@@ -3,6 +3,7 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
+	z-index: 1;
 	box-shadow: 0 -5px 5px 1px var(--light-scheme-layout-shadow);
 	background-color: var(--light-scheme-layout-bgc);
 	height: var(--mobile-nav-height);

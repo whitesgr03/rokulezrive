@@ -5,7 +5,7 @@
 	right: 0;
 	left: 0;
 	align-items: center;
-	z-index: 1;
+	z-index: 2;
 	box-shadow: 0 5px 5px 1px var(--light-scheme-layout-shadow);
 	background-color: var(--light-scheme-layout-bgc);
 	min-height: 50px;
@@ -109,12 +109,12 @@
 	top: 100%;
 	right: 0;
 	transform: translateX(100%) scale(0);
+	z-index: 2;
 	border: 2px solid var(--light-scheme-layout-shadow);
 	border-right: 0;
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
 	background-color: var(--light-scheme-layout-bgc);
-  z-index: 1;
 }
 
 .close {
