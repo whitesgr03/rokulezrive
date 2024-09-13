@@ -1,0 +1,27 @@
+.app {
+	display: flex;
+	flex: 1 1 100%;
+	flex-direction: column;
+	justify-content: space-between;
+	background-color: var(--light-scheme-main-bgc);
+	color: var(--light-scheme-color);
+}
+
+.active-mobile-nav {
+	padding-bottom: var(--mobile-nav-height);
+}
+
+.container {
+	display: flex;
+	position: relative;
+	flex: 1 1 100%;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+/* Dark scheme classes */
+
+:global(.dark).app {
+	background-color: var(--dark-scheme-layout-bgc);
+	color: var(--dark-scheme-color);
+}
