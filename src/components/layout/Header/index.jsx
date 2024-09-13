@@ -14,8 +14,12 @@ import logo from '../../../assets/logo.png';
 // Variables
 const classes = classNames.bind(styles);
 
-export const Header = ({ user, darkTheme, onSwitchColorTheme }) => {
-	const [activeDropdown, setActiveDropdown] = useState(false);
+export const Header = ({
+	user,
+	darkTheme,
+	activeDropdown,
+	onSwitchColorTheme,
+}) => {
 	const [activeDropdownSlide, setActiveDropdownSlide] = useState(false);
 
 	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
@@ -56,7 +60,7 @@ export const Header = ({ user, darkTheme, onSwitchColorTheme }) => {
 				<li className={styles['feature-item']}>
 					<button
 						type="button"
-						className={`${styles['feature-button']}`}
+						className={`account-button ${styles['feature-button']}`}
 						onClick={handleActiveDropdown}
 					>
 						<span className={`${icon} ${styles.user}`} />
@@ -64,7 +68,7 @@ export const Header = ({ user, darkTheme, onSwitchColorTheme }) => {
 				</li>
 			</ul>
 			<ul
-				className={`${styles.dropdown} ${classes({
+				className={`dropdown ${styles.dropdown} ${classes({
 					'dropdown-slide-in': activeDropdown,
 					'dropdown-slide-out': activeDropdownSlide,
 				})}`}
@@ -111,5 +115,6 @@ export const Header = ({ user, darkTheme, onSwitchColorTheme }) => {
 Header.propTypes = {
 	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
+	activeDropdown: PropTypes.bool,
 	onSwitchColorTheme: PropTypes.func,
 };

@@ -17,10 +17,20 @@ const classes = classNames.bind(styles);
 export const App = () => {
 	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
+	const [activeDropdown, setActiveDropdown] = useState(false);
 
 	const handleSwitchColorTheme = () => {
 		setDarkTheme(!darkTheme);
 		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
+	};
+
+	const handleActiveDropdown = e => {
+		const target = e.target.closest('.account-button');
+		const dropdown = e.target.closest('.dropdown');
+
+		dropdown || (target && !activeDropdown)
+			? setActiveDropdown(true)
+			: setActiveDropdown(false);
 	};
 
 	useEffect(() => {
@@ -46,10 +56,12 @@ export const App = () => {
 				dark: darkTheme,
 				'active-mobile-nav': user,
 			})}`}
+			onClick={handleActiveDropdown}
 		>
 			<Header
 				user={user}
 				darkTheme={darkTheme}
+				activeDropdown={activeDropdown}
 				onSwitchColorTheme={handleSwitchColorTheme}
 			/>
 			<div className={styles.container}>
