@@ -92,9 +92,6 @@ export const Header = ({
 					</a>
 				</li>
 			</ul>
-			{activeDropdown && (
-				<div className={styles.close} onClick={handleCloseDropdown} />
-			)}
 		</header>
 	);
 };
