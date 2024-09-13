@@ -1,6 +1,7 @@
 // Packages
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
+import { Outlet } from 'react-router-dom';
 
 // Styles
 import styles from './App.module.css';
@@ -53,7 +54,7 @@ export const App = () => {
 			/>
 			<div className={styles.container}>
 				<main>
-					<Home />
+					<Outlet context={{ user }} />
 				</main>
 				<Footer />
 				{user && <Mobile_nav />}
