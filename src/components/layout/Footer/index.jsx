@@ -1,6 +1,6 @@
 // Styles
 import styles from './Footer.module.css';
-import { icon } from '../../utils/icon.module.css';
+import { icon } from '../../../styles/icon.module.css';
 
 export const Footer = () => {
 	return (

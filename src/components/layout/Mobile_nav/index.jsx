@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import style from './style.module.css';
-import { icon } from '../../utils/icon.module.css';
+import { icon } from '../../../styles/icon.module.css';
 
 export const Mobile_nav = () => {
 	const [active, setActive] = useState(false);

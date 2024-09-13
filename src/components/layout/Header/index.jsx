@@ -6,7 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 
 // Styles
 import styles from './Header.module.css';
-import { icon } from '../../utils/icon.module.css';
+import { icon } from '../../../styles/icon.module.css';
 
 // Assets
 import logo from '../../../assets/logo.png';
