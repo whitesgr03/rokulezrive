@@ -33,6 +33,7 @@
 		"husky": "^9.1.6",
 		"postcss": "^8.4.45",
 		"prettier-plugin-css-order": "^2.1.2",
+		"stylelint-config-css-modules": "^4.4.0",
 		"stylelint-config-standard": "^36.0.1",
 		"vite": "^5.4.1"
 	}
