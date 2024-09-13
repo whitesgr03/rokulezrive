@@ -16,6 +16,7 @@ dist-ssr
 *stylelint*
 *commitlint*
 *husky*
+*example*
 
 # Editor directories and files
 .vscode/*
