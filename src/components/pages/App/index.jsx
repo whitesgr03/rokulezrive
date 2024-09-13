@@ -23,16 +23,20 @@ export const App = () => {
 	};
 
 	useEffect(() => {
-		const darkScheme = localStorage.getItem('darkTheme');
+		const getColorTheme = () => {
+			const darkScheme = localStorage.getItem('darkTheme');
 
-		const browserDarkScheme =
-			window.matchMedia('(prefers-color-scheme: dark)')?.matches ?? false;
+			const browserDarkScheme =
+				window.matchMedia('(prefers-color-scheme: dark)')?.matches ?? false;
 
-		darkScheme === null && localStorage.setItem('darkTheme', browserDarkScheme);
+			darkScheme === null &&
+				localStorage.setItem('darkTheme', browserDarkScheme);
 
-		setDarkTheme(
-			darkScheme === null ? browserDarkScheme : darkScheme === 'true',
-		);
+			setDarkTheme(
+				darkScheme === null ? browserDarkScheme : darkScheme === 'true',
+			);
+		};
+		getColorTheme();
 	}, []);
 
 	return (
