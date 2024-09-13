@@ -9,7 +9,6 @@ import styles from './App.module.css';
 import { Header } from '../../layout/Header';
 import { Footer } from '../../layout/Footer';
 import { Mobile_nav } from '../../layout/Mobile_nav';
-import { Home } from '../Home';
 
 // Variables
 const classes = classNames.bind(styles);
