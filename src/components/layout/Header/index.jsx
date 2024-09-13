@@ -1,7 +1,6 @@
 // Packages
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
 import { useMediaQuery } from 'react-responsive';
 
 // Styles
@@ -11,8 +10,6 @@ import { icon } from '../../../styles/icon.module.css';
 // Assets
 import logo from '../../../assets/logo.png';
 
-// Variables
-const classes = classNames.bind(styles);
 
 export const Header = ({
 	user,
@@ -96,10 +93,7 @@ export const Header = ({
 						className={styles['dropdown-link']}
 					>
 						<span
-							className={`${icon} ${classes({
-								logout: user,
-								login: !user,
-							})}`}
+							className={`${icon} ${user ? styles.logout : styles.login}`}
 						/>
 						{user ? 'Logout' : 'Login'}
 					</a>
