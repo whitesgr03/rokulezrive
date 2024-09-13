@@ -17,18 +17,11 @@ export const Header = ({
 	activeDropdown,
 	onSwitchColorTheme,
 }) => {
-	const [activeDropdownSlide, setActiveDropdownSlide] = useState(false);
+	const [dropdownSlideOut, setDropdownSlideOut] = useState(false);
 
 	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
 
-	const handleActiveDropdown = () => {
-		setActiveDropdown(!activeDropdown);
-		setActiveDropdownSlide(true);
-	};
-
-	const handleCloseDropdown = () => {
-		setActiveDropdown(false);
-	};
+	const handleDropdownSlideOut = () => setDropdownSlideOut(true);
 
 	return (
 		<header className={styles.header}>
@@ -58,7 +51,7 @@ export const Header = ({
 					<button
 						type="button"
 						className={`account-button ${styles['feature-button']}`}
-						onClick={handleActiveDropdown}
+						onClick={handleDropdownSlideOut}
 					>
 						<span className={`${icon} ${styles.user}`} />
 					</button>
@@ -67,7 +60,7 @@ export const Header = ({
 			<ul
 				className={`dropdown ${styles.dropdown} ${classes({
 					'dropdown-slide-in': activeDropdown,
-					'dropdown-slide-out': activeDropdownSlide,
+					'dropdown-slide-out': dropdownSlideOut,
 				})}`}
 			>
 				{isSmallMobile && (
