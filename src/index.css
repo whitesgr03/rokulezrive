@@ -1,68 +1,158 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+	/* light */
+	--light-scheme-color: rgb(0 0 0);
+	--light-scheme-color-rgb: 0 0 0;
+	--light-scheme-layout-bgc: rgb(220 214 214);
+	--light-scheme-layout-bgc-rgb: 220 214 214;
+	--light-scheme-layout-shadow: rgb(187 189 195);
+	--light-scheme-layout-shadow-rgb: 187 189 195;
+	--light-scheme-google-bgc: rgb(255 255 255);
+	--light-scheme-main-bgc: rgb(245 248 254);
+	--light-scheme-main-bgc-rgb: 245 248 254;
+	--light-scheme-highlight: rgb(23 80 115);
+	--light-scheme-highlight-rgb: 23 80 115;
+	--light-scheme-success: rgb(11 86 61);
+	--light-scheme-success-rgb: 11 86 61;
+	--light-scheme-error: rgb(145 29 29);
+	--light-scheme-error-rgb: 145 29 29;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+	/* dark */
+	--dark-scheme-color: rgb(209 209 209);
+	--dark-scheme-color-rgb: 209 209 209;
+	--dark-scheme-layout-bgc: rgb(10 19 36);
+	--dark-scheme-layout-bgc-rgb: 10 19 36;
+	--dark-scheme-layout-border-shadow: rgb(202 205 212);
+	--dark-scheme-layout-border-shadow-rgb: 202 205 212;
+	--dark-scheme-input-bgc: rgb(72 59 46);
+	--dark-scheme-input-bgc-rgb: 72 59 46;
+	--dark-scheme-switch-bgc: rgb(87 54 20);
+	--dark-scheme-switch-bgc-rgb: 87 54 20;
+	--dark-scheme-placeholder: rgb(168 168 168);
+	--dark-scheme-placeholder-rgb: 168 168 168;
+	--dark-scheme-highlight: rgb(242 161 69);
+	--dark-scheme-highlight-rgb: 242 161 69;
+	--dark-scheme-success: rgb(92 178 151);
+	--dark-scheme-success-rgb: 92 178 151;
+	--dark-scheme-error: rgb(236 116 116);
+	--dark-scheme-error-rgb: 236 116 116;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	/* icon */
+	--icon-size-mobile: 40px;
+	--icon-size-desktop: 30px;
+	--mobile-nav-height: 65px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+	box-sizing: border-box;
+	font-family:
+		Roboto,
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		Helvetica,
+		Arial,
+		sans-serif,
+		'Apple Color Emoji',
+		'Segoe UI Emoji',
+		'Segoe UI Symbol';
+	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+body * {
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 700;
+	line-height: 1.2em;
+}
+
+a {
+	color: var(--light-scheme-color);
+	text-decoration: none;
+}
+
+p {
+	line-height: 1.5em;
+	white-space: break-spaces;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+	cursor: pointer;
+	border: 0;
+	background-color: transparent;
+	color: var(--light-scheme-color);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+li {
+	list-style: none;
+}
+
+input,
+select,
+textarea {
+	outline: 0;
+}
+
+input[type='file'] {
+	display: none;
+}
+
+textarea {
+	resize: none;
+}
+
+img {
+	vertical-align: middle;
+	width: 100%;
+	height: auto;
+}
+
+main {
+	flex: 1 1 100%;
+}
+
+main > * {
+	width: 100%;
+	height: 100%;
+}
+
+/* Dark scheme classes */
+.dark * {
+	font-weight: 300;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6,
+.dark strong {
+	font-weight: 500;
+}
+
+.dark img {
+	filter: brightness(0.8) contrast(1.2);
+}
+
+.dark a {
+	color: var(--dark-scheme-color);
+}
+
+.dark button {
+	color: var(--dark-scheme-color);
 }
