@@ -76,17 +76,23 @@ const sharedDefault = [
 export const Drive = () => {
 	const { user } = useOutletContext();
 	const [activeOptionList, setActiveOptionList] = useState('');
-	const type = '';
+	const [activeUploadList, setActiveUploadList] = useState(false);
 	const files = filesDefault;
 	const shared = sharedDefault;
 
 	const handleActiveOptionList = e => {
-		const target = e.target.closest('.options');
+		const options = e.target.closest('.options');
 		const optionList = e.target.closest('.option-list');
+		const upload = e.target.closest('.upload');
+		const uploadList = e.target.closest('upload-list');
 
-		optionList || (target && activeOptionList !== target.dataset.id)
-			? setActiveOptionList(target.dataset.id)
+		optionList || (options && activeOptionList !== options.dataset.id)
+			? setActiveOptionList(options.dataset.id)
 			: setActiveOptionList('');
+
+		uploadList || (upload && !activeUploadList)
+			? setActiveUploadList(true)
+			: setActiveUploadList(false);
 	};
 
 	return (

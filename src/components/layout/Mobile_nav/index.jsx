@@ -1,52 +1,59 @@
-import { useState } from 'react';
+// Packages
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import style from './style.module.css';
+// Styles
+import styles from './style.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Mobile_nav = () => {
-	const [active, setActive] = useState(false);
-
+export const Mobile_nav = ({ activeUploadList }) => {
 	return (
-		<nav className={style['mobile-nav']}>
-			<ul className={style['mobile-nav-list']}>
-				<li className={style['mobile-nav-item']}>
-					<a href="/drive" className={style['mobile-nav-link']}>
-						<span className={`${icon} ${style.home}`} />
+		<nav className={styles['mobile-nav']}>
+			<ul className={styles['mobile-nav-list']}>
+				<li className={styles['mobile-nav-item']}>
+					<Link to="/drive" className={styles['mobile-nav-link']}>
+						<span className={`${icon} ${styles.home}`} />
 						Home
-					</a>
+					</Link>
 				</li>
-				<li className={style['mobile-nav-item']}>
-					<a href="/drive/shared" className={style['mobile-nav-link']}>
-						<span className={`${icon} ${style.shared}`} />
+				<li className={styles['mobile-nav-item']}>
+					<Link to="/drive/shared" className={styles['mobile-nav-link']}>
+						<span className={`${icon} ${styles.shared}`} />
 						Shared
-					</a>
+					</Link>
 				</li>
-				<li className={style['mobile-nav-item']}>
-					<a href="/drive/files" className={style['mobile-nav-link']}>
-						<span className={`${icon} ${style.drive}`} />
+				<li className={styles['mobile-nav-item']}>
+					<Link to="/drive/files" className={styles['mobile-nav-link']}>
+						<span className={`${icon} ${styles.drive}`} />
 						Files
-					</a>
+					</Link>
 				</li>
 			</ul>
-			<div className="upload">
-				<button type="button" className={style['upload-button']}>
-					<span className={`${icon} ${style.plus}`} />
+			<div className={`upload ${styles.upload}`}>
+				<button type="button" className={styles['upload-button']}>
+					<span className={`${icon} ${styles.plus}`} />
 				</button>
-				<ul
-					className={`${style['upload-list']} ${active ? style['is-active'] : ''}`}
-				>
-					<li>
-						<a href="/drive/files/create" className={style['upload-link']}>
-							<span className={`${icon} ${style['upload-file']})`} />
-						</a>
-					</li>
-					<li>
-						<a href="/drive/folders/create" className={style['upload-link']}>
-							<span className={`${icon} ${style['create-folder']})`} />
-						</a>
-					</li>
-				</ul>
+				{activeUploadList && (
+					<ul className={styles['upload-list']}>
+						<li>
+							<a href="/drive/files/create" className={styles['upload-link']}>
+								<span className={`${icon} ${styles['upload-file']}`} />
+								Upload File
+							</a>
+						</li>
+						<li>
+							<a href="/drive/folders/create" className={styles['upload-link']}>
+								<span className={`${icon} ${styles['create-folder']}`} />
+								Create Folder
+							</a>
+						</li>
+					</ul>
+				)}
 			</div>
 		</nav>
 	);
+};
+
+Mobile_nav.propTypes = {
+	activeUploadList: PropTypes.bool,
 };
