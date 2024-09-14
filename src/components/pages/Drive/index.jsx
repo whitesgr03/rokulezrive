@@ -1,4 +1,7 @@
 // Packages
+import {
+  useOutletContext,
+} from 'react-router-dom';
 import { useState } from 'react';
 
 // Styles
@@ -6,6 +9,7 @@ import styles from './Drive.module.css';
 
 // Components
 import { List } from './List';
+import { Mobile_nav } from '../../layout/Mobile_nav';
 
 const filesDefault = [
 	{
@@ -70,6 +74,7 @@ const sharedDefault = [
 ];
 
 export const Drive = () => {
+	const { user } = useOutletContext();
 	const [activeOptionList, setActiveOptionList] = useState('');
 	const type = '';
 	const files = filesDefault;
@@ -107,6 +112,7 @@ export const Drive = () => {
 					/>
 				</div>
 			)}
+			{user && <Mobile_nav activeUploadList={activeUploadList} />}
 		</div>
 	);
 };

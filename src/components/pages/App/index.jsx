@@ -9,7 +9,6 @@ import styles from './App.module.css';
 // Components
 import { Header } from '../../layout/Header';
 import { Footer } from '../../layout/Footer';
-import { Mobile_nav } from '../../layout/Mobile_nav';
 
 // Variables
 const classes = classNames.bind(styles);
@@ -69,7 +68,6 @@ export const App = () => {
 					<Outlet context={{ user }} />
 				</main>
 				<Footer />
-				{user && <Mobile_nav />}
 			</div>
 		</div>
 	);
