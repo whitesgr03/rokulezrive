@@ -5,6 +5,7 @@ import './styles/index.css';
 import { App } from './components/pages/App';
 import { Home } from './components/pages/Home';
 import { Drive } from './components/pages/Drive';
+import { NotFound } from './components/utils/Error/NotFound';
 
 import { Authentication } from './components/utils/Authentication';
 
@@ -26,6 +27,10 @@ export const Router = () => (
 								<Drive />
 							</Authentication>
 						),
+					},
+					{
+						path: '*',
+						element: <NotFound />,
 					},
 				],
 			},
