@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Styles
-import styles from './style.module.css';
+import styles from './Mobile_nav.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
 export const Mobile_nav = ({ activeUploadList }) => {
