@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
+import classNames from 'classnames/bind';
 
 // Styles
 import styles from './Header.module.css';
@@ -10,6 +11,8 @@ import { icon } from '../../../styles/icon.module.css';
 // Assets
 import logo from '../../../assets/logo.png';
 
+// Variables
+const classes = classNames.bind(styles);
 
 export const Header = ({
 	user,
