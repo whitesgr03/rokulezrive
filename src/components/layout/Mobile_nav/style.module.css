@@ -87,16 +87,9 @@
 	right: 85%;
 	bottom: 85%;
 	flex-direction: column;
-	visibility: hidden;
-	opacity: 0;
 	border: 2px solid var(--light-scheme-layout-shadow);
 	border-radius: 10px;
 	background-color: var(--light-scheme-layout-bgc);
-}
-
-.is-active {
-	visibility: visible;
-	opacity: 1;
 }
 
 .upload-link {
