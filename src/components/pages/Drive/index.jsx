@@ -22,6 +22,20 @@ const filesDefault = [
 		type: 'pdf',
 		createdAt: new Date(),
 	},
+	{
+		id: '11',
+		name: 'second project',
+		size: '130 kb',
+		type: 'pdf',
+		createdAt: new Date(),
+	},
+	{
+		id: '22',
+		name: 'second project',
+		size: '130 kb',
+		type: 'pdf',
+		createdAt: new Date(),
+	},
 ];
 
 const sharedDefault = [
@@ -34,6 +48,20 @@ const sharedDefault = [
 	},
 	{
 		id: '4',
+		name: 'second shared file',
+		owner: 'google@gmail.com',
+		type: 'image',
+		createdAt: new Date(),
+	},
+	{
+		id: '8',
+		name: 'second shared file',
+		owner: 'google@gmail.com',
+		type: 'image',
+		createdAt: new Date(),
+	},
+	{
+		id: '10',
 		name: 'second shared file',
 		owner: 'google@gmail.com',
 		type: 'image',
