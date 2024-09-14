@@ -70,6 +70,12 @@ body * {
 	padding: 0;
 }
 
+#root {
+	display: flex;
+	flex: 1 1 100%;
+	flex-direction: column;
+}
+
 h1,
 h2,
 h3,
