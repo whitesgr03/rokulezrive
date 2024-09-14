@@ -131,3 +131,9 @@
 	background-color: var(--dark-scheme-highlight);
 	color: var(--light-scheme-color);
 }
+
+:global(.dark) .upload-list {
+	border-width: 1px;
+	border-color: var(--dark-scheme-color);
+	background-color: var(--dark-scheme-input-bgc);
+}
