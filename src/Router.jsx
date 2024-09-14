@@ -21,7 +21,7 @@ export const Router = () => (
 						element: <Home />,
 					},
 					{
-						path: '/drive',
+						path: '/drive/:type?',
 						element: (
 							<Authentication>
 								<Drive />

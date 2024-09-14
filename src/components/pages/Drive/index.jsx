@@ -1,7 +1,5 @@
 // Packages
-import {
-  useOutletContext,
-} from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { useState } from 'react';
 
 // Styles
@@ -77,6 +75,7 @@ export const Drive = () => {
 	const { user } = useOutletContext();
 	const [activeOptionList, setActiveOptionList] = useState('');
 	const [activeUploadList, setActiveUploadList] = useState(false);
+	const { type } = useParams();
 	const files = filesDefault;
 	const shared = sharedDefault;
 
