@@ -1,12 +1,11 @@
 // Packages
-import { useOutletContext, useParams } from 'react-router-dom';
+import { Outlet, useOutletContext, useMatch } from 'react-router-dom';
 import { useState } from 'react';
 
 // Styles
 import styles from './Drive.module.css';
 
 // Components
-import { List } from './List';
 import { Mobile_nav } from '../../layout/Mobile_nav';
 
 const filesDefault = [
@@ -75,9 +74,10 @@ export const Drive = () => {
 	const { user } = useOutletContext();
 	const [activeOptionList, setActiveOptionList] = useState('');
 	const [activeUploadList, setActiveUploadList] = useState(false);
-	const { type } = useParams();
 	const files = filesDefault;
 	const shared = sharedDefault;
+
+	const drivePath = useMatch('/drive');
 
 	const handleActiveOptionList = e => {
 		const options = e.target.closest('.options');
@@ -96,27 +96,10 @@ export const Drive = () => {
 
 	return (
 		<div className={styles.drive} onClick={handleActiveOptionList}>
-			<h2>My Drive</h2>
-			{type !== 'files' && (
-				<div className={styles.container}>
-					<h3>Shared</h3>
-					<List
-						data={shared}
-						type={'shared'}
-						activeOptionList={activeOptionList}
-					/>
-				</div>
-			)}
-			{type !== 'shared' && (
-				<div className={styles.container}>
-					<h3>Files</h3>
-					<List
-						data={files}
-						type={'files'}
-						activeOptionList={activeOptionList}
-					/>
-				</div>
-			)}
+			{drivePath && <h2>My Drive</h2>}
+			<div className={styles.container}>
+				<Outlet context={{ files, shared, activeOptionList }} />
+			</div>
 			{user && <Mobile_nav activeUploadList={activeUploadList} />}
 		</div>
 	);

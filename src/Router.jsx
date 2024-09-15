@@ -9,6 +9,9 @@ import { Login } from './components/pages/Account/Login';
 import { Register } from './components/pages/Account/Register';
 import { NotFound } from './components/utils/Error/NotFound';
 
+import { Files } from './components/pages/Drive/Files';
+import { Shared } from './components/pages/Drive/Shared';
+
 import { Authentication } from './components/utils/Authentication';
 
 export const Router = () => (
@@ -23,12 +26,31 @@ export const Router = () => (
 						element: <Home />,
 					},
 					{
-						path: '/drive/:type?',
+						path: 'drive',
 						element: (
 							<Authentication>
 								<Drive />
 							</Authentication>
 						),
+						children: [
+							{
+								index: true,
+								element: (
+									<>
+										<Shared />
+										<Files />
+									</>
+								),
+							},
+							{
+								path: 'shared',
+								element: <Shared />,
+							},
+							{
+								path: 'files',
+								element: <Files />,
+							},
+						],
 					},
 					{
 						path: 'account',
