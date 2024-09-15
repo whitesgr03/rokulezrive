@@ -1,5 +1,6 @@
 // Packages
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 import classNames from 'classnames/bind';
@@ -28,9 +29,9 @@ export const Header = ({
 
 	return (
 		<header className={styles.header}>
-			<a href="/" className={styles.logo}>
+			<Link to="/" className={styles.logo}>
 				<img src={logo} alt="Logo" className={styles['logo-image']} />
-			</a>
+			</Link>
 			<ul className={styles.features}>
 				{!isSmallMobile && (
 					<li className={styles['feature-item']}>
@@ -84,15 +85,21 @@ export const Header = ({
 					</li>
 				)}
 				<li>
-					<a
-						href={user ? '/Logout' : '/Login'}
-						className={styles['dropdown-link']}
-					>
-						<span
-							className={`${icon} ${user ? styles.logout : styles.login}`}
-						/>
-						{user ? 'Logout' : 'Login'}
-					</a>
+					{user ? (
+						<button className={styles['dropdown-link']}>
+							<span className={`${icon} ${styles.logout}`} />
+							Logout
+						</button>
+					) : (
+						<Link
+							to="/account/login"
+							className={styles['dropdown-link']}
+							data-close
+						>
+							<span className={`${icon} ${styles.login}`} />
+							Login
+						</Link>
+					)}
 				</li>
 			</ul>
 		</header>
