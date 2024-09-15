@@ -1,0 +1,35 @@
+.federation {
+	display: flex;
+	row-gap: 15px;
+	flex-direction: column;
+	border-top: 1px solid var(--light-scheme-color);
+	padding: 0 5%;
+	padding-top: 20px;
+}
+
+.federation-button {
+	display: flex;
+	column-gap: 10px;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.3s ease;
+	cursor: pointer;
+	border: 2px solid var(--light-scheme-color);
+	border-radius: 5px;
+	background-color: var(--light-scheme-google-bgc);
+	min-height: 45px;
+	color: var(--light-scheme-color);
+}
+
+/* Dark scheme classes */
+
+:global(.dark) .federation {
+	border-color: var(--dark-scheme-color);
+}
+
+:global(.dark) .federation-button {
+	border-width: 1px;
+	border-color: var(--dark-scheme-color);
+	background-color: var(--dark-scheme-google-bgc);
+	color: var(--dark-scheme-color);
+}

@@ -5,6 +5,8 @@ import './styles/index.css';
 import { App } from './components/pages/App';
 import { Home } from './components/pages/Home';
 import { Drive } from './components/pages/Drive';
+import { Login } from './components/pages/Account/Login';
+import { Register } from './components/pages/Account/Register';
 import { NotFound } from './components/utils/Error/NotFound';
 
 import { Authentication } from './components/utils/Authentication';
@@ -27,6 +29,19 @@ export const Router = () => (
 								<Drive />
 							</Authentication>
 						),
+					},
+					{
+						path: 'account',
+						children: [
+							{
+								path: 'login',
+								element: <Login />,
+							},
+							{
+								path: 'register',
+								element: <Register />,
+							},
+						],
 					},
 					{
 						path: '*',
