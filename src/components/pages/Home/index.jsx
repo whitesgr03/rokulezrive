@@ -36,7 +36,7 @@ export const Home = activeMobileNav => {
 							Manage file from your mobile device or computer and sharing file
 							to anyone.
 						</p>
-						<Link className={styles['home-link']} to="/account/register">
+						<Link className={styles['home-link']} to="/account/login">
 							Try Local Drive for free
 						</Link>
 					</div>
