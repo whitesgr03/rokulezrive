@@ -27,7 +27,7 @@ export const App = () => {
 		const target = e.target.closest('.account-button');
 		const dropdown = e.target.closest('.dropdown');
 
-		dropdown || (target && !activeDropdown)
+		(dropdown && !e.target.dataset.close) || (target && !activeDropdown)
 			? setActiveDropdown(true)
 			: setActiveDropdown(false);
 	};
