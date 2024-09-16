@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 import styles from './Mobile_nav.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Mobile_nav = ({ menu, onActiveMenu }) => {
+// Components
+import { Folder_Form } from './Folder_Form';
+
+export const Mobile_nav = ({ menu, onActiveModal, onActiveMenu }) => {
 	const matches = useMatches();
 
 	return (
@@ -59,13 +62,13 @@ export const Mobile_nav = ({ menu, onActiveMenu }) => {
 								</Link>
 							</li>
 							<li>
-								<Link
-									to="/drive/folders/create"
+								<button
 									className={styles['upload-link']}
+									onClick={() => onActiveModal(<Folder_Form />)}
 								>
 									<span className={`${icon} ${styles['create-folder']}`} />
 									Create Folder
-								</Link>
+								</button>
 							</li>
 						</ul>
 					)}
@@ -78,4 +81,5 @@ export const Mobile_nav = ({ menu, onActiveMenu }) => {
 Mobile_nav.propTypes = {
 	menu: PropTypes.object,
 	onActiveMenu: PropTypes.func,
+	onActiveModal: PropTypes.func,
 };

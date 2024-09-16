@@ -10,6 +10,7 @@ import styles from './App.module.css';
 import { Header } from '../../layout/Header';
 import { Footer } from '../../layout/Footer';
 import { Mobile_nav } from '../../layout/Mobile_nav';
+import { Modal } from './Modal';
 
 // Variables
 const classes = classNames.bind(styles);
@@ -23,6 +24,7 @@ export const App = () => {
 	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [menu, setMenu] = useState(DEFAULT_MENU);
+	const [modal, setModal] = useState(null);
 
 	const handleCloseMenu = e => {
 		const { id, button, closeMenu } = e.target.dataset;
@@ -42,6 +44,16 @@ export const App = () => {
 	const handleSwitchColorTheme = () => {
 		setDarkTheme(!darkTheme);
 		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
+	};
+
+	const handleCloseModel = e => {
+		e.target.dataset.closeModel && setModal(null);
+		e.target.dataset.closeModel && document.body.removeAttribute('style');
+	};
+
+	const handleActiveModal = modal => {
+		document.body.style.overflow = 'hidden';
+		setModal(modal);
 	};
 
 	useEffect(() => {
@@ -69,6 +81,14 @@ export const App = () => {
 			})}`}
 			onClick={handleCloseMenu}
 		>
+			{modal && (
+				<Modal
+					onActiveModal={handleActiveModal}
+					onCloseModel={handleCloseModel}
+				>
+					{modal}
+				</Modal>
+			)}
 			<Header
 				user={user}
 				darkTheme={darkTheme}
@@ -88,7 +108,13 @@ export const App = () => {
 				</main>
 				<Footer />
 			</div>
-			{user && <Mobile_nav menu={menu} onActiveMenu={handleActiveMenu} />}
+			{user && (
+				<Mobile_nav
+					menu={menu}
+					onActiveModal={handleActiveModal}
+					onActiveMenu={handleActiveMenu}
+				/>
+			)}
 		</div>
 	);
 };
