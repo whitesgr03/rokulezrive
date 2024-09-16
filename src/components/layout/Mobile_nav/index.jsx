@@ -1,4 +1,5 @@
 // Packages
+import { useMatches } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +8,8 @@ import styles from './Mobile_nav.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
 export const Mobile_nav = ({ menu, onActiveMenu }) => {
+	const matches = useMatches();
+
 	return (
 		<nav className={styles['mobile-nav']}>
 			<ul className={styles['mobile-nav-list']}>
@@ -29,6 +32,7 @@ export const Mobile_nav = ({ menu, onActiveMenu }) => {
 					</Link>
 				</li>
 			</ul>
+			{matches[1].pathname === '/drive' && (
 				<div className={`upload ${styles.upload}`}>
 					<button
 						type="button"
@@ -66,6 +70,7 @@ export const Mobile_nav = ({ menu, onActiveMenu }) => {
 						</ul>
 					)}
 				</div>
+			)}
 		</nav>
 	);
 };
