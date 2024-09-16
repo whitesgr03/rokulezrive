@@ -25,7 +25,7 @@ export const Folder_Form = () => {
 							'form-input-error': error,
 						})} ${styles['folder-form-input']}`}
 						name="folder"
-						title="The email is required and must be standard format."
+						title="The folder name is required."
 					/>
 				</label>
 				<div
