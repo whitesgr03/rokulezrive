@@ -5,9 +5,6 @@ import { useState } from 'react';
 // Styles
 import styles from './Drive.module.css';
 
-// Components
-import { Mobile_nav } from '../../layout/Mobile_nav';
-
 const filesDefault = [
 	{
 		id: '0',
@@ -100,7 +97,6 @@ export const Drive = () => {
 			<div className={styles.container}>
 				<Outlet context={{ files, shared, activeOptionList }} />
 			</div>
-			{user && <Mobile_nav activeUploadList={activeUploadList} />}
 		</div>
 	);
 };
