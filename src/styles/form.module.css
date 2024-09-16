@@ -82,3 +82,20 @@
 	background-color: var(--light-scheme-success);
 	color: var(--dark-scheme-color);
 }
+
+/* Pseudo classes */
+.form-label:focus-within {
+	color: var(--light-scheme-highlight);
+}
+
+.form-input:focus {
+	border-color: var(--light-scheme-highlight);
+}
+
+:global(.dark) .form-label:focus-within {
+	color: var(--dark-scheme-highlight);
+}
+
+:global(.dark) .form-input:focus {
+	border-color: var(--dark-scheme-highlight);
+}
