@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import styles from './Mobile_nav.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Mobile_nav = ({ activeUploadList }) => {
+export const Mobile_nav = ({ menu, onActiveMenu }) => {
 	return (
 		<nav className={styles['mobile-nav']}>
 			<ul className={styles['mobile-nav-list']}>
@@ -29,31 +29,48 @@ export const Mobile_nav = ({ activeUploadList }) => {
 					</Link>
 				</li>
 			</ul>
-			<div className={`upload ${styles.upload}`}>
-				<button type="button" className={styles['upload-button']}>
-					<span className={`${icon} ${styles.plus}`} />
-				</button>
-				{activeUploadList && (
-					<ul className={styles['upload-list']}>
-						<li>
-							<a href="/drive/files/create" className={styles['upload-link']}>
-								<span className={`${icon} ${styles['upload-file']}`} />
-								Upload File
-							</a>
-						</li>
-						<li>
-							<a href="/drive/folders/create" className={styles['upload-link']}>
-								<span className={`${icon} ${styles['create-folder']}`} />
-								Create Folder
-							</a>
-						</li>
-					</ul>
-				)}
-			</div>
+				<div className={`upload ${styles.upload}`}>
+					<button
+						type="button"
+						className={styles['upload-button']}
+						onClick={() =>
+							onActiveMenu({
+								name: 'upload-menu',
+								button: 'upload-button',
+							})
+						}
+						data-button="upload-button"
+					>
+						<span className={`${icon} ${styles.plus}`} />
+					</button>
+					{menu.name === 'upload-menu' && (
+						<ul className={`upload-menu ${styles['upload-menu']}`}>
+							<li>
+								<Link
+									to="/drive/files/create"
+									className={styles['upload-link']}
+								>
+									<span className={`${icon} ${styles['upload-file']}`} />
+									Upload File
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/drive/folders/create"
+									className={styles['upload-link']}
+								>
+									<span className={`${icon} ${styles['create-folder']}`} />
+									Create Folder
+								</Link>
+							</li>
+						</ul>
+					)}
+				</div>
 		</nav>
 	);
 };
 
 Mobile_nav.propTypes = {
-	activeUploadList: PropTypes.bool,
+	menu: PropTypes.object,
+	onActiveMenu: PropTypes.func,
 };

@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import styles from './List.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const List = ({ data, type, activeOptionList }) => {
+export const List = ({ data, type, menu, onActiveMenu }) => {
 	const options = {
 		shared: [
 			{
@@ -43,7 +43,7 @@ export const List = ({ data, type, activeOptionList }) => {
 	};
 	const optionList = options[type].map(option => (
 		<li key={option.text}>
-			<button type="button" className={styles['option-list-button']}>
+			<button type="button" className={styles['option-menu-button']}>
 				<span className={`${icon} ${option.class}`} />
 				{option.text}
 			</button>
@@ -76,12 +76,23 @@ export const List = ({ data, type, activeOptionList }) => {
 							</div>
 						</div>
 					</button>
-					<div className={`options ${styles.options}`} data-id={item.id}>
-						<button>
+					<div className={styles.options}>
+						<button
+							onClick={() =>
+								onActiveMenu({
+									id: item.id,
+									button: 'option-button',
+									name: 'option-menu',
+								})
+							}
+							data-id={item.id}
+							data-button="option-button"
+						>
 							<span className={`${icon} ${styles.option}`} />
 						</button>
-						{activeOptionList === item.id && (
-							<ul className={`option-list ${styles['option-list']}`}>
+
+						{menu.name === 'option-menu' && menu.id === item.id && (
+							<ul className={`option-menu ${styles['option-menu']}`}>
 								{optionList}
 							</ul>
 						)}
@@ -95,5 +106,6 @@ export const List = ({ data, type, activeOptionList }) => {
 List.propTypes = {
 	data: PropTypes.array,
 	type: PropTypes.string,
-	activeOptionList: PropTypes.string,
+	menu: PropTypes.object,
+	onActiveMenu: PropTypes.func,
 };

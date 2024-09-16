@@ -58,7 +58,7 @@
 	position: relative;
 }
 
-.option-list {
+.option-menu {
 	display: flex;
 	position: absolute;
 	top: 50%;
@@ -71,7 +71,7 @@
 	background-color: var(--light-scheme-layout-bgc);
 }
 
-.option-list-button {
+.option-menu-button {
 	display: flex;
 	column-gap: 10px;
 	align-items: center;
@@ -173,7 +173,7 @@
 
 /* Dark scheme classes */
 
-:global(.dark) .option-list {
+:global(.dark) .option-menu {
 	border-width: 1px;
 	border-color: var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);

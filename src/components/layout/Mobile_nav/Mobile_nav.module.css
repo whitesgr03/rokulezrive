@@ -81,7 +81,7 @@
 	height: var(--size);
 }
 
-.upload-list {
+.upload-menu {
 	display: flex;
 	position: absolute;
 	right: 85%;
@@ -132,7 +132,7 @@
 	color: var(--light-scheme-color);
 }
 
-:global(.dark) .upload-list {
+:global(.dark) .upload-menu {
 	border-width: 1px;
 	border-color: var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);

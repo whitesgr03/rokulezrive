@@ -13,24 +13,35 @@ import { Mobile_nav } from '../../layout/Mobile_nav';
 
 // Variables
 const classes = classNames.bind(styles);
+const DEFAULT_MENU = {
+	id: '',
+	button: '',
+	name: '',
+};
 
 export const App = () => {
 	const [user, setUser] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
-	const [activeDropdown, setActiveDropdown] = useState(false);
+	const [menu, setMenu] = useState(DEFAULT_MENU);
+
+	const handleCloseMenu = e => {
+		const { id, button, closeMenu } = e.target.dataset;
+
+		menu.name !== '' &&
+			(closeMenu ||
+				(!button && !e.target.closest(`.${menu.name}`)) ||
+				id === menu.id ||
+				(!id && button === menu.button)) &&
+			setMenu(DEFAULT_MENU);
+	};
+
+	const handleActiveMenu = menu => {
+		setMenu({ ...DEFAULT_MENU, ...menu });
+	};
 
 	const handleSwitchColorTheme = () => {
 		setDarkTheme(!darkTheme);
 		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
-	};
-
-	const handleActiveDropdown = e => {
-		const target = e.target.closest('.account-button');
-		const dropdown = e.target.closest('.dropdown');
-
-		(dropdown && !e.target.dataset.close) || (target && !activeDropdown)
-			? setActiveDropdown(true)
-			: setActiveDropdown(false);
 	};
 
 	useEffect(() => {
@@ -56,17 +67,24 @@ export const App = () => {
 				dark: darkTheme,
 				'active-mobile-nav': user,
 			})}`}
-			onClick={handleActiveDropdown}
+			onClick={handleCloseMenu}
 		>
 			<Header
 				user={user}
 				darkTheme={darkTheme}
-				activeDropdown={activeDropdown}
+				menu={menu}
+				onActiveMenu={handleActiveMenu}
 				onSwitchColorTheme={handleSwitchColorTheme}
 			/>
 			<div className={styles.container}>
 				<main>
-					<Outlet context={{ user }} />
+					<Outlet
+						context={{
+							user,
+							onActiveMenu: handleActiveMenu,
+							menu,
+						}}
+					/>
 				</main>
 				<Footer />
 			</div>

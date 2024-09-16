@@ -18,14 +18,21 @@ const classes = classNames.bind(styles);
 export const Header = ({
 	user,
 	darkTheme,
-	activeDropdown,
 	onSwitchColorTheme,
+	menu,
+	onActiveMenu,
 }) => {
 	const [dropdownSlideOut, setDropdownSlideOut] = useState(false);
 
 	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
 
-	const handleDropdownSlideOut = () => setDropdownSlideOut(true);
+	const handleDropdownSlideOut = () => {
+		onActiveMenu({
+			button: 'account-button',
+			name: 'dropdown',
+		});
+		setDropdownSlideOut(true);
+	};
 
 	return (
 		<header className={styles.header}>
@@ -54,8 +61,9 @@ export const Header = ({
 				<li className={styles['feature-item']}>
 					<button
 						type="button"
-						className={`account-button ${styles['feature-button']}`}
+						className={`${styles['feature-button']}`}
 						onClick={handleDropdownSlideOut}
+						data-button="account-button"
 					>
 						<span className={`${icon} ${styles.user}`} />
 					</button>
@@ -63,7 +71,7 @@ export const Header = ({
 			</ul>
 			<ul
 				className={`dropdown ${styles.dropdown} ${classes({
-					'dropdown-slide-in': activeDropdown,
+					'dropdown-slide-in': menu.name === 'dropdown',
 					'dropdown-slide-out': dropdownSlideOut,
 				})}`}
 			>
@@ -93,8 +101,8 @@ export const Header = ({
 					) : (
 						<Link
 							to="/account/login"
-							className={styles['dropdown-link']}
-							data-close
+							className={`login ${styles['dropdown-link']}`}
+							data-close-menu
 						>
 							<span className={`${icon} ${styles.login}`} />
 							Login
@@ -109,6 +117,7 @@ export const Header = ({
 Header.propTypes = {
 	user: PropTypes.object,
 	darkTheme: PropTypes.bool,
-	activeDropdown: PropTypes.bool,
 	onSwitchColorTheme: PropTypes.func,
+	menu: PropTypes.object,
+	onActiveMenu: PropTypes.func,
 };

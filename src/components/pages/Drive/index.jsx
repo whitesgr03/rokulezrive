@@ -1,6 +1,5 @@
 // Packages
 import { Outlet, useOutletContext, useMatch } from 'react-router-dom';
-import { useState } from 'react';
 
 // Styles
 import styles from './Drive.module.css';
@@ -68,34 +67,18 @@ const sharedDefault = [
 ];
 
 export const Drive = () => {
-	const { user } = useOutletContext();
-	const [activeOptionList, setActiveOptionList] = useState('');
-	const [activeUploadList, setActiveUploadList] = useState(false);
+	const { onActiveMenu, menu } = useOutletContext();
+
 	const files = filesDefault;
 	const shared = sharedDefault;
 
 	const drivePath = useMatch('/drive');
 
-	const handleActiveOptionList = e => {
-		const options = e.target.closest('.options');
-		const optionList = e.target.closest('.option-list');
-		const upload = e.target.closest('.upload');
-		const uploadList = e.target.closest('upload-list');
-
-		optionList || (options && activeOptionList !== options.dataset.id)
-			? setActiveOptionList(options.dataset.id)
-			: setActiveOptionList('');
-
-		uploadList || (upload && !activeUploadList)
-			? setActiveUploadList(true)
-			: setActiveUploadList(false);
-	};
-
 	return (
-		<div className={styles.drive} onClick={handleActiveOptionList}>
+		<div className={styles.drive}>
 			{drivePath && <h2>My Drive</h2>}
 			<div className={styles.container}>
-				<Outlet context={{ files, shared, activeOptionList }} />
+				<Outlet context={{ files, shared, onActiveMenu, menu }} />
 			</div>
 		</div>
 	);
