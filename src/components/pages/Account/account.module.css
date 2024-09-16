@@ -15,6 +15,10 @@
 	padding: 20px 0;
 }
 
+.account-form-wrap {
+	padding: 0 5%;
+}
+
 .account-link-wrap {
 	display: flex;
 	row-gap: 5px;

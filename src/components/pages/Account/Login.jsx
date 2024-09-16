@@ -18,63 +18,65 @@ export const Login = () => {
 	const errors = {};
 	return (
 		<Account title="User Sign in">
-			<form className={formStyles.form}>
-				<div className={formStyles['input-wrap']}>
-					<label htmlFor="email" className={formStyles['form-label']}>
-						Email
-						<input
-							type="text"
-							id="email"
+			<div className={accountStyles['account-form-wrap']}>
+				<form className={formStyles.form}>
+					<div className={formStyles['input-wrap']}>
+						<label htmlFor="email" className={formStyles['form-label']}>
+							Email
+							<input
+								type="text"
+								id="email"
+								className={classes({
+									'form-input': true,
+									'form-input-error': errors.email,
+								})}
+								name="email"
+								title="The email is required and must be standard format."
+							/>
+						</label>
+						<div
 							className={classes({
-								'form-input': true,
-								'form-input-error': errors.email,
+								'form-message-wrap': true,
+								'form-message-active': errors.email,
 							})}
-							name="email"
-							title="The email is required and must be standard format."
-						/>
-					</label>
-					<div
-						className={classes({
-							'form-message-wrap': true,
-							'form-message-active': errors.email,
-						})}
-					>
-						<span className={`${icon} ${formStyles.alert}`} />
-						<p className={formStyles['form-message']}>
-							{errors.email ? errors.email : 'Message Placeholder'}
-						</p>
+						>
+							<span className={`${icon} ${formStyles.alert}`} />
+							<p className={formStyles['form-message']}>
+								{errors.email ? errors.email : 'Message Placeholder'}
+							</p>
+						</div>
 					</div>
-				</div>
-				<div className={formStyles['input-wrap']}>
-					<label htmlFor="password" className={formStyles['form-label']}>
-						Password
-						<input
-							type="password"
-							id="password"
-							className={`${formStyles['form-input']} ${classes({
-								'form-input-error': errors.password,
-							})}`}
-							name="password"
-							title="The password is required."
-						/>
-					</label>
-					<div
-						className={classes({
-							'form-message-wrap': true,
-							'form-message-active': errors.password,
-						})}
-					>
-						<span className={`${icon} ${formStyles.alert}`} />
-						<p className={formStyles['form-message']}>
-							{errors.password ? errors.password : 'Message Placeholder'}
-						</p>
+					<div className={formStyles['input-wrap']}>
+						<label htmlFor="password" className={formStyles['form-label']}>
+							Password
+							<input
+								type="password"
+								id="password"
+								className={`${formStyles['form-input']} ${classes({
+									'form-input-error': errors.password,
+								})}`}
+								name="password"
+								title="The password is required."
+							/>
+						</label>
+						<div
+							className={classes({
+								'form-message-wrap': true,
+								'form-message-active': errors.password,
+							})}
+						>
+							<span className={`${icon} ${formStyles.alert}`} />
+							<p className={formStyles['form-message']}>
+								{errors.password ? errors.password : 'Message Placeholder'}
+							</p>
+						</div>
 					</div>
-				</div>
 
-				<button type="submit" className={formStyles['form-submit']}>
-					Submit
-				</button>
-			</form>
+					<button type="submit" className={formStyles['form-submit']}>
+						Submit
+					</button>
+				</form>
+			</div>
 
 			<div className={styles.federation}>
 				<button className={styles['federation-button']}>
