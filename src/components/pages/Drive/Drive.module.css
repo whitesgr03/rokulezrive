@@ -9,4 +9,5 @@
 	display: flex;
 	row-gap: 35px;
 	flex-direction: column;
+	height: 100%;
 }

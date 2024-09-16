@@ -54,8 +54,9 @@ export const Mobile_nav = ({ menu, onActiveModal, onActiveMenu }) => {
 						<ul className={`upload-menu ${styles['upload-menu']}`}>
 							<li>
 								<Link
-									to="/drive/files/create"
+									to="/drive/files/upload"
 									className={styles['upload-link']}
+									data-close-menu
 								>
 									<span className={`${icon} ${styles['upload-file']}`} />
 									Upload File

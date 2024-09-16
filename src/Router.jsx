@@ -11,6 +11,7 @@ import { NotFound } from './components/utils/Error/NotFound';
 
 import { Files } from './components/pages/Drive/Files';
 import { Shared } from './components/pages/Drive/Shared';
+import { Upload } from './components/pages/Drive/upload';
 
 import { Authentication } from './components/utils/Authentication';
 
@@ -49,6 +50,10 @@ export const Router = () => (
 							{
 								path: 'files',
 								element: <Files />,
+							},
+							{
+								path: 'files/upload',
+								element: <Upload />,
 							},
 						],
 					},
