@@ -16,7 +16,6 @@
 	position: relative;
 	flex: 1 1 100%;
 	flex-direction: column;
-	overflow: hidden;
 }
 
 /* Dark scheme classes */
