@@ -1,40 +1,40 @@
 :root {
 	/* light */
 	--light-scheme-color: rgb(0 0 0);
-	--light-scheme-color-rgb: 0 0 0;
+	--light-scheme-color-rgb: 0, 0, 0;
 	--light-scheme-layout-bgc: rgb(220 214 214);
-	--light-scheme-layout-bgc-rgb: 220 214 214;
+	--light-scheme-layout-bgc-rgb: 220, 214, 214;
 	--light-scheme-layout-shadow: rgb(187 189 195);
-	--light-scheme-layout-shadow-rgb: 187 189 195;
+	--light-scheme-layout-shadow-rgb: 187, 189, 195;
 	--light-scheme-google-bgc: rgb(255 255 255);
 	--light-scheme-main-bgc: rgb(245 248 254);
-	--light-scheme-main-bgc-rgb: 245 248 254;
+	--light-scheme-main-bgc-rgb: 245, 248, 254;
 	--light-scheme-highlight: rgb(23 80 115);
-	--light-scheme-highlight-rgb: 23 80 115;
+	--light-scheme-highlight-rgb: 23, 80, 115;
 	--light-scheme-success: rgb(11 86 61);
-	--light-scheme-success-rgb: 11 86 61;
+	--light-scheme-success-rgb: 11, 86, 61;
 	--light-scheme-error: rgb(145 29 29);
-	--light-scheme-error-rgb: 145 29 29;
+	--light-scheme-error-rgb: 145, 29, 29;
 
 	/* dark */
 	--dark-scheme-color: rgb(209 209 209);
-	--dark-scheme-color-rgb: 209 209 209;
+	--dark-scheme-color-rgb: 209, 209, 209;
 	--dark-scheme-layout-bgc: rgb(10 19 36);
-	--dark-scheme-layout-bgc-rgb: 10 19 36;
+	--dark-scheme-layout-bgc-rgb: 10, 19, 36;
 	--dark-scheme-layout-border-shadow: rgb(202 205 212);
-	--dark-scheme-layout-border-shadow-rgb: 202 205 212;
+	--dark-scheme-layout-border-shadow-rgb: 202, 205, 212;
 	--dark-scheme-input-bgc: rgb(72 59 46);
-	--dark-scheme-input-bgc-rgb: 72 59 46;
+	--dark-scheme-input-bgc-rgb: 72, 59, 46;
 	--dark-scheme-switch-bgc: rgb(87 54 20);
-	--dark-scheme-switch-bgc-rgb: 87 54 20;
+	--dark-scheme-switch-bgc-rgb: 87, 54, 20;
 	--dark-scheme-placeholder: rgb(168 168 168);
-	--dark-scheme-placeholder-rgb: 168 168 168;
+	--dark-scheme-placeholder-rgb: 168, 168, 168;
 	--dark-scheme-highlight: rgb(242 161 69);
-	--dark-scheme-highlight-rgb: 242 161 69;
+	--dark-scheme-highlight-rgb: 242, 161, 69;
 	--dark-scheme-success: rgb(92 178 151);
-	--dark-scheme-success-rgb: 92 178 151;
+	--dark-scheme-success-rgb: 92, 178, 151;
 	--dark-scheme-error: rgb(236 116 116);
-	--dark-scheme-error-rgb: 236 116 116;
+	--dark-scheme-error-rgb: 236, 116, 116;
 
 	/* icon */
 	--icon-size-mobile: 40px;
