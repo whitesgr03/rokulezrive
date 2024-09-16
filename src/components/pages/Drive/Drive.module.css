@@ -1,12 +1,12 @@
 .drive {
 	display: flex;
-	row-gap: 20px;
+	row-gap: 30px;
 	flex-direction: column;
-	padding: 20px;
+	padding: 30px 20px;
 }
 
 .container {
 	display: flex;
-	row-gap: 20px;
+	row-gap: 35px;
 	flex-direction: column;
 }
