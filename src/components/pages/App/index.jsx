@@ -46,9 +46,9 @@ export const App = () => {
 		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
 	};
 
-	const handleCloseModel = e => {
-		e.target.dataset.closeModel && setModal(null);
-		e.target.dataset.closeModel && document.body.removeAttribute('style');
+	const handleCloseModal = e => {
+		e.target.dataset.closeModal && setModal(null);
+		e.target.dataset.closeModal && document.body.removeAttribute('style');
 	};
 
 	const handleActiveModal = modal => {
@@ -84,7 +84,7 @@ export const App = () => {
 			{modal && (
 				<Modal
 					onActiveModal={handleActiveModal}
-					onCloseModel={handleCloseModel}
+					onCloseModal={handleCloseModal}
 				>
 					{modal}
 				</Modal>

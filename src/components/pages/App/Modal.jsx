@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Modal = ({ onCloseModel, children }) => {
+export const Modal = ({ onCloseModal, children }) => {
 	return (
-		<div className={styles.modal} onClick={onCloseModel} data-close-model>
+		<div className={styles.modal} onClick={onCloseModal} data-close-modal>
 			<div className={styles['modal-wrap']}>
-				<button className={styles['modal-button']} data-close-model>
+				<button className={styles['modal-button']} data-close-modal>
 					<span className={`${icon} ${styles.close}`} />
 				</button>
 				<div className={styles.container}>{children}</div>
@@ -19,6 +19,6 @@ export const Modal = ({ onCloseModel, children }) => {
 };
 
 Modal.propTypes = {
-	onCloseModel: PropTypes.func,
+	onCloseModal: PropTypes.func,
 	children: PropTypes.node,
 };
