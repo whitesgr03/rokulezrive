@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
-import modalStyles from '../App/Modal.module.css';
+import modalStyles from '../../pages/App/Modal.module.css';
 
 // Variables
 const classes = classNames.bind(formStyles);
