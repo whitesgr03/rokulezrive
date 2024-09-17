@@ -11,7 +11,7 @@ const classes = classNames.bind(formStyles);
 
 export const Upload = () => {
 	const upload = false;
-	const error = 'Too large!';
+	const error = '';
 	return (
 		<div className={styles.upload}>
 			<h3>Upload File</h3>
