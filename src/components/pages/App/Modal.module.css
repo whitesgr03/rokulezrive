@@ -40,6 +40,10 @@
 	overflow: scroll;
 }
 
+.modal-input {
+	background-color: var(--light-scheme-main-bgc);
+}
+
 /* Dark scheme classes */
 :global(.dark) .modal-wrap {
 	border: 2px solid var(--dark-scheme-color);
@@ -48,5 +52,10 @@
 }
 
 :global(.dark) .close {
+	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .modal-input {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
 	color: var(--dark-scheme-color);
 }

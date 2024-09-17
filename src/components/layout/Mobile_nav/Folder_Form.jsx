@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
-import styles from './Folder_Form.module.css';
+import modalStyles from '../App/Modal.module.css';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -23,7 +23,7 @@ export const Folder_Form = () => {
 						className={`${classes({
 							'form-input': true,
 							'form-input-error': error,
-						})} ${styles['folder-form-input']}`}
+						})} ${modalStyles['modal-input']}`}
 						name="folder"
 						title="The folder name is required."
 					/>
