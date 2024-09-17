@@ -19,7 +19,7 @@ export const Register = () => {
 		<Account title="User Sign Up">
 			<div className={accountStyles['account-form-wrap']}>
 				<form className={formStyles.form}>
-					<div className={formStyles['input-wrap']}>
+					<div>
 						<label htmlFor="email" className={formStyles['form-label']}>
 							Email
 							<input
@@ -45,7 +45,7 @@ export const Register = () => {
 							</p>
 						</div>
 					</div>
-					<div className={formStyles['input-wrap']}>
+					<div>
 						<label htmlFor="password" className={formStyles['form-label']}>
 							Password
 							<input
@@ -70,7 +70,7 @@ export const Register = () => {
 							</p>
 						</div>
 					</div>
-					<div className={formStyles['input-wrap']}>
+					<div>
 						<label
 							htmlFor="confirmPassword"
 							className={formStyles['form-label']}

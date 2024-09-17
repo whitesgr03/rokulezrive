@@ -20,7 +20,7 @@ export const Login = () => {
 		<Account title="User Sign in">
 			<div className={accountStyles['account-form-wrap']}>
 				<form className={formStyles.form}>
-					<div className={formStyles['input-wrap']}>
+					<div>
 						<label htmlFor="email" className={formStyles['form-label']}>
 							Email
 							<input
