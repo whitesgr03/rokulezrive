@@ -102,6 +102,7 @@ export const App = () => {
 						context={{
 							user,
 							onActiveMenu: handleActiveMenu,
+							onActiveModal: handleActiveModal,
 							menu,
 						}}
 					/>

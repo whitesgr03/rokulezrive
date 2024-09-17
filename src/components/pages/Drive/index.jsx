@@ -67,7 +67,7 @@ const sharedDefault = [
 ];
 
 export const Drive = () => {
-	const { onActiveMenu, menu } = useOutletContext();
+	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
 
 	const files = filesDefault;
 	const shared = sharedDefault;
@@ -78,7 +78,9 @@ export const Drive = () => {
 		<div className={styles.drive}>
 			{drivePath && <h2>My Drive</h2>}
 			<div className={styles.container}>
-				<Outlet context={{ files, shared, onActiveMenu, menu }} />
+				<Outlet
+					context={{ files, shared, onActiveMenu, onActiveModal, menu }}
+				/>
 			</div>
 		</div>
 	);

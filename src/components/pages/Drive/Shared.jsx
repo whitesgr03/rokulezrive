@@ -7,9 +7,11 @@ import driveStyles from './Drive.module.css';
 import listStyles from './List.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
+// Components
+import { File_Delete } from './File_Delete';
 
 export const Shared = () => {
-	const { shared, menu, onActiveMenu } = useOutletContext();
+	const { shared, menu, onActiveMenu, onActiveModal } = useOutletContext();
 
 	return (
 		<>
@@ -51,6 +53,40 @@ export const Shared = () => {
 							>
 								<span className={`${icon} ${listStyles.option}`} />
 							</button>
+							{menu.name === 'option-menu' && menu.id === item.id && (
+								<ul className={`option-menu ${driveStyles['option-menu']}`}>
+									<li>
+										<button
+											type="button"
+											className={driveStyles['option-menu-button']}
+										>
+											<span className={`${icon} ${driveStyles.share}`} />
+											Share
+										</button>
+									</li>
+									<li>
+										<button
+											type="button"
+											className={driveStyles['option-menu-button']}
+										>
+											<span className={`${icon} ${driveStyles.download}`} />
+											Download
+										</button>
+									</li>
+									<li>
+										<button
+											type="button"
+											className={driveStyles['option-menu-button']}
+											onClick={() =>
+												onActiveModal(<File_Delete name={item.name} />)
+											}
+										>
+											<span className={`${icon} ${driveStyles.delete}`} />
+											Remove
+										</button>
+									</li>
+								</ul>
+							)}
 						</div>
 					</li>
 				))}
