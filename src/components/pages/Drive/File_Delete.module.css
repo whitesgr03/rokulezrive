@@ -1,0 +1,35 @@
+.file-delete {
+	display: flex;
+	row-gap: 20px;
+	flex-direction: column;
+}
+
+.container {
+	display: flex;
+	row-gap: 30px;
+	flex-direction: column;
+	align-items: center;
+}
+
+.file-button-wrap {
+	display: flex;
+	column-gap: 10px;
+	width: 100%;
+}
+
+.file-button {
+	cursor: pointer;
+	border: 2px solid var(--light-scheme-color);
+	border-radius: 5px;
+	width: 100%;
+	min-height: 45px;
+	color: var(--dark-scheme-color);
+}
+
+.cancel {
+	color: var(--light-scheme-color);
+}
+
+.delete {
+	background-color: var(--light-scheme-error);
+}
