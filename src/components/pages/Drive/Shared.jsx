@@ -60,15 +60,6 @@ export const Shared = () => {
 											type="button"
 											className={driveStyles['option-menu-button']}
 										>
-											<span className={`${icon} ${driveStyles.share}`} />
-											Share
-										</button>
-									</li>
-									<li>
-										<button
-											type="button"
-											className={driveStyles['option-menu-button']}
-										>
 											<span className={`${icon} ${driveStyles.download}`} />
 											Download
 										</button>
