@@ -49,6 +49,10 @@ export const Router = () => (
 								element: <Shared />,
 							},
 							{
+								path: 'shared/:fileId',
+								element: <File_Into />,
+							},
+							{
 								path: 'files',
 								element: <Files />,
 							},
