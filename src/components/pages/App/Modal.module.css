@@ -59,3 +59,7 @@
 	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
 	color: var(--dark-scheme-color);
 }
+
+:global(.dark) .modal-input::placeholder {
+	color: rgba(var(--dark-scheme-color-rgb), 0.8);
+}
