@@ -10,6 +10,7 @@ import { icon } from '../../../styles/icon.module.css';
 // Components
 import { File_Update } from './File_Update';
 import { File_Delete } from './File_Delete';
+import { File_Share } from './File_Share';
 
 export const Files = () => {
 	const { files, menu, onActiveMenu, onActiveModal } = useOutletContext();
@@ -60,6 +61,10 @@ export const Files = () => {
 										<button
 											type="button"
 											className={driveStyles['option-menu-button']}
+											onClick={() =>
+												onActiveModal(<File_Share name={item.name} />)
+											}
+											data-close-menu
 										>
 											<span className={`${icon} ${driveStyles.share}`} />
 											Share
