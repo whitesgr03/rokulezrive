@@ -28,7 +28,7 @@ export const File_Share = ({ name }) => {
 			<form className={formStyles.form}>
 				<div>
 					<div className={styles['input-wrap']}>
-						{emailList.length && (
+						{emailList.length > 0 && (
 							<label htmlFor="user_email" className={` ${styles.label}`}>
 								{emailList.map(email => (
 									<div key={email} className={styles.email}>
