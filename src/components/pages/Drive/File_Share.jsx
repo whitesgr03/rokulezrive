@@ -102,7 +102,3 @@ export const File_Share = ({ name }) => {
 		</div>
 	);
 };
-
-// commit this page
-
-// create file info page
