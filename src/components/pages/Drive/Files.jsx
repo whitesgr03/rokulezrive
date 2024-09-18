@@ -112,41 +112,49 @@ export const Files = () => {
 							</button>
 							{menu.name === 'option-menu' && menu.id === item.id && (
 								<ul className={`option-menu ${driveStyles['option-menu']}`}>
-									<li>
-										<button
-											type="button"
-											className={driveStyles['option-menu-button']}
-											onClick={() =>
-												onActiveModal(<File_Share name={item.name} />)
-											}
-											data-close-menu
-										>
-											<span className={`${icon} ${driveStyles.share}`} />
-											Share
-										</button>
-									</li>
-									<li>
-										<button
-											type="button"
-											className={driveStyles['option-menu-button']}
-										>
-											<span className={`${icon} ${driveStyles.download}`} />
-											Download
-										</button>
-									</li>
-									<li>
-										<button
-											type="button"
-											className={driveStyles['option-menu-button']}
-											onClick={() =>
-												onActiveModal(<File_Update name={item.name} />)
-											}
-											data-close-menu
-										>
-											<span className={`${icon} ${driveStyles.edit}`} />
-											Rename
-										</button>
-									</li>
+									{item.type && (
+										<>
+											<li>
+												<button
+													type="button"
+													className={driveStyles['option-menu-button']}
+													onClick={() =>
+														onActiveModal(<File_Share name={item.name} />)
+													}
+													data-close-menu
+												>
+													<span className={`${icon} ${driveStyles.share}`} />
+													Share
+												</button>
+											</li>
+
+											<li>
+												<button
+													type="button"
+													className={driveStyles['option-menu-button']}
+												>
+													<span className={`${icon} ${driveStyles.download}`} />
+													Download
+												</button>
+											</li>
+										</>
+									)}
+
+									{!item.type && (
+										<li>
+											<button
+												type="button"
+												className={driveStyles['option-menu-button']}
+												onClick={() =>
+													onActiveModal(<File_Update name={item.name} />)
+												}
+												data-close-menu
+											>
+												<span className={`${icon} ${driveStyles.edit}`} />
+												Rename
+											</button>
+										</li>
+									)}
 									<li>
 										<button
 											type="button"
