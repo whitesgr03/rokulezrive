@@ -1,5 +1,5 @@
 // Packages
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, Link, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
 // Styles
@@ -15,23 +15,78 @@ import { File_Share } from './File_Share';
 export const Files = () => {
 	const { files, menu, onActiveMenu, onActiveModal } = useOutletContext();
 
+	const { folderId } = useParams();
+
+	const defaultFiles = [
+		{
+			id: '0',
+			name: 'fiewr111rst rewrr',
+			size: '50 kb',
+			type: 'image',
+			createdAt: new Date(),
+		},
+		{
+			id: '225',
+			name: 'new Folder',
+			createdAt: new Date(),
+		},
+		{
+			id: '1',
+			name: 'dsadsad project',
+			size: '130 kb',
+			type: 'pdf',
+			createdAt: new Date(),
+		},
+		{
+			id: '11',
+			name: 'erwerew project',
+			size: '130 kb',
+			type: 'pdf',
+			createdAt: new Date(),
+		},
+		{
+			id: '22',
+			name: 'dsd dsad',
+			size: '130 kb',
+			type: 'pdf',
+			createdAt: new Date(),
+		},
+	];
+
+	const data = folderId ? defaultFiles : files;
+
 	return (
 		<>
 			<h3>Files</h3>
 			<ul className={listStyles.list}>
-				{files.map(item => (
+				{data.map(item => (
 					<li key={item.id} className={listStyles.file}>
-						<button className={listStyles['file-button']}>
-							<span className={`${icon} ${listStyles[item.type]}`} />
+						<Link
+							to={
+								item.type
+									? `/drive/files/${item.id}`
+									: `/drive/files/d/${item.id}`
+							}
+							state={{ file: item }}
+							className={listStyles['file-button']}
+						>
+							{item.type ? (
+								<span className={`${icon} ${listStyles[item.type]}`} />
+							) : (
+								<span className={`${icon} ${listStyles.folder}`} />
+							)}
 							<div className={listStyles.container}>
 								<p className={listStyles['file-name']}>{item.name}</p>
 								<div className={listStyles.info}>
-									<div className={listStyles['file-wrap']}>
-										<span className={`${icon} ${listStyles.size}`} />
-										<span className={listStyles['file-content']}>
-											{item.size}
-										</span>
-									</div>
+									{item.type && (
+										<div className={listStyles['file-wrap']}>
+											<span className={`${icon} ${listStyles.size}`} />
+											<span className={listStyles['file-content']}>
+												{item.size}
+											</span>
+										</div>
+									)}
+
 									<div className={listStyles['file-wrap']}>
 										<span className={`${icon} ${listStyles.date}`} />
 										<span className={listStyles['file-content']}>
@@ -40,7 +95,7 @@ export const Files = () => {
 									</div>
 								</div>
 							</div>
-						</button>
+						</Link>
 						<div className={listStyles.options}>
 							<button
 								onClick={() =>

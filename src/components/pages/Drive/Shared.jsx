@@ -1,5 +1,5 @@
 // Packages
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
 // Styles
@@ -19,7 +19,11 @@ export const Shared = () => {
 			<ul className={listStyles.list}>
 				{shared.map(item => (
 					<li key={item.id} className={listStyles.file}>
-						<button className={listStyles['file-button']}>
+						<Link
+							to={`/drive/shared/${item.id}`}
+							state={{ file: item }}
+							className={listStyles['file-button']}
+						>
 							<span className={`${icon} ${listStyles[item.type]}`} />
 							<div className={listStyles.container}>
 								<p className={listStyles['file-name']}>{item.name}</p>
@@ -38,7 +42,7 @@ export const Shared = () => {
 									</div>
 								</div>
 							</div>
-						</button>
+						</Link>
 						<div className={listStyles.options}>
 							<button
 								onClick={() =>

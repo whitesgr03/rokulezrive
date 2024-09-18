@@ -13,6 +13,11 @@ const filesDefault = [
 		createdAt: new Date(),
 	},
 	{
+		id: '221',
+		name: 'new Folder',
+		createdAt: new Date(),
+	},
+	{
 		id: '1',
 		name: 'second project',
 		size: '130 kb',
