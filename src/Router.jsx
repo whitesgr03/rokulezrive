@@ -8,6 +8,7 @@ import { Drive } from './components/pages/Drive';
 import { Login } from './components/pages/Account/Login';
 import { Register } from './components/pages/Account/Register';
 import { NotFound } from './components/utils/Error/NotFound';
+import { Error } from './components/utils/Error';
 
 import { Files } from './components/pages/Drive/Files';
 import { Shared } from './components/pages/Drive/Shared';
@@ -85,6 +86,7 @@ export const Router = () => (
 					},
 				],
 			},
+			{ path: '/error', element: <Error /> },
 		])}
 	/>
 );
