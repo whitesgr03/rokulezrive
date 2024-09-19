@@ -72,17 +72,12 @@ export const Router = () => (
 						],
 					},
 					{
-						path: 'account',
-						children: [
-							{
-								path: 'login',
-								element: <Login />,
-							},
-							{
-								path: 'register',
-								element: <Register />,
-							},
-						],
+						path: 'account/login',
+						element: <Login />,
+					},
+					{
+						path: 'account/register',
+						element: <Register />,
 					},
 					{
 						path: '*',
