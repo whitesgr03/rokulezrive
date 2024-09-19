@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 // Styles
 import styles from './Account.module.css';
 
-export const Account = ({ title, children }) => {
+import { Loading } from '../../utils/Loading/Loading';
+
+export const Account = ({ title, loading, children }) => {
 	const { user } = useOutletContext();
 
 	return (
@@ -15,7 +17,14 @@ export const Account = ({ title, children }) => {
 			) : (
 				<div className={styles.account}>
 					<h3>{title}</h3>
-					<div className={styles.container}>{children}</div>
+					<div className={styles.container}>
+						{loading && (
+							<div className={styles['login-shadow']}>
+								<Loading text={'Login...'} light={true} />
+							</div>
+						)}
+						{children}
+					</div>
 				</div>
 			)}
 		</>
@@ -24,5 +33,6 @@ export const Account = ({ title, children }) => {
 
 Account.propTypes = {
 	title: PropTypes.string,
+	loading: PropTypes.bool,
 	children: PropTypes.node,
 };
