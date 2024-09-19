@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import style from './Error.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Error = ({ message }) => {
-	console.error('Error component:', message);
+export const Error = ({ error }) => {
+	console.error('Error component:', error);
 
 	return (
 		<div className={style.error}>
@@ -24,5 +24,5 @@ export const Error = ({ message }) => {
 };
 
 Error.propTypes = {
-	message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+	error: PropTypes.string,
 };
