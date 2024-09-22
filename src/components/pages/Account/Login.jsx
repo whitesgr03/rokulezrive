@@ -247,20 +247,25 @@ export const Login = () => {
 		});
 
 		const initialGoogleButton = () => {
-			googleRenderButton.current &&
-				google.accounts.id.renderButton(googleRenderButton.current, {
-					theme: 'outline',
-					size: 'large',
-					logo_alignment: 'center',
-					width:
-						googleRenderButton.current.offsetWidth > 400
-							? 400
-							: googleRenderButton.current.offsetWidth,
-					locale: 'en',
-				});
+			const maxHeightGoogleButton = 400;
+			const computedStyle = getComputedStyle(googleRenderButton.current);
+			const border =
+				parseFloat(computedStyle.borderLeftWidth) +
+				parseFloat(computedStyle.borderRightWidth);
+
+			google.accounts.id.renderButton(googleRenderButton.current, {
+				theme: 'outline',
+				size: 'large',
+				logo_alignment: 'center',
+				width:
+					googleRenderButton.current.offsetWidth > maxHeightGoogleButton
+						? maxHeightGoogleButton - border
+						: googleRenderButton.current.offsetWidth - border,
+				locale: 'en',
+			});
 		};
 
-		initialGoogleButton();
+		googleRenderButton.current && initialGoogleButton();
 		window.addEventListener('resize', initialGoogleButton);
 		return () => window.removeEventListener('resize', initialGoogleButton);
 	}, [onUser, onActiveModal]);
@@ -350,7 +355,10 @@ export const Login = () => {
 					</div>
 
 					<div className={styles.federation}>
-						<button ref={googleRenderButton}></button>
+						<button
+							ref={googleRenderButton}
+							className={styles['federation-button']}
+						></button>
 						<button
 							className={styles['federation-button']}
 							onClick={() => {
