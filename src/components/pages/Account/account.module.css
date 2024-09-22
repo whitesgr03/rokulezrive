@@ -17,13 +17,6 @@
 	overflow: hidden;
 }
 
-.login-shadow {
-	position: absolute;
-	backdrop-filter: blur(2px);
-	inset: 0;
-	background-color: rgba(var(--light-scheme-color-rgb), 0.7);
-}
-
 .account-form-wrap {
 	padding: 0 5%;
 }
