@@ -104,6 +104,74 @@ export const Login = () => {
 		};
 		setFormData(fields);
 	};
+
+	const handleFacebookUserRegister = async user => {
+		const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/register/facebook`;
+
+		const options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(user),
+			credentials: 'include',
+		};
+
+		const result = await handleFetch(URL, options);
+
+		const handleSuccess = () => {
+			onUser(result.data);
+			localStorage.setItem(
+				'drive.session-exp',
+				JSON.stringify(new Date(result.cookie.exp).getTime()),
+			);
+			onActiveModal({ component: null });
+		};
+
+		result.success ? handleSuccess() : setError(result.message);
+	};
+
+	const handleFacebookUserLogin = async res => {
+		setLoading(true);
+
+		const { accessToken } = res;
+
+		const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/login/facebook`;
+
+		const options = {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+			credentials: 'include',
+		};
+
+		const result = await handleFetch(URL, options);
+
+		const handleSuccess = () => {
+			const isRegister = result.data;
+
+			isRegister
+				? (() => {
+						onUser(result.data);
+						localStorage.setItem(
+							'drive.session-exp',
+							JSON.stringify(new Date(result.cookie.exp).getTime()),
+						);
+					})()
+				: onActiveModal({
+						component: (
+							<Username_Form onRegister={handleFacebookUserRegister} />
+						),
+						clickToClose: false,
+					});
+		};
+
+		result.success ? handleSuccess() : setError(result.message);
+
+		setLoading(false);
+	};
+
 	useEffect(() => {
 		const { google } = window;
 
@@ -198,6 +266,17 @@ export const Login = () => {
 		window.addEventListener('resize', initialGoogleButton);
 		return () => window.removeEventListener('resize', initialGoogleButton);
 	}, [onUser, onActiveModal]);
+
+	useEffect(() => {
+		const { FB } = window;
+		FB.init({
+			appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+			status: true,
+			cookie: true,
+			xfbml: false,
+			version: 'v20.0',
+		});
+	}, []);
 	return (
 		<>
 			{error ? (
@@ -275,7 +354,17 @@ export const Login = () => {
 					<div className={styles.federation}>
 						<button ref={googleRenderButton}></button>
 						<button
-							<svg
+							className={styles['federation-button']}
+							onClick={() => {
+								const { FB } = window;
+
+								FB.login(res => {
+									res.status === 'connected'
+										? handleFacebookUserLogin(res.authResponse)
+										: setLoading(false);
+								});
+							}}
+						>
 								xmlns="http://www.w3.org/2000/svg"
 								width="1em"
 								height="1em"
