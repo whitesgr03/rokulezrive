@@ -54,8 +54,9 @@ export const App = () => {
 	};
 
 	const handleCloseModal = e => {
-		e.target.dataset.closeModal && setModal(null);
-		e.target.dataset.closeModal && document.body.removeAttribute('style');
+		e.target.dataset.closeModal === 'true' && setModal(null);
+		e.target.dataset.closeModal === 'true' &&
+			document.body.removeAttribute('style');
 	};
 
 	const handleActiveModal = modal => {
