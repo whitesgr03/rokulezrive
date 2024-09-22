@@ -19,6 +19,8 @@
 	background-color: var(--light-scheme-google-bgc);
 	min-height: 45px;
 	color: var(--light-scheme-color);
+.federation-button-svg {
+	font-size: 18px;
 }
 
 /* Dark scheme classes */
