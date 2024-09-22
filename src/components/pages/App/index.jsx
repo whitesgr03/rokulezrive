@@ -108,9 +108,11 @@ export const App = () => {
 			setLoading(false);
 		};
 
-		!sessionExp || Date.now() > new Date(JSON.parse(sessionExp)).getTime()
-			? removeExp()
-			: handleGetUser();
+		!sessionExp
+			? setLoading(false)
+			: Date.now() > new Date(JSON.parse(sessionExp)).getTime()
+				? removeExp()
+				: handleGetUser();
 
 		return () => controller.abort();
 	}, []);
