@@ -121,9 +121,7 @@ export const App = () => {
 
 	return (
 		<>
-			{loading ? (
-				<Loading text={'Loading...'} />
-			) : error ? (
+			{error ? (
 				<Navigate to="/error" state={{ error }} />
 			) : (
 				<div
@@ -133,6 +131,10 @@ export const App = () => {
 					})}`}
 					onClick={handleCloseMenu}
 				>
+					{loading ? (
+						<Loading text={'Loading...'} />
+					) : (
+						<>
 							{modal && (
 								<Modal
 									onActiveModal={handleActiveModal}
@@ -171,6 +173,7 @@ export const App = () => {
 									onActiveMenu={handleActiveMenu}
 								/>
 							)}
+						</>
 					)}
 				</div>
 			)}
