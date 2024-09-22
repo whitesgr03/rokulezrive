@@ -19,7 +19,6 @@ import { Account } from '.';
 // Variables
 const classes = classNames.bind(formStyles);
 const DEFAULT_FORM_DATA = { email: '', password: '' };
-const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/login`;
 
 export const Login = () => {
 	const { onUser } = useOutletContext();
@@ -62,6 +61,8 @@ export const Login = () => {
 
 	const handleLogin = async () => {
 		setLoading(true);
+
+		const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/login`;
 
 		const options = {
 			method: 'POST',
