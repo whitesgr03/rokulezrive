@@ -15,13 +15,14 @@ import { handleFetch } from '../../../utils/handleFetch';
 
 // Components
 import { Account } from '.';
+import { Username_Form } from './Username_Form';
 
 // Variables
 const classes = classNames.bind(formStyles);
 const DEFAULT_FORM_DATA = { email: '', password: '' };
 
 export const Login = () => {
-	const { onUser } = useOutletContext();
+	const { onUser, onActiveModal } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(false);
@@ -105,6 +106,75 @@ export const Login = () => {
 	};
 	useEffect(() => {
 		const { google } = window;
+
+		const handleGoogleUserRegister = async user => {
+			const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/register/google`;
+
+			const options = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(user),
+				credentials: 'include',
+			};
+
+			const result = await handleFetch(URL, options);
+
+			const handleSuccess = () => {
+				onUser(result.data);
+				localStorage.setItem(
+					'drive.session-exp',
+					JSON.stringify(new Date(result.cookie.exp).getTime()),
+				);
+				onActiveModal({ component: null });
+			};
+
+			result.success ? handleSuccess() : setError(result.message);
+		};
+
+		const handleGoogleUserLogin = async res => {
+			setLoading(true);
+
+			const { credential } = res;
+
+			const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/login/google`;
+
+			const options = {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${credential}`,
+				},
+				credentials: 'include',
+			};
+
+			const result = await handleFetch(URL, options);
+
+			const handleSuccess = () => {
+				const isRegister = result.data;
+
+				isRegister
+					? (() => {
+							onUser(result.data);
+							localStorage.setItem(
+								'drive.session-exp',
+								JSON.stringify(new Date(result.cookie.exp).getTime()),
+							);
+						})()
+					: onActiveModal({
+							component: (
+								<Username_Form
+									onGoogleUserRegister={handleGoogleUserRegister}
+								/>
+							),
+							clickToClose: false,
+						});
+			};
+
+			result.success ? handleSuccess() : setError(result.message);
+			setLoading(false);
+		};
+
 		google.accounts.id.initialize({
 			client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
 			callback: handleGoogleUserLogin,
@@ -127,9 +197,7 @@ export const Login = () => {
 		initialGoogleButton();
 		window.addEventListener('resize', initialGoogleButton);
 		return () => window.removeEventListener('resize', initialGoogleButton);
-  }, [
-    
-  ]);
+	}, [onUser, onActiveModal]);
 	return (
 		<>
 			{error ? (
