@@ -16,14 +16,14 @@ import { Loading } from '../../utils/Loading/Loading';
 const classes = classNames.bind(formStyles);
 const DEFAULT_FORM_DATA = { username: '' };
 
-export const Username_Form = ({ onGoogleUserRegister }) => {
+export const Username_Form = ({ onRegister }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(false);
 
 	const handleRegister = async () => {
 		setLoading(true);
-		await onGoogleUserRegister(formData);
+		await onRegister(formData);
 		setLoading(false);
 	};
 
@@ -117,5 +117,5 @@ export const Username_Form = ({ onGoogleUserRegister }) => {
 };
 
 Username_Form.propTypes = {
-	onGoogleUserRegister: PropTypes.func,
+	onRegister: PropTypes.func,
 };

@@ -231,9 +231,7 @@ export const Login = () => {
 						})()
 					: onActiveModal({
 							component: (
-								<Username_Form
-									onGoogleUserRegister={handleGoogleUserRegister}
-								/>
+								<Username_Form onRegister={handleGoogleUserRegister} />
 							),
 							clickToClose: false,
 						});
