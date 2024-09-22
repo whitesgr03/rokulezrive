@@ -59,9 +59,10 @@ export const App = () => {
 			document.body.removeAttribute('style');
 	};
 
-	const handleActiveModal = modal => {
-		document.body.style.overflow = 'hidden';
-		setModal(modal);
+	const handleActiveModal = ({ component, clickToClose = null }) => {
+		document.body.removeAttribute('style');
+		component && (document.body.style.overflow = 'hidden');
+		component ? setModal({ component, clickToClose }) : setModal(null);
 	};
 
 	useEffect(() => {
@@ -132,42 +133,44 @@ export const App = () => {
 					})}`}
 					onClick={handleCloseMenu}
 				>
-					{modal && (
-						<Modal
-							onActiveModal={handleActiveModal}
-							onCloseModal={handleCloseModal}
-						>
-							{modal}
-						</Modal>
-					)}
-					<Header
-						user={user}
-						darkTheme={darkTheme}
-						menu={menu}
-						onActiveMenu={handleActiveMenu}
-						onUser={setUser}
-						onSwitchColorTheme={handleSwitchColorTheme}
-					/>
-					<div className={styles.container}>
-						<main>
-							<Outlet
-								context={{
-									user,
-									onActiveMenu: handleActiveMenu,
-									onActiveModal: handleActiveModal,
-									onUser: setUser,
-									menu,
-								}}
+							{modal && (
+								<Modal
+									onActiveModal={handleActiveModal}
+									onCloseModal={handleCloseModal}
+									clickToClose={modal.clickToClose}
+								>
+									{modal.component}
+								</Modal>
+							)}
+							<Header
+								user={user}
+								darkTheme={darkTheme}
+								menu={menu}
+								onActiveMenu={handleActiveMenu}
+								onUser={setUser}
+								onSwitchColorTheme={handleSwitchColorTheme}
 							/>
-						</main>
-						<Footer />
-					</div>
-					{user && (
-						<Mobile_nav
-							menu={menu}
-							onActiveModal={handleActiveModal}
-							onActiveMenu={handleActiveMenu}
-						/>
+							<div className={styles.container}>
+								<main>
+									<Outlet
+										context={{
+											user,
+											onActiveMenu: handleActiveMenu,
+											onActiveModal: handleActiveModal,
+											onUser: setUser,
+											menu,
+										}}
+									/>
+								</main>
+								<Footer />
+							</div>
+							{user && (
+								<Mobile_nav
+									menu={menu}
+									onActiveModal={handleActiveModal}
+									onActiveMenu={handleActiveMenu}
+								/>
+							)}
 					)}
 				</div>
 			)}
