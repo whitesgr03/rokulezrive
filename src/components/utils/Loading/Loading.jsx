@@ -9,12 +9,13 @@ import { icon } from '../../../styles/icon.module.css';
 // Variables
 const classes = classNames.bind(styles);
 
-export const Loading = ({ text, dark, light }) => {
+export const Loading = ({ text, dark, light, shadow }) => {
 	return (
 		<div
 			className={`${styles.loading} ${classes({
 				dark,
 				light,
+				shadow,
 			})}`}
 		>
 			<span className={`${icon} ${styles.load}`} />
@@ -27,4 +28,5 @@ Loading.propTypes = {
 	text: PropTypes.string,
 	dark: PropTypes.bool,
 	light: PropTypes.bool,
+	shadow: PropTypes.bool,
 };

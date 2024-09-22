@@ -9,12 +9,17 @@
 	color: var(--light-scheme-color);
 }
 
+.shadow {
+	backdrop-filter: blur(3px);
+	background-color: rgba(var(--light-scheme-color-rgb), 0.4);
+}
+
 .light {
-  color: var(--dark-scheme-color);
+	color: var(--dark-scheme-color);
 }
 
 .dark {
-  color: var(--light-scheme-color);
+	color: var(--light-scheme-color);
 }
 
 .load {
@@ -34,4 +39,9 @@
 
 :global(.dark) .loading {
 	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .shadow {
+	backdrop-filter: blur(2px);
+	background-color: rgba(var(--light-scheme-color-rgb), 0.7);
 }
