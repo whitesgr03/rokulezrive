@@ -19,9 +19,7 @@ export const Account = ({ title, loading, children }) => {
 					<h3>{title}</h3>
 					<div className={styles.container}>
 						{loading && (
-							<div className={styles['login-shadow']}>
-								<Loading text={'Login...'} light={true} />
-							</div>
+							<Loading text={'Login...'} light={true} shadow={true} />
 						)}
 						{children}
 					</div>
