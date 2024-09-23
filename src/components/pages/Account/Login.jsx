@@ -84,7 +84,9 @@ export const Login = () => {
 			);
 		};
 
-		result.success ? handleSuccess() : setError(result.message);
+		result.success
+			? handleSuccess()
+			: setInputErrors({ ...inputErrors, ...result.message });
 
 		setLoading(false);
 	};
