@@ -8,7 +8,7 @@ import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
 
 // Components
-import { Account } from './index';
+import { Account } from './Account';
 
 // Variables
 const classes = classNames.bind(formStyles);

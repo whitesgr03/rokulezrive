@@ -10,9 +10,9 @@ import styles from './App.module.css';
 import { handleFetch } from '../../../utils/handleFetch';
 
 // Components
-import { Header } from '../../layout/Header';
-import { Footer } from '../../layout/Footer';
-import { Mobile_nav } from '../../layout/Mobile_nav';
+import { Header } from '../../layout/Header/Header';
+import { Footer } from '../../layout/Footer/Footer';
+import { Mobile_nav } from '../../layout/Mobile_nav/Mobile_nav';
 import { Modal } from './Modal';
 import { Loading } from '../../utils/Loading/Loading';
 
@@ -59,7 +59,7 @@ export const App = () => {
 			document.body.removeAttribute('style');
 	};
 
-	const handleActiveModal = ({ component, clickToClose = null }) => {
+	const handleActiveModal = ({ component, clickToClose = true }) => {
 		document.body.removeAttribute('style');
 		component && (document.body.style.overflow = 'hidden');
 		component ? setModal({ component, clickToClose }) : setModal(null);

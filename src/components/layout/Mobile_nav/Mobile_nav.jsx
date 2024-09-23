@@ -65,7 +65,8 @@ export const Mobile_nav = ({ menu, onActiveModal, onActiveMenu }) => {
 							<li>
 								<button
 									className={styles['upload-link']}
-									onClick={() => onActiveModal(<Folder_Form />)}
+									onClick={() => onActiveModal({ component: <Folder_Form /> })}
+									data-close-menu
 								>
 									<span className={`${icon} ${styles['create-folder']}`} />
 									Create Folder

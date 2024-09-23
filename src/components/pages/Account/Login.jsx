@@ -14,7 +14,7 @@ import formStyles from '../../../styles/form.module.css';
 import { handleFetch } from '../../../utils/handleFetch';
 
 // Components
-import { Account } from '.';
+import { Account } from './Account';
 import { Username_Form } from './Username_Form';
 
 // Variables
