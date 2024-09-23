@@ -42,13 +42,11 @@ export const Username_Form = ({ onRegister }) => {
 		const schema = object({
 			username: string()
 				.trim()
-				.required('Username is required.')
-				.min(4, 'Username must be between 4 and 25 letters.')
-				.max(25, 'Username must be between 4 and 25 letters.')
 				.matches(
-					/^\w+$/,
-					'Username must only contain alphanumeric and underline characters.',
-				),
+					/^(?=.*[a-zA-Z0-9]_?)(?=.{4,25})/,
+					'Username must contain alphanumeric and underscore characters, and be between 4 and 25 characters.',
+				)
+				.required('Username is required.'),
 		}).noUnknown();
 
 		try {
