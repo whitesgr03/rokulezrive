@@ -23,7 +23,10 @@ export const Username_Form = ({ onRegister }) => {
 
 	const handleRegister = async () => {
 		setLoading(true);
-		await onRegister(formData);
+		const fields = await onRegister(formData);
+
+		fields && setInputErrors({ ...DEFAULT_FORM_DATA, ...fields });
+
 		setLoading(false);
 	};
 

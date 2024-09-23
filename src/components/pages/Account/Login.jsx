@@ -84,9 +84,13 @@ export const Login = () => {
 			);
 		};
 
-		result.success
-			? handleSuccess()
-			: setInputErrors({ ...inputErrors, ...result.message });
+		const handleError = () => {
+			result.fields
+				? setInputErrors({ ...DEFAULT_FORM_DATA, ...result.fields })
+				: setError(result.message);
+		};
+
+		result.success ? handleSuccess() : handleError();
 
 		setLoading(false);
 	};
@@ -130,7 +134,11 @@ export const Login = () => {
 			onActiveModal({ component: null });
 		};
 
-		result.success ? handleSuccess() : setError(result.message);
+		result.success
+			? handleSuccess()
+			: result.message && setError(result.message);
+
+		return result?.fields;
 	};
 
 	const handleFacebookUserLogin = async res => {
@@ -200,7 +208,11 @@ export const Login = () => {
 				onActiveModal({ component: null });
 			};
 
-			result.success ? handleSuccess() : setError(result.message);
+			result.success
+				? handleSuccess()
+				: result.message && setError(result.message);
+
+			return result?.fields;
 		};
 
 		const handleGoogleUserLogin = async res => {
