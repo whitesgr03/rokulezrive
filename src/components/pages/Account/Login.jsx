@@ -38,7 +38,7 @@ export const Login = () => {
 				.email('The email must be in standard format.')
 				.required('The email is required.'),
 			password: string()
-				// .min(8, 'The password is incorrect.')
+				.min(8, 'The password is incorrect.')
 				.required('The password is required.'),
 		}).noUnknown();
 
