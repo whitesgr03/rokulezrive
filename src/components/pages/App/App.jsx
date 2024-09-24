@@ -23,7 +23,6 @@ const DEFAULT_MENU = {
 	button: '',
 	name: '',
 };
-const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/user`;
 
 export const App = () => {
 	const [user, setUser] = useState(null);
@@ -87,13 +86,15 @@ export const App = () => {
 		const { signal } = controller;
 
 		const handleGetUser = async () => {
+			const url = `${import.meta.env.VITE_RESOURCE_URL}/account/user`;
+
 			const options = {
 				method: 'GET',
 				signal,
 				credentials: 'include',
 			};
 
-			const result = await handleFetch(URL, options);
+			const result = await handleFetch(url, options);
 
 			const handleSuccess = () => {
 				result.success ? setUser(result.data) : setError(result.message);
