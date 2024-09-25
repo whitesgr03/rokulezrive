@@ -17,7 +17,6 @@ import logo from '../../../assets/logo.png';
 
 // Variables
 const classes = classNames.bind(styles);
-const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/logout`;
 
 export const Header = ({
 	user,
@@ -41,11 +40,13 @@ export const Header = ({
 	};
 
 	const handleLogout = async () => {
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/logout`;
+
 		const options = {
 			method: 'GET',
 			credentials: 'include',
 		};
-		const result = await handleFetch(URL, options);
+		const result = await handleFetch(url, options);
 
 		result.success && onUser(null);
 		result.success && localStorage.removeItem('drive.session-exp');
