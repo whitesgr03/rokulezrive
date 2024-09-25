@@ -63,7 +63,7 @@ export const Login = () => {
 	const handleLogin = async () => {
 		setLoading(true);
 
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/login`;
+		const URL = `${import.meta.env.VITE_RESOURCE_URL}/login`;
 
 		const options = {
 			method: 'POST',
@@ -112,7 +112,7 @@ export const Login = () => {
 	};
 
 	const handleFacebookUserRegister = async user => {
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/register/facebook`;
+		const URL = `${import.meta.env.VITE_RESOURCE_URL}/register/facebook`;
 
 		const options = {
 			method: 'POST',
@@ -146,7 +146,7 @@ export const Login = () => {
 
 		const { accessToken } = res;
 
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/login/facebook`;
+		const URL = `${import.meta.env.VITE_RESOURCE_URL}/login/facebook`;
 
 		const options = {
 			method: 'POST',
@@ -186,7 +186,7 @@ export const Login = () => {
 		const { google } = window;
 
 		const handleGoogleUserRegister = async user => {
-			const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/register/google`;
+			const URL = `${import.meta.env.VITE_RESOURCE_URL}/register/google`;
 
 			const options = {
 				method: 'POST',
@@ -220,7 +220,7 @@ export const Login = () => {
 
 			const { credential } = res;
 
-			const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/login/google`;
+			const URL = `${import.meta.env.VITE_RESOURCE_URL}/login/google`;
 
 			const options = {
 				method: 'POST',
