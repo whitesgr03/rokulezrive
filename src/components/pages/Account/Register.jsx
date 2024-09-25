@@ -90,7 +90,7 @@ export const Register = () => {
 	const handleRegister = async () => {
 		setLoading(true);
 
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/account/register`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/register`;
 
 		const options = {
 			method: 'POST',
@@ -101,7 +101,7 @@ export const Register = () => {
 			credentials: 'include',
 		};
 
-		const result = await handleFetch(URL, options);
+		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
 			onUser(result.data);
