@@ -86,7 +86,7 @@ export const App = () => {
 		const { signal } = controller;
 
 		const handleGetUser = async () => {
-			const url = `${import.meta.env.VITE_RESOURCE_URL}/account/user`;
+			const url = `${import.meta.env.VITE_RESOURCE_URL}/user`;
 
 			const options = {
 				method: 'GET',
