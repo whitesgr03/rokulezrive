@@ -19,9 +19,16 @@
 .form-input {
 	border: 2px solid transparent;
 	border-radius: 5px;
-	background-color: var(--light-scheme-layout-bgc);
 	padding: 10px;
 	width: 100%;
+}
+
+.form-input-layout-bgc {
+	background-color: var(--light-scheme-layout-bgc);
+}
+
+.form-input-main-bgc {
+	background-color: var(--light-scheme-main-bgc);
 }
 
 .form-input-error {
@@ -70,9 +77,13 @@
 
 /* Dark scheme classes */
 
-:global(.dark) .form-input {
+:global(.dark) .form-input-layout-bgc {
 	background-color: var(--dark-scheme-input-bgc);
 	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .form-input-main-bgc {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
 }
 
 :global(.dark) .form-input-error {
