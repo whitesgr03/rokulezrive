@@ -54,21 +54,8 @@ export const Router = () => (
 								element: <File_Into />,
 							},
 							{
-								path: 'files',
-								element: <Files />,
-							},
-							{
-								path: 'files/upload',
-								element: <Upload />,
-							},
-
-							{
-								path: 'files/:fileId',
-								element: <File_Into />,
-							},
-							{
-								path: 'files/d/:folderId',
-								element: <Files />,
+								path: 'folder?',
+								element: <Folder />,
 							},
 						],
 					},
