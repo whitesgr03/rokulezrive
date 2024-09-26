@@ -12,7 +12,7 @@ import { handleFetch } from '../../../utils/handleFetch';
 // Components
 import { Header } from '../../layout/Header/Header';
 import { Footer } from '../../layout/Footer/Footer';
-import { Mobile_nav } from '../../layout/Mobile_nav/Mobile_nav';
+import { Mobile_Nav } from '../../layout/Mobile_Nav/Mobile_Nav';
 import { Modal } from './Modal';
 import { Loading } from '../../utils/Loading/Loading';
 
@@ -169,7 +169,7 @@ export const App = () => {
 								<Footer />
 							</div>
 							{user && (
-								<Mobile_nav
+								<Mobile_Nav
 									menu={menu}
 									onActiveModal={handleActiveModal}
 									onActiveMenu={handleActiveMenu}
