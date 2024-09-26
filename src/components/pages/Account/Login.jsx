@@ -173,7 +173,6 @@ export const Login = () => {
 						component: (
 							<Username_Form onRegister={handleFacebookUserRegister} />
 						),
-						clickToClose: false,
 					});
 		};
 
@@ -247,7 +246,6 @@ export const Login = () => {
 							component: (
 								<Username_Form onRegister={handleGoogleUserRegister} />
 							),
-							clickToClose: false,
 						});
 			};
 
