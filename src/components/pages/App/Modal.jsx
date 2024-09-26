@@ -7,11 +7,7 @@ import { icon } from '../../../styles/icon.module.css';
 
 export const Modal = ({ onCloseModal, clickToClose, children }) => {
 	return (
-		<div
-			className={styles.modal}
-			onClick={onCloseModal}
-			data-close-modal={clickToClose}
-		>
+		<div className={styles.modal} onClick={onCloseModal}>
 			<div className={styles['modal-wrap']}>
 				{clickToClose && (
 					<button className={styles['modal-button']} data-close-modal>
