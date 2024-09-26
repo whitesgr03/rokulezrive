@@ -46,7 +46,7 @@ export const Router = () => (
 								),
 							},
 							{
-								path: 'shared',
+								path: 'shared?',
 								element: <Shared />,
 							},
 							{
