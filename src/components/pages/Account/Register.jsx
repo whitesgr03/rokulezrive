@@ -113,7 +113,7 @@ export const Register = () => {
 
 		const handleError = () => {
 			result.fields
-				? setInputErrors({ ...DEFAULT_FORM_DATA, ...result.fields })
+				? setInputErrors({ ...result.fields })
 				: setError(result.message);
 		};
 

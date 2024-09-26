@@ -19,12 +19,11 @@ import { Username_Form } from './Username_Form';
 
 // Variables
 const classes = classNames.bind(formStyles);
-const DEFAULT_FORM_DATA = { email: '', password: '' };
 
 export const Login = () => {
 	const { onUser, onActiveModal, darkTheme } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
-	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+	const [formData, setFormData] = useState({ email: '', password: '' });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const googleRenderButton = useRef(null);
@@ -86,7 +85,7 @@ export const Login = () => {
 
 		const handleError = () => {
 			result.fields
-				? setInputErrors({ ...DEFAULT_FORM_DATA, ...result.fields })
+				? setInputErrors({ ...result.fields })
 				: setError(result.message);
 		};
 

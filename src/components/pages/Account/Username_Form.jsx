@@ -14,18 +14,17 @@ import { Loading } from '../../utils/Loading/Loading';
 
 // Variables
 const classes = classNames.bind(formStyles);
-const DEFAULT_FORM_DATA = { username: '' };
 
 export const Username_Form = ({ onRegister }) => {
 	const [inputErrors, setInputErrors] = useState({});
-	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+	const [formData, setFormData] = useState({ username: '' });
 	const [loading, setLoading] = useState(false);
 
 	const handleRegister = async () => {
 		setLoading(true);
 		const fields = await onRegister(formData);
 
-		fields && setInputErrors({ ...DEFAULT_FORM_DATA, ...fields });
+		fields && setInputErrors({ ...fields });
 
 		setLoading(false);
 	};
