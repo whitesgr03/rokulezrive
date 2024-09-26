@@ -15,7 +15,7 @@ import { handleFetch } from '../../../../utils/handleFetch';
 const classes = classNames.bind(formStyles);
 const DEFAULT_FORM_DATA = { folder: '' };
 
-export const Folder_Form = () => {
+export const Folder_Create = () => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(false);
