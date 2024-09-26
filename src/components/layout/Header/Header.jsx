@@ -59,7 +59,7 @@ export const Header = ({
 				<Navigate to="/error" state={{ error }} />
 			) : (
 				<header className={styles.header}>
-					<Link to="/" className={styles.logo}>
+					<Link to={user ? '/drive' : '/'} className={styles.logo}>
 						<img src={logo} alt="Logo" className={styles['logo-image']} />
 					</Link>
 					<ul className={styles.features}>
