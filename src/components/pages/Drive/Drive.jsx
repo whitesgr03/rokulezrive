@@ -1,44 +1,20 @@
 // Packages
-import { Outlet, useOutletContext, useMatch } from 'react-router-dom';
+import {
+	Outlet,
+	useOutletContext,
+	Navigate,
+	useParams,
+} from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 // Styles
 import styles from './Drive.module.css';
 
-const filesDefault = [
-	{
-		id: '0',
-		name: 'first project',
-		size: '50 kb',
-		type: 'image',
-		createdAt: new Date(),
-	},
-	{
-		id: '221',
-		name: 'new Folder',
-		createdAt: new Date(),
-	},
-	{
-		id: '1',
-		name: 'second project',
-		size: '130 kb',
-		type: 'pdf',
-		createdAt: new Date(),
-	},
-	{
-		id: '11',
-		name: 'second project',
-		size: '130 kb',
-		type: 'pdf',
-		createdAt: new Date(),
-	},
-	{
-		id: '22',
-		name: 'second project',
-		size: '130 kb',
-		type: 'pdf',
-		createdAt: new Date(),
-	},
-];
+// Components
+import { Loading } from '../../utils/Loading/Loading';
+
+// Utils
+import { handleFetch } from '../../../utils/handleFetch';
 
 const sharedDefault = [
 	{
@@ -74,19 +50,83 @@ const sharedDefault = [
 export const Drive = () => {
 	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
 
-	const files = filesDefault;
+	const { folderId } = useParams();
+
+	const [folders, setFolders] = useState([]);
+
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+
 	const shared = sharedDefault;
 
-	const drivePath = useMatch('/drive');
+	const subfolder = folders.find(folder => folder.id === folderId);
+
+	const data = folderId ? (subfolder ?? false) : (folders[0] ?? false);
+
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
+
+		const handleGetFolder = async () => {
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+
+			folderId && (url += `/${folderId}`);
+
+			const options = {
+				method: 'GET',
+				signal,
+				credentials: 'include',
+			};
+
+			const result = await handleFetch(url, options);
+
+			const handleResult = () => {
+				const handleSuccess = () => {
+					const { name, id, children: subfolders, files } = result.data;
+					setFolders([
+						...folders,
+						{
+							name,
+							id,
+							subfolders,
+							files,
+						},
+					]);
+				};
+				result.success ? handleSuccess() : setError(result.message);
+				setLoading(false);
+			};
+
+			result && handleResult();
+		};
+		!data && handleGetFolder();
+		return () => controller.abort();
+	}, [data, folderId, folders]);
 
 	return (
-		<div className={styles.drive}>
-			{drivePath && <h2>My Drive</h2>}
-			<div className={styles.container}>
-				<Outlet
-					context={{ files, shared, onActiveMenu, onActiveModal, menu }}
-				/>
-			</div>
-		</div>
+		<>
+			{error ? (
+				<Navigate to="/error" state={{ error }} />
+			) : (
+				<div className={styles.drive}>
+					{loading || !data ? (
+						<Loading text="Loading..." />
+					) : (
+						<>
+							{data && <h2>{data.name}</h2>}
+							<Outlet
+								context={{
+									data,
+									shared,
+									onActiveMenu,
+									onActiveModal,
+									menu,
+								}}
+							/>
+						</>
+					)}
+				</div>
+			)}
+		</>
 	);
 };
