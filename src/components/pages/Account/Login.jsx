@@ -22,7 +22,7 @@ const classes = classNames.bind(formStyles);
 const DEFAULT_FORM_DATA = { email: '', password: '' };
 
 export const Login = () => {
-	const { onUser, onActiveModal } = useOutletContext();
+	const { onUser, onActiveModal, darkTheme } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(false);
@@ -266,7 +266,7 @@ export const Login = () => {
 				parseFloat(computedStyle.borderRightWidth);
 
 			google.accounts.id.renderButton(googleRenderButton.current, {
-				theme: 'outline',
+				theme: darkTheme ? 'filled_black' : 'outline',
 				size: 'large',
 				logo_alignment: 'center',
 				width:
@@ -280,7 +280,7 @@ export const Login = () => {
 		googleRenderButton.current && initialGoogleButton();
 		window.addEventListener('resize', initialGoogleButton);
 		return () => window.removeEventListener('resize', initialGoogleButton);
-	}, [onUser, onActiveModal]);
+	}, [darkTheme, onUser, onActiveModal]);
 
 	useEffect(() => {
 		const { FB } = window;

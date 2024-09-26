@@ -157,11 +157,12 @@ export const App = () => {
 								<main>
 									<Outlet
 										context={{
-											user,
 											onActiveMenu: handleActiveMenu,
 											onActiveModal: handleActiveModal,
 											onUser: setUser,
+											user,
 											menu,
+											darkTheme,
 										}}
 									/>
 								</main>
