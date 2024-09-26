@@ -59,49 +59,37 @@ export const Drive = () => {
 
 	const shared = sharedDefault;
 
-	const subfolder = folders.find(folder => folder.id === folderId);
+	const folder = folderId
+		? folders.find(folder => folder.id === folderId)
+		: folders[0];
 
-	const data = folderId ? (subfolder ?? false) : (folders[0] ?? false);
+	const handleGetFolder = async (signal = null) => {
+		setLoading(true);
+		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+
+		const options = {
+			method: 'GET',
+			signal,
+			credentials: 'include',
+		};
+
+		const result = await handleFetch(url, options);
+
+		const handleResult = () => {
+			result.success ? setFolders(result.data) : setError(result.message);
+			setLoading(false);
+		};
+
+		result && handleResult();
+	};
 
 	useEffect(() => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const handleGetFolder = async () => {
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
-
-			folderId && (url += `/${folderId}`);
-
-			const options = {
-				method: 'GET',
-				signal,
-				credentials: 'include',
-			};
-
-			const result = await handleFetch(url, options);
-
-			const handleResult = () => {
-				const handleSuccess = () => {
-					const { name, id, children: subfolders, files } = result.data;
-					setFolders([
-						...folders,
-						{
-							name,
-							id,
-							subfolders,
-							files,
-						},
-					]);
-				};
-				result.success ? handleSuccess() : setError(result.message);
-				setLoading(false);
-			};
-
-			result && handleResult();
-		};
-		!data && handleGetFolder();
+		handleGetFolder(signal);
 		return () => controller.abort();
-	}, [data, folderId, folders]);
+	}, []);
 
 	return (
 		<>
@@ -109,17 +97,18 @@ export const Drive = () => {
 				<Navigate to="/error" state={{ error }} />
 			) : (
 				<div className={styles.drive}>
-					{loading || !data ? (
+					{loading ? (
 						<Loading text="Loading..." />
 					) : (
 						<>
-							{data && <h2>{data.name}</h2>}
+							{<h2>{folder.name}</h2>}
 							<Outlet
 								context={{
-									data,
+									folder,
 									shared,
 									onActiveMenu,
 									onActiveModal,
+									onGetFolder: handleGetFolder,
 									menu,
 								}}
 							/>

@@ -10,25 +10,25 @@ import { Files } from './Files';
 import { Folder_Create } from './Folder_Create';
 
 export const Folder = () => {
-	const { data, menu, onActiveMenu, onActiveModal } = useOutletContext();
+	const { folder, menu, onActiveMenu, onActiveModal } = useOutletContext();
 
 	return (
 		<>
-			{!data.subfolders.length && !data.files.length ? (
+			{!folder.children.length && !folder.files.length ? (
 				<p className={styles.text}>No files in the folder</p>
 			) : (
 				<>
-					{data.subfolders.length > 0 && (
+					{folder.children.length > 0 && (
 						<Subfolders
-							data={data.subfolders}
+							data={folder.children}
 							menu={menu}
 							onActiveMenu={onActiveMenu}
 							onActiveModal={onActiveModal}
 						/>
 					)}
-					{data.files.length > 0 && (
+					{folder.files.length > 0 && (
 						<Files
-							data={data.files}
+							data={folder.files}
 							menu={menu}
 							onActiveMenu={onActiveMenu}
 							onActiveModal={onActiveModal}
