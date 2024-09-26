@@ -4,8 +4,8 @@ import { format } from 'date-fns';
 
 // Styles
 import driveStyles from './Drive.module.css';
-import listStyles from './List.module.css';
 import { icon } from '../../../styles/icon.module.css';
+import styles from './Shared.module.css'
 
 // Components
 import { File_Delete } from './File_Delete';
@@ -16,34 +16,34 @@ export const Shared = () => {
 	return (
 		<>
 			<h3>Shared</h3>
-			<ul className={listStyles.list}>
+			<ul className={driveStyles.list}>
 				{shared.map(item => (
-					<li key={item.id} className={listStyles.file}>
+					<li key={item.id} className={driveStyles.item}>
 						<Link
 							to={`/drive/shared/${item.id}`}
 							state={{ file: item }}
-							className={listStyles['file-button']}
+							className={driveStyles.container}
 						>
-							<span className={`${icon} ${listStyles[item.type]}`} />
-							<div className={listStyles.container}>
-								<p className={listStyles['file-name']}>{item.name}</p>
-								<div className={listStyles.info}>
-									<div className={listStyles['file-wrap']}>
-										<span className={`${icon} ${listStyles['share-by']}`} />
-										<span className={listStyles['file-content']}>
+							<span className={`${icon} ${driveStyles[item.type]}`} />
+							<div className={driveStyles.content}>
+								<p className={driveStyles.name}>{item.name}</p>
+								<div className={driveStyles['info-wrap']}>
+									<div className={driveStyles.info}>
+										<span className={`${icon} ${styles['share-by']}`} />
+										<span className={driveStyles['file-content']}>
 											{item.owner}
 										</span>
 									</div>
-									<div className={listStyles['file-wrap']}>
-										<span className={`${icon} ${listStyles.date}`} />
-										<span className={listStyles['file-content']}>
+									<div className={driveStyles.info}>
+										<span className={`${icon} ${driveStyles.calendar}`} />
+										<span className={driveStyles.date}>
 											{format(item.createdAt, 'MMM d, y')}
 										</span>
 									</div>
 								</div>
 							</div>
 						</Link>
-						<div className={listStyles.options}>
+						<div className={driveStyles.options}>
 							<button
 								onClick={() =>
 									onActiveMenu({
@@ -55,7 +55,7 @@ export const Shared = () => {
 								data-id={item.id}
 								data-button="option-button"
 							>
-								<span className={`${icon} ${listStyles.option}`} />
+								<span className={`${icon} ${driveStyles.option}`} />
 							</button>
 							{menu.name === 'option-menu' && menu.id === item.id && (
 								<ul className={`option-menu ${driveStyles['option-menu']}`}>
