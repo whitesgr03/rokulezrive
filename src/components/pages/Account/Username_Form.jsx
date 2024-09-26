@@ -82,8 +82,7 @@ export const Username_Form = ({ onRegister }) => {
 			<form className={formStyles.form} onSubmit={handleSubmit}>
 				<div className={formStyles['input-wrap']}>
 					<label htmlFor="username" className={formStyles['form-label']}>
-						Username
-						<p>Create your local drive username</p>
+						Create Local Drive username
 						<input
 							type="text"
 							id="username"
