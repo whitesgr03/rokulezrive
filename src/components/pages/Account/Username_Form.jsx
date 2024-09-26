@@ -87,8 +87,9 @@ export const Username_Form = ({ onRegister }) => {
 							id="username"
 							className={`${classes({
 								'form-input': true,
+								'form-input-main-bgc': true,
 								'form-input-error': inputErrors.username,
-							})} ${modalStyles['modal-input']}`}
+							})}`}
 							name="username"
 							title="The Username is required."
 							onChange={handleChange}

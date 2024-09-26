@@ -147,6 +147,7 @@ export const Register = () => {
 										id="username"
 										className={classes({
 											'form-input': true,
+											'form-input-layout-bgc': true,
 											'form-input-error': inputErrors.username,
 										})}
 										name="username"
@@ -175,6 +176,7 @@ export const Register = () => {
 										id="email"
 										className={classes({
 											'form-input': true,
+											'form-input-layout-bgc': true,
 											'form-input-error': inputErrors.email,
 										})}
 										name="email"
@@ -201,7 +203,9 @@ export const Register = () => {
 										value={formData.password}
 										type="password"
 										id="password"
-										className={`${formStyles['form-input']} ${classes({
+										className={`${classes({
+											'form-input': true,
+											'form-input-layout-bgc': true,
 											'form-input-error': inputErrors.password,
 										})}`}
 										name="password"
@@ -231,7 +235,9 @@ export const Register = () => {
 										value={formData.confirmPassword}
 										type="password"
 										id="confirmPassword"
-										className={`${formStyles['form-input']} ${classes({
+										className={`${classes({
+											'form-input': true,
+											'form-input-layout-bgc': true,
 											'form-input-error': inputErrors.confirmPassword,
 										})}`}
 										name="confirmPassword"

@@ -5,7 +5,6 @@ import { useState } from 'react';
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
-import modalStyles from '../App/Modal.module.css';
 import styles from './File_Share.module.css';
 
 // Variables
@@ -47,8 +46,9 @@ export const File_Share = ({ name }) => {
 								id="user_email"
 								className={`${classes({
 									'form-input': true,
+									'form-input-main-bgc': true,
 									'form-input-error': error,
-								})}  ${modalStyles['modal-input']} ${styles.input}`}
+								})} ${styles.input}`}
 								name="user_email"
 								placeholder="Add people with email"
 							/>

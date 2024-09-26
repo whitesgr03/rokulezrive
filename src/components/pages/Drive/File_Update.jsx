@@ -4,7 +4,6 @@ import classNames from 'classnames/bind';
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
-import modalStyles from '../App/Modal.module.css';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -15,7 +14,7 @@ export const File_Update = ({ name }) => {
 
 	return (
 		<form className={formStyles.form}>
-			<div >
+			<div>
 				<label htmlFor="file_rename" className={formStyles['form-label']}>
 					Rename
 					<input
@@ -23,8 +22,9 @@ export const File_Update = ({ name }) => {
 						id="file_rename"
 						className={`${classes({
 							'form-input': true,
+							'form-input-main-bgc': true,
 							'form-input-error': error,
-						})} ${modalStyles['modal-input']}`}
+						})}`}
 						name="file_rename"
 						value={fileName}
 						title="The file name is required."
