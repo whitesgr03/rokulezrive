@@ -8,7 +8,7 @@ import styles from './Mobile_nav.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
 // Components
-import { Folder_Form } from './Folder_Form';
+import { Folder_Form } from '../../pages/Drive/Folder/Folder_Create';
 
 export const Mobile_nav = ({ menu, onActiveModal, onActiveMenu }) => {
 	const matches = useMatches();
