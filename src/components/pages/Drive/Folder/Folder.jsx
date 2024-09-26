@@ -13,7 +13,7 @@ export const Folder = () => {
 	return (
 		<>
 			{!data.subfolders.length && !data.files.length ? (
-				<p className={styles.text}>No Files in the folder</p>
+				<p className={styles.text}>No files in the folder</p>
 			) : (
 				<>
 					{data.subfolders.length > 0 && (
