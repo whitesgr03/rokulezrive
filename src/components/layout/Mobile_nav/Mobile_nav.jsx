@@ -29,7 +29,7 @@ export const Mobile_nav = ({ menu, onActiveModal, onActiveMenu }) => {
 					</Link>
 				</li>
 				<li className={styles['mobile-nav-item']}>
-					<Link to="/drive/files" className={styles['mobile-nav-link']}>
+					<Link to="/drive/folder" className={styles['mobile-nav-link']}>
 						<span className={`${icon} ${styles.drive}`} />
 						Files
 					</Link>
