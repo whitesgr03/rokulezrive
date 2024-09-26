@@ -130,6 +130,7 @@ img {
 main {
 	position: relative;
 	flex: 1 1 100%;
+	z-index: 1;
 }
 
 main > * {
