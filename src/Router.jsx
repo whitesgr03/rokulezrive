@@ -57,6 +57,10 @@ export const Router = () => (
 								path: 'folder?',
 								element: <Folder />,
 							},
+							{
+								path: 'folders/:folderId?',
+								element: <Folder />,
+							},
 						],
 					},
 					{
