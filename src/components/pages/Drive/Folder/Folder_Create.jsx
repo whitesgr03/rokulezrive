@@ -33,10 +33,10 @@ export const Folder_Create = ({ onCreateSubfolder }) => {
 		let isValid = false;
 
 		const schema = object({
-			folder: string()
+			name: string()
 				.trim()
-				.required('Folder is required.')
-				.max(200, ({ max }) => `Folder must be less then ${max} letters.`),
+				.required('Folder name is required.')
+				.max(200, ({ max }) => `Folder name must be less then ${max} letters.`),
 		}).noUnknown();
 
 		try {
