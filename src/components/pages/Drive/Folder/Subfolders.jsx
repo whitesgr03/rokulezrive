@@ -1,19 +1,20 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
-import PropTypes from 'prop-types';
 
 import driveStyles from '../Drive.module.css';
 import { icon } from '../../../../styles/icon.module.css';
 import styles from './Subfolders.module.css';
 
 // Components
-import { File_Update } from '../File_Update';
+import { Folder_Update } from './Folder_Update';
 import { File_Delete } from '../File_Delete';
 
 export const Subfolders = () => {
-	const { folder, menu, onActiveMenu, onActiveModal } = useOutletContext();
+	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
+		useOutletContext();
 
 	const data = folder.children;
+
 	return (
 		<>
 			<h3>Folders</h3>
@@ -59,7 +60,16 @@ export const Subfolders = () => {
 											type="button"
 											className={driveStyles['option-menu-button']}
 											onClick={() =>
-												onActiveModal(<File_Update name={file.name} />)
+												onActiveModal({
+													component: (
+														<Folder_Update
+															name={file.name}
+															folderId={file.id}
+															onGetFolder={onGetFolder}
+															onActiveModal={onActiveModal}
+														/>
+													),
+												})
 											}
 											data-close-menu
 										>
@@ -90,9 +100,3 @@ export const Subfolders = () => {
 	);
 };
 
-Subfolders.propTypes = {
-	data: PropTypes.array,
-	menu: PropTypes.object,
-	onActiveMenu: PropTypes.func,
-	onActiveModal: PropTypes.func,
-};
