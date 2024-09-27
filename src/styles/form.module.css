@@ -23,11 +23,11 @@
 	width: 100%;
 }
 
-.form-input-layout-bgc {
+.form-input-bgc {
 	background-color: var(--light-scheme-layout-bgc);
 }
 
-.form-input-main-bgc {
+.form-input-modal-bgc {
 	background-color: var(--light-scheme-main-bgc);
 }
 
@@ -77,12 +77,15 @@
 
 /* Dark scheme classes */
 
-:global(.dark) .form-input-layout-bgc {
-	background-color: var(--dark-scheme-input-bgc);
+:global(.dark) .form-input {
 	color: var(--dark-scheme-color);
 }
 
-:global(.dark) .form-input-main-bgc {
+:global(.dark) .form-input-bgc {
+	background-color: var(--dark-scheme-input-bgc);
+}
+
+:global(.dark) .form-input-modal-bgc {
 	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
 }
 

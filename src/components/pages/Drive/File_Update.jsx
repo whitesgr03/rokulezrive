@@ -22,7 +22,7 @@ export const File_Update = ({ name }) => {
 						id="file_rename"
 						className={`${classes({
 							'form-input': true,
-							'form-input-main-bgc': true,
+							'form-input-modal-bgc': true,
 							'form-input-error': error,
 						})}`}
 						name="file_rename"

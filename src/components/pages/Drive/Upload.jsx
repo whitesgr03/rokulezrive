@@ -43,7 +43,7 @@ export const Upload = () => {
 									id="upload"
 									className={`${classes({
 										'form-input': true,
-										'form-input-layout-bgc': true,
+										'form-input-bgc': true,
 										'form-input-error': error,
 									})}`}
 									name="upload"

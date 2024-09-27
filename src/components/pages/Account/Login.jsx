@@ -307,7 +307,7 @@ export const Login = () => {
 										id="email"
 										className={classes({
 											'form-input': true,
-											'form-input-layout-bgc': true,
+											'form-input-bgc': true,
 											'form-input-error': inputErrors.email,
 										})}
 										name="email"
@@ -338,7 +338,7 @@ export const Login = () => {
 										id="password"
 										className={`${classes({
 											'form-input': true,
-											'form-input-layout-bgc': true,
+											'form-input-bgc': true,
 											'form-input-error': inputErrors.password,
 										})}`}
 										name="password"

@@ -87,7 +87,7 @@ export const Username_Form = ({ onRegister }) => {
 							id="username"
 							className={`${classes({
 								'form-input': true,
-								'form-input-main-bgc': true,
+								'form-input-modal-bgc': true,
 								'form-input-error': inputErrors.username,
 							})}`}
 							name="username"

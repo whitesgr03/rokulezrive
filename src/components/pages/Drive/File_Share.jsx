@@ -46,7 +46,7 @@ export const File_Share = ({ name }) => {
 								id="user_email"
 								className={`${classes({
 									'form-input': true,
-									'form-input-main-bgc': true,
+									'form-input-modal-bgc': true,
 									'form-input-error': error,
 								})} ${styles.input}`}
 								name="user_email"
