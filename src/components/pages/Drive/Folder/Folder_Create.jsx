@@ -5,9 +5,8 @@ import { object, string } from 'yup';
 import PropTypes from 'prop-types';
 
 // Styles
-import { icon } from '../../../../styles/icon.module.css';
 import formStyles from '../../../../styles/form.module.css';
-import modalStyles from '../../App/Modal.module.css';
+import { icon } from '../../../../styles/icon.module.css';
 
 // Components
 import { Loading } from '../../../utils/Loading/Loading';
