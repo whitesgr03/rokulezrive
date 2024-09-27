@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { object, string } from 'yup';
+import PropTypes from 'prop-types';
 
 // Styles
 import { icon } from '../../../../styles/icon.module.css';
@@ -14,10 +15,11 @@ import { handleFetch } from '../../../../utils/handleFetch';
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const Folder_Create = () => {
+export const Folder_Create = ({ onCreateSubfolder }) => {
 	const [inputErrors, setInputErrors] = useState({});
-	const [formData, setFormData] = useState({ folder: '' });
+	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
+
 	const handleChange = e => {
 		const { value, name } = e.target;
 		const fields = {
@@ -55,27 +57,12 @@ export const Folder_Create = () => {
 		}
 	};
 
-	const handleCreateFolder = async () => {
+	const handleCreate = async () => {
 		setLoading(true);
 
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/drive/folder`;
+		const fields = await onCreateSubfolder(formData);
 
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData),
-			credentials: 'include',
-		};
-
-		const result = await handleFetch(URL, options);
-
-		const handleSuccess = () => {};
-
-		const handleError = () => {};
-
-		result.success ? handleSuccess() : handleError();
+		fields && setInputErrors({ ...fields });
 
 		setLoading(false);
 	};
@@ -84,7 +71,7 @@ export const Folder_Create = () => {
 		e.preventDefault();
 
 		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleCreateFolder());
+		isValid && (await handleCreate());
 	};
 	return (
 		<form className={formStyles.form} onSubmit={handleSubmit}>
@@ -122,4 +109,8 @@ export const Folder_Create = () => {
 			</button>
 		</form>
 	);
+};
+
+Folder_Create.propTypes = {
+	onCreateSubfolder: PropTypes.func,
 };
