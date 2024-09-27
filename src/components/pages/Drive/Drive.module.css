@@ -5,7 +5,36 @@
 	padding: 30px 20px;
 }
 
+.paths {
+	display: flex;
+	column-gap: 20px;
+}
 
+.paths-item {
+	display: flex;
+	column-gap: 10px;
+	flex: 0 1 33%;
+}
+
+.paths-wrap {
+	display: flex;
+	position: relative;
+	padding-right: 5px;
+	min-width: 100%;
+	max-width: 0;
+}
+
+.paths-link {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.paths-icon {
+	position: absolute;
+	top: 0;
+	left: 100%;
+}
 
 /* For Link */
 

@@ -4,8 +4,10 @@ import {
 	useOutletContext,
 	Navigate,
 	useParams,
+	Link,
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 // Styles
 import styles from './Drive.module.css';
@@ -51,7 +53,9 @@ export const Drive = () => {
 	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
 
 	const { folderId } = useParams();
+	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
 
+	const [paths, setPaths] = useState([]);
 	const [folders, setFolders] = useState([]);
 
 	const [loading, setLoading] = useState(true);
@@ -91,6 +95,43 @@ export const Drive = () => {
 		return () => controller.abort();
 	}, []);
 
+	useEffect(() => {
+		const getParentFolderIds = (array, id) => {
+			const subfolder = folders.find(folder => folder.id === id);
+
+			return !subfolder
+				? array
+				: subfolder.parent === null
+					? [
+							{
+								name: subfolder.name,
+								id: subfolder.id,
+								path: '/drive',
+							},
+							...array,
+						]
+					: getParentFolderIds(
+							subfolder.id === folderId
+								? [...array]
+								: [
+										{
+											name: subfolder.name,
+											id: subfolder.id,
+											path: `/drive/folders/${subfolder.id}`,
+										},
+										...array,
+									],
+							subfolder.parent.id,
+						);
+		};
+
+		const handleSet = () => {
+			const paths = getParentFolderIds([], folderId);
+			setPaths(paths.slice(-3));
+		};
+		folders.length && handleSet();
+	}, [folders, folderId, isSmallMobile]);
+
 	return (
 		<>
 			{error ? (
@@ -101,6 +142,25 @@ export const Drive = () => {
 						<Loading text="Loading..." />
 					) : (
 						<>
+							{paths.length !== 0 && (
+								<nav>
+									<ul className={styles.paths}>
+										{paths.map((item, i) => (
+											<li key={`${item.path}`} className={styles['paths-item']}>
+												<div className={styles['paths-wrap']}>
+													<Link to={item.path} className={styles['paths-link']}>
+														{item.name}
+													</Link>
+													{paths.length - 1 !== i && (
+														<span className={styles['paths-icon']}>{'>'}</span>
+													)}
+												</div>
+											</li>
+										))}
+									</ul>
+								</nav>
+							)}
+
 							{<h2>{folder.name}</h2>}
 							<Outlet
 								context={{
