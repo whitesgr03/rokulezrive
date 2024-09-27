@@ -84,6 +84,7 @@ export const Folder_Create = ({ onCreateSubfolder }) => {
 							id="name"
 							className={`${classes({
 								'form-input': true,
+								'form-input-modal-bgc': true,
 								'form-input-error': inputErrors.folder,
 							})}`}
 							name="name"
