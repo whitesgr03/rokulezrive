@@ -7,7 +7,6 @@ import { object, string } from 'yup';
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
-import modalStyles from '../../pages/App/Modal.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading/Loading';
@@ -22,6 +21,7 @@ export const Username_Form = ({ onRegister }) => {
 
 	const handleRegister = async () => {
 		setLoading(true);
+
 		const fields = await onRegister(formData);
 
 		fields && setInputErrors({ ...fields });
