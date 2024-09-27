@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,10 @@ import styles from './Subfolders.module.css';
 import { File_Update } from '../File_Update';
 import { File_Delete } from '../File_Delete';
 
-export const Subfolders = ({ data, menu, onActiveMenu, onActiveModal }) => {
+export const Subfolders = () => {
+	const { folder, menu, onActiveMenu, onActiveModal } = useOutletContext();
+
+	const data = folder.children;
 	return (
 		<>
 			<h3>Folders</h3>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -11,7 +11,9 @@ import { File_Update } from '../File_Update';
 import { File_Delete } from '../File_Delete';
 import { File_Share } from '../File_Share';
 
-export const Files = ({ data, menu, onActiveMenu, onActiveModal }) => {
+export const Files = () => {
+	const { folder, menu, onActiveMenu, onActiveModal } = useOutletContext();
+	const data = folder.files;
 	return (
 		<>
 			<h3>Files</h3>
