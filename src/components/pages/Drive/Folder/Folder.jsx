@@ -1,4 +1,5 @@
-import { useOutletContext, Link } from 'react-router-dom';
+import { useOutletContext, Link, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 
 // Styles
 import styles from './Folder.module.css';
@@ -45,6 +46,10 @@ export const Folder = () => {
 	};
 
 	return (
+		<>
+			{error ? (
+				<Navigate to="/error" state={{ error }} />
+			) : (
 				<>
 					{!folder.children.length && !folder.files.length ? (
 						<p className={styles.text}>No files in the folder</p>
