@@ -9,8 +9,8 @@ import { icon } from '../../../../styles/icon.module.css';
 import formStyles from '../../../../styles/form.module.css';
 import modalStyles from '../../App/Modal.module.css';
 
-// Utils
-import { handleFetch } from '../../../../utils/handleFetch';
+// Components
+import { Loading } from '../../../utils/Loading/Loading';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -74,40 +74,43 @@ export const Folder_Create = ({ onCreateSubfolder }) => {
 		isValid && (await handleCreate());
 	};
 	return (
-		<form className={formStyles.form} onSubmit={handleSubmit}>
-			<div className={formStyles['input-wrap']}>
-				<label htmlFor="folder" className={formStyles['form-label']}>
-					Folder Name
-					<input
-						type="text"
-						id="folder"
-						className={`${classes({
-							'form-input': true,
-							'form-input-error': inputErrors.folder,
-						})} ${modalStyles['modal-input']}`}
-						name="folder"
-						title="The folder name is required."
-						value={formData.folder}
-						onChange={handleChange}
-					/>
-				</label>
-				<div
-					className={classes({
-						'form-message-wrap': true,
-						'form-message-active': inputErrors.folder,
-					})}
-				>
-					<span className={`${icon} ${formStyles.alert}`} />
-					<p className={formStyles['form-message']}>
-						{inputErrors ? inputErrors.folder : 'Message Placeholder'}
-					</p>
+		<>
+			{loading && <Loading text={'Creating...'} light={true} shadow={true} />}
+			<form className={formStyles.form} onSubmit={handleSubmit}>
+				<div className={formStyles['input-wrap']}>
+					<label htmlFor="name" className={formStyles['form-label']}>
+						Folder Name
+						<input
+							type="text"
+							id="name"
+							className={`${classes({
+								'form-input': true,
+								'form-input-error': inputErrors.folder,
+							})}`}
+							name="name"
+							title="The folder name is required."
+							value={formData.folder}
+							onChange={handleChange}
+						/>
+					</label>
+					<div
+						className={classes({
+							'form-message-wrap': true,
+							'form-message-active': inputErrors.folder,
+						})}
+					>
+						<span className={`${icon} ${formStyles.alert}`} />
+						<p className={formStyles['form-message']}>
+							{inputErrors ? inputErrors.folder : 'Message Placeholder'}
+						</p>
+					</div>
 				</div>
-			</div>
 
-			<button type="submit" className={formStyles['form-submit']}>
-				Create
-			</button>
-		</form>
+				<button type="submit" className={formStyles['form-submit']}>
+					Create
+				</button>
+			</form>
+		</>
 	);
 };
 
