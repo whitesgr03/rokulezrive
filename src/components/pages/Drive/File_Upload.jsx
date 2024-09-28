@@ -2,14 +2,14 @@
 import classNames from 'classnames/bind';
 
 // Styles
-import styles from './Upload.module.css';
+import styles from './File_Upload.module.css';
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
 
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const Upload = () => {
+export const File_Upload = () => {
 	const upload = false;
 	const error = '';
 	return (
