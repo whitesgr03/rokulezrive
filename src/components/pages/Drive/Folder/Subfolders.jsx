@@ -7,7 +7,7 @@ import styles from './Subfolders.module.css';
 
 // Components
 import { Folder_Update } from './Folder_Update';
-import { File_Delete } from '../File_Delete';
+import { Folder_Delete } from './Folder_Delete';
 
 export const Subfolders = () => {
 	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
@@ -82,7 +82,16 @@ export const Subfolders = () => {
 											type="button"
 											className={driveStyles['option-menu-button']}
 											onClick={() =>
-												onActiveModal(<File_Delete name={file.name} />)
+												onActiveModal({
+													component: (
+														<Folder_Delete
+															name={file.name}
+															folderId={file.id}
+															onGetFolder={onGetFolder}
+															onActiveModal={onActiveModal}
+														/>
+													),
+												})
 											}
 											data-close-menu
 										>
@@ -99,4 +108,3 @@ export const Subfolders = () => {
 		</>
 	);
 };
-
