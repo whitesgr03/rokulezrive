@@ -71,7 +71,7 @@ export const Folder_Update = ({
 	const handleUpdate = async () => {
 		setLoading(true);
 
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
 
 		const options = {
 			method: 'PUT',
@@ -82,7 +82,7 @@ export const Folder_Update = ({
 			credentials: 'include',
 		};
 
-		const result = await handleFetch(URL, options);
+		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
 			onGetFolder();

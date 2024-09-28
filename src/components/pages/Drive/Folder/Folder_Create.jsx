@@ -63,7 +63,7 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 
 	const handleCreateSubfolder = async () => {
 		setLoading(true);
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
 
 		const options = {
 			method: 'POST',
@@ -74,7 +74,7 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 			credentials: 'include',
 		};
 
-		const result = await handleFetch(URL, options);
+		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
 			onGetFolder();
