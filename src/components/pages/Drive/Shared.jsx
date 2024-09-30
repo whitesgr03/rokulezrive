@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 // Styles
 import driveStyles from './Drive.module.css';
 import { icon } from '../../../styles/icon.module.css';
-import styles from './Shared.module.css'
+import styles from './Shared.module.css';
 
 // Components
 import { File_Delete } from './File_Delete';
