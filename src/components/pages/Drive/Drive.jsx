@@ -68,23 +68,26 @@ export const Drive = () => {
 		: folders[0];
 
 
+	const handleGetFolder = async folderId => {
 		setLoading(true);
-		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
 
 		const options = {
 			method: 'GET',
-			signal,
 			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
 
 		const handleResult = () => {
-			result.success ? setFolders(result.data) : setError(result.message);
-			setLoading(false);
+			const newFolders = folders.map(folder =>
+				folder.id === result.data.id ? result.data : folder,
+			);
+			setFolders(newFolders);
 		};
 
-		result && handleResult();
+		result.success ? handleResult() : setError(result.message);
+		setLoading(false);
 	};
 
 	useEffect(() => {
