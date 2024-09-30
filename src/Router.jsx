@@ -54,7 +54,7 @@ export const Router = () => (
 								element: <File_Into />,
 							},
 							{
-								path: 'folder?',
+								path: 'folders/my-drive',
 								element: <Folder />,
 							},
 							{
