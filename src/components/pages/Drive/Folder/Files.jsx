@@ -38,9 +38,7 @@ export const Files = () => {
 
 									<div className={driveStyles.info}>
 										<span className={`${icon} ${driveStyles.calendar}`} />
-										<span className={driveStyles.date}>
-											{format(file.createdAt, 'MMM d, y')}
-										</span>
+										<span>{format(file.createdAt, 'MMM d, y')}</span>
 									</div>
 								</div>
 							</div>

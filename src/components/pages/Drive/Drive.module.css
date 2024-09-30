@@ -90,11 +90,6 @@
 	align-items: center;
 }
 
-.date {
-	font-weight: 300;
-	font-size: var(--detail-size);
-}
-
 .options {
 	position: relative;
 }
