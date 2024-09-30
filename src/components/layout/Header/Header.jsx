@@ -10,7 +10,7 @@ import styles from './Header.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
 // Utils
-import { handleFetch } from '../../../utils/handleFetch';
+import { handleFetch } from '../../../utils/handle_fetch';
 
 // Assets
 import logo from '../../../assets/logo.png';

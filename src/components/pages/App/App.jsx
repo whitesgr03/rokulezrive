@@ -7,7 +7,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import styles from './App.module.css';
 
 // Utils
-import { handleFetch } from '../../../utils/handleFetch';
+import { handleFetch } from '../../../utils/handle_fetch';
 
 // Components
 import { Header } from '../../layout/Header/Header';

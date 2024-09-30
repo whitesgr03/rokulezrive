@@ -16,7 +16,7 @@ import styles from './Drive.module.css';
 import { Loading } from '../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../utils/handleFetch';
+import { handleFetch } from '../../../utils/handle_fetch';
 
 const sharedDefault = [
 	{

@@ -10,7 +10,7 @@ import styles from './Folder_Delete.module.css';
 import { Loading } from '../../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../../utils/handleFetch';
+import { handleFetch } from '../../../../utils/handle_fetch';
 
 export const Folder_Delete = ({
 	name,

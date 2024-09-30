@@ -10,7 +10,7 @@ import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
 
 // Utils
-import { handleFetch } from '../../../utils/handleFetch';
+import { handleFetch } from '../../../utils/handle_fetch';
 
 // Components
 import { Account } from './Account';

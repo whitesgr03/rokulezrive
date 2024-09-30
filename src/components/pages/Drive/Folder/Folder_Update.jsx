@@ -14,7 +14,7 @@ import formStyles from '../../../../styles/form.module.css';
 import { Loading } from '../../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../../utils/handleFetch';
+import { handleFetch } from '../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);
