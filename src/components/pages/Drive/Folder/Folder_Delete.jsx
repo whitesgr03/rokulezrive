@@ -50,7 +50,7 @@ export const Folder_Delete = ({
 			) : (
 				<>
 					{loading && (
-						<Loading text={'Creating...'} light={true} shadow={true} />
+						<Loading text={'Deleting...'} light={true} shadow={true} />
 					)}
 					<div className={styles['folder-delete']}>
 						<h3>Delete Forever</h3>
