@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-// Styles
-import styles from './Folder_Delete.module.css';
+// folderStyles
+import folderStyles from './Folder.module.css';
 
 // Components
 import { Loading } from '../../../utils/Loading/Loading';
@@ -52,20 +52,20 @@ export const Folder_Delete = ({
 					{loading && (
 						<Loading text={'Deleting...'} light={true} shadow={true} />
 					)}
-					<div className={styles['folder-delete']}>
+					<div className={folderStyles['folder-delete']}>
 						<h3>Delete Forever</h3>
-						<div className={styles.container}>
+						<div className={folderStyles.container}>
 							<p>Do you really want to delete?</p>
 							<p>{`"${name}"`}</p>
-							<div className={styles['folder-button-wrap']}>
+							<div className={folderStyles['folder-button-wrap']}>
 								<button
-									className={`${styles['folder-button']} ${styles.cancel}`}
+									className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
 									data-close-modal
 								>
 									Cancel
 								</button>
 								<button
-									className={`${styles['folder-button']} ${styles.delete}`}
+									className={`${folderStyles['folder-button']} ${folderStyles.delete}`}
 									onClick={handleDeleteFolder}
 								>
 									Delete
