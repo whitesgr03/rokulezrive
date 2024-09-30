@@ -130,6 +130,7 @@ export const Folder_Update = ({
 									value={formData.name}
 									title="The Folder name is required."
 									onChange={handleChange}
+									autoFocus
 								/>
 							</label>
 							<div

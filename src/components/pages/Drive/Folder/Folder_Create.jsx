@@ -122,6 +122,7 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 									title="The folder name is required."
 									value={formData.folder}
 									onChange={handleChange}
+									autoFocus
 								/>
 							</label>
 							<div
