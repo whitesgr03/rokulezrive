@@ -1,7 +1,9 @@
+// Packages
 import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
+// Styles
 import driveStyles from '../Drive.module.css';
 import { icon } from '../../../../styles/icon.module.css';
 import styles from './Files.module.css';
@@ -10,6 +12,8 @@ import styles from './Files.module.css';
 import { File_Update } from '../File_Update';
 import { File_Delete } from '../File_Delete';
 import { File_Share } from '../File_Share';
+
+// Utils
 
 export const Files = () => {
 	const { folder, menu, onActiveMenu, onActiveModal } = useOutletContext();
