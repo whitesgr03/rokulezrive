@@ -5,10 +5,10 @@ import styles from './Folder.module.css';
 import { icon } from '../../../../styles/icon.module.css';
 
 // Components
-import { Subfolders } from './Subfolders';
-import { Files } from './Files';
-import { Folder_Create } from './Folder_Create';
-import { File_Upload } from '../File_Upload';
+import { Subfolders } from './Subfolder/Subfolders';
+import { Files } from './File/Files';
+import { Folder_Create } from './Subfolder/Folder_Create';
+import { File_Upload } from './File/File_Upload';
 
 export const Folder = () => {
 	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =

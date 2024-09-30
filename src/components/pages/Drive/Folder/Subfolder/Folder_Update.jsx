@@ -7,14 +7,14 @@ import { object, string } from 'yup';
 import PropTypes from 'prop-types';
 
 // Styles
-import { icon } from '../../../../styles/icon.module.css';
-import formStyles from '../../../../styles/form.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
+import formStyles from '../../../../../styles/form.module.css';
 
 // Components
-import { Loading } from '../../../utils/Loading/Loading';
+import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../../utils/handle_fetch';
+import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);

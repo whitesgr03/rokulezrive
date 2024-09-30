@@ -1,38 +1,31 @@
 // Packages
-import classNames from 'classnames/bind';
-import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import classNames from 'classnames/bind';
 import { object, string } from 'yup';
 import PropTypes from 'prop-types';
 
 // Styles
-import { icon } from '../../../styles/icon.module.css';
-import formStyles from '../../../styles/form.module.css';
+import formStyles from '../../../../../styles/form.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
 
 // Components
-import { Loading } from '../../utils/Loading/Loading';
+import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../utils/handle_fetch';
+import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const File_Update = ({
-	name,
-	folderId,
-	fileId,
-	onGetFolder,
-	onActiveModal,
-}) => {
+export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
-	const [formData, setFormData] = useState({ name });
+	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	const handleChange = e => {
 		const { value, name } = e.target;
-
 		const fields = {
 			...formData,
 			[name]: value,
@@ -68,24 +61,23 @@ export const File_Update = ({
 		}
 	};
 
-	const handleUpdate = async () => {
+	const handleCreateSubfolder = async () => {
 		setLoading(true);
-
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}/files/${fileId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
 
 		const options = {
-			method: 'PUT',
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(formData),
+			body: JSON.stringify({ ...formData, parentId }),
 			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			onGetFolder(folderId);
+			onGetFolder(parentId);
 			onActiveModal({ component: null });
 		};
 
@@ -96,7 +88,6 @@ export const File_Update = ({
 		};
 
 		result.success ? handleSuccess() : handleError();
-
 		setLoading(false);
 	};
 
@@ -104,20 +95,21 @@ export const File_Update = ({
 		e.preventDefault();
 
 		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleUpdate());
+		isValid && (await handleCreateSubfolder());
 	};
-
 	return (
 		<>
 			{error ? (
 				<Navigate to="/error" state={{ error }} />
 			) : (
 				<>
-					{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
+					{loading && (
+						<Loading text={'Creating...'} light={true} shadow={true} />
+					)}
 					<form className={formStyles.form} onSubmit={handleSubmit}>
-						<div>
+						<div className={formStyles['input-wrap']}>
 							<label htmlFor="name" className={formStyles['form-label']}>
-								Rename File
+								Folder Name
 								<input
 									type="text"
 									id="name"
@@ -127,8 +119,8 @@ export const File_Update = ({
 										'form-input-error': inputErrors.name,
 									})}`}
 									name="name"
-									value={formData.name}
-									title="The File name is required."
+									title="The folder name is required."
+									value={formData.folder}
 									onChange={handleChange}
 									autoFocus
 								/>
@@ -136,20 +128,20 @@ export const File_Update = ({
 							<div
 								className={classes({
 									'form-message-wrap': true,
-									'form-message-active': inputErrors.name,
+									'form-message-active': inputErrors.folder,
 								})}
 							>
 								<span className={`${icon} ${formStyles.alert}`} />
 								<p className={formStyles['form-message']}>
 									{inputErrors.folder
-										? inputErrors.name
+										? inputErrors.folder
 										: 'Message Placeholder'}
 								</p>
 							</div>
 						</div>
 
 						<button type="submit" className={formStyles['form-submit']}>
-							Save
+							Create
 						</button>
 					</form>
 				</>
@@ -158,10 +150,8 @@ export const File_Update = ({
 	);
 };
 
-File_Update.propTypes = {
-	name: PropTypes.string,
-	folderId: PropTypes.string,
-	fileId: PropTypes.string,
+Folder_Create.propTypes = {
+	parentId: PropTypes.string,
 	onGetFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };

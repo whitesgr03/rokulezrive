@@ -4,13 +4,13 @@ import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // folderStyles
-import folderStyles from './Folder.module.css';
+import folderStyles from '../Folder.module.css';
 
 // Components
-import { Loading } from '../../../utils/Loading/Loading';
+import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../../utils/handle_fetch';
+import { handleFetch } from '../../../../../utils/handle_fetch';
 
 export const Folder_Delete = ({
 	name,

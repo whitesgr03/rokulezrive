@@ -6,15 +6,15 @@ import PropTypes from 'prop-types';
 
 // Styles
 import styles from './File_Upload.module.css';
-import { icon } from '../../../styles/icon.module.css';
-import formStyles from '../../../styles/form.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
+import formStyles from '../../../../../styles/form.module.css';
 
 // Components
-import { Loading } from '../../utils/Loading/Loading';
+import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../utils/handle_fetch';
-import { formatBytes } from '../../../utils/format_bytes';
+import { handleFetch } from '../../../../../utils/handle_fetch';
+import { formatBytes } from '../../../../../utils/format_bytes';
 
 // Variables
 const classes = classNames.bind(formStyles);

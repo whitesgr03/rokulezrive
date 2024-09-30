@@ -1,31 +1,38 @@
 // Packages
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
+import { Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import { object, string } from 'yup';
 import PropTypes from 'prop-types';
 
 // Styles
-import formStyles from '../../../../styles/form.module.css';
-import { icon } from '../../../../styles/icon.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
+import formStyles from '../../../../../styles/form.module.css';
 
 // Components
-import { Loading } from '../../../utils/Loading/Loading';
+import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../../utils/handle_fetch';
+import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
+export const File_Update = ({
+	name,
+	folderId,
+	fileId,
+	onGetFolder,
+	onActiveModal,
+}) => {
 	const [inputErrors, setInputErrors] = useState({});
-	const [formData, setFormData] = useState({ name: '' });
+	const [formData, setFormData] = useState({ name });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	const handleChange = e => {
 		const { value, name } = e.target;
+
 		const fields = {
 			...formData,
 			[name]: value,
@@ -61,23 +68,24 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 		}
 	};
 
-	const handleCreateSubfolder = async () => {
+	const handleUpdate = async () => {
 		setLoading(true);
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}/files/${fileId}`;
 
 		const options = {
-			method: 'POST',
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ ...formData, parentId }),
+			body: JSON.stringify(formData),
 			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			onGetFolder(parentId);
+			onGetFolder(folderId);
 			onActiveModal({ component: null });
 		};
 
@@ -88,6 +96,7 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 		};
 
 		result.success ? handleSuccess() : handleError();
+
 		setLoading(false);
 	};
 
@@ -95,21 +104,20 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 		e.preventDefault();
 
 		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleCreateSubfolder());
+		isValid && (await handleUpdate());
 	};
+
 	return (
 		<>
 			{error ? (
 				<Navigate to="/error" state={{ error }} />
 			) : (
 				<>
-					{loading && (
-						<Loading text={'Creating...'} light={true} shadow={true} />
-					)}
+					{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
 					<form className={formStyles.form} onSubmit={handleSubmit}>
-						<div className={formStyles['input-wrap']}>
+						<div>
 							<label htmlFor="name" className={formStyles['form-label']}>
-								Folder Name
+								Rename File
 								<input
 									type="text"
 									id="name"
@@ -119,8 +127,8 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 										'form-input-error': inputErrors.name,
 									})}`}
 									name="name"
-									title="The folder name is required."
-									value={formData.folder}
+									value={formData.name}
+									title="The File name is required."
 									onChange={handleChange}
 									autoFocus
 								/>
@@ -128,20 +136,20 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 							<div
 								className={classes({
 									'form-message-wrap': true,
-									'form-message-active': inputErrors.folder,
+									'form-message-active': inputErrors.name,
 								})}
 							>
 								<span className={`${icon} ${formStyles.alert}`} />
 								<p className={formStyles['form-message']}>
 									{inputErrors.folder
-										? inputErrors.folder
+										? inputErrors.name
 										: 'Message Placeholder'}
 								</p>
 							</div>
 						</div>
 
 						<button type="submit" className={formStyles['form-submit']}>
-							Create
+							Save
 						</button>
 					</form>
 				</>
@@ -150,8 +158,10 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 	);
 };
 
-Folder_Create.propTypes = {
-	parentId: PropTypes.string,
+File_Update.propTypes = {
+	name: PropTypes.string,
+	folderId: PropTypes.string,
+	fileId: PropTypes.string,
 	onGetFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };

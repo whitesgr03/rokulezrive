@@ -5,17 +5,17 @@ import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 // Styles
-import driveStyles from '../Drive.module.css';
-import { icon } from '../../../../styles/icon.module.css';
+import driveStyles from '../../Drive.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
 import styles from './Files.module.css';
 
 // Components
-import { File_Update } from '../File_Update';
-import { File_Delete } from '../File_Delete';
-import { File_Share } from '../File_Share';
+import { File_Update } from './File_Update';
+import { File_Delete } from './File_Delete';
+import { File_Share } from '../../File_Share';
 
 // Utils
-import { formatBytes } from '../../../../utils/format_bytes';
+import { formatBytes } from '../../../../../utils/format_bytes';
 
 export const Files = () => {
 	const {
@@ -93,6 +93,7 @@ export const Files = () => {
 							className={driveStyles.container}
 						>
 							<span className={`${icon} ${driveStyles.image}`} />
+							{/* file.type icon */}
 							<div className={driveStyles.content}>
 								<p className={driveStyles.name}>{file.name}</p>
 								<div className={driveStyles['info-wrap']}>
