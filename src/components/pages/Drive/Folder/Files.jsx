@@ -18,8 +18,14 @@ import { File_Share } from '../File_Share';
 import { formatBytes } from '../../../../utils/format_bytes';
 
 export const Files = () => {
-	const { folder, menu, onActiveMenu, onActiveModal, onSetDownloadUrl } =
-		useOutletContext();
+	const {
+		folder,
+		menu,
+		onActiveMenu,
+		onActiveModal,
+		onSetDownloadUrl,
+		onGetFolder,
+	} = useOutletContext();
 
 	useEffect(() => {
 		const getDownloadUrls = async () => {
@@ -167,7 +173,17 @@ export const Files = () => {
 											type="button"
 											className={driveStyles['option-menu-button']}
 											onClick={() =>
-												onActiveModal(<File_Delete name={file.name} />)
+												onActiveModal({
+													component: (
+														<File_Delete
+															name={file.name}
+															folderId={folder.id}
+															fileId={file.id}
+															onGetFolder={onGetFolder}
+															onActiveModal={onActiveModal}
+														/>
+													),
+												})
 											}
 											data-close-menu
 										>
