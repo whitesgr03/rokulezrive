@@ -1,4 +1,4 @@
-import { useOutletContext, Link } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 
 // Styles
 import styles from './Folder.module.css';
@@ -40,14 +40,13 @@ export const Folder = () => {
 				{menu.name === 'upload-menu' && (
 					<ul className={`upload-menu ${styles['upload-menu']}`}>
 						<li>
-							<Link
-								to="/drive/files/upload"
+							<button
 								className={styles['upload-link']}
 								data-close-menu
 							>
 								<span className={`${icon} ${styles['upload-file']}`} />
 								Upload File
-							</Link>
+							</button>
 						</li>
 						<li>
 							<button
