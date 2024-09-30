@@ -1,5 +1,6 @@
 // Packages
 import { Link, useOutletContext } from 'react-router-dom';
+import { useEffect } from 'react';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -17,13 +18,68 @@ import { File_Share } from '../File_Share';
 import { formatBytes } from '../../../../utils/format_bytes';
 
 export const Files = () => {
-	const { folder, menu, onActiveMenu, onActiveModal } = useOutletContext();
-	const data = folder.files;
+	const { folder, menu, onActiveMenu, onActiveModal, onSetDownloadUrl } =
+		useOutletContext();
+
+	useEffect(() => {
+		const getDownloadUrls = async () => {
+			const blobs = await Promise.all(
+				folder.files.map(
+					async file =>
+						new Promise(resolve =>
+							fetch(file.secure_url)
+								.then(res => resolve(res.blob()))
+								.catch(() => resolve(null)),
+						),
+				),
+			);
+
+			const data = folder.files.map((file, i) => ({
+				...file,
+				download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
+			}));
+
+			onSetDownloadUrl({
+				id: folder.id,
+				data,
+			});
+		};
+		folder.files[0].download_url ?? getDownloadUrls();
+	}, [onSetDownloadUrl, folder]);
+
+	useEffect(() => {
+		const getDownloadUrl = async () => {
+			const target = folder.files[folder.files.length - 1];
+			const blob = await new Promise(resolve =>
+				fetch(target.secure_url)
+					.then(res => resolve(res.blob()))
+					.catch(() => resolve(null)),
+			);
+
+			const newData = folder.files.map(file =>
+				file.id === target.id
+					? {
+							...file,
+							download_url: blob === null ? '' : URL.createObjectURL(blob),
+						}
+					: file,
+			);
+
+			onSetDownloadUrl({
+				id: folder.id,
+				data: newData,
+			});
+		};
+
+		folder.files[0].download_url &&
+			!folder.files[folder.files.length - 1].download_url &&
+			getDownloadUrl();
+	}, [onSetDownloadUrl, folder]);
 	return (
 		<>
 			<h3>Files</h3>
 			<ul className={driveStyles.list}>
-				{data.map(file => (
+				{folder.files.map(file => (
 					<li key={file.id} className={driveStyles.item}>
 						<Link
 							to={`/files/${file.id}`}
@@ -79,15 +135,18 @@ export const Files = () => {
 											</button>
 										</li>
 
-										<li>
-											<button
-												type="button"
-												className={driveStyles['option-menu-button']}
-											>
-												<span className={`${icon} ${driveStyles.download}`} />
-												Download
-											</button>
-										</li>
+										{file.download_url && (
+											<li>
+												<a
+													className={driveStyles['option-menu-button']}
+													href={file.download_url}
+													download={file.name}
+												>
+													<span className={`${icon} ${driveStyles.download}`} />
+													Download
+												</a>
+											</li>
+										)}
 									</>
 
 									<li>

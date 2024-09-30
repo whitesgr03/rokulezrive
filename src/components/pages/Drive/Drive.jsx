@@ -67,6 +67,12 @@ export const Drive = () => {
 		? folders.find(folder => folder.id === folderId)
 		: folders[0];
 
+	const handleSetDownloadUrl = ({ id, data }) => {
+		const newFolders = folders.map(folder =>
+			folder.id === id ? { ...folder, files: data } : folder,
+		);
+		setFolders(newFolders);
+	};
 
 	const handleGetFolder = async folderId => {
 		setLoading(true);
@@ -192,6 +198,7 @@ export const Drive = () => {
 									onActiveMenu,
 									onActiveModal,
 									onGetFolder: handleGetFolder,
+									onSetDownloadUrl: handleSetDownloadUrl,
 									menu,
 								}}
 							/>
