@@ -67,7 +67,7 @@ export const Drive = () => {
 		? folders.find(folder => folder.id === folderId)
 		: folders[0];
 
-	const handleGetFolder = async (signal = null) => {
+
 		setLoading(true);
 		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
 
@@ -90,6 +90,26 @@ export const Drive = () => {
 	useEffect(() => {
 		const controller = new AbortController();
 		const { signal } = controller;
+
+		const handleGetListFolder = async (signal = null) => {
+			setLoading(true);
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+
+			const options = {
+				method: 'GET',
+				signal,
+				credentials: 'include',
+			};
+
+			const result = await handleFetch(url, options);
+
+			const handleResult = () => {
+				result.success ? setFolders(result.data) : setError(result.message);
+				setLoading(false);
+			};
+
+			result && handleResult();
+		};
 
 		handleGetListFolder(signal);
 		return () => controller.abort();
