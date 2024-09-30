@@ -91,7 +91,7 @@ export const Drive = () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		handleGetFolder(signal);
+		handleGetListFolder(signal);
 		return () => controller.abort();
 	}, []);
 
