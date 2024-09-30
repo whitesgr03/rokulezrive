@@ -160,7 +160,17 @@ export const Files = () => {
 											type="button"
 											className={driveStyles['option-menu-button']}
 											onClick={() =>
-												onActiveModal(<File_Update name={file.name} />)
+												onActiveModal({
+													component: (
+														<File_Update
+															name={file.name}
+															folderId={folder.id}
+															fileId={file.id}
+															onGetFolder={onGetFolder}
+															onActiveModal={onActiveModal}
+														/>
+													),
+												})
 											}
 											data-close-menu
 										>
