@@ -13,26 +13,24 @@ export const Subfolders = () => {
 	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
 		useOutletContext();
 
-	const data = folder.children;
-
 	return (
 		<>
 			<h3>Folders</h3>
 			<ul className={driveStyles.list}>
-				{data.map(file => (
-					<li key={file.id} className={driveStyles.item}>
+				{folder.children.map(folder => (
+					<li key={folder.id} className={driveStyles.item}>
 						<Link
-							to={`/drive/folders/${file.id}`}
+							to={`/drive/folders/${folder.id}`}
 							className={driveStyles.container}
 						>
 							<span className={`${icon} ${styles.folder}`} />
 
 							<div className={driveStyles.content}>
-								<p className={driveStyles.name}>{file.name}</p>
+								<p className={driveStyles.name}>{folder.name}</p>
 								<div className={driveStyles['info-wrap']}>
 									<div className={driveStyles.info}>
 										<span className={`${icon} ${driveStyles.calendar}`} />
-										<span>{format(file.createdAt, 'MMM d, y')}</span>
+										<span>{format(folder.createdAt, 'MMM d, y')}</span>
 									</div>
 								</div>
 							</div>
@@ -41,17 +39,17 @@ export const Subfolders = () => {
 							<button
 								onClick={() =>
 									onActiveMenu({
-										id: file.id,
+										id: folder.id,
 										button: 'option-button',
 										name: 'option-menu',
 									})
 								}
-								data-id={file.id}
+								data-id={folder.id}
 								data-button="option-button"
 							>
 								<span className={`${icon} ${driveStyles.option}`} />
 							</button>
-							{menu.name === 'option-menu' && menu.id === file.id && (
+							{menu.name === 'option-menu' && menu.id === folder.id && (
 								<ul className={`option-menu ${driveStyles['option-menu']}`}>
 									<li>
 										<button
@@ -61,8 +59,8 @@ export const Subfolders = () => {
 												onActiveModal({
 													component: (
 														<Folder_Update
-															name={file.name}
-															folderId={file.id}
+															name={folder.name}
+															folderId={folder.id}
 															onGetFolder={onGetFolder}
 															onActiveModal={onActiveModal}
 														/>
@@ -83,8 +81,8 @@ export const Subfolders = () => {
 												onActiveModal({
 													component: (
 														<Folder_Delete
-															name={file.name}
-															folderId={file.id}
+															name={folder.name}
+															folderId={folder.id}
 															onGetFolder={onGetFolder}
 															onActiveModal={onActiveModal}
 														/>
