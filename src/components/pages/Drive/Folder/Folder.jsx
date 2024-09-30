@@ -8,6 +8,7 @@ import { icon } from '../../../../styles/icon.module.css';
 import { Subfolders } from './Subfolders';
 import { Files } from './Files';
 import { Folder_Create } from './Folder_Create';
+import { File_Upload } from '../File_Upload';
 
 export const Folder = () => {
 	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
@@ -42,6 +43,17 @@ export const Folder = () => {
 						<li>
 							<button
 								className={styles['upload-link']}
+								onClick={() =>
+									onActiveModal({
+										component: (
+											<File_Upload
+												folderId={folder.id}
+												onGetFolder={onGetFolder}
+												onActiveModal={onActiveModal}
+											/>
+										),
+									})
+								}
 								data-close-menu
 							>
 								<span className={`${icon} ${styles['upload-file']}`} />
