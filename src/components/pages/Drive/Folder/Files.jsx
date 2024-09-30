@@ -14,6 +14,7 @@ import { File_Delete } from '../File_Delete';
 import { File_Share } from '../File_Share';
 
 // Utils
+import { formatBytes } from '../../../../utils/format_bytes';
 
 export const Files = () => {
 	const { folder, menu, onActiveMenu, onActiveModal } = useOutletContext();
@@ -36,7 +37,7 @@ export const Files = () => {
 									<div className={driveStyles.info}>
 										<span className={`${icon} ${styles.size}`} />
 										<span className={driveStyles['file-content']}>
-											{file.size}
+											{formatBytes(file.size)}
 										</span>
 									</div>
 
