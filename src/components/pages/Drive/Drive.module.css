@@ -82,6 +82,8 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 5px 10px;
+	font-weight: 300;
+	font-size: var(--detail-size);
 }
 
 .info {
