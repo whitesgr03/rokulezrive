@@ -77,7 +77,7 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			onGetFolder();
+			onGetFolder(parentId);
 			onActiveModal({ component: null });
 		};
 
