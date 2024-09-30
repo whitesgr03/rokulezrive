@@ -12,7 +12,7 @@ import { Error } from './components/utils/Error/Error';
 
 import { Folder } from './components/pages/Drive/Folder/Folder';
 import { Shared } from './components/pages/Drive/Shared';
-import { Upload } from './components/pages/Drive/upload';
+
 import { File_Into } from './components/pages/Drive/File_Info';
 
 import { Authentication } from './components/utils/Authentication/Authentication';
