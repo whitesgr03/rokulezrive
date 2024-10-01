@@ -256,6 +256,12 @@
 	height: var(--size);
 }
 
+.file-link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 /* Dark scheme classes */
 
 :global(.dark) .option-menu {
