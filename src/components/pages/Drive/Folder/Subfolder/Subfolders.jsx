@@ -9,7 +9,6 @@ import styles from './Subfolders.module.css';
 import { Folder_Update } from './Folder_Update';
 import { Folder_Delete } from './Folder_Delete';
 
-
 export const Subfolders = () => {
 	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
 		useOutletContext();
@@ -18,20 +17,20 @@ export const Subfolders = () => {
 		<>
 			<h3>Folders</h3>
 			<ul className={driveStyles.list}>
-				{folder.children.map(folder => (
-					<li key={folder.id} className={driveStyles.item}>
+				{folder.children.map(subfolder => (
+					<li key={subfolder.id} className={driveStyles.item}>
 						<Link
-							to={`/drive/folders/${folder.id}`}
+							to={`/drive/folders/${subfolder.id}`}
 							className={driveStyles.container}
 						>
 							<span className={`${icon} ${styles.folder}`} />
 
 							<div className={driveStyles.content}>
-								<p className={driveStyles.name}>{folder.name}</p>
+								<p className={driveStyles.name}>{subfolder.name}</p>
 								<div className={driveStyles['info-wrap']}>
 									<div className={driveStyles.info}>
 										<span className={`${icon} ${driveStyles.calendar}`} />
-										<span>{format(folder.createdAt, 'MMM d, y')}</span>
+										<span>{format(subfolder.createdAt, 'MMM d, y')}</span>
 									</div>
 								</div>
 							</div>
@@ -40,17 +39,17 @@ export const Subfolders = () => {
 							<button
 								onClick={() =>
 									onActiveMenu({
-										id: folder.id,
+										id: subfolder.id,
 										button: 'option-button',
 										name: 'option-menu',
 									})
 								}
-								data-id={folder.id}
+								data-id={subfolder.id}
 								data-button="option-button"
 							>
 								<span className={`${icon} ${driveStyles.option}`} />
 							</button>
-							{menu.name === 'option-menu' && menu.id === folder.id && (
+							{menu.name === 'option-menu' && menu.id === subfolder.id && (
 								<ul className={`option-menu ${driveStyles['option-menu']}`}>
 									<li>
 										<button
@@ -60,8 +59,8 @@ export const Subfolders = () => {
 												onActiveModal({
 													component: (
 														<Folder_Update
-															name={folder.name}
-															folderId={folder.id}
+															name={subfolder.name}
+															folderId={subfolder.id}
 															onGetFolder={onGetFolder}
 															onActiveModal={onActiveModal}
 														/>
@@ -82,8 +81,8 @@ export const Subfolders = () => {
 												onActiveModal({
 													component: (
 														<Folder_Delete
-															name={folder.name}
-															folderId={folder.id}
+															name={subfolder.name}
+															folderId={subfolder.id}
 															onGetFolder={onGetFolder}
 															onActiveModal={onActiveModal}
 														/>
