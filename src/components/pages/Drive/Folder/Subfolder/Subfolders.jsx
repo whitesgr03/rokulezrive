@@ -60,6 +60,7 @@ export const Subfolders = () => {
 													component: (
 														<Folder_Update
 															name={subfolder.name}
+															parentId={folder.id}
 															folderId={subfolder.id}
 															onGetFolder={onGetFolder}
 															onActiveModal={onActiveModal}
