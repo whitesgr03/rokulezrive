@@ -3,8 +3,8 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 
 // Styles
-import { icon } from '../../../styles/icon.module.css';
-import formStyles from '../../../styles/form.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
+import formStyles from '../../../../../styles/form.module.css';
 import styles from './File_Share.module.css';
 
 // Variables
