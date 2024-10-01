@@ -3,11 +3,11 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
 // Styles
-import { icon } from '../../../styles/icon.module.css';
-import driveStyles from './Drive.module.css';
-import formStyles from '../../../styles/form.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
+import driveStyles from '../../Drive.module.css';
+import formStyles from '../../../../../styles/form.module.css';
 
-import { formatBytes } from '../../../utils/format_bytes';
+import { formatBytes } from '../../../../../utils/format_bytes';
 
 export const File_Into = () => {
 	const { folder } = useOutletContext();
