@@ -26,7 +26,7 @@ export const Files = () => {
 				{folder.files.map(file => (
 					<li key={file.id} className={driveStyles.item}>
 						<Link
-							to={`/files/${file.id}`}
+							to={`files/${file.id}`}
 							relative="path"
 							className={driveStyles.container}
 						>
