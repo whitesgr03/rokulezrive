@@ -7,6 +7,8 @@ import { icon } from '../../../styles/icon.module.css';
 import driveStyles from './Drive.module.css';
 import formStyles from '../../../styles/form.module.css';
 
+import { formatBytes } from '../../../utils/format_bytes';
+
 export const File_Into = () => {
 	const { folder } = useOutletContext();
 	const { fileId } = useParams();
@@ -22,6 +24,7 @@ export const File_Into = () => {
 				/>
 			</div>
 			<div className={driveStyles['file-info']}>
+				{file.size && <p>File Size: {formatBytes(file.size)}</p>}
 				{file.owner && <p>Owner: {file.owner}</p>}
 				<p>Create At: {format(file.createdAt, 'MMM d, y')}</p>
 			</div>
