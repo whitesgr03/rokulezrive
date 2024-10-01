@@ -155,7 +155,7 @@ export const Drive = () => {
 	}, [folders, folderId, fileId, isSmallMobile]);
 
 	useEffect(() => {
-		const getAllFileDownloadUrls = async currentFolder => {
+		const getAllFilesDownloadUrls = async currentFolder => {
 			const blobs = await Promise.all(
 				currentFolder.files.map(
 					async file =>
@@ -201,7 +201,7 @@ export const Drive = () => {
 			const lastFile = folder.files[folder.files.length - 1];
 
 			const newFiles =
-				(!firstFile.download_url && (await getAllFileDownloadUrls(folder))) ||
+				(!firstFile.download_url && (await getAllFilesDownloadUrls(folder))) ||
 				(!lastFile.download_url && (await getFileDownloadUrl(folder)));
 
 			newFiles &&
