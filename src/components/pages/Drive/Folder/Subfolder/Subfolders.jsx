@@ -83,6 +83,7 @@ export const Subfolders = () => {
 													component: (
 														<Folder_Delete
 															name={subfolder.name}
+															parentId={folder.id}
 															folderId={subfolder.id}
 															onGetFolder={onGetFolder}
 															onActiveModal={onActiveModal}

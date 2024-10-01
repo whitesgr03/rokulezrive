@@ -14,6 +14,7 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 
 export const Folder_Delete = ({
 	name,
+	parentId,
 	folderId,
 	onGetFolder,
 	onActiveModal,
@@ -32,7 +33,7 @@ export const Folder_Delete = ({
 		};
 
 		const handleSuccess = () => {
-			onGetFolder();
+			onGetFolder(parentId);
 			onActiveModal({ component: null });
 		};
 
@@ -81,6 +82,7 @@ export const Folder_Delete = ({
 
 Folder_Delete.propTypes = {
 	name: PropTypes.string,
+	parentId: PropTypes.string,
 	folderId: PropTypes.string,
 	onGetFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
