@@ -56,15 +56,18 @@ export const Shared = () => {
 							</button>
 							{menu.name === 'option-menu' && menu.id === item.id && (
 								<ul className={`option-menu ${driveStyles['option-menu']}`}>
-									<li>
-										<button
-											type="button"
-											className={driveStyles['option-menu-button']}
-										>
-											<span className={`${icon} ${driveStyles.download}`} />
-											Download
-										</button>
-									</li>
+									{item.file.download_url && (
+										<li>
+											<a
+												className={driveStyles['option-menu-button']}
+												href={item.file.download_url}
+												download={item.file.name}
+											>
+												<span className={`${icon} ${driveStyles.download}`} />
+												Download
+											</a>
+										</li>
+									)}
 									<li>
 										<button
 											type="button"

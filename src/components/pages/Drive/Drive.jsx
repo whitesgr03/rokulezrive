@@ -216,6 +216,35 @@ export const Drive = () => {
 
 		folders.length && folder.files.length && handleSetDownloadUrls(folder);
 	}, [folder, folders]);
+	useEffect(() => {
+		const getAllSharedFilesDownloadUrls = async () => {
+			const blobs = await Promise.all(
+				shared.map(
+					async item =>
+						new Promise(resolve =>
+							fetch(item.file.secure_url)
+								.then(res => resolve(res.blob()))
+								.catch(() => resolve(null)),
+						),
+				),
+			);
+
+			const newShared = shared.map((item, i) => ({
+				...item,
+				file: {
+					...item.file,
+					download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
+				},
+			}));
+
+			setShared(newShared);
+		};
+
+		shared.length &&
+			!shared[0].file?.download_url &&
+			getAllSharedFilesDownloadUrls();
+	}, [shared]);
+
 
 	return (
 		<>
