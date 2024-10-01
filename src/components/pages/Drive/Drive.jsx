@@ -118,40 +118,44 @@ export const Drive = () => {
 	}, []);
 
 	useEffect(() => {
-		const getParentFolderIds = (array, id) => {
-			const subfolder = folders.find(folder => folder.id === id);
+		const getParentFolderIds = (result, id, folders) => {
+			const subfolder = folders.splice(
+				folders.findIndex(folder => folder.id === id),
+				1,
+			)[0];
 
-			return !subfolder
-				? array
+			return !id
+				? []
 				: subfolder.parent === null
 					? [
 							{
 								name: subfolder.name,
-								id: subfolder.id,
 								path: '/drive',
 							},
-							...array,
+							...result,
 						]
 					: getParentFolderIds(
-							subfolder.id === folderId
-								? [...array]
+							subfolder.id === folderId && !fileId
+								? [...result]
 								: [
 										{
 											name: subfolder.name,
-											id: subfolder.id,
 											path: `/drive/folders/${subfolder.id}`,
 										},
-										...array,
+										...result,
 									],
 							subfolder.parent.id,
+							folders,
 						);
 		};
 
 		const handleSet = () => {
-			const paths = getParentFolderIds([], folderId);
+			const paths = getParentFolderIds([], folderId, [...folders]);
 			setPaths(paths.slice(-3));
 		};
 		folders.length && handleSet();
+	}, [folders, folderId, fileId, isSmallMobile]);
+
 	useEffect(() => {
 		const getAllFileDownloadUrls = async currentFolder => {
 			const blobs = await Promise.all(
