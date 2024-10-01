@@ -18,37 +18,6 @@ import { Loading } from '../../utils/Loading/Loading';
 // Utils
 import { handleFetch } from '../../../utils/handle_fetch';
 
-const sharedDefault = [
-	{
-		id: '3',
-		name: 'first shared file',
-		owner: 'facebook@gmail.com',
-		type: 'pdf',
-		createdAt: new Date(),
-	},
-	{
-		id: '4',
-		name: 'second shared file',
-		owner: 'google@gmail.com',
-		type: 'image',
-		createdAt: new Date(),
-	},
-	{
-		id: '8',
-		name: 'second shared file',
-		owner: 'google@gmail.com',
-		type: 'image',
-		createdAt: new Date(),
-	},
-	{
-		id: '10',
-		name: 'second shared file',
-		owner: 'google@gmail.com',
-		type: 'image',
-		createdAt: new Date(),
-	},
-];
-
 export const Drive = () => {
 	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
 
@@ -60,8 +29,6 @@ export const Drive = () => {
 
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-
-	const shared = sharedDefault;
 
 	const folder = folderId
 		? folders.find(folder => folder.id === folderId)
