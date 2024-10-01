@@ -25,11 +25,7 @@ export const Files = () => {
 			<ul className={driveStyles.list}>
 				{folder.files.map(file => (
 					<li key={file.id} className={driveStyles.item}>
-						<Link
-							to={`files/${file.id}`}
-							relative="path"
-							className={driveStyles.container}
-						>
+						<Link to={`files/${file.id}`} className={driveStyles.container}>
 							<span className={`${icon} ${driveStyles.image}`} />
 							{/* file.type icon */}
 							<div className={driveStyles.content}>
