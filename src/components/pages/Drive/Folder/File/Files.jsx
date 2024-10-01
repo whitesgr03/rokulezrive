@@ -1,7 +1,6 @@
 // Packages
 import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
-import PropTypes from 'prop-types';
 
 // Styles
 import driveStyles from '../../Drive.module.css';
@@ -149,11 +148,4 @@ export const Files = () => {
 			</ul>
 		</>
 	);
-};
-
-Files.propTypes = {
-	data: PropTypes.array,
-	menu: PropTypes.object,
-	onActiveMenu: PropTypes.func,
-	onActiveModal: PropTypes.func,
 };
