@@ -189,6 +189,8 @@
 	height: var(--size);
 }
 
+/* upload */
+
 .upload {
 	display: flex;
 	row-gap: 30px;
@@ -236,10 +238,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-.file-wrap {
-	align-items: flex-start;
 }
 
 .upload-file {
