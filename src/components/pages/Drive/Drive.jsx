@@ -52,7 +52,7 @@ const sharedDefault = [
 export const Drive = () => {
 	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
 
-	const { folderId } = useParams();
+	const { folderId, fileId } = useParams();
 	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
 
 	const [paths, setPaths] = useState([]);
@@ -244,7 +244,7 @@ export const Drive = () => {
 								</nav>
 							)}
 
-							{<h2>{folder.name}</h2>}
+							{!fileId && <h2>{folder.name}</h2>}
 							<Outlet
 								context={{
 									folder,
