@@ -4,9 +4,8 @@ import { format } from 'date-fns';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
-import uploadStyles from './Upload.module.css';
+import driveStyles from './Drive.module.css';
 import formStyles from '../../../styles/form.module.css';
-import styles from './File_info.module.css';
 
 export const File_Into = () => {
 	const {
@@ -14,19 +13,19 @@ export const File_Into = () => {
 	} = useLocation();
 
 	return (
-		<div className={uploadStyles['file-info']}>
+		<div className={driveStyles['file-info']}>
 			<p>{file.name}</p>
-			<div className={uploadStyles.file}>
+			<div className={driveStyles.file}>
 				<span
-					className={`${icon} ${uploadStyles['file-icon']} ${uploadStyles.image}`}
+					className={`${icon} ${driveStyles['file-icon']} ${driveStyles.image}`}
 				/>
 			</div>
-			<div className={`${uploadStyles['file-info']} ${styles['file-wrap']}`}>
+			<div
+				className={`${driveStyles['file-info']} ${driveStyles['file-wrap']}`}
+			>
 				{file.size && <p>File Size: {file.size}</p>}
 				{file.owner && <p>Owner: {file.owner}</p>}
-				<p className={styles.date}>
-					Create At: {format(file.createdAt, 'MMM d, y')}
-				</p>
+				<p>Create At: {format(file.createdAt, 'MMM d, y')}</p>
 			</div>
 			<button type="button" className={formStyles['form-submit']}>
 				Download
