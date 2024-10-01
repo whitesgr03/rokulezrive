@@ -67,13 +67,6 @@ export const Drive = () => {
 		? folders.find(folder => folder.id === folderId)
 		: folders[0];
 
-	const handleSetDownloadUrl = ({ id, data }) => {
-		const newFolders = folders.map(folder =>
-			folder.id === id ? { ...folder, files: data } : folder,
-		);
-		setFolders(newFolders);
-	};
-
 	const handleGetFolder = async folderId => {
 		setLoading(true);
 		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
@@ -159,7 +152,68 @@ export const Drive = () => {
 			setPaths(paths.slice(-3));
 		};
 		folders.length && handleSet();
-	}, [folders, folderId, isSmallMobile]);
+	useEffect(() => {
+		const getAllFileDownloadUrls = async currentFolder => {
+			const blobs = await Promise.all(
+				currentFolder.files.map(
+					async file =>
+						new Promise(resolve =>
+							fetch(file.secure_url)
+								.then(res => resolve(res.blob()))
+								.catch(() => resolve(null)),
+						),
+				),
+			);
+
+			const newFiles = currentFolder.files.map((file, i) => ({
+				...file,
+				download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
+			}));
+
+			return newFiles;
+		};
+
+		const getFileDownloadUrl = async currentFolder => {
+			const targetFile = currentFolder.files[currentFolder.files.length - 1];
+
+			const blob = await new Promise(resolve =>
+				fetch(targetFile.secure_url)
+					.then(res => resolve(res.blob()))
+					.catch(() => resolve(null)),
+			);
+
+			const newFiles = currentFolder.files.map(file =>
+				file.id === targetFile.id
+					? {
+							...file,
+							download_url: blob === null ? '' : URL.createObjectURL(blob),
+						}
+					: file,
+			);
+
+			return newFiles;
+		};
+
+		const handleSetDownloadUrls = async folder => {
+			const firstFile = folder.files[0];
+			const lastFile = folder.files[folder.files.length - 1];
+
+			const newFiles =
+				(!firstFile.download_url && (await getAllFileDownloadUrls(folder))) ||
+				(!lastFile.download_url && (await getFileDownloadUrl(folder)));
+
+			newFiles &&
+				setFolders(
+					folders.map(subfolder =>
+						subfolder.id === folder.id
+							? { ...subfolder, files: newFiles }
+							: subfolder,
+					),
+				);
+		};
+
+		folders.length && folder.files.length && handleSetDownloadUrls(folder);
+	}, [folder, folders]);
 
 	return (
 		<>
@@ -198,7 +252,6 @@ export const Drive = () => {
 									onActiveMenu,
 									onActiveModal,
 									onGetFolder: handleGetFolder,
-									onSetDownloadUrl: handleSetDownloadUrl,
 									menu,
 								}}
 							/>

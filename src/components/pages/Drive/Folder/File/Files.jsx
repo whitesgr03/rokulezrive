@@ -1,6 +1,5 @@
 // Packages
 import { Link, useOutletContext } from 'react-router-dom';
-import { useEffect } from 'react';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -18,69 +17,9 @@ import { File_Share } from '../../File_Share';
 import { formatBytes } from '../../../../../utils/format_bytes';
 
 export const Files = () => {
-	const {
-		folder,
-		menu,
-		onActiveMenu,
-		onActiveModal,
-		onSetDownloadUrl,
-		onGetFolder,
-	} = useOutletContext();
+	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
+		useOutletContext();
 
-	useEffect(() => {
-		const getDownloadUrls = async () => {
-			const blobs = await Promise.all(
-				folder.files.map(
-					async file =>
-						new Promise(resolve =>
-							fetch(file.secure_url)
-								.then(res => resolve(res.blob()))
-								.catch(() => resolve(null)),
-						),
-				),
-			);
-
-			const data = folder.files.map((file, i) => ({
-				...file,
-				download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
-			}));
-
-			onSetDownloadUrl({
-				id: folder.id,
-				data,
-			});
-		};
-		folder.files[0].download_url ?? getDownloadUrls();
-	}, [onSetDownloadUrl, folder]);
-
-	useEffect(() => {
-		const getDownloadUrl = async () => {
-			const target = folder.files[folder.files.length - 1];
-			const blob = await new Promise(resolve =>
-				fetch(target.secure_url)
-					.then(res => resolve(res.blob()))
-					.catch(() => resolve(null)),
-			);
-
-			const newData = folder.files.map(file =>
-				file.id === target.id
-					? {
-							...file,
-							download_url: blob === null ? '' : URL.createObjectURL(blob),
-						}
-					: file,
-			);
-
-			onSetDownloadUrl({
-				id: folder.id,
-				data: newData,
-			});
-		};
-
-		folder.files[0].download_url &&
-			!folder.files[folder.files.length - 1].download_url &&
-			getDownloadUrl();
-	}, [onSetDownloadUrl, folder]);
 	return (
 		<>
 			<h3>Files</h3>
