@@ -21,16 +21,19 @@ export const File_Into = () => {
 					className={`${icon} ${driveStyles['file-icon']} ${driveStyles.image}`}
 				/>
 			</div>
-			<div
-				className={`${driveStyles['file-info']} ${driveStyles['file-wrap']}`}
-			>
-				{file.size && <p>File Size: {file.size}</p>}
+			<div className={driveStyles['file-info']}>
 				{file.owner && <p>Owner: {file.owner}</p>}
 				<p>Create At: {format(file.createdAt, 'MMM d, y')}</p>
 			</div>
-			<button type="button" className={formStyles['form-submit']}>
-				Download
-			</button>
+			{file.download_url && (
+				<a
+					className={`${formStyles['form-submit']} ${driveStyles['file-link']}`}
+					href={file.download_url}
+					download={file.name}
+				>
+					Download
+				</a>
+			)}
 		</div>
 	);
 };
