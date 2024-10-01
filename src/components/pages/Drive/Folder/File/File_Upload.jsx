@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Styles
-import styles from './File_Upload.module.css';
+import driveStyles from '../../Drive.module.css';
 import { icon } from '../../../../../styles/icon.module.css';
 import formStyles from '../../../../../styles/form.module.css';
 
@@ -80,30 +80,30 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 					{loading && (
 						<Loading text={'Uploading...'} light={true} shadow={true} />
 					)}
-					<div className={styles.upload}>
+					<div className={driveStyles.upload}>
 						<h3>Upload File</h3>
 						<form
-							className={`${formStyles.form} ${styles['upload-form']}`}
+							className={`${formStyles.form} ${driveStyles['upload-form']}`}
 							onSubmit={handleSubmit}
 						>
 							<div
-								className={`${formStyles['form-wrap']} ${styles['upload-form-wrap']}`}
+								className={`${formStyles['form-wrap']} ${driveStyles['upload-form-wrap']}`}
 							>
 								{file instanceof File ? (
 									<>
-										<div className={styles.file}>
+										<div className={driveStyles.file}>
 											<button
 												type="button"
-												className={styles['file-button']}
+												className={driveStyles['file-button']}
 												onClick={handleCancel}
 											>
-												<span className={`${icon} ${styles.restart}`} />
+												<span className={`${icon} ${driveStyles.restart}`} />
 											</button>
 											<span
-												className={`${icon} ${styles['file-icon']} ${styles.image}`}
+												className={`${icon} ${driveStyles['file-icon']} ${driveStyles.image}`}
 											/>
 										</div>
-										<div className={styles['file-info']}>
+										<div className={driveStyles['file-info']}>
 											<p>{file.name}</p>
 											<p>{formatBytes(file.size)}</p>
 										</div>
@@ -129,8 +129,10 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 												title="size must be less than 1 mb."
 												onChange={handleChange}
 											/>
-											<div className={styles.preview}>
-												<span className={`${icon} ${styles['upload-file']}`} />
+											<div className={driveStyles.preview}>
+												<span
+													className={`${icon} ${driveStyles['upload-file']}`}
+												/>
 												<p>Click here to upload</p>
 												<p>( File as you like up to 1 MB )</p>
 											</div>
