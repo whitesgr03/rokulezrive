@@ -21,17 +21,16 @@ export const Shared = () => {
 					<li key={item.id} className={driveStyles.item}>
 						<Link
 							to={`/drive/shared/${item.id}`}
-							state={{ file: item }}
 							className={driveStyles.container}
 						>
 							<span className={`${icon} ${driveStyles[item.type]}`} />
 							<div className={driveStyles.content}>
-								<p className={driveStyles.name}>{item.name}</p>
+								<p className={driveStyles.name}>{item.file.name}</p>
 								<div className={driveStyles['info-wrap']}>
 									<div className={driveStyles.info}>
 										<span className={`${icon} ${styles['share-by']}`} />
 										<span className={driveStyles['file-content']}>
-											{item.owner}
+											{item.file.owner.username}
 										</span>
 									</div>
 									<div className={driveStyles.info}>

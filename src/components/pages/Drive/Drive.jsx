@@ -27,6 +27,8 @@ export const Drive = () => {
 	const [paths, setPaths] = useState([]);
 	const [folders, setFolders] = useState([]);
 
+	const [shared, setShared] = useState([]);
+
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -60,8 +62,19 @@ export const Drive = () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const handleGetListFolder = async (signal = null) => {
-			setLoading(true);
+		const getListShared = async () => {
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/shared`;
+
+			const options = {
+				method: 'GET',
+				signal,
+				credentials: 'include',
+			};
+
+			return await handleFetch(url, options);
+		};
+
+		const getListFolder = async () => {
 			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
 
 			const options = {
@@ -70,17 +83,35 @@ export const Drive = () => {
 				credentials: 'include',
 			};
 
-			const result = await handleFetch(url, options);
+			return await handleFetch(url, options);
+		};
+
+		const handleGetLists = async () => {
+			setLoading(true);
+
+			const [shared, folders] = await Promise.all([
+				getListShared(),
+				getListFolder(),
+			]);
 
 			const handleResult = () => {
-				result.success ? setFolders(result.data) : setError(result.message);
+				const handleError = () => {
+					setError(!shared.success ? shared.message : folders.message);
+				};
+
+				const handleSuccess = () => {
+					setFolders(folders.data);
+					setShared(shared.data);
+				};
+
+				shared.success && folders.success ? handleSuccess() : handleError();
 				setLoading(false);
 			};
 
-			result && handleResult();
+			shared && folders && handleResult();
 		};
 
-		handleGetListFolder(signal);
+		handleGetLists();
 		return () => controller.abort();
 	}, []);
 
