@@ -49,7 +49,7 @@ export const Router = () => (
 								element: <File_Into />,
 							},
 							{
-								path: 'shared?',
+								path: 'shared',
 								element: <Shared />,
 							},
 							{
