@@ -1,5 +1,5 @@
 // Packages
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { format } from 'date-fns';
 
 // Styles
@@ -10,10 +10,9 @@ import formStyles from '../../../../../styles/form.module.css';
 import { formatBytes } from '../../../../../utils/format_bytes';
 
 export const File_Into = () => {
-	const { folder } = useOutletContext();
-	const { fileId } = useParams();
+	const { state } = useLocation();
 
-	const file = folder.files.find(file => file.id === fileId);
+	const { file, shared_createdAt } = state;
 
 	return (
 		<div className={driveStyles['file-info']}>
