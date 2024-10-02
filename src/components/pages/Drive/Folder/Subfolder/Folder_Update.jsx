@@ -142,9 +142,7 @@ export const Folder_Update = ({
 							>
 								<span className={`${icon} ${formStyles.alert}`} />
 								<p className={formStyles['form-message']}>
-									{inputErrors.folder
-										? inputErrors.name
-										: 'Message Placeholder'}
+									{inputErrors.name ? inputErrors.name : 'Message Placeholder'}
 								</p>
 							</div>
 						</div>
