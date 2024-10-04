@@ -65,7 +65,7 @@
 
 .form-submit {
 	align-self: center;
-	transition: transform 0.3s ease;
+	transition: transform 0.1s ease;
 	cursor: pointer;
 	border: 2px solid var(--light-scheme-color);
 	border-radius: 5px;
