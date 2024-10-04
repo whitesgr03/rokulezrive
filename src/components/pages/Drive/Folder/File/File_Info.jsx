@@ -9,8 +9,7 @@ import formStyles from '../../../../../styles/form.module.css';
 
 import { formatBytes } from '../../../../../utils/format_bytes';
 
-export const File_Into = () => {
-	const { state } = useLocation();
+export const File_Info = () => {
 
 	const { file, shared_createdAt } = state;
 

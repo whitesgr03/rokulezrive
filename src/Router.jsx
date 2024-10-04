@@ -12,7 +12,7 @@ import { Error } from './components/utils/Error/Error';
 
 import { Folder } from './components/pages/Drive/Folder/Folder';
 import { Shared } from './components/pages/Drive/Shared';
-import { File_Into } from './components/pages/Drive/Folder/File/File_Info';
+import { File_Info } from './components/pages/Drive/Folder/File/File_Info';
 
 import { Authentication } from './components/utils/Authentication/Authentication';
 
@@ -46,7 +46,7 @@ export const Router = () => (
 							},
 							{
 								path: 'files/:fileId',
-								element: <File_Into />,
+								element: <File_Info />,
 							},
 							{
 								path: 'shared',
@@ -62,7 +62,7 @@ export const Router = () => (
 							},
 							{
 								path: 'folders/my-drive/files/:fileId',
-								element: <File_Into />,
+								element: <File_Info />,
 							},
 							{
 								path: 'folders/:folderId?',
@@ -70,7 +70,7 @@ export const Router = () => (
 							},
 							{
 								path: 'folders/:folderId?/files/:fileId',
-								element: <File_Into />,
+								element: <File_Info />,
 							},
 						],
 					},
