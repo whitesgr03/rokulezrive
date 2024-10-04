@@ -18,9 +18,9 @@ export const Shared = () => {
 			<h3>Shared</h3>
 			<ul className={driveStyles.list}>
 				{shared.map(item => (
-					<li key={item.id} className={driveStyles.item}>
+					<li key={item.file.id} className={driveStyles.item}>
 						<Link
-							to={`/drive/shared/${item.id}`}
+							to={`/drive/shared/${item.file.id}`}
 							className={driveStyles.container}
 						>
 							<span className={`${icon} ${driveStyles.image}`} />
