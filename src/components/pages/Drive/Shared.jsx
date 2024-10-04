@@ -22,7 +22,6 @@ export const Shared = () => {
 						<Link
 							to={`/drive/shared/${item.id}`}
 							className={driveStyles.container}
-							state={{ file: item.file, shared_createdAt: item.createdAt }}
 						>
 							<span className={`${icon} ${driveStyles.image}`} />
 							{/* file.type icon */}
