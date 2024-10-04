@@ -82,6 +82,17 @@ export const Shared = () => {
 												<button
 													type="button"
 													className={driveStyles['option-menu-button']}
+													onClick={() =>
+														onActiveModal({
+															component: (
+																<Shared_Delete
+																	name={item.file.name}
+																	shareId={item.id}
+																	onActiveModal={onActiveModal}
+																	onGetSharing={onGetSharing}
+																/>
+															),
+														})
 													}
 												>
 													<span className={`${icon} ${driveStyles.unshare}`} />
