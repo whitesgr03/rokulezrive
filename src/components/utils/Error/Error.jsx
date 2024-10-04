@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import styles from './Error.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
+export const Error = ({ error, children }) => {
 	const [darkTheme, setDarkTheme] = useState(false);
 	const { state } = useLocation();
 
@@ -37,9 +38,13 @@ import { icon } from '../../../styles/icon.module.css';
 				<span className={`${icon} ${styles.alert}`} />
 				<div className={styles.message}>
 					<p>Our apologies, there has been an error.</p>
+					{children ? (
+						children
+					) : (
 						<p>
 							Please come back later, or if you have any questions, contact us.
 						</p>
+					)}
 				</div>
 				<Link to="/" className={styles.link}>
 					Back to Home Page
@@ -51,4 +56,5 @@ import { icon } from '../../../styles/icon.module.css';
 
 Error.propTypes = {
 	error: PropTypes.string,
+	children: PropTypes.node,
 };
