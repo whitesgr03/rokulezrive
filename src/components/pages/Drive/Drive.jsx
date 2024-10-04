@@ -62,6 +62,29 @@ export const Drive = () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
+		const getSharedFilesDownloadUrls = async shared => {
+			const blobs = await Promise.all(
+				shared.map(
+					async item =>
+						new Promise(resolve =>
+							fetch(item.file.secure_url)
+								.then(res => resolve(res.blob()))
+								.catch(() => resolve(null)),
+						),
+				),
+			);
+
+			const newShared = shared.map((item, i) => ({
+				...item,
+				file: {
+					...item.file,
+					download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
+				},
+			}));
+
+			return newShared;
+		};
+
 		const getListShared = async () => {
 			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/shared`;
 
@@ -99,9 +122,9 @@ export const Drive = () => {
 					setError(!shared.success ? shared.message : folders.message);
 				};
 
-				const handleSuccess = () => {
+				const handleSuccess = async () => {
 					setFolders(folders.data);
-					setShared(shared.data);
+					setShared(await getSharedFilesDownloadUrls(shared.data));
 				};
 
 				shared.success && folders.success ? handleSuccess() : handleError();
@@ -216,35 +239,6 @@ export const Drive = () => {
 
 		folders.length && folder.files.length && handleSetDownloadUrls(folder);
 	}, [folder, folders]);
-	useEffect(() => {
-		const getAllSharedFilesDownloadUrls = async () => {
-			const blobs = await Promise.all(
-				shared.map(
-					async item =>
-						new Promise(resolve =>
-							fetch(item.file.secure_url)
-								.then(res => resolve(res.blob()))
-								.catch(() => resolve(null)),
-						),
-				),
-			);
-
-			const newShared = shared.map((item, i) => ({
-				...item,
-				file: {
-					...item.file,
-					download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
-				},
-			}));
-
-			setShared(newShared);
-		};
-
-		shared.length &&
-			!shared[0].file?.download_url &&
-			getAllSharedFilesDownloadUrls();
-	}, [shared]);
-
 
 	return (
 		<>
