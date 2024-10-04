@@ -119,6 +119,7 @@
 	background-color: var(--light-scheme-layout-bgc);
 }
 
+/* files icon */
 
 .image {
 	--size: var(--icon-size-desktop);
