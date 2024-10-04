@@ -76,7 +76,7 @@ export const File_Share = ({
 	const handleCreateSharing = async () => {
 		setLoading(true);
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharing/${sharing.id}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/shared/${sharing.id}`;
 
 		const options = {
 			method: 'PUT',
