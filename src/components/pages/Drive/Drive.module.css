@@ -236,6 +236,7 @@
 .file-info {
 	display: flex;
 	row-gap: 10px;
+	flex: 1 1 100%;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
