@@ -10,7 +10,7 @@ import styles from './Files.module.css';
 // Components
 import { File_Update } from './File_Update';
 import { File_Delete } from './File_Delete';
-import { File_Share } from '../../File_Share';
+import { File_Share } from './File_Share';
 
 // Utils
 import { formatBytes } from '../../../../../utils/format_bytes';
@@ -71,7 +71,18 @@ export const Files = () => {
 												type="button"
 												className={driveStyles['option-menu-button']}
 												onClick={() =>
-													onActiveModal(<File_Share name={file.name} />)
+													onActiveModal({
+														component: (
+															<File_Share
+																name={file.name}
+																sharing={file.sharing}
+																folderId={folder.id}
+																fileId={file.id}
+																onGetFolder={onGetFolder}
+																onActiveModal={onActiveModal}
+															/>
+														),
+													})
 												}
 												data-close-menu
 											>

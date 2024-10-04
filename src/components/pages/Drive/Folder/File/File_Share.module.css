@@ -1,53 +1,67 @@
-.file-share {
+.container {
 	display: flex;
 	row-gap: 10px;
 	flex-direction: column;
 }
 
-.input-wrap {
-	margin-bottom: 10px;
+.wrap {
 	border: 1px solid var(--light-scheme-color);
 	border-radius: 10px;
 	background-color: var(--light-scheme-main-bgc);
-	padding: 0 10px;
 }
 
-.label {
+.username-list {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
 	border-bottom: 1px solid var(--light-scheme-color);
-	padding: 10px 0;
-	max-height: 120px;
+	padding: 10px;
+	max-height: 140px;
 	overflow: scroll;
 }
 
-.email {
+.username-item {
 	display: flex;
 	border: 1px solid var(--light-scheme-color);
 	border-radius: 5px;
 	background-color: var(--light-scheme-layout-bgc);
 }
 
-.email-text {
+.username-error {
+	background-color: var(--light-scheme-error);
+}
+
+.username-text {
 	display: flex;
 	align-items: center;
 	padding: 10px;
+	color: var(--light-scheme-color);
 }
 
-.email-close {
+.username-text-error {
+	color: var(--dark-scheme-color);
+}
+
+.username-close {
 	min-width: 45px;
 	min-height: 45px;
+	color: var(--light-scheme-color);
 }
 
-.button-wrap {
+.username-close-error {
+	color: var(--dark-scheme-color);
+}
+
+.label {
 	display: flex;
-	column-gap: 5px;
-	padding: 10px 0;
+	row-gap: 10px;
+	flex-direction: column;
+	border-bottom: 1px solid var(--light-scheme-color);
+	padding: 10px;
 }
 
-.border {
-	border-bottom: 1px solid var(--light-scheme-color);
+.input-wrap {
+	display: flex;
 }
 
 .input {
@@ -68,6 +82,7 @@
 	display: flex;
 	column-gap: 10px;
 	align-items: center;
+	padding: 10px;
 }
 
 .checkbox {
@@ -119,7 +134,7 @@
 	align-items: center;
 }
 
-.copy {
+.copy-button {
 	cursor: pointer;
 	border: 2px dashed var(--light-scheme-color);
 	border-radius: 5px;
@@ -130,21 +145,47 @@
 
 /* Dark scheme classes */
 
-:global(.dark) .input-wrap {
+:global(.dark) .wrap {
 	border-width: 2px;
 	border-color: var(--dark-scheme-color);
 	background-color: rgba(var(--light-scheme-color-rgb), 0.5);
+	overflow: hidden;
 }
 
 :global(.dark) .label {
-	border-width: 1px;
+	border-width: 2px;
 	border-color: var(--dark-scheme-color);
 }
 
-:global(.dark) .email {
+:global(.dark) .username-list {
 	border-width: 2px;
 	border-color: var(--dark-scheme-color);
+}
+
+:global(.dark) .username-item {
+	border: 0;
+	border-color: var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);
+}
+
+:global(.dark) .username-error {
+	background-color: var(--dark-scheme-error);
+}
+
+:global(.dark) .username-text {
+	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .username-text-error {
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .username-close {
+	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .username-close-error {
+	color: var(--light-scheme-color);
 }
 
 :global(.dark) .border {
@@ -167,7 +208,7 @@
 	border-color: var(--dark-scheme-color);
 }
 
-:global(.dark) .copy {
+:global(.dark) .copy-button {
 	border-color: var(--dark-scheme-color);
 	color: var(--dark-scheme-color);
 }
