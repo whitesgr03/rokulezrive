@@ -8,7 +8,7 @@ import { icon } from '../../../styles/icon.module.css';
 import styles from './Shared.module.css';
 
 // Components
-import { File_Delete } from './File_Delete';
+import { Shared_Delete } from './Shared_Delete';
 
 export const Shared = () => {
 	const { shared, menu, onActiveMenu, onActiveModal } = useOutletContext();
