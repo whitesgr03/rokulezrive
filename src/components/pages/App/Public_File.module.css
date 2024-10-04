@@ -1,0 +1,9 @@
+.public-file {
+	display: flex;
+	row-gap: 10px;
+	flex: 1 1 100%;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 30px 20px;
+}

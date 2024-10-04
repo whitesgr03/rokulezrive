@@ -14,6 +14,7 @@ import { Folder } from './components/pages/Drive/Folder/Folder';
 import { Shared } from './components/pages/Drive/Shared';
 import { File_Info } from './components/pages/Drive/Folder/File/File_Info';
 import { Shared_File } from './components/pages/Drive/Shared_file';
+import { Public_File } from './components/pages/App/Public_FIle';
 
 import { Authentication } from './components/utils/Authentication/Authentication';
 
@@ -74,6 +75,10 @@ export const Router = () => (
 								element: <File_Info />,
 							},
 						],
+					},
+					{
+						path: 'shared/:shareId',
+						element: <Public_File />,
 					},
 					{
 						path: 'account/login',
