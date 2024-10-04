@@ -24,13 +24,8 @@ export const File_Info = () => {
 				/>
 			</div>
 			<div className={driveStyles['file-info']}>
-				{file.owner && <p>Owner: {file.owner.username}</p>}
-				{file.size && <p>Size: {formatBytes(file.size)}</p>}
-				{file.owner ? (
-					<p>Shared At: {format(shared_createdAt, 'MMM d, y')}</p>
-				) : (
-					<p>Create At: {format(file.createdAt, 'MMM d, y')}</p>
-				)}
+				<p>Size: {formatBytes(file.size)}</p>
+				<p>Create At: {format(file.createdAt, 'MMM d, y')}</p>
 			</div>
 			{file.download_url && (
 				<a
