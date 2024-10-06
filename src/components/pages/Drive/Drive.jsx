@@ -59,7 +59,7 @@ export const Drive = () => {
 	};
 
 	const handleGetSharing = useCallback(async signal => {
-		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/shared`;
+		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles`;
 
 		const options = {
 			method: 'GET',
