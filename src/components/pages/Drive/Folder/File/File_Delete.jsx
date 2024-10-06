@@ -25,7 +25,7 @@ export const File_Delete = ({
 	const handleDeleteFile = async () => {
 		setLoading(true);
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}/files/${fileId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}`;
 
 		const options = {
 			method: 'DELETE',
