@@ -75,11 +75,11 @@ export const Folder_Update = ({
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
 
 		const options = {
-			method: 'PUT',
+			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ ...formData, parentId }),
+			body: JSON.stringify(formData),
 			credentials: 'include',
 		};
 
