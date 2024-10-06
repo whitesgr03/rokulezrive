@@ -50,17 +50,17 @@ export const Shared = () => {
 									<button
 										onClick={() =>
 											onActiveMenu({
-												id: item.id,
+												id: item.file.id,
 												button: 'option-button',
 												name: 'option-menu',
 											})
 										}
-										data-id={item.id}
+										data-id={item.file.id}
 										data-button="option-button"
 									>
 										<span className={`${icon} ${driveStyles.option}`} />
 									</button>
-									{menu.name === 'option-menu' && menu.id === item.id && (
+									{menu.name === 'option-menu' && menu.id === item.file.id && (
 										<ul className={`option-menu ${driveStyles['option-menu']}`}>
 											{item.file.download_url && (
 												<li>
@@ -85,7 +85,7 @@ export const Shared = () => {
 															component: (
 																<Shared_Delete
 																	name={item.file.name}
-																	shareId={item.id}
+																	sharedFilesId={item.file.id}
 																	onActiveModal={onActiveModal}
 																	onGetSharing={onGetSharing}
 																/>

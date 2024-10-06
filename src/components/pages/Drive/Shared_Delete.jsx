@@ -14,7 +14,7 @@ import { handleFetch } from '../../../utils/handle_fetch';
 
 export const Shared_Delete = ({
 	name,
-	shareId,
+	sharedFilesId,
 	onGetSharing,
 	onActiveModal,
 }) => {
@@ -80,7 +80,7 @@ export const Shared_Delete = ({
 
 Shared_Delete.propTypes = {
 	name: PropTypes.string,
-	shareId: PropTypes.string,
+	sharedFilesId: PropTypes.string,
 	onGetSharing: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
