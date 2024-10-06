@@ -23,8 +23,6 @@ export const Error = ({ error, children }) => {
 			darkScheme === null &&
 				localStorage.setItem('darkTheme', browserDarkScheme);
 
-			console.log(darkScheme);
-
 			setDarkTheme(
 				darkScheme === null ? browserDarkScheme : darkScheme === 'true',
 			);
