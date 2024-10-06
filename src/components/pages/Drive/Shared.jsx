@@ -41,9 +41,7 @@ export const Shared = () => {
 											</div>
 											<div className={driveStyles.info}>
 												<span className={`${icon} ${driveStyles.calendar}`} />
-												<span>
-													{format(item.members[0].sharedAt, 'MMM d, y')}
-												</span>
+												<span>{format(item.sharedAt, 'MMM d, y')}</span>
 											</div>
 										</div>
 									</div>
