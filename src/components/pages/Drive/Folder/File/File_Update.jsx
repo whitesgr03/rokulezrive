@@ -71,10 +71,10 @@ export const File_Update = ({
 	const handleUpdate = async () => {
 		setLoading(true);
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}/files/${fileId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}`;
 
 		const options = {
-			method: 'PUT',
+			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 			},
