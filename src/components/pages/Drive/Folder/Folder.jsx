@@ -16,11 +16,11 @@ export const Folder = () => {
 
 	return (
 		<>
-			{!folder.children.length && !folder.files.length ? (
+			{!folder.subfolders.length && !folder.files.length ? (
 				<p className={styles.text}>No files in the folder</p>
 			) : (
 				<>
-					{folder.children.length > 0 && <Subfolders />}
+					{folder.subfolders.length > 0 && <Subfolders />}
 					{folder.files.length > 0 && <Files />}
 				</>
 			)}

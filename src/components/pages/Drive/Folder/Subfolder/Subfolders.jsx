@@ -17,7 +17,7 @@ export const Subfolders = () => {
 		<>
 			<h3>Folders</h3>
 			<ul className={driveStyles.list}>
-				{folder.children.map(subfolder => (
+				{folder.subfolders.map(subfolder => (
 					<li key={subfolder.id} className={driveStyles.item}>
 						<Link
 							to={`/drive/folders/${subfolder.id}`}
