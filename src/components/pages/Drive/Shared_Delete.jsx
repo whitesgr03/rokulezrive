@@ -55,7 +55,7 @@ export const Shared_Delete = ({
 						<h3>Stop sharing file</h3>
 						<div className={folderStyles.container}>
 							<p>Do you really want to unshare?</p>
-							<p>{`"${name}"`}</p>
+							<p className={folderStyles.name}>{`"${name}"`}</p>
 							<div className={folderStyles['folder-button-wrap']}>
 								<button
 									className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}

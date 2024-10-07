@@ -57,7 +57,7 @@ export const File_Delete = ({
 						<h3>Delete Forever</h3>
 						<div className={folderStyles.container}>
 							<p>Do you really want to delete?</p>
-							<p>{`"${name}"`}</p>
+							<p className={folderStyles.name}>{`"${name}"`}</p>
 							<div className={folderStyles['folder-button-wrap']}>
 								<button
 									className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}

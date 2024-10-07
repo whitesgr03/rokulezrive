@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 
 // folderStyles
 import folderStyles from '../Folder.module.css';
+import formStyles from '../../../../../styles/form.module.css';
+import { icon } from '../../../../../styles/icon.module.css';
+import styles from './Folder_Delete.module.css';
 
 // Components
 import { Loading } from '../../../../utils/Loading/Loading';
@@ -14,6 +17,7 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 
 export const Folder_Delete = ({
 	name,
+	subfolders,
 	parentId,
 	folderId,
 	onGetFolder,
@@ -21,6 +25,10 @@ export const Folder_Delete = ({
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+
+	const { _count } = subfolders.find(subfolder => subfolder.id === folderId);
+
+	const folderIsEmpty = _count.subfolders + _count.files === 0;
 
 	const handleDeleteFolder = async () => {
 		setLoading(true);
@@ -57,7 +65,14 @@ export const Folder_Delete = ({
 						<h3>Delete Forever</h3>
 						<div className={folderStyles.container}>
 							<p>Do you really want to delete?</p>
-							<p>{`"${name}"`}</p>
+
+							<p className={folderStyles.name}>{`"${name}"`}</p>
+							{!folderIsEmpty && (
+								<div className={styles.text}>
+									<span className={`${icon} ${formStyles.alert}`} />
+									<p>All files and subfolders will be deleted.</p>
+								</div>
+							)}
 							<div className={folderStyles['folder-button-wrap']}>
 								<button
 									className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
@@ -82,6 +97,7 @@ export const Folder_Delete = ({
 
 Folder_Delete.propTypes = {
 	name: PropTypes.string,
+	subfolders: PropTypes.array,
 	parentId: PropTypes.string,
 	folderId: PropTypes.string,
 	onGetFolder: PropTypes.func,

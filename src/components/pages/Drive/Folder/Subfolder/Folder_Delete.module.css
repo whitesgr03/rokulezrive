@@ -1,0 +1,12 @@
+.text {
+	display: flex;
+	column-gap: 10px;
+	justify-content: center;
+	align-items: center;
+	color: var(--light-scheme-error);
+}
+
+/* Dark scheme classes */
+:global(.dark) .text {
+	color: var(--dark-scheme-error);
+}
