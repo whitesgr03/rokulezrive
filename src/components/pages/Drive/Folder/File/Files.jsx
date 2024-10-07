@@ -71,7 +71,8 @@ export const Files = () => {
 														component: (
 															<File_Share
 																name={file.name}
-																sharing={file.sharing}
+																sharers={file.sharers}
+																publicId={file.public ? file.public.id : ''}
 																folderId={folder.id}
 																fileId={file.id}
 																onGetFolder={onGetFolder}

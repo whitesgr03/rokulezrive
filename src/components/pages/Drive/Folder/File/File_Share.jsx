@@ -20,7 +20,8 @@ const classes = classNames.bind(formStyles);
 
 export const File_Share = ({
 	name,
-	sharing,
+	sharers,
+	publicId,
 	folderId,
 	fileId,
 	onGetFolder,
@@ -254,7 +255,8 @@ export const File_Share = ({
 
 File_Share.propTypes = {
 	name: PropTypes.string,
-	sharing: PropTypes.object,
+	sharers: PropTypes.array,
+	publicId: PropTypes.string,
 	folderId: PropTypes.string,
 	fileId: PropTypes.string,
 	onGetFolder: PropTypes.func,
