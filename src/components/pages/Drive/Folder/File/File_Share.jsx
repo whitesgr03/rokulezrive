@@ -107,6 +107,26 @@ export const File_Share = ({
 		const isValid = !loading && (await handleValidFields());
 		isValid && (await handleCreateShare());
 	};
+
+	const handleDeleteSharer = async sharerId => {
+		setLoading(true);
+
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharers/${sharerId}`;
+
+		const options = {
+			method: 'DELETE',
+			credentials: 'include',
+		};
+
+		const result = await handleFetch(url, options);
+
+		const handleSuccess = () => {
+			setNewSharers(newSharers.filter(item => item.sharer.id !== sharerId));
+			onGetFolder(folderId);
+		};
+
+		result.success ? handleSuccess() : setError(result.message);
+		setLoading(false);
 	};
 
 	const handleCopyLink = async () => {
@@ -124,6 +144,7 @@ export const File_Share = ({
 				<button
 					type="button"
 					className={`${styles['username-close']}`}
+					onClick={() => handleDeleteSharer(item.sharer.id)}
 				>
 					<span className={`${icon} ${styles.close}`} />
 				</button>
