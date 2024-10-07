@@ -77,7 +77,7 @@ export const Router = () => (
 						],
 					},
 					{
-						path: 'shared/:shareId',
+						path: 'shared/:publicFileId',
 						element: <Public_File />,
 					},
 					{

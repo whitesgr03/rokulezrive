@@ -18,7 +18,7 @@ import { formatBytes } from '../../../utils/format_bytes';
 import { handleFetch } from '../../../utils/handle_fetch';
 
 export const Public_File = () => {
-	const { shareId } = useParams();
+	const { publicFileId } = useParams();
 	const [data, setData] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -45,9 +45,8 @@ export const Public_File = () => {
 
 		const handleGetSharedFile = async () => {
 			setLoading(true);
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/shared/${shareId}`;
 
-			console.log(shareId);
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/public/${publicFileId}`;
 
 			const options = {
 				method: 'GET',
@@ -56,8 +55,6 @@ export const Public_File = () => {
 			};
 
 			const result = await handleFetch(url, options);
-
-			console.log(result);
 
 			const handleResult = async () => {
 				result.success
@@ -71,7 +68,7 @@ export const Public_File = () => {
 
 		handleGetSharedFile();
 		return () => controller.abort();
-	}, [shareId]);
+	}, [publicFileId]);
 
 	return (
 		<div className={styles['public-file']}>
