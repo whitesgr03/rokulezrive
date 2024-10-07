@@ -6,7 +6,7 @@ import {
 	useParams,
 	Link,
 } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 // Styles
@@ -58,16 +58,10 @@ export const Drive = () => {
 		setLoading(false);
 	};
 
-	const handleGetSharing = useCallback(async signal => {
-		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles`;
 
-		const options = {
-			method: 'GET',
-			signal,
-			credentials: 'include',
-		};
-
-		const result = await handleFetch(url, options);
+	useEffect(() => {
+		const controller = new AbortController();
+		const { signal } = controller;
 
 		const getSharedFilesDownloadUrls = async shared => {
 			const blobs = await Promise.all(
@@ -92,21 +86,20 @@ export const Drive = () => {
 			return newShared;
 		};
 
-		const handleResult = async () => {
-			result.success
-				? setShared(await getSharedFilesDownloadUrls(result.data))
-				: setError(result.message);
+		const getFolders = async () => {
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+
+			const options = {
+				method: 'GET',
+				signal,
+				credentials: 'include',
+			};
+
+			return await handleFetch(url, options);
 		};
 
-		result && handleResult();
-	}, []);
-
-	useEffect(() => {
-		const controller = new AbortController();
-		const { signal } = controller;
-
-		const getListFolder = async () => {
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+		const getSharedFiles = async signal => {
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles`;
 
 			const options = {
 				method: 'GET',
@@ -120,22 +113,25 @@ export const Drive = () => {
 		const handleGetLists = async () => {
 			setLoading(true);
 
-			const [, folders] = await Promise.all([
-				handleGetSharing(signal),
-				getListFolder(),
+			const [sharedFiles, folders] = await Promise.all([
+				getSharedFiles(),
+				getFolders(),
 			]);
 
-			const handleResult = () => {
+			const handleResult = async () => {
 				folders.success ? setFolders(folders.data) : setError(folders.message);
+				sharedFiles.success
+					? setShared(await getSharedFilesDownloadUrls(sharedFiles.data))
+					: setError(sharedFiles.message);
 				setLoading(false);
 			};
 
-			folders && handleResult();
+			folders && sharedFiles && handleResult();
 		};
 
 		handleGetLists();
 		return () => controller.abort();
-	}, [handleGetSharing]);
+	}, []);
 
 	useEffect(() => {
 		const getParentFolderIds = (result, id, folders) => {
