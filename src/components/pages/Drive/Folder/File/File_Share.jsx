@@ -70,7 +70,7 @@ export const File_Share = ({
 		}
 	};
 
-	const handleCreateShare = async () => {
+	const handleCreateSharer = async () => {
 		setLoading(true);
 
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharers`;
@@ -105,7 +105,7 @@ export const File_Share = ({
 	const handleSubmit = async e => {
 		e.preventDefault();
 		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleCreateShare());
+		isValid && (await handleCreateSharer());
 	};
 
 	const handleDeleteSharer = async sharerId => {
