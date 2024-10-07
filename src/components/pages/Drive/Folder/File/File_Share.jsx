@@ -1,8 +1,9 @@
 // Packages
 import classNames from 'classnames/bind';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { object, string } from 'yup';
 
 // Styles
 import { icon } from '../../../../../styles/icon.module.css';
@@ -27,23 +28,12 @@ export const File_Share = ({
 	onGetFolder,
 	onActiveModal,
 }) => {
-	const originUsernames = useMemo(
-		() => sharing.members.map(item => item.member.username).sort(),
-		[sharing.members],
-	);
-
-	const [shareAnyone, setShareAnyone] = useState(sharing.anyone);
-	const [usernames, setUsernames] = useState(originUsernames);
-	const [usernameErrors, setUsernameErrors] = useState([]);
+	const [newSharers, setNewSharers] = useState(sharers);
 
 	const [formData, setFormData] = useState({ username: '' });
 	const [inputErrors, setInputErrors] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-
-	const isDataChange =
-		JSON.stringify(originUsernames) !== JSON.stringify([...usernames].sort()) ||
-		sharing.anyone !== shareAnyone;
 
 	const handleChange = e => {
 		const { value, name } = e.target;
@@ -55,62 +45,68 @@ export const File_Share = ({
 		setFormData(fields);
 	};
 
-	const handleAddUsername = () => {
-		const handleSetUsername = () => {
-			setUsernames([...usernames, formData.username]);
-			setFormData({ ...formData, username: '' });
+	const handleValidFields = async () => {
+		let isValid = false;
+
+		const schema = object({
+			username: string().trim().required('Username is required.'),
+		}).noUnknown();
+
+		try {
+			await schema.validate(formData, {
+				abortEarly: false,
+				stripUnknown: true,
+			});
 			setInputErrors({});
-		};
-
-		formData.username === ''
-			? setInputErrors({ ...inputErrors, username: 'Username is required' })
-			: handleSetUsername();
+			isValid = true;
+			return isValid;
+		} catch (err) {
+			const obj = {};
+			for (const error of err.inner) {
+				obj[error.path] ?? (obj[error.path] = error.message);
+			}
+			setInputErrors(obj);
+			return isValid;
+		}
 	};
 
-	const handleRemoveUsernames = username => {
-		const errors = usernameErrors.filter(u => u !== username);
-		!errors.length && setInputErrors({});
-		setUsernameErrors(errors);
-		setUsernames(usernames.filter(u => u !== username));
-	};
-
-	const handleCreateSharing = async () => {
+	const handleCreateShare = async () => {
 		setLoading(true);
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/shared/${sharing.id}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharers`;
 
 		const options = {
-			method: 'PUT',
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ anyone: shareAnyone, usernames }),
+			body: JSON.stringify(formData),
 			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
 
-		const handleFail = () => {
-			const handleMessageErrors = () => {
-				setInputErrors({ ...inputErrors, ...result.fields });
-				setUsernameErrors([...result.data]);
-			};
-
-			result.fields ? handleMessageErrors() : setError(result.message);
+		const handleError = () => {
+			result.fields
+				? setInputErrors({ ...result.fields })
+				: setError(result.message);
 		};
 
 		const handleSuccess = () => {
+			setNewSharers([...newSharers, result.data]);
+			setFormData({ ...formData, username: '' });
 			onGetFolder(folderId);
-			onActiveModal({ component: null });
 		};
 
-		result.success ? handleSuccess() : handleFail();
+		result.success ? handleSuccess() : handleError();
 		setLoading(false);
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		!usernameErrors.length && (await handleCreateSharing());
+		const isValid = !loading && (await handleValidFields());
+		isValid && (await handleCreateShare());
+	};
 	};
 
 	const handleCopyLink = async () => {
@@ -119,29 +115,15 @@ export const File_Share = ({
 		);
 	};
 
-	const usernameList = usernames.map((name, index) => {
-		const error = usernameErrors.find(err => err === name);
-
+	const listSharers = newSharers.map(item => {
 		return (
-			<div
-				key={`${name}${index}`}
-				className={`${styles['username-item']} ${
-					error ? styles['username-error'] : ''
-				}`}
-			>
-				<span
-					className={`${styles['username-text']} ${
-						error ? styles['username-text-error'] : ''
-					}`}
-				>
-					{name}
+			<div key={`${item.sharer.id}`} className={`${styles['username-item']} `}>
+				<span className={`${styles['username-text']}`}>
+					{item.sharer.username}
 				</span>
 				<button
 					type="button"
-					className={`${styles['username-close']} ${
-						error ? styles['username-close-error'] : ''
-					}`}
-					onClick={() => handleRemoveUsernames(name)}
+					className={`${styles['username-close']}`}
 				>
 					<span className={`${icon} ${styles.close}`} />
 				</button>
@@ -160,8 +142,8 @@ export const File_Share = ({
 						<h3>Share {`"${name}"`}</h3>
 						<form className={formStyles.form} onSubmit={handleSubmit}>
 							<div className={styles.wrap}>
-								{usernames.length > 0 && (
-									<ul className={styles['username-list']}>{usernameList}</ul>
+								{newSharers.length > 0 && (
+									<ul className={styles['username-list']}>{listSharers}</ul>
 								)}
 								<label htmlFor="username" className={styles['label']}>
 									Share people with username
@@ -178,11 +160,7 @@ export const File_Share = ({
 											value={formData.username}
 											onChange={handleChange}
 										/>
-										<button
-											type="button"
-											className={styles['input-button']}
-											onClick={handleAddUsername}
-										>
+										<button type="submit" className={styles['input-button']}>
 											<span className={`${icon} ${styles.add}`} />
 										</button>
 									</div>
