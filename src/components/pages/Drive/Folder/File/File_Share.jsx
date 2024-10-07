@@ -28,6 +28,9 @@ export const File_Share = ({
 	onGetFolder,
 	onActiveModal,
 }) => {
+	const [newPublicId, setNewPublicId] = useState(publicId);
+	const [isPublic, setIsPublic] = useState(publicId !== '');
+
 	const [newSharers, setNewSharers] = useState(sharers);
 
 	const [formData, setFormData] = useState({ username: '' });
@@ -129,6 +132,44 @@ export const File_Share = ({
 		setLoading(false);
 	};
 
+	const handlePublicFile = async () => {
+		setLoading(true);
+
+		const setPublic = async () => {
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/public`;
+
+			const options = {
+				method: 'POST',
+				credentials: 'include',
+			};
+
+			return await handleFetch(url, options);
+		};
+
+		const setPrivate = async () => {
+			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/public/${newPublicId}`;
+
+			const options = {
+				method: 'DELETE',
+				credentials: 'include',
+			};
+
+			return await handleFetch(url, options);
+		};
+
+		const result = isPublic ? await setPrivate() : await setPublic();
+
+		const handleSuccess = () => {
+			!isPublic && setNewPublicId(result.data);
+			setIsPublic(!isPublic);
+			onGetFolder(folderId);
+		};
+
+		result.success ? handleSuccess() : setError(result.message);
+
+		setLoading(false);
+	};
+
 	const handleCopyLink = async () => {
 		await navigator.clipboard.writeText(
 			`${location.protocol}//${location.host}/shared/${sharing.id}`,
@@ -196,12 +237,12 @@ export const File_Share = ({
 										name="share_anyone"
 										id="share_anyone"
 										className={styles.checkbox}
-										onChange={() => setShareAnyone(!shareAnyone)}
-										checked={shareAnyone}
+										onChange={handlePublicFile}
+										checked={isPublic}
 									/>
 									<div className={styles['checkbox-wrap']}>
 										<span
-											className={`${icon} ${styles.check} ${shareAnyone ? styles['is-check'] : ''}`}
+											className={`${icon} ${styles.check} ${isPublic ? styles['is-check'] : ''}`}
 										/>
 									</div>
 									Anyone with the link
@@ -221,7 +262,7 @@ export const File_Share = ({
 								</p>
 							</div>
 							<div className={styles['submit-wrap']}>
-								{shareAnyone && (
+								{isPublic && (
 									<button
 										type="button"
 										className={styles['copy-button']}
