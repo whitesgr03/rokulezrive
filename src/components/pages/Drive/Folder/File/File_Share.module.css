@@ -147,6 +147,10 @@
 	background-color: var(--dark-scheme-input-bgc);
 }
 
+:global(.dark) .username-text {
+	color: var(--dark-scheme-color);
+}
+
 :global(.dark) .username-close {
 	color: var(--dark-scheme-color);
 }
