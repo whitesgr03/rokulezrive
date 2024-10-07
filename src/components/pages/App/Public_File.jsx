@@ -19,7 +19,7 @@ import { handleFetch } from '../../../utils/handle_fetch';
 
 export const Public_File = () => {
 	const { shareId } = useParams();
-	const [file, setFile] = useState({});
+	const [data, setData] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -27,16 +27,19 @@ export const Public_File = () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const getFileDownloadUrl = async file => {
+		const getFileDownloadUrl = async data => {
 			const blob = await new Promise(resolve =>
-				fetch(file.secure_url)
+				fetch(data.secure_url)
 					.then(res => resolve(res.blob()))
 					.catch(() => resolve(null)),
 			);
 
 			return {
-				...file,
-				download_url: blob === null ? '' : URL.createObjectURL(blob),
+				...data,
+				file: {
+					...data.file,
+					download_url: blob === null ? '' : URL.createObjectURL(blob),
+				},
 			};
 		};
 
@@ -58,7 +61,7 @@ export const Public_File = () => {
 
 			const handleResult = async () => {
 				result.success
-					? setFile(await getFileDownloadUrl(result.data))
+					? setData(await getFileDownloadUrl(result.data))
 					: setError(result);
 				setLoading(false);
 			};
@@ -74,15 +77,7 @@ export const Public_File = () => {
 		<div className={styles['public-file']}>
 			{error ? (
 				<Error error={error.message}>
-					{error.code === 404 && (
-						<p>The file you are looking for could not be found.</p>
-					)}
-					{error.code === 403 && (
-						<p>
-							The file is not public and can only be opened by people with
-							access links.
-						</p>
-					)}
+					<p>The file you are looking for could not be found.</p>
 				</Error>
 			) : (
 				<>
@@ -90,22 +85,22 @@ export const Public_File = () => {
 						<Loading text="Loading..." />
 					) : (
 						<>
-							<p>{file.name}</p>
+							<p>{data.file.name}</p>
 							<div className={driveStyles.file}>
 								<span
 									className={`${icon} ${driveStyles['file-icon']} ${driveStyles.image}`}
 								/>
 							</div>
 							<div className={driveStyles['file-info']}>
-								<p>Size: {formatBytes(file.size)}</p>
-								<p>Shared by: {file.owner.username}</p>
-								<p>Shared At: {format(file.updatedAt, 'MMM d, y')}</p>
+								<p>Size: {formatBytes(data.file.size)}</p>
+								<p>Shared by: {data.file.owner.username}</p>
+								<p>Shared At: {format(data.createdAt, 'MMM d, y')}</p>
 							</div>
-							{file.download_url && (
+							{data.file.download_url && (
 								<a
 									className={`${formStyles['form-submit']} ${driveStyles['file-link']}`}
-									href={file.download_url}
-									download={file.name}
+									href={data.file.download_url}
+									download={data.file.name}
 								>
 									Download
 								</a>
