@@ -11,7 +11,7 @@ import styles from './Shared.module.css';
 import { Shared_Delete } from './Shared_Delete';
 
 export const Shared = () => {
-	const { shared, menu, onActiveMenu, onActiveModal, onGetSharing } =
+	const { shared, menu, onActiveMenu, onActiveModal, onDeleteSharedFile } =
 		useOutletContext();
 
 	const matchPath = useMatch('/drive/shared');
@@ -87,7 +87,7 @@ export const Shared = () => {
 																	name={item.file.name}
 																	sharedFileId={item.file.id}
 																	onActiveModal={onActiveModal}
-																	onGetSharing={onGetSharing}
+																	onDeleteSharedFile={onDeleteSharedFile}
 																/>
 															),
 														})

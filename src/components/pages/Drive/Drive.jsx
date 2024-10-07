@@ -58,6 +58,9 @@ export const Drive = () => {
 		setLoading(false);
 	};
 
+	const handleDeleteSharedFile = id => {
+		setShared(shared.filter(item => item.file.id !== id));
+	};
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -272,7 +275,7 @@ export const Drive = () => {
 									onActiveMenu,
 									onActiveModal,
 									onGetFolder: handleGetFolder,
-									onGetSharing: handleGetSharing,
+									onDeleteSharedFile: handleDeleteSharedFile,
 									menu,
 								}}
 							/>

@@ -15,7 +15,7 @@ import { handleFetch } from '../../../utils/handle_fetch';
 export const Shared_Delete = ({
 	name,
 	sharedFileId,
-	onGetSharing,
+	onDeleteSharedFile,
 	onActiveModal,
 }) => {
 	const [loading, setLoading] = useState(false);
@@ -32,9 +32,9 @@ export const Shared_Delete = ({
 		};
 
 		const handleSuccess = async () => {
-			await onGetSharing();
-			onActiveModal({ component: null });
+			onDeleteSharedFile(sharedFileId);
 			setLoading(false);
+			onActiveModal({ component: null });
 		};
 
 		const result = await handleFetch(url, options);
@@ -81,6 +81,6 @@ export const Shared_Delete = ({
 Shared_Delete.propTypes = {
 	name: PropTypes.string,
 	sharedFileId: PropTypes.string,
-	onGetSharing: PropTypes.func,
+	onDeleteSharedFile: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
