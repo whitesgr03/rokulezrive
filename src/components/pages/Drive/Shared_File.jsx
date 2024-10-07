@@ -13,7 +13,7 @@ export const Shared_File = () => {
 	const { shared } = useOutletContext();
 	const { fileId } = useParams();
 
-	const { file, members } = shared.find(item => item.file.id === fileId);
+	const { file, sharedAt } = shared.find(item => item.file.id === fileId);
 
 	return (
 		<div className={driveStyles['file-info']}>
@@ -26,7 +26,7 @@ export const Shared_File = () => {
 			<div className={driveStyles['file-info']}>
 				<p>Size: {formatBytes(file.size)}</p>
 				<p>Shared by: {file.owner.username}</p>
-				<p>Shared At: {format(members[0].sharedAt, 'MMM d, y')}</p>
+				<p>Shared At: {format(sharedAt, 'MMM d, y')}</p>
 			</div>
 			{file.download_url && (
 				<a
