@@ -27,10 +27,6 @@
 	background-color: var(--light-scheme-layout-bgc);
 }
 
-.username-error {
-	background-color: var(--light-scheme-error);
-}
-
 .username-text {
 	display: flex;
 	align-items: center;
@@ -38,18 +34,10 @@
 	color: var(--light-scheme-color);
 }
 
-.username-text-error {
-	color: var(--dark-scheme-color);
-}
-
 .username-close {
 	min-width: 45px;
 	min-height: 45px;
 	color: var(--light-scheme-color);
-}
-
-.username-close-error {
-	color: var(--dark-scheme-color);
 }
 
 .label {
@@ -168,24 +156,8 @@
 	background-color: var(--dark-scheme-input-bgc);
 }
 
-:global(.dark) .username-error {
-	background-color: var(--dark-scheme-error);
-}
-
-:global(.dark) .username-text {
-	color: var(--dark-scheme-color);
-}
-
-:global(.dark) .username-text-error {
-	color: var(--light-scheme-color);
-}
-
 :global(.dark) .username-close {
 	color: var(--dark-scheme-color);
-}
-
-:global(.dark) .username-close-error {
-	color: var(--light-scheme-color);
 }
 
 :global(.dark) .border {
