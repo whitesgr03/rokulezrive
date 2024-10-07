@@ -85,7 +85,7 @@ export const Shared = () => {
 															component: (
 																<Shared_Delete
 																	name={item.file.name}
-																	sharedFilesId={item.file.id}
+																	sharedFileId={item.file.id}
 																	onActiveModal={onActiveModal}
 																	onGetSharing={onGetSharing}
 																/>

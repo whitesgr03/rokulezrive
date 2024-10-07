@@ -14,7 +14,7 @@ import { handleFetch } from '../../../utils/handle_fetch';
 
 export const Shared_Delete = ({
 	name,
-	sharedFilesId,
+	sharedFileId,
 	onGetSharing,
 	onActiveModal,
 }) => {
@@ -24,7 +24,7 @@ export const Shared_Delete = ({
 	const handleDeleteFile = async () => {
 		setLoading(true);
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles/${sharedFilesId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles/${sharedFileId}`;
 
 		const options = {
 			method: 'DELETE',
@@ -80,7 +80,7 @@ export const Shared_Delete = ({
 
 Shared_Delete.propTypes = {
 	name: PropTypes.string,
-	sharedFilesId: PropTypes.string,
+	sharedFileId: PropTypes.string,
 	onGetSharing: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
