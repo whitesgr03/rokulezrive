@@ -264,7 +264,7 @@ export const File_Share = ({
 								{isPublic && (
 									<button
 										type="button"
-										className={styles['copy-button']}
+										className={formStyles['form-submit']}
 										onClick={handleCopyLink}
 									>
 										Copy Link
