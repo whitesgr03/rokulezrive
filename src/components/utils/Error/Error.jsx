@@ -13,6 +13,10 @@ export const Error = ({ error, children }) => {
 
 	console.error('Error component:', state ? state.error : error);
 
+	const handleClick = () => {
+		document.body.removeAttribute('style');
+	};
+
 	useEffect(() => {
 		const getColorTheme = () => {
 			const darkScheme = localStorage.getItem('darkTheme');
@@ -44,7 +48,7 @@ export const Error = ({ error, children }) => {
 						</p>
 					)}
 				</div>
-				<Link to="/" className={styles.link}>
+				<Link to="/" className={styles.link} onClick={handleClick}>
 					Back to Home Page
 				</Link>
 			</div>
