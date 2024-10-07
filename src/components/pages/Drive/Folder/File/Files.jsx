@@ -76,7 +76,6 @@ export const Files = () => {
 																folderId={folder.id}
 																fileId={file.id}
 																onGetFolder={onGetFolder}
-																onActiveModal={onActiveModal}
 															/>
 														),
 													})

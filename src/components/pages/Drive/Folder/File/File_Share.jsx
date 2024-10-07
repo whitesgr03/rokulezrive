@@ -26,7 +26,6 @@ export const File_Share = ({
 	folderId,
 	fileId,
 	onGetFolder,
-	onActiveModal,
 }) => {
 	const [newPublicId, setNewPublicId] = useState(publicId);
 	const [isPublic, setIsPublic] = useState(publicId !== '');
@@ -269,19 +268,6 @@ export const File_Share = ({
 										onClick={handleCopyLink}
 									>
 										Copy Link
-									</button>
-								)}
-								{isDataChange ? (
-									<button type="submit" className={formStyles['form-submit']}>
-										Save
-									</button>
-								) : (
-									<button
-										type="button"
-										className={formStyles['form-submit']}
-										onClick={() => onActiveModal({ component: null })}
-									>
-										Done
 									</button>
 								)}
 							</div>
