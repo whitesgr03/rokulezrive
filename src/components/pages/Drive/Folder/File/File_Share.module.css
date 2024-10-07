@@ -122,15 +122,6 @@
 	align-items: center;
 }
 
-.copy-button {
-	cursor: pointer;
-	border: 2px dashed var(--light-scheme-color);
-	border-radius: 5px;
-	width: 50%;
-	min-height: 45px;
-	color: var(--light-scheme-color);
-}
-
 /* Dark scheme classes */
 
 :global(.dark) .wrap {
@@ -178,9 +169,4 @@
 
 :global(.dark) .check {
 	border-color: var(--dark-scheme-color);
-}
-
-:global(.dark) .copy-button {
-	border-color: var(--dark-scheme-color);
-	color: var(--dark-scheme-color);
 }
