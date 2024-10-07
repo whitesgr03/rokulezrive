@@ -171,7 +171,7 @@ export const File_Share = ({
 
 	const handleCopyLink = async () => {
 		await navigator.clipboard.writeText(
-			`${location.protocol}//${location.host}/shared/${publicId}`,
+			`${location.protocol}//${location.host}/shared/${newPublicId}`,
 		);
 	};
 
