@@ -67,11 +67,11 @@ export const Router = () => (
 								element: <File_Info />,
 							},
 							{
-								path: 'folders/:folderId?',
+								path: 'folders/:folderId',
 								element: <Folder />,
 							},
 							{
-								path: 'folders/:folderId?/files/:fileId',
+								path: 'folders/:folderId/files/:fileId',
 								element: <File_Info />,
 							},
 						],
