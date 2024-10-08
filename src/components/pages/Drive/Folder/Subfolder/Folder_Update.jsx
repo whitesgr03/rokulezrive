@@ -21,9 +21,8 @@ const classes = classNames.bind(formStyles);
 
 export const Folder_Update = ({
 	name,
-	parentId,
 	folderId,
-	onGetFolder,
+	onUpdateFolder,
 	onActiveModal,
 }) => {
 	const [inputErrors, setInputErrors] = useState({});
@@ -86,7 +85,8 @@ export const Folder_Update = ({
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			onGetFolder(parentId);
+			const { parentFolder, newFolder } = result.data;
+			onUpdateFolder(parentFolder, newFolder);
 			onActiveModal({ component: null });
 		};
 
@@ -159,8 +159,7 @@ export const Folder_Update = ({
 
 Folder_Update.propTypes = {
 	name: PropTypes.string,
-	parentId: PropTypes.string,
 	folderId: PropTypes.string,
-	onGetFolder: PropTypes.func,
+	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };

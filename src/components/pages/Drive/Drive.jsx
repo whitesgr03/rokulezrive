@@ -66,6 +66,17 @@ export const Drive = () => {
 		setFolders([...newFolders, newFolder]);
 	};
 
+	const handleUpdateFolder = (parentFolder, newFolder) => {
+		const newFolders = folders.map(
+			folder =>
+				(folder.id === parentFolder.id && parentFolder) ||
+				(folder.id === newFolder.id && newFolder) ||
+				folder,
+		);
+
+		setFolders(newFolders);
+	};
+
 	const handleDeleteSharedFile = id => {
 		setShared(shared.filter(item => item.file.id !== id));
 	};
@@ -283,6 +294,8 @@ export const Drive = () => {
 									onActiveMenu,
 									onActiveModal,
 									onGetFolder: handleGetFolder,
+									onAddFolder: handleAddFolder,
+									onUpdateFolder: handleUpdateFolder,
 									onDeleteSharedFile: handleDeleteSharedFile,
 									menu,
 								}}

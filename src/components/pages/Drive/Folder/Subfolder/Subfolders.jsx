@@ -10,8 +10,14 @@ import { Folder_Update } from './Folder_Update';
 import { Folder_Delete } from './Folder_Delete';
 
 export const Subfolders = () => {
-	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
-		useOutletContext();
+	const {
+		folder,
+		menu,
+		onActiveMenu,
+		onActiveModal,
+		onGetFolder,
+		onUpdateFolder,
+	} = useOutletContext();
 
 	return (
 		<>
@@ -60,9 +66,8 @@ export const Subfolders = () => {
 													component: (
 														<Folder_Update
 															name={subfolder.name}
-															parentId={folder.id}
 															folderId={subfolder.id}
-															onGetFolder={onGetFolder}
+															onUpdateFolder={onUpdateFolder}
 															onActiveModal={onActiveModal}
 														/>
 													),
