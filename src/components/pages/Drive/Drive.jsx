@@ -156,45 +156,6 @@ export const Drive = () => {
 	}, []);
 
 	useEffect(() => {
-		const getParentFolderIds = (result, id, folders) => {
-			const subfolder = folders.splice(
-				folders.findIndex(folder => folder.id === id),
-				1,
-			)[0];
-
-			return !id
-				? []
-				: subfolder.parent === null
-					? [
-							{
-								name: subfolder.name,
-								path: '/drive',
-							},
-							...result,
-						]
-					: getParentFolderIds(
-							subfolder.id === folderId && !fileId
-								? [...result]
-								: [
-										{
-											name: subfolder.name,
-											path: `/drive/folders/${subfolder.id}`,
-										},
-										...result,
-									],
-							subfolder.parent.id,
-							folders,
-						);
-		};
-
-		const handleSet = () => {
-			const paths = getParentFolderIds([], folderId, [...folders]);
-			setPaths(paths.slice(-3));
-		};
-		folders.length && handleSet();
-	}, [folders, folderId, fileId, isSmallMobile]);
-
-	useEffect(() => {
 		const getAllFilesDownloadUrls = async currentFolder => {
 			const blobs = await Promise.all(
 				currentFolder.files.map(
@@ -256,6 +217,53 @@ export const Drive = () => {
 
 		folders.length && folder.files.length && handleSetDownloadUrls(folder);
 	}, [folder, folders]);
+
+	useEffect(() => {
+		const getParentFolderIds = (result, id, folders) => {
+			const index = folders.findIndex(folder => folder.id === id);
+			const subfolder = index !== -1 ? folders.splice(index, 1)[0] : folders[0];
+
+			const currentFolderPath = subfolder.id === folderId;
+			const inFilePath = fileId;
+
+			return id
+				? subfolder.parent === null
+					? [
+							{
+								name: subfolder.name,
+								path: '/drive',
+							},
+							...result,
+						]
+					: getParentFolderIds(
+							currentFolderPath && !inFilePath
+								? [...result]
+								: [
+										{
+											name: subfolder.name,
+											path: `/drive/folders/${subfolder.id}`,
+										},
+										...result,
+									],
+							subfolder.parent.id,
+							folders,
+						)
+				: !inFilePath
+					? []
+					: [
+							{
+								name: subfolder.name,
+								path: '/drive',
+							},
+						];
+		};
+
+		const handleSet = () => {
+			const paths = getParentFolderIds([], folderId, [...folders]);
+			setPaths(paths.slice(-3));
+		};
+		folders.length && handleSet();
+	}, [folders, folderId, fileId, isSmallMobile]);
 
 	return (
 		<>
