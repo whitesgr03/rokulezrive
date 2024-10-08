@@ -18,7 +18,7 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
+export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
@@ -76,8 +76,9 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 
 		const result = await handleFetch(url, options);
 
-		const handleSuccess = () => {
-			onGetFolder(parentId);
+		const handleSuccess = async () => {
+			const { parentFolder, newFolder } = result.data;
+			onAddFolder(parentFolder, newFolder);
 			onActiveModal({ component: null });
 		};
 
@@ -152,6 +153,6 @@ export const Folder_Create = ({ parentId, onGetFolder, onActiveModal }) => {
 
 Folder_Create.propTypes = {
 	parentId: PropTypes.string,
-	onGetFolder: PropTypes.func,
+	onAddFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };

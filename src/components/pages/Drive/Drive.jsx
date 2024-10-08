@@ -58,6 +58,14 @@ export const Drive = () => {
 		setLoading(false);
 	};
 
+	const handleAddFolder = (parentFolder, newFolder) => {
+		const newFolders = folders.map(folder =>
+			folder.id === parentFolder.id ? parentFolder : folder,
+		);
+
+		setFolders([...newFolders, newFolder]);
+	};
+
 	const handleDeleteSharedFile = id => {
 		setShared(shared.filter(item => item.file.id !== id));
 	};

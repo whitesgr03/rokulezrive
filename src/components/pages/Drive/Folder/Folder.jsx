@@ -11,8 +11,14 @@ import { Folder_Create } from './Subfolder/Folder_Create';
 import { File_Upload } from './File/File_Upload';
 
 export const Folder = () => {
-	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
-		useOutletContext();
+	const {
+		folder,
+		menu,
+		onActiveMenu,
+		onActiveModal,
+		onAddFolder,
+		onGetFolder,
+	} = useOutletContext();
 
 	return (
 		<>
@@ -68,7 +74,7 @@ export const Folder = () => {
 										component: (
 											<Folder_Create
 												parentId={folder.id}
-												onGetFolder={onGetFolder}
+												onAddFolder={onAddFolder}
 												onActiveModal={onActiveModal}
 											/>
 										),
