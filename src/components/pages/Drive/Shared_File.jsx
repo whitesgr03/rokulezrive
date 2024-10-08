@@ -20,7 +20,7 @@ export const Shared_File = () => {
 			<p>{file.name}</p>
 			<div className={driveStyles.file}>
 				<span
-					className={`${icon} ${driveStyles['file-icon']} ${driveStyles.image}`}
+					className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${file.type}`]}`}
 				/>
 			</div>
 			<div className={driveStyles['file-info']}>

@@ -26,8 +26,7 @@ export const Files = () => {
 				{folder.files.map(file => (
 					<li key={file.id} className={driveStyles.item}>
 						<Link to={`files/${file.id}`} className={driveStyles.container}>
-							<span className={`${icon} ${driveStyles.image}`} />
-							{/* file.type icon */}
+							<span className={`${icon} ${driveStyles[`${file.type}`]}`} />
 							<div className={driveStyles.content}>
 								<p className={driveStyles.name}>{file.name}</p>
 								<div className={driveStyles['info-wrap']}>
