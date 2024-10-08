@@ -43,7 +43,7 @@ export const Header = ({
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/logout`;
 
 		const options = {
-			method: 'GET',
+			method: 'POST',
 			credentials: 'include',
 		};
 		const result = await handleFetch(url, options);
