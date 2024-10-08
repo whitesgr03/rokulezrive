@@ -295,6 +295,7 @@ export const Drive = () => {
 									onActiveModal,
 									onGetFolder: handleGetFolder,
 									onAddFolder: handleAddFolder,
+									onFolders: setFolders,
 									onUpdateFolder: handleUpdateFolder,
 									onDeleteSharedFile: handleDeleteSharedFile,
 									menu,

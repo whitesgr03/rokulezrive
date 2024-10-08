@@ -15,7 +15,7 @@ export const Subfolders = () => {
 		menu,
 		onActiveMenu,
 		onActiveModal,
-		onGetFolder,
+		onFolders,
 		onUpdateFolder,
 	} = useOutletContext();
 
@@ -91,7 +91,7 @@ export const Subfolders = () => {
 															subfolders={folder.subfolders}
 															parentId={folder.id}
 															folderId={subfolder.id}
-															onGetFolder={onGetFolder}
+															onFolders={onFolders}
 															onActiveModal={onActiveModal}
 														/>
 													),
