@@ -29,7 +29,7 @@ export const Public_File = () => {
 
 		const getFileDownloadUrl = async data => {
 			const blob = await new Promise(resolve =>
-				fetch(data.secure_url)
+				fetch(data.file.secure_url)
 					.then(res => resolve(res.blob()))
 					.catch(() => resolve(null)),
 			);
