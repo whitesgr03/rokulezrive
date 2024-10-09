@@ -13,8 +13,8 @@ import { Error } from './components/utils/Error/Error';
 import { Folder } from './components/pages/Drive/Folder/Folder';
 import { Shared } from './components/pages/Drive/Shared';
 import { File_Info } from './components/pages/Drive/Folder/File/File_Info';
-import { Shared_File } from './components/pages/Drive/Shared_file';
-import { Public_File } from './components/pages/App/Public_FIle';
+import { Shared_File } from './components/pages/Drive/Shared_File';
+import { Public_File } from './components/pages/App/Public_File';
 
 import { Authentication } from './components/utils/Authentication/Authentication';
 

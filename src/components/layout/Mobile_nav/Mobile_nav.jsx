@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 
 // Styles
-import styles from './Mobile_nav.module.css';
+import styles from './Mobile_Nav.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
 export const Mobile_Nav = () => (
