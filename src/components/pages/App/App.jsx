@@ -44,7 +44,7 @@ export const App = () => {
 	};
 
 	const handleActiveMenu = menu => {
-		setMenu({ ...DEFAULT_MENU, ...menu });
+		menu ? setMenu({ ...DEFAULT_MENU, ...menu }) : setMenu(DEFAULT_MENU);
 	};
 
 	const handleSwitchColorTheme = () => {
