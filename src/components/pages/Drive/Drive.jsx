@@ -85,29 +85,6 @@ export const Drive = () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const getSharedFilesDownloadUrls = async shared => {
-			const blobs = await Promise.all(
-				shared.map(
-					async item =>
-						new Promise(resolve =>
-							fetch(item.file.secure_url)
-								.then(res => resolve(res.blob()))
-								.catch(() => resolve(null)),
-						),
-				),
-			);
-
-			const newShared = shared.map((item, i) => ({
-				...item,
-				file: {
-					...item.file,
-					download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
-				},
-			}));
-
-			return newShared;
-		};
-
 		const getFolders = async () => {
 			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
 
@@ -143,7 +120,7 @@ export const Drive = () => {
 			const handleResult = async () => {
 				folders.success ? setFolders(folders.data) : setError(folders.message);
 				sharedFiles.success
-					? setShared(await getSharedFilesDownloadUrls(sharedFiles.data))
+					? setShared(sharedFiles.data)
 					: setError(sharedFiles.message);
 				setLoading(false);
 			};
@@ -154,69 +131,6 @@ export const Drive = () => {
 		handleGetLists();
 		return () => controller.abort();
 	}, []);
-
-	useEffect(() => {
-		const getAllFilesDownloadUrls = async currentFolder => {
-			const blobs = await Promise.all(
-				currentFolder.files.map(
-					async file =>
-						new Promise(resolve =>
-							fetch(file.secure_url)
-								.then(res => resolve(res.blob()))
-								.catch(() => resolve(null)),
-						),
-				),
-			);
-
-			const newFiles = currentFolder.files.map((file, i) => ({
-				...file,
-				download_url: blobs[i] === null ? '' : URL.createObjectURL(blobs[i]),
-			}));
-
-			return newFiles;
-		};
-
-		const getFileDownloadUrl = async currentFolder => {
-			const targetFile = currentFolder.files[currentFolder.files.length - 1];
-
-			const blob = await new Promise(resolve =>
-				fetch(targetFile.secure_url)
-					.then(res => resolve(res.blob()))
-					.catch(() => resolve(null)),
-			);
-
-			const newFiles = currentFolder.files.map(file =>
-				file.id === targetFile.id
-					? {
-							...file,
-							download_url: blob === null ? '' : URL.createObjectURL(blob),
-						}
-					: file,
-			);
-
-			return newFiles;
-		};
-
-		const handleSetDownloadUrls = async folder => {
-			const firstFile = folder.files[0];
-			const lastFile = folder.files[folder.files.length - 1];
-
-			const newFiles =
-				(!firstFile.download_url && (await getAllFilesDownloadUrls(folder))) ||
-				(!lastFile.download_url && (await getFileDownloadUrl(folder)));
-
-			newFiles &&
-				setFolders(
-					folders.map(subfolder =>
-						subfolder.id === folder.id
-							? { ...subfolder, files: newFiles }
-							: subfolder,
-					),
-				);
-		};
-
-		folders.length && folder.files.length && handleSetDownloadUrls(folder);
-	}, [folder, folders]);
 
 	useEffect(() => {
 		const getParentFolderIds = (result, id, folders) => {
