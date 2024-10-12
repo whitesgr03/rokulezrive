@@ -29,7 +29,8 @@ export const Header = ({
 	const [dropdownSlideOut, setDropdownSlideOut] = useState(false);
 	const [error, setError] = useState(false);
 
-	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
+	const isNormalMobile = useMediaQuery({ minWidth: 440 });
+	const isNormalTablet = useMediaQuery({ minWidth: 800 });
 
 	const handleDropdownSlideOut = () => {
 		onActiveMenu({
@@ -61,9 +62,12 @@ export const Header = ({
 				<header className={styles.header}>
 					<Link to={user ? '/drive' : '/'} className={styles.logo}>
 						<img src={logo} alt="Logo" className={styles['logo-image']} />
+						{isNormalTablet && (
+							<h1 className={styles['logo-text']}>Local Drive</h1>
+						)}
 					</Link>
 					<ul className={styles.features}>
-						{!isSmallMobile && (
+						{isNormalMobile && (
 							<li className={styles['feature-item']}>
 								<button
 									type="button"
@@ -98,7 +102,7 @@ export const Header = ({
 							'dropdown-slide-out': dropdownSlideOut,
 						})}`}
 					>
-						{isSmallMobile && (
+						{!isNormalMobile && (
 							<li>
 								<button
 									type="button"

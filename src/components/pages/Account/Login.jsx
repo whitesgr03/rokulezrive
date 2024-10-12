@@ -5,10 +5,11 @@ import { useEffect, useState, useRef } from 'react';
 import { object, string } from 'yup';
 
 // Styles
-import styles from './Login.module.css';
-import accountStyles from './Account.module.css';
+
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
+import accountStyles from './Account.module.css';
+import styles from './Login.module.css';
 
 // Utils
 import { handleFetch } from '../../../utils/handle_fetch';
@@ -362,7 +363,10 @@ export const Login = () => {
 								</div>
 							</div>
 
-							<button type="submit" className={formStyles['form-submit']}>
+							<button
+								type="submit"
+								className={`${formStyles['form-submit']} ${accountStyles.submit}`}
+							>
 								Login
 							</button>
 						</form>

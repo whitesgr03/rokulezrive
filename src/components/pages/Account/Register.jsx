@@ -259,7 +259,10 @@ export const Register = () => {
 								</div>
 							</div>
 
-							<button type="submit" className={formStyles['form-submit']}>
+							<button
+								type="submit"
+								className={`${formStyles['form-submit']} ${accountStyles.submit}`}
+							>
 								Submit
 							</button>
 						</form>

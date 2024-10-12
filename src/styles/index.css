@@ -37,9 +37,13 @@
 	--dark-scheme-error-rgb: 236, 116, 116;
 
 	/* icon */
-	--icon-size-mobile: 40px;
+	--icon-size-mobile: 45px;
+	--icon-size-normal: 40px;
 	--icon-size-desktop: 30px;
+
+	/* layout */
 	--mobile-nav-height: 65px;
+	--mobile-header-height: 50px;
 }
 
 * {
@@ -83,7 +87,7 @@ h4,
 h5,
 h6 {
 	font-weight: 700;
-	line-height: 1.2em;
+	line-height: 1.2;
 }
 
 a {
@@ -92,7 +96,7 @@ a {
 }
 
 p {
-	line-height: 1.5em;
+	line-height: 1.5;
 	white-space: break-spaces;
 }
 
@@ -163,4 +167,10 @@ main > * {
 
 .dark button {
 	color: var(--dark-scheme-color);
+}
+
+@media (width >= 600px) {
+	:root {
+		--mobile-header-height: 80px;
+	}
 }

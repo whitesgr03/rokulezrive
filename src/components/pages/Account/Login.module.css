@@ -39,3 +39,13 @@
 	background-color: var(--dark-scheme-google-bgc);
 	color: var(--dark-scheme-color);
 }
+
+@media (width >= 550px) {
+	.federation {
+		align-items: center;
+	}
+
+	.federation-button {
+		min-width: 400px;
+	}
+}
