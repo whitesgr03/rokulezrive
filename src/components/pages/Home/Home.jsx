@@ -6,8 +6,9 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.css';
 
 // Assets
-import shareImage from '../../../assets/share.svg';
-import manageImage from '../../../assets/manage.svg';
+import shareImage from '../../../assets/share.jpg';
+import manageImage from '../../../assets/manage.jpg';
+import heroImage from '../../../assets/hero-bg.png';
 
 // Variables
 const classes = classNames.bind(styles);
