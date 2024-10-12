@@ -17,7 +17,7 @@
 	border: 2px solid var(--light-scheme-color);
 	border-radius: 8px;
 	background-color: var(--light-scheme-layout-bgc);
-	padding: 35px 20px 10px;
+	padding: 35px 20px;
 	max-height: 75%;
 	overflow: hidden;
 	color: var(--light-scheme-color);
@@ -27,13 +27,13 @@
 	position: absolute;
 	top: 0;
 	right: 0;
+	color: rgba(var(--light-scheme-color-rgb), 0.6);
 }
 
 .close {
 	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath fill='%23000' d='M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504L738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512L828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496L285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512L195.2 285.696a64 64 0 0 1 0-90.496'/%3E%3C/svg%3E");
 	width: var(--icon-size-mobile);
 	height: var(--icon-size-mobile);
-	color: var(--light-scheme-color);
 }
 
 .container {
@@ -48,10 +48,52 @@
 	color: var(--dark-scheme-color);
 }
 
-:global(.dark) .close {
-	color: var(--dark-scheme-color);
-}
-
 :global(.dark) .modal-input::placeholder {
 	color: rgba(var(--dark-scheme-color-rgb), 0.8);
+}
+
+@media (width >= 440px) {
+	.modal-wrap {
+		padding: 40px 10%;
+	}
+}
+
+@media (width >= 600px) {
+	.modal {
+		padding: 0 10%;
+	}
+}
+
+@media (width >=900px) {
+	.modal {
+		padding: 0 15%;
+	}
+}
+
+@media (width >= 1000px) {
+	.modal-button:hover {
+		color: var(--light-scheme-color);
+	}
+
+	:global(.dark) .modal-button:hover {
+		color: var(--light-scheme-google-bgc);
+	}
+}
+
+@media (width >= 1100px) {
+	.modal {
+		padding: 0 20%;
+	}
+}
+
+@media (width >= 1300px) {
+	.modal {
+		padding: 0 25%;
+	}
+}
+
+@media (width >= 1600px) {
+	.modal {
+		padding: 0 30%;
+	}
 }
