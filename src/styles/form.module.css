@@ -107,6 +107,7 @@
 
 .form-label:focus-within {
 	color: var(--light-scheme-highlight);
+	font-weight: bolder;
 }
 
 .form-input:focus {
@@ -123,4 +124,24 @@
 
 :global(.dark) .form-input:focus {
 	border-color: var(--dark-scheme-highlight);
+}
+
+@media (width >= 1000px) {
+	.form-label:hover {
+		color: var(--light-scheme-highlight);
+		font-weight: bolder;
+	}
+
+	.form-submit:hover {
+		background-color: rgba(var(--light-scheme-highlight-rgb), 0.8);
+	}
+
+	:global(.dark) .form-label:hover {
+		color: var(--dark-scheme-highlight);
+	}
+
+	:global(.dark) .form-submit:hover {
+		border: 2px solid var(--dark-scheme-highlight);
+		background-color: rgba(var(--light-scheme-success-rgb), 0.8);
+	}
 }
