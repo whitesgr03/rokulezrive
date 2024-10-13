@@ -64,6 +64,9 @@ export const File_Info = () => {
 
 			const options = {
 				method: 'POST',
+				headers: {
+					'X-Requested-With': 'XmlHttpRequest',
+				},
 				credentials: 'include',
 			};
 

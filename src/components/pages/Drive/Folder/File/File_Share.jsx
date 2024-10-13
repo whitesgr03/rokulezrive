@@ -81,6 +81,7 @@ export const File_Share = ({
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
+				'X-Requested-With': 'XmlHttpRequest',
 			},
 			body: JSON.stringify(formData),
 			credentials: 'include',
@@ -117,6 +118,9 @@ export const File_Share = ({
 
 		const options = {
 			method: 'DELETE',
+			headers: {
+				'X-Requested-With': 'XmlHttpRequest',
+			},
 			credentials: 'include',
 		};
 
@@ -139,6 +143,9 @@ export const File_Share = ({
 
 			const options = {
 				method: 'POST',
+				headers: {
+					'X-Requested-With': 'XmlHttpRequest',
+				},
 				credentials: 'include',
 			};
 
@@ -150,6 +157,9 @@ export const File_Share = ({
 
 			const options = {
 				method: 'DELETE',
+				headers: {
+					'X-Requested-With': 'XmlHttpRequest',
+				},
 				credentials: 'include',
 			};
 

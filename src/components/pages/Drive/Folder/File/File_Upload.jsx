@@ -51,6 +51,9 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 		const options = {
 			method: 'POST',
 			body: formData,
+			headers: {
+				'X-Requested-With': 'XmlHttpRequest',
+			},
 			credentials: 'include',
 		};
 

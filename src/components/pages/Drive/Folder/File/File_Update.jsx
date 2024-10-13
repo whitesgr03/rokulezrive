@@ -77,6 +77,7 @@ export const File_Update = ({
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
+				'X-Requested-With': 'XmlHttpRequest',
 			},
 			body: JSON.stringify(formData),
 			credentials: 'include',

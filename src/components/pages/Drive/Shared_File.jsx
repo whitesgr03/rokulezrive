@@ -64,6 +64,9 @@ export const Shared_File = () => {
 
 			const options = {
 				method: 'POST',
+				headers: {
+					'X-Requested-With': 'XmlHttpRequest',
+				},
 				credentials: 'include',
 			};
 

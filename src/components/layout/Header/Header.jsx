@@ -45,6 +45,9 @@ export const Header = ({
 
 		const options = {
 			method: 'POST',
+			headers: {
+				'X-Requested-With': 'XmlHttpRequest',
+			},
 			credentials: 'include',
 		};
 		const result = await handleFetch(url, options);

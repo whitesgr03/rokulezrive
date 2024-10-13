@@ -69,6 +69,7 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
+				'X-Requested-With': 'XmlHttpRequest',
 			},
 			body: JSON.stringify({ ...formData, parentId }),
 			credentials: 'include',

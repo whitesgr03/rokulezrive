@@ -28,6 +28,9 @@ export const Shared_Delete = ({
 
 		const options = {
 			method: 'DELETE',
+			headers: {
+				'X-Requested-With': 'XmlHttpRequest',
+			},
 			credentials: 'include',
 		};
 
