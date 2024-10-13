@@ -47,8 +47,8 @@ export const Register = () => {
 			username: string()
 				.trim()
 				.matches(
-					/^(?=.*[a-zA-Z0-9]_?)(?=.{4,25})/,
-					'Username must contain alphanumeric and underscore characters, and be between 4 and 25 characters.',
+					/^(?=\w{4,25}$)(?!.*[_]{2,})[^_].*[^_]$/,
+					'Username can only contain alphanumeric and non-consecutive underscore characters, and be between 4 and 25 characters.',
 				)
 				.required('Username is required.'),
 			email: string()
@@ -58,7 +58,7 @@ export const Register = () => {
 			password: string()
 				.matches(
 					/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-					'Password must contain one or more numbers, special symbols, lowercase and uppercase characters, and at least 8 characters.',
+					'Password must contain one or more numbers, special symbols (Ex: !@#$%^&*), lowercase and uppercase characters, and at least 8 characters.',
 				)
 				.required('Password is required.'),
 			confirmPassword: string()

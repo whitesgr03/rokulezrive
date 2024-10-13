@@ -1,11 +1,16 @@
 // Packages
-import { Link, useOutletContext, Navigate } from 'react-router-dom';
+import {
+	Link,
+	useOutletContext,
+	Navigate,
+	useSearchParams,
+	useNavigate,
+} from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { object, string } from 'yup';
 
 // Styles
-
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
 import accountStyles from './Account.module.css';
@@ -21,13 +26,23 @@ import { Username_Form } from './Username_Form';
 // Variables
 const classes = classNames.bind(formStyles);
 
+// Assets
+import googleIcon from '../../../assets/google.png';
+import facebookIcon from '../../../assets/facebook.png';
+
 export const Login = () => {
-	const { onUser, onActiveModal, darkTheme } = useOutletContext();
+	const [searchParams] = useSearchParams();
+	const navigate = useNavigate();
+
+	const code = searchParams.get('code');
+	const state = searchParams.get('state');
+	const errorParams = searchParams.get('error');
+
+	const { onUser, onActiveModal } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '', password: '' });
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(code ? true : false);
 	const [error, setError] = useState(null);
-	const googleRenderButton = useRef(null);
 
 	const handleValidFields = async () => {
 		let isValid = false;
@@ -69,6 +84,7 @@ export const Login = () => {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
+				'X-Requested-With': 'XmlHttpRequest',
 			},
 			body: JSON.stringify(formData),
 			credentials: 'include',
@@ -111,130 +127,83 @@ export const Login = () => {
 		setFormData(fields);
 	};
 
-	const handleFacebookUserRegister = async user => {
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/register/facebook`;
-
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(user),
-			credentials: 'include',
-		};
-
-		const result = await handleFetch(URL, options);
-
-		const handleSuccess = () => {
-			onUser(result.data);
-			localStorage.setItem(
-				'drive.session-exp',
-				JSON.stringify(new Date(result.cookie.exp).getTime()),
-			);
-			onActiveModal({ component: null });
-		};
-
-		result.success
-			? handleSuccess()
-			: result.message && setError(result.message);
-
-		return result?.fields;
+	const generateRandomString = () => {
+		const characters =
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		return Array.from(
+			window.crypto.getRandomValues(new Uint32Array(32)),
+			value => characters.charAt(value % characters.length),
+		).join('');
 	};
 
-	const handleFacebookUserLogin = async res => {
+	const handleFacebookUserLogin = async () => {
 		setLoading(true);
 
-		const { accessToken } = res;
+		const state = generateRandomString();
 
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/login/facebook`;
+		localStorage.setItem('facebook_state', state);
 
-		const options = {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-			credentials: 'include',
-		};
+		const url =
+			'https://www.facebook.com/v21.0/dialog/oauth?' +
+			`client_id=${import.meta.env.VITE_FACEBOOK_APP_ID}` +
+			`&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}` +
+			`&state=${state}` +
+			'&auth_type=rerequest' +
+			'&scope=public_profile';
 
-		const result = await handleFetch(URL, options);
+		window.location.replace(url);
+	};
 
-		const handleSuccess = () => {
-			const isRegister = result.data;
+	const handleGoogleUserLogin = () => {
+		setLoading(true);
+		const { google } = window;
 
-			isRegister
-				? (() => {
-						onUser(result.data);
-						localStorage.setItem(
-							'drive.session-exp',
-							JSON.stringify(new Date(result.cookie.exp).getTime()),
-						);
-					})()
-				: onActiveModal({
-						component: (
-							<Username_Form onRegister={handleFacebookUserRegister} />
-						),
-					});
-		};
+		const state = generateRandomString();
 
-		result.success ? handleSuccess() : setError(result.message);
+		localStorage.setItem('google_state', state);
 
-		setLoading(false);
+		google.accounts.oauth2
+			.initCodeClient({
+				client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+				scope:
+					'https://www.googleapis.com/auth/userinfo.email ' +
+					'https://www.googleapis.com/auth/userinfo.profile ' +
+					'openid',
+				ux_mode: 'redirect',
+				redirect_uri: `${import.meta.env.VITE_REDIRECT_URI}`,
+				state,
+			})
+			.requestCode();
 	};
 
 	useEffect(() => {
-		const { google } = window;
+		const controller = new AbortController();
+		const { signal } = controller;
 
-		const handleGoogleUserRegister = async user => {
-			const URL = `${import.meta.env.VITE_RESOURCE_URL}/register/google`;
+		const facebookState = localStorage.getItem('facebook_state');
+		const googleState = localStorage.getItem('google_state');
+
+		const handleLogin = async type => {
+			const url = `${import.meta.env.VITE_RESOURCE_URL}/login/${type}`;
 
 			const options = {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+					'X-Requested-With': 'XmlHttpRequest',
 				},
-				body: JSON.stringify(user),
+				signal,
+				body: JSON.stringify({ code }),
 				credentials: 'include',
 			};
 
-			const result = await handleFetch(URL, options);
+			const result = await handleFetch(url, options);
 
 			const handleSuccess = () => {
-				onUser(result.data);
-				localStorage.setItem(
-					'drive.session-exp',
-					JSON.stringify(new Date(result.cookie.exp).getTime()),
-				);
-				onActiveModal({ component: null });
-			};
+				localStorage.removeItem('google_state');
+				localStorage.removeItem('facebook_state');
 
-			result.success
-				? handleSuccess()
-				: result.message && setError(result.message);
-
-			return result?.fields;
-		};
-
-		const handleGoogleUserLogin = async res => {
-			setLoading(true);
-
-			const { credential } = res;
-
-			const URL = `${import.meta.env.VITE_RESOURCE_URL}/login/google`;
-
-			const options = {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${credential}`,
-				},
-				credentials: 'include',
-			};
-
-			const result = await handleFetch(URL, options);
-
-			const handleSuccess = () => {
-				const isRegister = result.data;
-
-				isRegister
+				result.data
 					? (() => {
 							onUser(result.data);
 							localStorage.setItem(
@@ -244,54 +213,31 @@ export const Login = () => {
 						})()
 					: onActiveModal({
 							component: (
-								<Username_Form onRegister={handleGoogleUserRegister} />
+								<Username_Form
+									type={type}
+									onUser={onUser}
+									onActiveModal={onActiveModal}
+								/>
 							),
 						});
 			};
 
-			result.success ? handleSuccess() : setError(result.message);
-			setLoading(false);
+			const handleResult = () => {
+				result.success ? handleSuccess() : setError(result.message);
+				setLoading(false);
+			};
+
+			result && handleResult();
 		};
 
-		google.accounts.id.initialize({
-			client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-			callback: handleGoogleUserLogin,
-		});
+		code && state === facebookState && handleLogin('facebook');
+		code && state === googleState && handleLogin('google');
 
-		const initialGoogleButton = () => {
-			const maxHeightGoogleButton = 400;
-			const computedStyle = getComputedStyle(googleRenderButton.current);
-			const border =
-				parseFloat(computedStyle.borderLeftWidth) +
-				parseFloat(computedStyle.borderRightWidth);
+		errorParams && navigate('/account/login');
 
-			google.accounts.id.renderButton(googleRenderButton.current, {
-				theme: darkTheme ? 'filled_black' : 'outline',
-				size: 'large',
-				logo_alignment: 'center',
-				width:
-					googleRenderButton.current.offsetWidth > maxHeightGoogleButton
-						? maxHeightGoogleButton - border
-						: googleRenderButton.current.offsetWidth - border,
-				locale: 'en',
-			});
-		};
+		return () => controller.abort();
+	}, [code, state, errorParams, navigate, onActiveModal, onUser]);
 
-		googleRenderButton.current && initialGoogleButton();
-		window.addEventListener('resize', initialGoogleButton);
-		return () => window.removeEventListener('resize', initialGoogleButton);
-	}, [darkTheme, onUser, onActiveModal]);
-
-	useEffect(() => {
-		const { FB } = window;
-		FB.init({
-			appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-			status: true,
-			cookie: true,
-			xfbml: false,
-			version: 'v20.0',
-		});
-	}, []);
 	return (
 		<>
 			{error ? (
@@ -374,37 +320,21 @@ export const Login = () => {
 
 					<div className={styles.federation}>
 						<button
-							ref={googleRenderButton}
 							className={styles['federation-button']}
-						></button>
+							onClick={handleGoogleUserLogin}
+						>
+							<div className={styles.icon}>
+								<img src={googleIcon} alt="Google login icon" />
+							</div>
+							Sign in with Google
+						</button>
 						<button
 							className={styles['federation-button']}
-							onClick={() => {
-								const { FB } = window;
-
-								FB.login(res => {
-									res.status === 'connected'
-										? handleFacebookUserLogin(res.authResponse)
-										: setLoading(false);
-								});
-							}}
+							onClick={handleFacebookUserLogin}
 						>
-							<svg
-								className={styles['federation-button-svg']}
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 256 256"
-							>
-								<path
-									fill="#1877f2"
-									d="M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128c0 63.888 46.808 116.843 108 126.445V165H75.5v-37H108V99.8c0-32.08 19.11-49.8 48.348-49.8C170.352 50 185 52.5 185 52.5V84h-16.14C152.959 84 148 93.867 148 103.99V128h35.5l-5.675 37H148v89.445c61.192-9.602 108-62.556 108-126.445"
-								/>
-								<path
-									fill="#fff"
-									d="m177.825 165l5.675-37H148v-24.01C148 93.866 152.959 84 168.86 84H185V52.5S170.352 50 156.347 50C127.11 50 108 67.72 108 99.8V128H75.5v37H108v89.445A129 129 0 0 0 128 256a129 129 0 0 0 20-1.555V165z"
-								/>
-							</svg>
+							<div className={styles.icon}>
+								<img src={facebookIcon} alt="Facebook login icon" />
+							</div>
 							Sign in with Facebook
 						</button>
 					</div>

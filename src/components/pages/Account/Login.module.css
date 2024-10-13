@@ -20,11 +20,13 @@
 	max-width: 400px;
 	min-height: 45px;
 	color: var(--light-scheme-color);
-	font-size: 14px;
 }
 
-.federation-button-svg {
-	font-size: 18px;
+.icon {
+	--size: var(--icon-size-desktop);
+
+	width: var(--size);
+	height: var(--size);
 }
 
 /* Dark scheme classes */
