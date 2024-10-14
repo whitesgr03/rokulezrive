@@ -7,17 +7,17 @@
 	backdrop-filter: blur(4px);
 	inset: 0;
 	background-color: rgba(var(--light-scheme-color-rgb), 0.6);
+	padding: 0 5%;
 }
 
 .modal-wrap {
 	display: flex;
 	position: relative;
 	flex: 1 1 100%;
-	margin: 0 5%;
 	border: 2px solid var(--light-scheme-color);
 	border-radius: 8px;
 	background-color: var(--light-scheme-layout-bgc);
-	padding: 35px 20px;
+	padding: 40px 20px;
 	max-height: 75%;
 	overflow: hidden;
 	color: var(--light-scheme-color);
@@ -52,21 +52,14 @@
 	color: rgba(var(--dark-scheme-color-rgb), 0.8);
 }
 
-@media (width >= 440px) {
+@media (width >= 500px) {
 	.modal-wrap {
-		padding: 40px 10%;
+		margin: 0 auto;
+		max-width: 500px;
 	}
-}
 
-@media (width >= 600px) {
 	.modal {
 		padding: 0 10%;
-	}
-}
-
-@media (width >=900px) {
-	.modal {
-		padding: 0 15%;
 	}
 }
 
@@ -77,23 +70,5 @@
 
 	:global(.dark) .modal-button:hover {
 		color: var(--light-scheme-google-bgc);
-	}
-}
-
-@media (width >= 1100px) {
-	.modal {
-		padding: 0 20%;
-	}
-}
-
-@media (width >= 1300px) {
-	.modal {
-		padding: 0 25%;
-	}
-}
-
-@media (width >= 1600px) {
-	.modal {
-		padding: 0 30%;
 	}
 }
