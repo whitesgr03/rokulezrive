@@ -55,6 +55,15 @@
 	height: var(--size);
 }
 
+.active {
+	color: var(--light-scheme-highlight);
+	font-weight: bolder;
+}
+
+:global(.dark) .active {
+	color: var(--dark-scheme-highlight);
+}
+
 /* Dark scheme classes */
 
 :global(.dark) .mobile-nav {
