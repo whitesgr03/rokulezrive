@@ -70,7 +70,7 @@
 	border: 2px solid var(--light-scheme-color);
 	border-radius: 5px;
 	background-color: var(--light-scheme-highlight);
-	width: 50%;
+	width: 100%;
 	min-height: 45px;
 	color: var(--dark-scheme-color);
 }
