@@ -69,6 +69,26 @@
 	}
 }
 
+@media (width >= 700px) {
+	.footer {
+		background-color: var(--light-scheme-main-bgc);
+		padding: 20px;
+	}
+
+	:global(.dark) .footer {
+		border-top: 1px solid var(--dark-scheme-color);
+		background-color: var(--dark-scheme-layout-bgc);
+	}
+
+	.email {
+		--size: var(--icon-size-desktop);
+	}
+
+	.github {
+		--size: var(--icon-size-desktop);
+	}
+}
+
 @media (width >= 800px) {
 	.address-list {
 		column-gap: 50px;
