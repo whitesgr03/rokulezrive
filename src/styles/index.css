@@ -175,4 +175,7 @@ main > * {
 		--mobile-header-height: 70px;
 	}
 
+  main {
+    display: flex;
+  }
 }
