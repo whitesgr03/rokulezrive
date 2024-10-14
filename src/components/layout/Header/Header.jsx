@@ -30,7 +30,7 @@ export const Header = ({
 	const [error, setError] = useState(false);
 
 	const isNormalMobile = useMediaQuery({ minWidth: 440 });
-	const isNormalTablet = useMediaQuery({ minWidth: 800 });
+	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
 	const handleDropdownSlideOut = () => {
 		onActiveMenu({
