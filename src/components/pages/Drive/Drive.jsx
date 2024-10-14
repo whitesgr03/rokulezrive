@@ -10,18 +10,24 @@ import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 // Styles
+import { icon } from '../../../styles/icon.module.css';
+import upload_listStyles from './Upload_List.module.css';
 import styles from './Drive.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading/Loading';
+import { Upload_List } from './Upload_List';
+import { Mobile_Nav } from '../../layout/Mobile_Nav/Mobile_Nav';
+import { Footer } from '../../layout/Footer/Footer';
 
 // Utils
 import { handleFetch } from '../../../utils/handle_fetch';
 
 export const Drive = () => {
+	const { folderId, fileId } = useParams();
 	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
 
-	const { folderId, fileId } = useParams();
+	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
 
 	const [paths, setPaths] = useState([]);
@@ -184,48 +190,101 @@ export const Drive = () => {
 			{error ? (
 				<Navigate to="/error" state={{ error }} />
 			) : (
-				<div className={styles.drive}>
+				<>
 					{loading ? (
 						<Loading text="Loading..." />
 					) : (
 						<>
-							{paths.length !== 0 && (
-								<nav>
-									<ul className={styles.paths}>
-										{paths.map((item, i) => (
-											<li key={`${item.path}`} className={styles['paths-item']}>
-												<div className={styles['paths-wrap']}>
-													<Link to={item.path} className={styles['paths-link']}>
-														{item.name}
-													</Link>
-													{paths.length - 1 !== i && (
-														<span className={styles['paths-icon']}>{'>'}</span>
-													)}
-												</div>
-											</li>
-										))}
-									</ul>
-								</nav>
+							{isNormalTablet && (
+								<div className={styles.sidebar}>
+									<Upload_List
+										folder={folder}
+										onActiveModal={onActiveModal}
+										onAddFolder={handleAddFolder}
+										onGetFolder={handleGetFolder}
+									/>
+									<Mobile_Nav />
+								</div>
 							)}
+							<div className={styles['wrap-bgc']}>
+								<div className={styles.wrap}>
+									<div className={styles.drive}>
+										<>
+											{paths.length !== 0 && (
+												<nav>
+													<ul className={styles.paths}>
+														{paths.map((item, i) => (
+															<li
+																key={`${item.path}`}
+																className={styles['paths-item']}
+															>
+																<div className={styles['paths-wrap']}>
+																	<Link
+																		to={item.path}
+																		className={styles['paths-link']}
+																	>
+																		{item.name}
+																	</Link>
+																	{paths.length - 1 !== i && (
+																		<span className={styles['paths-icon']}>
+																			{'>'}
+																		</span>
+																	)}
+																</div>
+															</li>
+														))}
+													</ul>
+												</nav>
+											)}
 
-							{!fileId && <h2>{folder.name}</h2>}
-							<Outlet
-								context={{
-									folder,
-									shared,
-									onActiveMenu,
-									onActiveModal,
-									onGetFolder: handleGetFolder,
-									onAddFolder: handleAddFolder,
-									onFolders: setFolders,
-									onUpdateFolder: handleUpdateFolder,
-									onDeleteSharedFile: handleDeleteSharedFile,
-									menu,
-								}}
-							/>
+											{!fileId && <h2>{folder.name}</h2>}
+											<Outlet
+												context={{
+													folder,
+													shared,
+													onActiveMenu,
+													onActiveModal,
+													onGetFolder: handleGetFolder,
+													onAddFolder: handleAddFolder,
+													onFolders: setFolders,
+													onUpdateFolder: handleUpdateFolder,
+													onDeleteSharedFile: handleDeleteSharedFile,
+													menu,
+												}}
+											/>
+										</>
+									</div>
+									{isNormalTablet && <Footer />}
+								</div>
+							</div>
+							{!isNormalTablet && (
+								<div className={`upload ${upload_listStyles.upload}`}>
+									<button
+										type="button"
+										className={upload_listStyles['upload-button']}
+										onClick={() =>
+											onActiveMenu({
+												name: 'upload-menu',
+												button: 'upload-button',
+											})
+										}
+										data-button="upload-button"
+									>
+										<span className={`${icon} ${upload_listStyles.plus}`} />
+									</button>
+									{menu.name === 'upload-menu' && (
+										<Upload_List
+											folder={folder}
+											onActiveModal={onActiveModal}
+											onAddFolder={handleAddFolder}
+											onGetFolder={handleGetFolder}
+										/>
+									)}
+								</div>
+							)}
 						</>
 					)}
-				</div>
+				</>
 			)}
 		</>
 	);
