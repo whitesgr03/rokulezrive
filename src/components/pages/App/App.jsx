@@ -1,6 +1,7 @@
 // Packages
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
+import { useMediaQuery } from 'react-responsive';
 import { Outlet, Navigate } from 'react-router-dom';
 
 // Styles
@@ -31,6 +32,8 @@ export const App = () => {
 	const [modal, setModal] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+
+	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
 	const handleCloseMenu = e => {
 		const { id, button, closeMenu } = e.target.dataset;
@@ -128,7 +131,7 @@ export const App = () => {
 				<div
 					className={`${styles.app} ${classes({
 						dark: darkTheme,
-						'active-mobile-nav': user,
+						'active-mobile-nav': !isNormalTablet && user,
 					})}`}
 					onClick={handleCloseMenu}
 				>
@@ -166,9 +169,9 @@ export const App = () => {
 										}}
 									/>
 								</main>
-								<Footer />
+								{!isNormalTablet && <Footer />}
 							</div>
-							{user && (
+							{!isNormalTablet && user && (
 								<Mobile_Nav
 									menu={menu}
 									onActiveModal={handleActiveModal}
