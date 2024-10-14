@@ -228,6 +228,18 @@
 	}
 }
 
+@media (width >= 700px) {
+	.header {
+		position: static;
+		box-shadow: none;
+		padding: 0 20px;
+	}
+
+	:global(.dark) .header {
+		border: 0;
+	}
+}
+
 @media (width >= 800px) {
 	.features {
 		column-gap: 50px;
