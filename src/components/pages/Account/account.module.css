@@ -14,6 +14,7 @@
 	border: 1px solid var(--light-scheme-color);
 	border-radius: 10px;
 	padding: 20px 0;
+	width: 100%;
 	overflow: hidden;
 }
 
@@ -58,39 +59,23 @@
 	}
 }
 
-@media (width >= 550px) {
-	.submit {
-		max-width: 400px;
-	}
-}
-
-@media (width >=900px) {
+@media (width >= 500px) {
 	.account {
-		padding: 40px 15%;
+		margin: 0 auto;
+		padding: 40px 5%;
+		max-width: 500px;
 	}
 }
 
-@media (width >= 1000px) {
+@media (width >= 600px) {
+	.account {
+		padding: 40px 0;
+	}
+}
+
+@media (width >= 900px) {
 	.account {
 		justify-content: center;
-	}
-}
-
-@media (width >= 1100px) {
-	.account {
-		row-gap: 30px;
-		padding: 50px 20%;
-	}
-}
-
-@media (width >= 1300px) {
-	.account {
-		padding: 50px 30%;
-	}
-}
-
-@media (width >= 1600px) {
-	.account {
-		padding: 50px 35%;
+		padding: 50px 0;
 	}
 }
