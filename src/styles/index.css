@@ -170,7 +170,7 @@ main > * {
 	color: var(--dark-scheme-color);
 }
 
-@media (width >= 600px) {
+@media (width >= 700px) {
 	:root {
 		--mobile-header-height: 80px;
 	}
