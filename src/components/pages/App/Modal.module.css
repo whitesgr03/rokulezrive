@@ -69,6 +69,6 @@
 	}
 
 	:global(.dark) .modal-button:hover {
-		color: var(--light-scheme-google-bgc);
+		color: var(--dark-scheme-color-bgc);
 	}
 }

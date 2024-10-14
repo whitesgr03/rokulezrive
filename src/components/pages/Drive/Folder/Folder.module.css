@@ -22,7 +22,7 @@
 	border-radius: 100%;
 	background-color: var(--light-scheme-highlight);
 	padding: 10px;
-	color: var(--light-scheme-google-bgc);
+	color: var(--dark-scheme-color-bgc);
 }
 
 .plus {

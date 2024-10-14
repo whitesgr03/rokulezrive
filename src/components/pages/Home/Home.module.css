@@ -172,7 +172,7 @@
 	.hero-container {
 		display: flex;
 		position: relative;
-		background-color: var(--light-scheme-google-bgc);
+		background-color: var(--dark-scheme-color-bgc);
 		padding: 40px 0;
 		aspect-ratio: 16 / 9;
 	}

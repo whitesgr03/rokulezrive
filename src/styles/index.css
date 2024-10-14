@@ -6,7 +6,6 @@
 	--light-scheme-layout-bgc-rgb: 220, 214, 214;
 	--light-scheme-layout-shadow: rgb(187 189 195);
 	--light-scheme-layout-shadow-rgb: 187, 189, 195;
-	--light-scheme-google-bgc: rgb(255 255 255);
 	--light-scheme-main-bgc: rgb(245 248 254);
 	--light-scheme-main-bgc-rgb: 245, 248, 254;
 	--light-scheme-highlight: rgb(23 80 115);
@@ -19,6 +18,8 @@
 	/* dark */
 	--dark-scheme-color: rgb(209 209 209);
 	--dark-scheme-color-rgb: 209, 209, 209;
+	--dark-scheme-color-bgc: rgb(255 255 255);
+	--dark-scheme-color-bgc-rgb: 255, 255, 255;
 	--dark-scheme-layout-bgc: rgb(10 19 36);
 	--dark-scheme-layout-bgc-rgb: 10, 19, 36;
 	--dark-scheme-layout-border-shadow: rgb(202 205 212);
