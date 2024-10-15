@@ -32,7 +32,9 @@ export const Subfolders = () => {
 							<span className={`${icon} ${styles.folder}`} />
 
 							<div className={driveStyles.content}>
-								<p className={driveStyles.name}>{subfolder.name}</p>
+								<p className={driveStyles.name} title={subfolder.name}>
+									{subfolder.name}
+								</p>
 								<div className={driveStyles['info-wrap']}>
 									<div className={driveStyles.info}>
 										<span className={`${icon} ${driveStyles.calendar}`} />

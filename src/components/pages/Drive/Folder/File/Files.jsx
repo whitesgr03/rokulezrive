@@ -103,7 +103,9 @@ export const Files = () => {
 								<Link to={`files/${file.id}`} className={driveStyles.container}>
 									<span className={`${icon} ${driveStyles[`${file.type}`]}`} />
 									<div className={driveStyles.content}>
-										<p className={driveStyles.name}>{file.name}</p>
+										<p className={driveStyles.name} title={file.name}>
+											{file.name}
+										</p>
 										<div className={driveStyles['info-wrap']}>
 											<div className={driveStyles.info}>
 												<span className={`${icon} ${styles.size}`} />

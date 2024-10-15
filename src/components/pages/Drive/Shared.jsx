@@ -107,7 +107,9 @@ export const Shared = () => {
 												className={`${icon} ${driveStyles[`${item.file.type}`]}`}
 											/>
 											<div className={driveStyles.content}>
-												<p className={driveStyles.name}>{item.file.name}</p>
+												<p className={driveStyles.name} title={item.file.name}>
+													{item.file.name}
+												</p>
 												<div className={driveStyles['info-wrap']}>
 													<div className={driveStyles.info}>
 														<span className={`${icon} ${styles['share-by']}`} />
