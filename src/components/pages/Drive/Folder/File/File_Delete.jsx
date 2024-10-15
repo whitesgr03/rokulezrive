@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-// folderStyles
+// Styles
 import folderStyles from '../Folder.module.css';
 
 // Components
