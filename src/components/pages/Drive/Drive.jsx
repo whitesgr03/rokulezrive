@@ -226,7 +226,7 @@ export const Drive = () => {
 												</nav>
 											)}
 
-											{!fileId && <h2>{folder.name}</h2>}
+											{!folderId && !fileId && <h2>{folder.name}</h2>}
 											<Outlet
 												context={{
 													folder,
