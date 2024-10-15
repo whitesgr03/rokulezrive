@@ -175,10 +175,10 @@ export const Drive = () => {
 
 		const handleSet = () => {
 			const paths = getParentFolderIds([], folderId, [...folders]);
-			setPaths(paths.slice(-3));
+			setPaths(paths.slice(isNormalTablet ? -3 : -2));
 		};
 		folders.length && handleSet();
-	}, [folders, folderId, fileId, isSmallMobile]);
+	}, [folders, folderId, fileId, isSmallMobile, isNormalTablet]);
 
 	return (
 		<>
