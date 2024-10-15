@@ -6,7 +6,7 @@ import {
 	useParams,
 	Link,
 } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 // Styles
@@ -212,28 +212,22 @@ export const Drive = () => {
 										<>
 											{paths.length !== 0 && (
 												<nav>
-													<ul className={styles.paths}>
+													<div className={styles.paths}>
 														{paths.map((item, i) => (
-															<li
-																key={`${item.path}`}
-																className={styles['paths-item']}
-															>
-																<div className={styles['paths-wrap']}>
-																	<Link
-																		to={item.path}
-																		className={styles['paths-link']}
-																	>
-																		{item.name}
-																	</Link>
-																	{paths.length - 1 !== i && (
-																		<span className={styles['paths-icon']}>
-																			{'>'}
-																		</span>
-																	)}
-																</div>
-															</li>
+															<Fragment key={`${item.path}`}>
+																{i !== 0 && (
+																	<span className={`${styles.arrow}`} />
+																)}
+																<Link
+																	to={item.path}
+																	className={styles['paths-link']}
+																	title={item.name}
+																>
+																	{item.name}
+																</Link>
+															</Fragment>
 														))}
-													</ul>
+													</div>
 												</nav>
 											)}
 
