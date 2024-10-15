@@ -143,9 +143,6 @@ export const Drive = () => {
 			const index = folders.findIndex(folder => folder.id === id);
 			const subfolder = index !== -1 ? folders.splice(index, 1)[0] : folders[0];
 
-			const currentFolderPath = subfolder.id === folderId;
-			const inFilePath = fileId;
-
 			return id
 				? subfolder.parent === null
 					? [
@@ -156,19 +153,17 @@ export const Drive = () => {
 							...result,
 						]
 					: getParentFolderIds(
-							currentFolderPath && !inFilePath
-								? [...result]
-								: [
-										{
-											name: subfolder.name,
-											path: `/drive/folders/${subfolder.id}`,
-										},
-										...result,
-									],
+							[
+								{
+									name: subfolder.name,
+									path: `/drive/folders/${subfolder.id}`,
+								},
+								...result,
+							],
 							subfolder.parent.id,
 							folders,
 						)
-				: !inFilePath
+				: !fileId
 					? []
 					: [
 							{
