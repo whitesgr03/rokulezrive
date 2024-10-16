@@ -251,6 +251,14 @@
 }
 
 @media (width >= 1000px) {
+	.dropdown-link:hover {
+		color: var(--light-scheme-highlight);
+	}
+
+	:global(.dark) .dropdown-link:hover {
+		color: var(--dark-scheme-highlight);
+	}
+
 	.logo-text {
 		font-size: 1.5rem;
 	}
