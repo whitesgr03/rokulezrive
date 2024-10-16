@@ -202,46 +202,44 @@ export const Drive = () => {
 								</div>
 							)}
 							<div className={styles['wrap-bgc']}>
-								<div className={styles.wrap}>
-									<div className={styles.drive}>
-										<>
-											{paths.length !== 0 && (
-												<nav>
-													<div className={styles.paths}>
-														{paths.map((item, i) => (
-															<Fragment key={`${item.path}`}>
-																{i !== 0 && (
-																	<span className={`${styles.arrow}`} />
-																)}
-																<Link
-																	to={item.path}
-																	className={styles['paths-link']}
-																	title={item.name}
-																>
-																	{item.name}
-																</Link>
-															</Fragment>
-														))}
-													</div>
-												</nav>
-											)}
+								<div className={styles.drive}>
+									<div className={styles.content}>
+										{paths.length !== 0 && (
+											<nav>
+												<div className={styles.paths}>
+													{paths.map((item, i) => (
+														<Fragment key={`${item.path}`}>
+															{i !== 0 && (
+																<span className={`${styles.arrow}`} />
+															)}
+															<Link
+																to={item.path}
+																className={styles['paths-link']}
+																title={item.name}
+															>
+																{item.name}
+															</Link>
+														</Fragment>
+													))}
+												</div>
+											</nav>
+										)}
 
-											{!folderId && !fileId && <h2>{folder.name}</h2>}
-											<Outlet
-												context={{
-													folder,
-													shared,
-													onActiveMenu,
-													onActiveModal,
-													onGetFolder: handleGetFolder,
-													onAddFolder: handleAddFolder,
-													onFolders: setFolders,
-													onUpdateFolder: handleUpdateFolder,
-													onDeleteSharedFile: handleDeleteSharedFile,
-													menu,
-												}}
-											/>
-										</>
+										{!folderId && !fileId && <h2>{folder.name}</h2>}
+										<Outlet
+											context={{
+												folder,
+												shared,
+												onActiveMenu,
+												onActiveModal,
+												onGetFolder: handleGetFolder,
+												onAddFolder: handleAddFolder,
+												onFolders: setFolders,
+												onUpdateFolder: handleUpdateFolder,
+												onDeleteSharedFile: handleDeleteSharedFile,
+												menu,
+											}}
+										/>
 									</div>
 									{isNormalTablet && <Footer />}
 								</div>

@@ -3,7 +3,11 @@
 	height: 100%;
 }
 
-.wrap {
+.content {
+	display: flex;
+	row-gap: 20px;
+	flex-direction: column;
+	padding: 30px;
 	height: 100%;
 }
 
@@ -320,8 +324,21 @@
 }
 
 @media (width >= 440px) {
-	.drive {
-		padding: 40px 10%;
+
+	.content {
+		padding: 30px 15%;
+	}
+}
+
+@media (width >= 550px) {
+	.content {
+		padding: 30px 20%;
+	}
+}
+
+@media (width >= 650px) {
+	.content {
+		padding: 30px 22%;
 	}
 }
 
@@ -334,6 +351,12 @@
 
 	:global(.dark) .drive {
 		background-color: var(--dark-scheme-layout-bgc);
+	}
+
+	.content {
+		flex: 1 1 100%;
+		padding: 20px;
+		height: auto;
 	}
 
 	.sidebar {
