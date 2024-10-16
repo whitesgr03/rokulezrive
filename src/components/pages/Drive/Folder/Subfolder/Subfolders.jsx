@@ -1,5 +1,6 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
+import { useMediaQuery } from 'react-responsive';
 
 import driveStyles from '../../Drive.module.css';
 import { icon } from '../../../../../styles/icon.module.css';
@@ -19,10 +20,21 @@ export const Subfolders = () => {
 		onUpdateFolder,
 	} = useOutletContext();
 
+	const isNormalTablet = useMediaQuery({ minWidth: 700 });
+
 	return (
 		<>
-			<h3>Folders</h3>
+			<h3 className={driveStyles.title}>Folders</h3>
 			<ul className={driveStyles.list}>
+				{isNormalTablet && (
+					<li className={driveStyles.item}>
+						<div className={`${driveStyles.container} ${driveStyles.head}`}>
+							<div>Name</div>
+							<div className={driveStyles.date}>Created At</div>
+						</div>
+						<div className={driveStyles['options-button']} />
+					</li>
+				)}
 				{folder.subfolders.map(subfolder => (
 					<li key={subfolder.id} className={driveStyles.item}>
 						<Link
@@ -30,17 +42,17 @@ export const Subfolders = () => {
 							className={driveStyles.container}
 						>
 							<span className={`${icon} ${styles.folder}`} />
-
-							<div className={driveStyles.content}>
-								<p className={driveStyles.name} title={subfolder.name}>
-									{subfolder.name}
-								</p>
-								<div className={driveStyles['info-wrap']}>
-									<div className={driveStyles.info}>
-										<span className={`${icon} ${driveStyles.calendar}`} />
-										<span>{format(subfolder.createdAt, 'MMM d, y')}</span>
-									</div>
-								</div>
+							<p
+								className={`${driveStyles.name} ${driveStyles.span}`}
+								title={subfolder.name}
+							>
+								{subfolder.name}
+							</p>
+							<div className={`${driveStyles.info} ${driveStyles.date}`}>
+								{!isNormalTablet && (
+									<span className={`${icon} ${driveStyles.calendar}`} />
+								)}
+								{format(subfolder.createdAt, 'MMM d, y')}
 							</div>
 						</Link>
 						<div className={driveStyles.options}>
@@ -52,6 +64,7 @@ export const Subfolders = () => {
 										name: 'option-menu',
 									})
 								}
+								className={driveStyles['options-button']}
 								data-id={subfolder.id}
 								data-button="option-button"
 							>

@@ -2,6 +2,7 @@
 import { Link, useOutletContext, Navigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 // Styles
 import driveStyles from '../../Drive.module.css';
@@ -22,6 +23,8 @@ export const Files = () => {
 		useOutletContext();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+
+	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
 	const downloading = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath stroke-dasharray='2 4' stroke-dashoffset='6' d='M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9'%3E%3Canimate attributeName='stroke-dashoffset' dur='0.6s' repeatCount='indefinite' values='6;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='32' stroke-dashoffset='32' d='M12 21c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.1s' dur='0.4s' values='32;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='10' stroke-dashoffset='10' d='M12 8v7.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.5s' dur='0.2s' values='10;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='6' stroke-dashoffset='6' d='M12 15.5l3.5 -3.5M12 15.5l-3.5 -3.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.7s' dur='0.2s' values='6;0'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E#123#${Math.random()}")`;
 
@@ -96,29 +99,36 @@ export const Files = () => {
 				<Navigate to="/error" state={{ error }} />
 			) : (
 				<>
-					<h3>Files</h3>
+					<h3 className={driveStyles.title}>Files</h3>
 					<ul className={driveStyles.list}>
+						{isNormalTablet && (
+							<li className={driveStyles.item}>
+								<div className={`${driveStyles.container} ${driveStyles.head}`}>
+									<div>Name</div>
+									<div className={driveStyles.size}>Size</div>
+									<div className={driveStyles.date}>Created At</div>
+								</div>
+								<div className={driveStyles['options-button']} />
+							</li>
+						)}
 						{folder.files.map(file => (
 							<li key={file.id} className={driveStyles.item}>
 								<Link to={`files/${file.id}`} className={driveStyles.container}>
 									<span className={`${icon} ${driveStyles[`${file.type}`]}`} />
-									<div className={driveStyles.content}>
-										<p className={driveStyles.name} title={file.name}>
-											{file.name}
-										</p>
-										<div className={driveStyles['info-wrap']}>
-											<div className={driveStyles.info}>
-												<span className={`${icon} ${styles.size}`} />
-												<span className={driveStyles['file-content']}>
-													{formatBytes(file.size)}
-												</span>
-											</div>
-
-											<div className={driveStyles.info}>
-												<span className={`${icon} ${driveStyles.calendar}`} />
-												<span>{format(file.createdAt, 'MMM d, y')}</span>
-											</div>
-										</div>
+									<p className={driveStyles.name} title={file.name}>
+										{file.name}
+									</p>
+									<div className={`${driveStyles.info}`}>
+										{!isNormalTablet && (
+											<span className={`${icon} ${styles.size}`} />
+										)}
+										{formatBytes(file.size)}
+									</div>
+									<div className={`${driveStyles.info}`}>
+										{!isNormalTablet && (
+											<span className={`${icon} ${driveStyles.calendar} `} />
+										)}
+										{format(file.createdAt, 'MMM d, y')}
 									</div>
 								</Link>
 								<div className={driveStyles.options}>
@@ -130,6 +140,7 @@ export const Files = () => {
 												name: 'option-menu',
 											})
 										}
+										className={driveStyles['options-button']}
 										data-id={file.id}
 										data-button="option-button"
 									>
