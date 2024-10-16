@@ -238,6 +238,10 @@
 	:global(.dark) .header {
 		border: 0;
 	}
+
+	.dropdown {
+		width: 20%;
+	}
 }
 
 @media (width >= 800px) {
