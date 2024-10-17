@@ -29,6 +29,7 @@ export const File_Share = ({
 }) => {
 	const [newPublicId, setNewPublicId] = useState(publicId);
 	const [isPublic, setIsPublic] = useState(publicId !== '');
+	const [isCopied, setIsCopied] = useState(false);
 
 	const [newSharers, setNewSharers] = useState(sharers);
 
@@ -180,6 +181,13 @@ export const File_Share = ({
 	};
 
 	const handleCopyLink = async () => {
+		!isCopied &&
+			(await navigator.clipboard.writeText(
+				`${location.protocol}//${location.host}/shared/${newPublicId}`,
+			));
+		!isCopied && setIsCopied(true);
+	};
+
 	const handleRemoveCopied = e => {
 		e.target.dataset.copied &&
 			setTimeout(() => {
