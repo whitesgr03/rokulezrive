@@ -36,16 +36,16 @@
 	height: var(--size);
 }
 
-/* Pseudo classes */
-
-.footer-link:hover {
-	color: var(--light-scheme-highlight);
-}
-
 /* Dark scheme classes */
 
 :global(.dark) .footer {
 	border: 0;
+}
+
+/* Pseudo classes */
+
+.footer-link:hover {
+	color: var(--light-scheme-highlight);
 }
 
 :global(.dark) .footer-link:hover {
