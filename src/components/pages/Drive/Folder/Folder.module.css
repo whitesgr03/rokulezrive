@@ -43,5 +43,26 @@
 }
 
 .delete {
+/* Pseudo classes */
+
+.cancel:active,
+.delete:active {
+	transform: scale(0.95) translateY(5px);
+}
+
+.cancel:hover {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
+}
+
+.delete:hover {
+	background-color: var(--light-scheme-error);
+}
+
+:global(.dark) .cancel:hover {
+	background-color: rgba(var(--dark-scheme-color-rgb), 0.5);
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .delete:hover {
 	background-color: var(--light-scheme-error);
 }
