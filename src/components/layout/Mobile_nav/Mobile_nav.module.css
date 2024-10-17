@@ -60,16 +60,16 @@
 	font-weight: bolder;
 }
 
-:global(.dark) .active {
-	color: var(--dark-scheme-highlight);
-}
-
 /* Dark scheme classes */
 
 :global(.dark) .mobile-nav {
 	box-shadow: none;
 	border-top: 1px solid var(--dark-scheme-color);
 	background-color: var(--dark-scheme-layout-bgc);
+}
+
+:global(.dark) .active {
+	color: var(--dark-scheme-highlight);
 }
 
 /* Pseudo classes */
