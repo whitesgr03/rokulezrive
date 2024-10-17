@@ -218,8 +218,14 @@ export const File_Share = ({
 								{newSharers.length > 0 && (
 									<ul className={styles['username-list']}>{listSharers}</ul>
 								)}
-								<label htmlFor="username" className={styles['label']}>
-									Share people with username
+
+								<div className={styles['label-wrap']}>
+									<label
+										htmlFor="username"
+										className={`${styles['label']} ${formStyles['form-label']}`}
+									>
+										Share people with username
+									</label>
 									<div className={styles['input-wrap']}>
 										<input
 											type="text"
@@ -233,47 +239,29 @@ export const File_Share = ({
 											value={formData.username}
 											onChange={handleChange}
 										/>
-										<button type="submit" className={styles['input-button']}>
+										<button
+											type="submit"
+											className={`${styles['input-button']} ${styles.zoom}`}
+										>
 											<span className={`${icon} ${styles.add}`} />
 										</button>
 									</div>
-								</label>
-
-								<label
-									htmlFor="share_anyone"
-									className={styles['checkbox-label']}
-								>
-									<input
-										type="checkbox"
-										name="share_anyone"
-										id="share_anyone"
-										className={styles.checkbox}
-										onChange={handlePublicFile}
-										checked={isPublic}
-									/>
-									<div className={styles['checkbox-wrap']}>
-										<span
-											className={`${icon} ${styles.check} ${isPublic ? styles['is-check'] : ''}`}
-										/>
-									</div>
-									Anyone with the link
-								</label>
-							</div>
-							<div
-								className={classes({
-									'form-message-wrap': true,
-									'form-message-active': inputErrors.username,
-								})}
-							>
-								<span className={`${icon} ${formStyles.alert}`} />
-								<p className={formStyles['form-message']}>
-									{inputErrors.username
-										? inputErrors.username
-										: 'Message Placeholder'}
-								</p>
-							</div>
-							<div className={styles['submit-wrap']}>
-								{isPublic && (
+									{inputErrors.username && (
+										<div
+											className={classes({
+												'form-message-wrap': true,
+												'form-message-active': inputErrors.username,
+											})}
+										>
+											<span className={`${icon} ${formStyles.alert}`} />
+											<p className={formStyles['form-message']}>
+												{inputErrors.username
+													? inputErrors.username
+													: 'Message Placeholder'}
+											</p>
+										</div>
+									)}
+								</div>
 									<button
 										type="button"
 										className={formStyles['form-submit']}
