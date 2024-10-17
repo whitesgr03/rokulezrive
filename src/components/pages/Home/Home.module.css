@@ -128,6 +128,16 @@
 	color: var(--dark-scheme-highlight);
 }
 
+/* Pseudo classes */
+
+.home-link:hover {
+	background-color: rgba(var(--light-scheme-highlight-rgb), 0.8);
+}
+
+:global(.dark) .home-link:hover {
+	background-color: rgba(var(--dark-scheme-highlight-rgb), 0.8);
+}
+
 @media (width >= 440px) {
 	.home {
 		--home-padding-top-bottom: 40px;
@@ -237,14 +247,6 @@
 
 	:global(.dark) .hero-container {
 		background-color: var(--dark-scheme-layout-bgc);
-	}
-
-	.home-link:hover {
-		background-color: rgba(var(--light-scheme-highlight-rgb), 0.8);
-	}
-
-	:global(.dark) .home-link:hover {
-		background-color: rgba(var(--dark-scheme-highlight-rgb), 0.8);
 	}
 }
 
