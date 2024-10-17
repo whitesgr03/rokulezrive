@@ -1,6 +1,6 @@
 export const formatBytes = bytes => {
 	const k = 1000;
-	const sizes = ['Bytes', 'KB', 'MB'];
+	const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 
 	const i = Math.floor(Math.log(bytes) / Math.log(k));
 
