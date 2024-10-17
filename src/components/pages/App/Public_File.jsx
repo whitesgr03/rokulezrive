@@ -119,7 +119,7 @@ export const Public_File = () => {
 	return (
 		<div className={styles['public-file']}>
 			{error ? (
-				<Error error={error.message}>
+				<Error error={error.message} onError={setError}>
 					<p>The file you are looking for could not be found.</p>
 				</Error>
 			) : (
