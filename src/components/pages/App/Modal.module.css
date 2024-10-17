@@ -27,7 +27,6 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	color: rgba(var(--light-scheme-color-rgb), 0.6);
 }
 
 .close {
