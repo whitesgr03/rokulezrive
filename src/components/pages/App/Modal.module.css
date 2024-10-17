@@ -6,7 +6,7 @@
 	z-index: 3;
 	backdrop-filter: blur(4px);
 	inset: 0;
-	background-color: rgba(var(--light-scheme-color-rgb), 0.6);
+	background-color: rgba(var(--light-scheme-color-rgb), 0.9);
 	padding: 0 5%;
 }
 
