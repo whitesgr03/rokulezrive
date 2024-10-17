@@ -77,6 +77,22 @@
 	color: var(--light-scheme-color);
 }
 
+/* Pseudo classes */
+
+.upload-link:active {
+	transform: scale(0.9);
+}
+
+.upload-link:hover {
+	border-color: var(--light-scheme-highlight);
+	color: var(--light-scheme-highlight);
+}
+
+:global(.dark) .upload-link:hover {
+	border-color: var(--dark-scheme-highlight);
+	color: var(--dark-scheme-highlight);
+}
+
 @media (width >= 700px) {
 	.upload-menu {
 		display: flex;
@@ -110,27 +126,11 @@
 		background-color: var(--dark-scheme-color-bgc);
 	}
 
-	.upload-link:active {
-		transform: scale(0.9);
-	}
-
 	:global(.dark) .upload-link {
 		box-shadow: 0 3px 3px 1px rgba(var(--dark-scheme-color-rgb), 0.3);
 		border: 1px solid var(--dark-scheme-color);
 		background-color: rgba(var(--light-scheme-color-rgb), 0.1);
 		color: var(--dark-scheme-color);
-	}
-}
-
-@media (width >= 1000px) {
-	.upload-link:hover {
-		border-color: var(--light-scheme-highlight);
-		color: var(--light-scheme-highlight);
-	}
-
-	:global(.dark) .upload-link:hover {
-		border-color: var(--dark-scheme-highlight);
-		color: var(--dark-scheme-highlight);
 	}
 }
 
