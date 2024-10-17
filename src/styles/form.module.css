@@ -39,7 +39,6 @@
 	display: flex;
 	column-gap: 5px;
 	align-items: center;
-	align-self: self-start;
 	visibility: hidden;
 	opacity: 0;
 	color: var(--light-scheme-error);
