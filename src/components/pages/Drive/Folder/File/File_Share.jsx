@@ -262,14 +262,56 @@ export const File_Share = ({
 										</div>
 									)}
 								</div>
+								<div className={styles['checkbox-wrap']}>
+									<label
+										htmlFor="share_anyone"
+										className={styles['checkbox-label']}
+									>
+										<input
+											type="checkbox"
+											name="share_anyone"
+											id="share_anyone"
+											className={styles.checkbox}
+											onChange={handlePublicFile}
+											checked={isPublic}
+										/>
+										<div className={styles['checkbox-bgc']}>
+											<div
+												className={`${styles['checkbox-border']} ${isPublic ? styles['is-check-border'] : ''}`}
+											>
+												<span
+													className={`${icon} ${styles.check} ${isPublic ? styles['is-check'] : ''}`}
+												/>
+											</div>
+										</div>
+										Anyone with the link
+									</label>
 									<button
 										type="button"
-										className={formStyles['form-submit']}
-										onClick={handleCopyLink}
+										className={`${styles['copy-link']} ${styles['input-button']} ${isPublic ? '' : styles['show-btn']}`}
 									>
-										Copy Link
+										<div
+											className={`${styles['copy-link-wrap']}  ${isCopied ? styles.copied : ''}`}
+											data-copied
+											onTransitionEnd={handleRemoveCopied}
+										>
+											<div className={styles['copy-link-item']}>
+												<span
+													className={`${icon} ${styles['copied-link-check']}`}
+												/>
+												<span className={styles['copied-link-text']}>
+													Copied
+												</span>
+											</div>
+											<div
+												className={styles['copy-link-item']}
+												onClick={isPublic ? handleCopyLink : () => {}}
+											>
+												<span className={`${icon} ${styles.link}`} />
+											</div>
+										</div>
 									</button>
-								)}
+								</div>
 							</div>
 						</form>
 					</div>
