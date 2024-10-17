@@ -1,6 +1,6 @@
 // Packages
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useMatch, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { object, string } from 'yup';
 import PropTypes from 'prop-types';
@@ -23,6 +23,10 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+
+	const matchShared = useMatch('/drive/shared/:id');
+	const matchFiles = useMatch('/drive/files/:id');
+	const navigate = useNavigate();
 
 	const handleChange = e => {
 		const { value, name } = e.target;
@@ -81,6 +85,7 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 			const { parentFolder, newFolder } = result.data;
 			onAddFolder(parentFolder, newFolder);
 			onActiveModal({ component: null });
+			matchShared || (matchFiles && navigate('/'));
 		};
 
 		const handleError = () => {
