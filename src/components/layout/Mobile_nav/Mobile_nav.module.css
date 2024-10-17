@@ -72,6 +72,16 @@
 	background-color: var(--dark-scheme-layout-bgc);
 }
 
+/* Pseudo classes */
+
+.mobile-nav-link:hover {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
+}
+
+:global(.dark) .mobile-nav-link:hover {
+	background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
+}
+
 @media (width >= 700px) {
 	.mobile-nav {
 		position: static;
@@ -107,14 +117,6 @@
 @media (width >= 1000px) {
 	.mobile-nav-link {
 		padding: 10px 30px;
-	}
-
-	.mobile-nav-link:hover {
-		background-color: rgba(var(--light-scheme-color-rgb), 0.2);
-	}
-
-	:global(.dark) .mobile-nav-link:hover {
-		background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
 	}
 }
 
