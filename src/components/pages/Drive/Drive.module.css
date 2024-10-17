@@ -251,10 +251,6 @@
 	padding: 10px;
 }
 
-.file {
-	position: relative;
-}
-
 .restart-button {
 	position: absolute;
 	top: 0;
@@ -269,12 +265,18 @@
 	height: 120px;
 }
 
-.file-info {
+.file-container {
 	display: flex;
 	row-gap: 10px;
 	flex: 1 1 100%;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+}
+
+.file-info {
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 }
 
@@ -296,6 +298,10 @@
 
 .download-text {
 	position: relative;
+}
+
+.download-btn {
+	width: 50% !important;
 }
 
 /* Dark scheme classes */
@@ -513,6 +519,10 @@
 	:global(.dark) .restart-button {
 		border-color: rgba(var(--dark-scheme-color-rgb), 0.8);
 		color: rgba(var(--dark-scheme-color-rgb), 0.8);
+	}
+
+	.download-btn {
+		width: 35% !important;
 	}
 }
 

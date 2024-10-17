@@ -4,9 +4,10 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 
 // Styles
+
 import { icon } from '../../../../../styles/icon.module.css';
-import driveStyles from '../../Drive.module.css';
 import formStyles from '../../../../../styles/form.module.css';
+import driveStyles from '../../Drive.module.css';
 
 import { formatBytes } from '../../../../../utils/format_bytes';
 import { handleFetch } from '../../../../../utils/handle_fetch';
@@ -90,7 +91,7 @@ export const File_Info = () => {
 			{error ? (
 				<Navigate to="/error" state={{ error }} />
 			) : (
-				<div className={driveStyles['file-info']}>
+				<div className={driveStyles['file-container']}>
 					<p>{file.name}</p>
 					<div className={driveStyles.file}>
 						<span
@@ -102,7 +103,7 @@ export const File_Info = () => {
 						<p>Create At: {format(file.createdAt, 'MMM d, y')}</p>
 					</div>
 					<button
-						className={`${formStyles['form-submit']}`}
+						className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
 						onClick={() =>
 							handleGetResourceUrl({ id: fileId, name: file.name })
 						}

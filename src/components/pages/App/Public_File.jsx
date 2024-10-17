@@ -129,7 +129,7 @@ export const Public_File = () => {
 					) : (
 						<>
 							<p>{data.file.name}</p>
-							<div className={driveStyles.file}>
+							<div>
 								<span
 									className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${data.file.type}`]}`}
 								/>
@@ -140,7 +140,7 @@ export const Public_File = () => {
 								<p>Shared At: {format(data.createdAt, 'MMM d, y')}</p>
 							</div>
 							<button
-								className={`${formStyles['form-submit']}`}
+								className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
 								onClick={() =>
 									handleGetResourceUrl({
 										id: data.file.id,

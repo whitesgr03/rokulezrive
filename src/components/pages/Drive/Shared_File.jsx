@@ -90,7 +90,7 @@ export const Shared_File = () => {
 			{error ? (
 				<Navigate to="/error" state={{ error }} />
 			) : (
-				<div className={driveStyles['file-info']}>
+				<div className={driveStyles['file-container']}>
 					<p>{file.name}</p>
 					<div className={driveStyles.file}>
 						<span
@@ -103,7 +103,7 @@ export const Shared_File = () => {
 						<p>Shared At: {format(sharedAt, 'MMM d, y')}</p>
 					</div>
 					<button
-						className={`${formStyles['form-submit']}`}
+						className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
 						onClick={() =>
 							handleGetResourceUrl({ id: fileId, name: file.name })
 						}
