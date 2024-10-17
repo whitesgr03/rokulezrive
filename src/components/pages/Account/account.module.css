@@ -1,6 +1,7 @@
 .account {
 	display: flex;
 	row-gap: 15px;
+	flex: 1 1 100%;
 	flex-direction: column;
 	padding: 5%;
 }
@@ -50,6 +51,18 @@
 :global(.dark) .account-link {
 	color: var(--dark-scheme-highlight);
 	text-decoration-color: var(--dark-scheme-highlight);
+}
+
+/* Pseudo classes */
+
+.account-link:hover {
+	font-style: italic;
+	font-weight: 700;
+	text-decoration-thickness: 3px;
+}
+
+:global(.dark) .account-link:hover {
+	text-decoration-thickness: 3px;
 }
 
 @media (width >= 440px) {
