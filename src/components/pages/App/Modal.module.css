@@ -52,23 +52,49 @@
 	color: rgba(var(--dark-scheme-color-rgb), 0.8);
 }
 
+@media (width >= 440px) {
+	.modal-wrap {
+		max-width: 90%;
+	}
+}
+
 @media (width >= 500px) {
 	.modal-wrap {
 		margin: 0 auto;
-		max-width: 500px;
+		max-width: 80%;
 	}
+}
 
-	.modal {
-		padding: 0 10%;
+@media (width >= 700px) {
+	.modal-wrap {
+		max-width: 60%;
+	}
+}
+
+@media (width >= 900px) {
+	.modal-wrap {
+		max-width: 50%;
 	}
 }
 
 @media (width >= 1000px) {
-	.modal-button:hover {
-		color: var(--light-scheme-color);
+	.modal-button {
+		color: rgba(var(--light-scheme-color-rgb), 0.6);
 	}
 
-	:global(.dark) .modal-button:hover {
-		color: var(--dark-scheme-color-bgc);
+	:global(.dark) .modal-button {
+		color: rgba(var(--dark-scheme-color-rgb), 0.8);
+	}
+}
+
+@media (width >= 1200px) {
+	.modal-wrap {
+		max-width: 40%;
+	}
+}
+
+@media (width >= 1500px) {
+	.modal-wrap {
+		max-width: 30%;
 	}
 }
