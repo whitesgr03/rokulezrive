@@ -2,6 +2,7 @@
 	--home-padding-top-bottom: 20px;
 
 	display: flex;
+	flex: 1 1 100%;
 	flex-direction: column;
 	padding: var(--home-padding-top-bottom) 10px;
 }
