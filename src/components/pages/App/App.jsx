@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { useMediaQuery } from 'react-responsive';
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate, ScrollRestoration } from 'react-router-dom';
 
 // Styles
 import styles from './App.module.css';
@@ -139,6 +139,7 @@ export const App = () => {
 						<Loading text={'Loading...'} />
 					) : (
 						<>
+							<ScrollRestoration getKey={location => location.key} />
 							{modal && (
 								<Modal
 									onActiveModal={handleActiveModal}
