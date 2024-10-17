@@ -130,14 +130,12 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 							<div
 								className={classes({
 									'form-message-wrap': true,
-									'form-message-active': inputErrors.folder,
+									'form-message-active': inputErrors.name,
 								})}
 							>
 								<span className={`${icon} ${formStyles.alert}`} />
 								<p className={formStyles['form-message']}>
-									{inputErrors.folder
-										? inputErrors.folder
-										: 'Message Placeholder'}
+									{inputErrors.name ? inputErrors.name : 'Message Placeholder'}
 								</p>
 							</div>
 						</div>
