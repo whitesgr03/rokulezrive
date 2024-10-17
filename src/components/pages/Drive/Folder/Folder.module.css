@@ -44,6 +44,10 @@
 }
 
 .delete {
+	transition: transform 0.1s ease;
+	background-color: rgba(var(--light-scheme-error-rgb), 0.8);
+}
+
 /* Pseudo classes */
 
 .cancel:active,
