@@ -22,6 +22,7 @@ const classes = classNames.bind(formStyles);
 export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 	const [inputError, setInputError] = useState('');
 	const [file, setFile] = useState({});
+	const [size, setSize] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -34,9 +35,11 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 		const file = e.target.files[0];
 		const MEGABYTE = 1000000;
 
-		file.size <= MEGABYTE
-			? setFile(file)
-			: setInputError('Size must be less than 1 MB.');
+		const handleError = () => {
+			setInputError('Size must be less than 1 MB.');
+			setSize(file.size);
+		};
+		file.size <= MEGABYTE ? setFile(file) : handleError();
 	};
 
 	const handleUploadFile = async () => {
@@ -97,7 +100,7 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 										<div className={driveStyles.file}>
 											<button
 												type="button"
-												className={driveStyles['file-button']}
+												className={driveStyles['restart-button']}
 												onClick={handleCancel}
 											>
 												<span className={`${icon} ${driveStyles.restart}`} />
@@ -118,7 +121,7 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 									<>
 										<label
 											htmlFor="upload"
-											className={formStyles['form-label']}
+											className={`${formStyles['form-label']} ${driveStyles.preview}`}
 										>
 											<input
 												type="file"
@@ -132,13 +135,11 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 												title="size must be less than 1 mb."
 												onChange={handleChange}
 											/>
-											<div className={driveStyles.preview}>
-												<span
-													className={`${icon} ${driveStyles['upload-file']}`}
-												/>
-												<p>Click here to upload</p>
-												<p>( File as you like up to 1 MB )</p>
-											</div>
+											<span
+												className={`${icon} ${driveStyles['upload-file']}`}
+											/>
+											<p>Click here to upload</p>
+											<p>( File as you like up to 1 MB )</p>
 										</label>
 										<div
 											className={classes({
@@ -147,9 +148,14 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 											})}
 										>
 											<span className={`${icon} ${formStyles.alert}`} />
-											<p className={formStyles['form-message']}>
-												{inputError ? inputError : 'Message Placeholder'}
-											</p>
+											<div>
+												<p>
+													The upload file size: {size && formatBytes(size)}.
+												</p>
+												<p className={formStyles['form-message']}>
+													{inputError ? inputError : 'Message Placeholder'}
+												</p>
+											</div>
 										</div>
 									</>
 								)}
