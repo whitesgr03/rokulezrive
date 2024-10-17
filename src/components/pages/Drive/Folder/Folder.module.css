@@ -71,3 +71,9 @@
 :global(.dark) .delete:hover {
 	background-color: var(--light-scheme-error);
 }
+
+@media (width >= 1000px) {
+	:global(.dark) .delete {
+		background-color: rgba(var(--light-scheme-error-rgb), 0.5);
+	}
+}
