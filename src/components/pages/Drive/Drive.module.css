@@ -319,6 +319,10 @@
 }
 /* Pseudo classes */
 
+.preview:hover {
+	border-color: var(--light-scheme-highlight);
+}
+
 .item:not(:first-of-type):hover {
 	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
 }
@@ -335,6 +339,10 @@
 :global(.dark) .restart-button:hover {
 	border-color: var(--dark-scheme-color-bgc);
 	color: var(--dark-scheme-color-bgc);
+}
+
+:global(.dark) .preview:hover {
+	border-color: var(--dark-scheme-highlight);
 }
 
 @media (width >= 440px) {
