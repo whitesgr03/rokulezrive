@@ -187,7 +187,7 @@ export const File_Share = ({
 
 	const listSharers = newSharers.map(item => {
 		return (
-			<div key={`${item.sharer.id}`} className={`${styles['username-item']} `}>
+			<li key={`${item.sharer.id}`} className={`${styles['username-item']} `}>
 				<span className={`${styles['username-text']}`}>
 					{item.sharer.username}
 				</span>
@@ -198,7 +198,7 @@ export const File_Share = ({
 				>
 					<span className={`${icon} ${styles.close}`} />
 				</button>
-			</div>
+			</li>
 		);
 	});
 
