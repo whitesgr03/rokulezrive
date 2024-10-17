@@ -39,6 +39,7 @@
 }
 
 .cancel {
+	transition: transform 0.1s ease;
 	color: var(--light-scheme-color);
 }
 
