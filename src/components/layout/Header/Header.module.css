@@ -214,6 +214,24 @@
 	background-color: var(--dark-scheme-input-bgc);
 }
 
+/* Pseudo classes */
+
+.feature-button:hover {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
+}
+
+:global(.dark) .feature-button:hover {
+	background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
+}
+
+.dropdown-link:hover {
+	color: var(--light-scheme-highlight);
+}
+
+:global(.dark) .dropdown-link:hover {
+	color: var(--dark-scheme-highlight);
+}
+
 @media (width >= 440px) {
 	.header {
 		padding: 0 10%;
@@ -251,14 +269,6 @@
 }
 
 @media (width >= 1000px) {
-	.dropdown-link:hover {
-		color: var(--light-scheme-highlight);
-	}
-
-	:global(.dark) .dropdown-link:hover {
-		color: var(--dark-scheme-highlight);
-	}
-
 	.logo-text {
 		font-size: 1.5rem;
 	}
@@ -274,13 +284,5 @@
 	.feature-button {
 		padding: 10px;
 		height: 100%;
-	}
-
-	.feature-button:hover {
-		background-color: rgba(var(--light-scheme-color-rgb), 0.2);
-	}
-
-	:global(.dark) .feature-button:hover {
-		background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
 	}
 }
