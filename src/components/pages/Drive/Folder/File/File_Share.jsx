@@ -180,9 +180,11 @@ export const File_Share = ({
 	};
 
 	const handleCopyLink = async () => {
-		await navigator.clipboard.writeText(
-			`${location.protocol}//${location.host}/shared/${newPublicId}`,
-		);
+	const handleRemoveCopied = e => {
+		e.target.dataset.copied &&
+			setTimeout(() => {
+				setIsCopied(false);
+			}, 2000);
 	};
 
 	const listSharers = newSharers.map(item => {
