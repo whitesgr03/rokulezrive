@@ -317,6 +317,12 @@
 :global(.dark) .file-button {
 	border-color: var(--dark-scheme-color);
 }
+
+:global(.dark) .restart-button {
+	border-width: 3px;
+	border-color: var(--dark-scheme-color);
+}
+
 /* Pseudo classes */
 
 .preview:hover {
