@@ -1,6 +1,7 @@
 
 /* Pseudo classes */
 
+	flex: 1 1 100%;
 .account-link:hover {
 	font-style: italic;
 	font-weight: 700;
