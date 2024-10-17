@@ -317,6 +317,25 @@
 :global(.dark) .file-button {
 	border-color: var(--dark-scheme-color);
 }
+/* Pseudo classes */
+
+.item:not(:first-of-type):hover {
+	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
+}
+
+.restart-button:hover {
+	border-color: var(--light-scheme-color);
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .item:not(:first-of-type):hover {
+	background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
+}
+
+:global(.dark) .restart-button:hover {
+	border-color: var(--dark-scheme-color-bgc);
+	color: var(--dark-scheme-color-bgc);
+}
 
 @media (width >= 440px) {
 	.item {
@@ -469,12 +488,14 @@
 		padding: 0 10px;
 	}
 
-	.item:not(:first-of-type):hover {
-		background-color: rgba(var(--light-scheme-color-rgb), 0.2);
+	.restart-button {
+		border-color: rgba(var(--light-scheme-color-rgb), 0.6);
+		color: rgba(var(--light-scheme-color-rgb), 0.6);
 	}
 
-	:global(.dark) .item:not(:first-of-type):hover {
-		background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
+	:global(.dark) .restart-button {
+		border-color: rgba(var(--dark-scheme-color-rgb), 0.8);
+		color: rgba(var(--dark-scheme-color-rgb), 0.8);
 	}
 }
 
