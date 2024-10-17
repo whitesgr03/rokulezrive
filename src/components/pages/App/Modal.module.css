@@ -52,6 +52,16 @@
 	color: rgba(var(--dark-scheme-color-rgb), 0.8);
 }
 
+/* Pseudo classes */
+
+.modal-button:hover {
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .modal-button:hover {
+	color: var(--dark-scheme-color-bgc);
+}
+
 @media (width >= 440px) {
 	.modal-wrap {
 		max-width: 90%;
