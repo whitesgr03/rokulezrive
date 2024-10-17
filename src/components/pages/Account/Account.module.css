@@ -1,0 +1,12 @@
+
+/* Pseudo classes */
+
+.account-link:hover {
+	font-style: italic;
+	font-weight: 700;
+	text-decoration-thickness: 3px;
+}
+
+:global(.dark) .account-link:hover {
+	text-decoration-thickness: 3px;
+}
