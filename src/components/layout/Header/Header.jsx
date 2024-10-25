@@ -1,16 +1,14 @@
 // Packages
 import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 import classNames from 'classnames/bind';
+import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import styles from './Header.module.css';
 import { icon } from '../../../styles/icon.module.css';
-
-// Utils
-import { handleFetch } from '../../../utils/handle_fetch';
 
 // Assets
 import logo from '../../../assets/logo.png';
@@ -19,15 +17,13 @@ import logo from '../../../assets/logo.png';
 const classes = classNames.bind(styles);
 
 export const Header = ({
-	user,
+	session,
 	darkTheme,
 	onSwitchColorTheme,
 	menu,
-	onUser,
 	onActiveMenu,
 }) => {
 	const [dropdownSlideOut, setDropdownSlideOut] = useState(false);
-	const [error, setError] = useState(false);
 
 	const isNormalMobile = useMediaQuery({ minWidth: 440 });
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
@@ -41,120 +37,98 @@ export const Header = ({
 	};
 
 	const handleLogout = async () => {
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/logout`;
-
-		const options = {
-			method: 'POST',
-			headers: {
-				'X-Requested-With': 'XmlHttpRequest',
-			},
-			credentials: 'include',
-		};
-		const result = await handleFetch(url, options);
-
-		result.success && onUser(null);
-		result.success && localStorage.removeItem('drive.session-exp');
-		!result.success && setError(result.message);
+		await supabase.auth.signOut();
 	};
 
 	return (
-		<>
-			{error ? (
-				<Navigate to="/error" state={{ error }} />
-			) : (
-				<header className={styles.header}>
-					<Link to={user ? '/drive' : '/'} className={styles.logo}>
-						<img src={logo} alt="Logo" className={styles['logo-image']} />
-						{isNormalTablet && (
-							<h1 className={styles['logo-text']}>Local Drive</h1>
-						)}
-					</Link>
-					<ul className={styles.features}>
-						{isNormalMobile && (
-							<li className={styles['feature-item']}>
-								<button
-									type="button"
-									className={styles['feature-button']}
-									onClick={onSwitchColorTheme}
-								>
-									<div className={styles.toggle}>
-										<span
-											className={`${icon} ${darkTheme ? styles.moon : styles.sun}`}
-										/>
-										<div className={styles['toggle-background']}>
-											<div className={styles['toggle-button']} />
-										</div>
-									</div>
-								</button>
-							</li>
-						)}
-						<li className={styles['feature-item']}>
-							<button
-								type="button"
-								className={`${styles['feature-button']}`}
-								onClick={handleDropdownSlideOut}
-								data-button="account-button"
-							>
-								<span className={`${icon} ${styles.user}`} />
-							</button>
-						</li>
-					</ul>
-					<ul
-						className={`dropdown ${styles.dropdown} ${classes({
-							'dropdown-slide-in': menu.name === 'dropdown',
-							'dropdown-slide-out': dropdownSlideOut,
-						})}`}
+		<header className={styles.header}>
+			<Link to={session ? '/drive' : '/'} className={styles.logo}>
+				<img src={logo} alt="Logo" className={styles['logo-image']} />
+				{isNormalTablet && <h1 className={styles['logo-text']}>Local Drive</h1>}
+			</Link>
+			<ul className={styles.features}>
+				{isNormalMobile && (
+					<li className={styles['feature-item']}>
+						<button
+							type="button"
+							className={styles['feature-button']}
+							onClick={onSwitchColorTheme}
+						>
+							<div className={styles.toggle}>
+								<span
+									className={`${icon} ${darkTheme ? styles.moon : styles.sun}`}
+								/>
+								<div className={styles['toggle-background']}>
+									<div className={styles['toggle-button']} />
+								</div>
+							</div>
+						</button>
+					</li>
+				)}
+				<li className={styles['feature-item']}>
+					<button
+						type="button"
+						className={`${styles['feature-button']}`}
+						onClick={handleDropdownSlideOut}
+						data-button="account-button"
 					>
-						{!isNormalMobile && (
-							<li>
-								<button
-									type="button"
-									className={styles['dropdown-button']}
-									onClick={onSwitchColorTheme}
-								>
-									<span className={icon} />
-									<span>{darkTheme ? 'Dark ' : 'Light '}mode</span>
-									<div className={styles.toggle}>
-										<div className={styles['toggle-background']}>
-											<div className={styles['toggle-button']} />
-										</div>
-									</div>
-								</button>
-							</li>
-						)}
-						<li>
-							{user ? (
-								<button
-									className={styles['dropdown-link']}
-									onClick={handleLogout}
-									data-close-menu
-								>
-									<span className={`${icon} ${styles.logout}`} />
-									Logout
-								</button>
-							) : (
-								<Link
-									to="/account/login"
-									className={`login ${styles['dropdown-link']}`}
-									data-close-menu
-								>
-									<span className={`${icon} ${styles.login}`} />
-									Login
-								</Link>
-							)}
-						</li>
-					</ul>
-				</header>
-			)}
-		</>
+						<span className={`${icon} ${styles.user}`} />
+					</button>
+				</li>
+			</ul>
+			<ul
+				className={`dropdown ${styles.dropdown} ${classes({
+					'dropdown-slide-in': menu.name === 'dropdown',
+					'dropdown-slide-out': dropdownSlideOut,
+				})}`}
+			>
+				{!isNormalMobile && (
+					<li>
+						<button
+							type="button"
+							className={styles['dropdown-button']}
+							onClick={onSwitchColorTheme}
+						>
+							<span className={icon} />
+							<span>{darkTheme ? 'Dark ' : 'Light '}mode</span>
+							<div className={styles.toggle}>
+								<div className={styles['toggle-background']}>
+									<div className={styles['toggle-button']} />
+								</div>
+							</div>
+						</button>
+					</li>
+				)}
+				<li>
+					{session ? (
+						<button
+							className={styles['dropdown-link']}
+							onClick={handleLogout}
+							data-close-menu
+						>
+							<span className={`${icon} ${styles.logout}`} />
+							Logout
+						</button>
+					) : (
+						<Link
+							to="/account/login"
+							className={`login ${styles['dropdown-link']}`}
+							data-close-menu
+						>
+							<span className={`${icon} ${styles.login}`} />
+							Login
+						</Link>
+					)}
+				</li>
+			</ul>
+		</header>
 	);
 };
 
 Header.propTypes = {
-	user: PropTypes.object,
+	session: PropTypes.object,
 	darkTheme: PropTypes.bool,
 	onSwitchColorTheme: PropTypes.func,
 	menu: PropTypes.object,
 	onActiveMenu: PropTypes.func,
-	onUser: PropTypes.func,
 };

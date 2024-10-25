@@ -82,11 +82,20 @@ export const Router = () => (
 					},
 					{
 						path: 'account/login',
-						element: <Login />,
+						element: (
+							<Authentication isPublicRoute={true}>
+								<Login />
+							</Authentication>
+						),
 					},
 					{
 						path: 'account/register',
-						element: <Register />,
+						element: (
+							<Authentication isPublicRoute={true}>
+								<Register />
+							</Authentication>
+						),
+					},
 					},
 					{
 						path: '*',

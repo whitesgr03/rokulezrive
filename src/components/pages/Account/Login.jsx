@@ -1,14 +1,9 @@
 // Packages
-import {
-	Link,
-	useOutletContext,
-	Navigate,
-	useSearchParams,
-	useNavigate,
-} from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { object, string } from 'yup';
+import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
@@ -16,12 +11,8 @@ import formStyles from '../../../styles/form.module.css';
 import accountStyles from './Account.module.css';
 import styles from './Login.module.css';
 
-// Utils
-import { handleFetch } from '../../../utils/handle_fetch';
-
 // Components
 import { Account } from './Account';
-import { Username_Form } from './Username_Form';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -31,17 +22,9 @@ import googleIcon from '../../../assets/google.png';
 import facebookIcon from '../../../assets/facebook.png';
 
 export const Login = () => {
-	const [searchParams] = useSearchParams();
-	const navigate = useNavigate();
-
-	const code = searchParams.get('code');
-	const state = searchParams.get('state');
-	const errorParams = searchParams.get('error');
-
-	const { onUser, onActiveModal } = useOutletContext();
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '', password: '' });
-	const [loading, setLoading] = useState(code ? true : false);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	const handleValidFields = async () => {
@@ -77,36 +60,41 @@ export const Login = () => {
 
 	const handleLogin = async () => {
 		setLoading(true);
+		const { email, password } = formData;
 
-		const URL = `${import.meta.env.VITE_RESOURCE_URL}/login`;
+		const { error } = await supabase.auth.signInWithPassword({
+			email,
+			password,
+		});
 
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-Requested-With': 'XmlHttpRequest',
+		const handleError = error => {
+			switch (error.code) {
+				case 'invalid_credentials':
+					setInputErrors({ ...inputErrors, email: 'Email is not registered.' });
+					break;
+
+				case 'email_not_confirmed':
+					setInputErrors({ ...inputErrors, email: 'Email not confirmed.' });
+					break;
+
+				default:
+					setError(error);
+			}
+		};
+
+		error && handleError(error);
+		setLoading(false);
+	};
+
+	const handleSocialLogin = async provider => {
+		setLoading(true);
+
+		await supabase.auth.signInWithOAuth({
+			provider,
+			options: {
+				redirectTo: `http://localhost:5173/drive`,
 			},
-			body: JSON.stringify(formData),
-			credentials: 'include',
-		};
-
-		const result = await handleFetch(URL, options);
-
-		const handleSuccess = () => {
-			onUser(result.data);
-			localStorage.setItem(
-				'drive.session-exp',
-				JSON.stringify(new Date(result.cookie.exp).getTime()),
-			);
-		};
-
-		const handleError = () => {
-			result.fields
-				? setInputErrors({ ...result.fields })
-				: setError(result.message);
-		};
-
-		result.success ? handleSuccess() : handleError();
+		});
 
 		setLoading(false);
 	};
@@ -126,117 +114,6 @@ export const Login = () => {
 		};
 		setFormData(fields);
 	};
-
-	const generateRandomString = () => {
-		const characters =
-			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		return Array.from(
-			window.crypto.getRandomValues(new Uint32Array(32)),
-			value => characters.charAt(value % characters.length),
-		).join('');
-	};
-
-	const handleFacebookUserLogin = async () => {
-		setLoading(true);
-
-		const state = generateRandomString();
-
-		localStorage.setItem('facebook_state', state);
-
-		const url =
-			'https://www.facebook.com/v21.0/dialog/oauth?' +
-			`client_id=${import.meta.env.VITE_FACEBOOK_APP_ID}` +
-			`&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}` +
-			`&state=${state}` +
-			'&auth_type=rerequest' +
-			'&scope=public_profile';
-
-		window.location.replace(url);
-	};
-
-	const handleGoogleUserLogin = () => {
-		setLoading(true);
-		const { google } = window;
-
-		const state = generateRandomString();
-
-		localStorage.setItem('google_state', state);
-
-		google.accounts.oauth2
-			.initCodeClient({
-				client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-				scope:
-					'https://www.googleapis.com/auth/userinfo.email ' +
-					'https://www.googleapis.com/auth/userinfo.profile ' +
-					'openid',
-				ux_mode: 'redirect',
-				redirect_uri: `${import.meta.env.VITE_REDIRECT_URI}`,
-				state,
-			})
-			.requestCode();
-	};
-
-	useEffect(() => {
-		const controller = new AbortController();
-		const { signal } = controller;
-
-		const facebookState = localStorage.getItem('facebook_state');
-		const googleState = localStorage.getItem('google_state');
-
-		const handleLogin = async type => {
-			const url = `${import.meta.env.VITE_RESOURCE_URL}/login/${type}`;
-
-			const options = {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XmlHttpRequest',
-				},
-				signal,
-				body: JSON.stringify({ code }),
-				credentials: 'include',
-			};
-
-			const result = await handleFetch(url, options);
-
-			const handleSuccess = () => {
-				localStorage.removeItem('google_state');
-				localStorage.removeItem('facebook_state');
-
-				result.data
-					? (() => {
-							onUser(result.data);
-							localStorage.setItem(
-								'drive.session-exp',
-								JSON.stringify(new Date(result.cookie.exp).getTime()),
-							);
-						})()
-					: onActiveModal({
-							component: (
-								<Username_Form
-									type={type}
-									onUser={onUser}
-									onActiveModal={onActiveModal}
-								/>
-							),
-						});
-			};
-
-			const handleResult = () => {
-				result.success ? handleSuccess() : setError(result.message);
-				setLoading(false);
-			};
-
-			result && handleResult();
-		};
-
-		code && state === facebookState && handleLogin('facebook');
-		code && state === googleState && handleLogin('google');
-
-		errorParams && navigate('/account/login');
-
-		return () => controller.abort();
-	}, [code, state, errorParams, navigate, onActiveModal, onUser]);
 
 	return (
 		<>
@@ -321,7 +198,7 @@ export const Login = () => {
 					<div className={styles.federation}>
 						<button
 							className={styles['federation-button']}
-							onClick={handleGoogleUserLogin}
+							onClick={() => handleSocialLogin('google')}
 						>
 							<div className={styles.icon}>
 								<img src={googleIcon} alt="Google login icon" />
@@ -330,7 +207,7 @@ export const Login = () => {
 						</button>
 						<button
 							className={styles['federation-button']}
-							onClick={handleFacebookUserLogin}
+							onClick={() => handleSocialLogin('facebook')}
 						>
 							<div className={styles.icon}>
 								<img src={facebookIcon} alt="Facebook login icon" />

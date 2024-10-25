@@ -2,13 +2,11 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { useMediaQuery } from 'react-responsive';
-import { Outlet, Navigate, ScrollRestoration } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import styles from './App.module.css';
-
-// Utils
-import { handleFetch } from '../../../utils/handle_fetch';
 
 // Components
 import { Header } from '../../layout/Header/Header';
@@ -26,12 +24,11 @@ const DEFAULT_MENU = {
 };
 
 export const App = () => {
-	const [user, setUser] = useState(null);
+	const [session, setSession] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [menu, setMenu] = useState(DEFAULT_MENU);
 	const [modal, setModal] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
@@ -85,104 +82,68 @@ export const App = () => {
 	}, []);
 
 	useEffect(() => {
-		const controller = new AbortController();
-		const { signal } = controller;
-
-		const handleGetUser = async () => {
-			const url = `${import.meta.env.VITE_RESOURCE_URL}/api/user`;
-
-			const options = {
-				method: 'GET',
-				signal,
-				credentials: 'include',
-			};
-
-			const result = await handleFetch(url, options);
-
-			const handleSuccess = () => {
-				result.success ? setUser(result.data) : setError(result.message);
-				setLoading(false);
-			};
-
-			result && handleSuccess();
-		};
-
-		const sessionExp = localStorage.getItem('drive.session-exp') ?? false;
-
-		const removeExp = () => {
-			localStorage.removeItem('drive.session-exp');
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange(async (event, session) => {
+			setSession(session);
 			setLoading(false);
-		};
+		});
 
-		!sessionExp
-			? setLoading(false)
-			: Date.now() > new Date(JSON.parse(sessionExp)).getTime()
-				? removeExp()
-				: handleGetUser();
-
-		return () => controller.abort();
+		return () => subscription.unsubscribe();
 	}, []);
 
 	return (
-		<>
-			{error ? (
-				<Navigate to="/error" state={{ error }} />
+		<div
+			className={`${styles.app} ${classes({
+				dark: darkTheme,
+				'active-mobile-nav': !isNormalTablet && session,
+			})}`}
+			onClick={handleCloseMenu}
+		>
+			{loading ? (
+				<Loading text={'Loading...'} />
 			) : (
-				<div
-					className={`${styles.app} ${classes({
-						dark: darkTheme,
-						'active-mobile-nav': !isNormalTablet && user,
-					})}`}
-					onClick={handleCloseMenu}
-				>
-					{loading ? (
-						<Loading text={'Loading...'} />
-					) : (
-						<>
-							<ScrollRestoration getKey={location => location.key} />
-							{modal && (
-								<Modal
-									onActiveModal={handleActiveModal}
-									onCloseModal={handleCloseModal}
-									clickToClose={modal.clickToClose}
-								>
-									{modal.component}
-								</Modal>
-							)}
-							<Header
-								user={user}
-								darkTheme={darkTheme}
-								menu={menu}
-								onActiveMenu={handleActiveMenu}
-								onUser={setUser}
-								onSwitchColorTheme={handleSwitchColorTheme}
-							/>
-							<div className={styles.container}>
-								<main>
-									<Outlet
-										context={{
-											onActiveMenu: handleActiveMenu,
-											onActiveModal: handleActiveModal,
-											onUser: setUser,
-											user,
-											menu,
-											darkTheme,
-										}}
-									/>
-								</main>
-								{!isNormalTablet && <Footer />}
-							</div>
-							{!isNormalTablet && user && (
-								<Mobile_Nav
-									menu={menu}
-									onActiveModal={handleActiveModal}
-									onActiveMenu={handleActiveMenu}
-								/>
-							)}
-						</>
+				<>
+					<ScrollRestoration getKey={location => location.key} />
+					{modal && (
+						<Modal
+							onActiveModal={handleActiveModal}
+							onCloseModal={handleCloseModal}
+							clickToClose={modal.clickToClose}
+						>
+							{modal.component}
+						</Modal>
 					)}
-				</div>
+					<Header
+						session={session}
+						darkTheme={darkTheme}
+						menu={menu}
+						onActiveMenu={handleActiveMenu}
+						onSwitchColorTheme={handleSwitchColorTheme}
+					/>
+					<div className={styles.container}>
+						<main>
+							<Outlet
+								context={{
+									onActiveMenu: handleActiveMenu,
+									onActiveModal: handleActiveModal,
+									menu,
+									darkTheme,
+									session,
+								}}
+							/>
+						</main>
+						{!isNormalTablet && <Footer />}
+					</div>
+					{!isNormalTablet && session && (
+						<Mobile_Nav
+							menu={menu}
+							onActiveModal={handleActiveModal}
+							onActiveMenu={handleActiveMenu}
+						/>
+					)}
+				</>
 			)}
-		</>
+		</div>
 	);
 };

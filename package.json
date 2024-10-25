@@ -12,6 +12,7 @@
 		"commitlint": "commitlint --edit"
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^2.45.6",
 		"classnames": "^2.5.1",
 		"date-fns": "^3.6.0",
 		"prop-types": "^15.8.1",
