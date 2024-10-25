@@ -48,8 +48,8 @@ export const Register = () => {
 				.required('Email is required.'),
 			password: string()
 				.matches(
-					/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-					'Password must contain one or more numbers, special symbols (Ex: !@#$%^&*), lowercase and uppercase characters, and at least 8 characters.',
+					/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=[\]{};':"|<>?,./`~])(?=.{8,})/,
+					'Password must contain one or more numbers, special symbols, lowercase and uppercase characters, and at least 8 characters.',
 				)
 				.required('Password is required.'),
 			confirmPassword: string()
