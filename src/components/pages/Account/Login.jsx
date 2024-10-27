@@ -102,6 +102,9 @@ export const Login = () => {
 			provider,
 			options: {
 				redirectTo: `http://localhost:5173/drive`,
+				queryParams: {
+					prompt: 'consent',
+				},
 			},
 		});
 
