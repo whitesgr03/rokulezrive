@@ -11,7 +11,9 @@ export const Error = ({ error, onError, children }) => {
 	const [darkTheme, setDarkTheme] = useState(false);
 	const { state } = useLocation();
 
-	console.error('Error component:', state ? state.error : error);
+	const message = state?.error || error;
+
+	message && console.error('Error component:', message);
 
 	const handleClick = () => {
 		document.body.removeAttribute('style');
