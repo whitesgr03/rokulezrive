@@ -22,6 +22,7 @@ export const Header = ({
 	onSwitchColorTheme,
 	menu,
 	onActiveMenu,
+	onSession,
 }) => {
 	const [dropdownSlideOut, setDropdownSlideOut] = useState(false);
 
@@ -37,6 +38,7 @@ export const Header = ({
 	};
 
 	const handleLogout = async () => {
+		onSession(null);
 		await supabase.auth.signOut();
 	};
 
@@ -131,4 +133,5 @@ Header.propTypes = {
 	onSwitchColorTheme: PropTypes.func,
 	menu: PropTypes.object,
 	onActiveMenu: PropTypes.func,
+	onSession: PropTypes.func,
 };
