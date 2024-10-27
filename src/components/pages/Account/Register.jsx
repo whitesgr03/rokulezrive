@@ -101,22 +101,24 @@ export const Register = () => {
 		const handleError = error => {
 			let email = '';
 
-			!error && (email = 'Email has been registered.');
+			const handleErrorCode = () => {
+				switch (error.code) {
+					case 'over_email_send_rate_limit':
+						onActiveModal({
+							component: (
+								<p>
+									You sent the verification email too many times, please try
+									again in one hour.
+								</p>
+							),
+						});
+						break;
+					default:
+						setError(error);
+				}
+			};
 
-			switch (error.code) {
-				case 'over_email_send_rate_limit':
-					onActiveModal({
-						component: (
-							<p>
-								You sent the verification email too many times, please try again
-								in one hour.
-							</p>
-						),
-					});
-					break;
-				default:
-					setError(error);
-			}
+			!error ? (email = 'Email has been registered.') : handleErrorCode();
 
 			setInputErrors({ ...inputErrors, email });
 		};
