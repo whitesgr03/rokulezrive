@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 import classNames from 'classnames/bind';
 import { supabase } from '../../../utils/supabase_client';
+import { handleFetch } from '../../../utils/handle_fetch';
 
 // Styles
 import styles from './Header.module.css';
@@ -39,6 +40,23 @@ export const Header = ({
 
 	const handleLogout = async () => {
 		onSession(null);
+
+		const handleFacebookLogout = async () => {
+			const url =
+				`https://graph.facebook.com/${session.user.user_metadata.sub}/permissions?` +
+				`access_token=${session.provider_token}`;
+
+			const options = {
+				method: 'DELETE',
+			};
+
+			await handleFetch(url, options);
+		};
+
+		session.user.user_metadata?.iss ===
+			'https://graph.facebook.com/me?fields=email,first_name,last_name,name,picture' &&
+			(await handleFacebookLogout());
+
 		await supabase.auth.signOut();
 	};
 
