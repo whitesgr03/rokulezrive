@@ -7,6 +7,7 @@ import { Home } from './components/pages/Home/Home';
 import { Drive } from './components/pages/Drive/Drive';
 import { Login } from './components/pages/Account/Login';
 import { Register } from './components/pages/Account/Register';
+import { Password_Form } from './components/pages/Account/Password_Form';
 import { NotFound } from './components/utils/Error/NotFound';
 import { Error } from './components/utils/Error/Error';
 
@@ -88,6 +89,9 @@ export const Router = () => (
 						path: 'account/register',
 						element: <Register />,
 					},
+					{
+						path: 'account/resetting-password',
+						element: <Password_Form />,
 					},
 					{
 						path: '*',
