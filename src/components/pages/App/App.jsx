@@ -149,6 +149,7 @@ export const App = () => {
 						menu={menu}
 						onActiveMenu={handleActiveMenu}
 						onSwitchColorTheme={handleSwitchColorTheme}
+						onSession={setSession}
 					/>
 					<div className={styles.container}>
 						<main>
