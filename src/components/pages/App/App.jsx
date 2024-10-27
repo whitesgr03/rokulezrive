@@ -160,6 +160,7 @@ export const App = () => {
 									menu,
 									darkTheme,
 									session,
+									onSession: setSession,
 								}}
 							/>
 						</main>
