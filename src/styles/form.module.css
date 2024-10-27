@@ -4,6 +4,11 @@
 	flex-direction: column;
 }
 
+.title {
+	margin-bottom: 15px;
+	font-style: italic;
+}
+
 .form-wrap {
 	display: flex;
 	flex-direction: column;
@@ -33,6 +38,12 @@
 
 .form-input-error {
 	border-color: var(--light-scheme-error);
+}
+
+.sign {
+	margin: 5px 0;
+	color: rgba(var(--light-scheme-color-rgb), 0.7);
+	font-size: 0.8rem;
 }
 
 .form-message-wrap {
@@ -90,6 +101,11 @@
 
 :global(.dark) .form-input-error {
 	border-color: var(--dark-scheme-error);
+}
+
+:global(.dark) .sign {
+	color: rgba(var(--dark-scheme-color-rgb), 0.8);
+	font-size: 0.85rem;
 }
 
 :global(.dark) .form-message-wrap {
