@@ -1,5 +1,10 @@
 // Packages
-import { Link, useOutletContext, useNavigate } from 'react-router-dom';
+import {
+	Link,
+	useOutletContext,
+	useNavigate,
+	Navigate,
+} from 'react-router-dom';
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { object, string, ref } from 'yup';
@@ -9,9 +14,11 @@ import { supabase } from '../../../utils/supabase_client';
 import accountStyles from './Account.module.css';
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
+import Validation_EmailStyles from './Validation_Email.module.css';
 
 // Components
 import { Account } from './Account';
+import { Validation_Email } from './Validation_Email';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -28,6 +35,7 @@ export const Register = () => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
 
 	const handleChange = e => {
 		const { value, name } = e.target;
@@ -91,26 +99,44 @@ export const Register = () => {
 		});
 
 		const handleError = error => {
-			console.log('signUp', error);
-			!error &&
-				setInputErrors({ ...inputErrors, email: 'Email has been registered.' });
+			let email = '';
+
+			!error && (email = 'Email has been registered.');
+
+			switch (error.code) {
+				case 'over_email_send_rate_limit':
+					onActiveModal({
+						component: (
+							<p>
+								You sent the verification email too many times, please try again
+								in one hour.
+							</p>
+						),
+					});
+					break;
+				default:
+					setError(error);
+			}
+
+			setInputErrors({ ...inputErrors, email });
 		};
 
 		const handleSuccess = () => {
 			onActiveModal({
 				component: (
-					<div className={formStyles.form}>
+					<Validation_Email>
 						<p>
-							Check your email and find the verification email to confirm your
-							email address.
+							Check your email and find the
+							<span className={Validation_EmailStyles.highlight}>
+								{' '}
+								Rokulezrive Email Verification{' '}
+							</span>
+							to complete the signup within 24 hours.
 						</p>
-						<p>You can close this page.</p>
-					</div>
+					</Validation_Email>
 				),
-				clickToClose: false,
 			});
-
-			navigate('/', { replace: true });
+			navigate('/account/login');
 		};
 
 		!error && data.user?.identities.length > 0
@@ -128,113 +154,119 @@ export const Register = () => {
 	};
 
 	return (
-		<Account title="User Sign Up" loading={loading}>
-			<div className={accountStyles['account-form-wrap']}>
-				<form className={formStyles.form} onSubmit={handleSubmit}>
-					<div>
-						<label htmlFor="email" className={formStyles['form-label']}>
-							Email
-							<input
-								onChange={handleChange}
-								value={formData.email}
-								type="text"
-								id="email"
-								className={classes({
-									'form-input': true,
-									'form-input-bgc': true,
-									'form-input-error': inputErrors.email,
-								})}
-								name="email"
-								title="The email is required and must be standard format."
-							/>
-						</label>
-						<div
-							className={classes({
-								'form-message-wrap': true,
-								'form-message-active': inputErrors.email,
-							})}
-						>
-							<span className={`${icon} ${formStyles.alert}`} />
-							<p className={formStyles['form-message']}>
-								{inputErrors ? inputErrors.email : 'Message Placeholder'}
-							</p>
-						</div>
-					</div>
-					<div>
-						<label htmlFor="password" className={formStyles['form-label']}>
-							Password
-							<input
-								onChange={handleChange}
-								value={formData.password}
-								type="password"
-								id="password"
-								className={`${classes({
-									'form-input': true,
-									'form-input-bgc': true,
-									'form-input-error': inputErrors.password,
-								})}`}
-								name="password"
-								title="The password is required."
-							/>
-						</label>
-						<div
-							className={classes({
-								'form-message-wrap': true,
-								'form-message-active': inputErrors.password,
-							})}
-						>
-							<span className={`${icon} ${formStyles.alert}`} />
-							<p className={formStyles['form-message']}>
-								{inputErrors ? inputErrors.password : 'Message Placeholder'}
-							</p>
-						</div>
-					</div>
-					<div>
-						<label
-							htmlFor="confirmPassword"
-							className={formStyles['form-label']}
-						>
-							Confirm Password
-							<input
-								onChange={handleChange}
-								value={formData.confirmPassword}
-								type="password"
-								id="confirmPassword"
-								className={`${classes({
-									'form-input': true,
-									'form-input-bgc': true,
-									'form-input-error': inputErrors.confirmPassword,
-								})}`}
-								name="confirmPassword"
-								title="The confirm password must be the same as the password."
-							/>
-						</label>
-						<div
-							className={classes({
-								'form-message-wrap': true,
-								'form-message-active': inputErrors.confirmPassword,
-							})}
-						>
-							<span className={`${icon} ${formStyles.alert}`} />
-							<p className={formStyles['form-message']}>
-								{inputErrors
-									? inputErrors.confirmPassword
-									: 'Message Placeholder'}
-							</p>
-						</div>
-					</div>
+		<>
+			{error ? (
+				<Navigate to="/error" state={{ error }} />
+			) : (
+				<Account title="User Sign Up" loading={loading}>
+					<div className={accountStyles['account-form-wrap']}>
+						<form className={formStyles.form} onSubmit={handleSubmit}>
+							<div>
+								<label htmlFor="email" className={formStyles['form-label']}>
+									Email
+									<input
+										onChange={handleChange}
+										value={formData.email}
+										type="text"
+										id="email"
+										className={classes({
+											'form-input': true,
+											'form-input-bgc': true,
+											'form-input-error': inputErrors.email,
+										})}
+										name="email"
+										title="The email is required and must be standard format."
+									/>
+								</label>
+								<div
+									className={classes({
+										'form-message-wrap': true,
+										'form-message-active': inputErrors.email,
+									})}
+								>
+									<span className={`${icon} ${formStyles.alert}`} />
+									<p className={formStyles['form-message']}>
+										{inputErrors ? inputErrors.email : 'Message Placeholder'}
+									</p>
+								</div>
+							</div>
+							<div>
+								<label htmlFor="password" className={formStyles['form-label']}>
+									Password
+									<input
+										onChange={handleChange}
+										value={formData.password}
+										type="password"
+										id="password"
+										className={`${classes({
+											'form-input': true,
+											'form-input-bgc': true,
+											'form-input-error': inputErrors.password,
+										})}`}
+										name="password"
+										title="The password is required."
+									/>
+								</label>
+								<div
+									className={classes({
+										'form-message-wrap': true,
+										'form-message-active': inputErrors.password,
+									})}
+								>
+									<span className={`${icon} ${formStyles.alert}`} />
+									<p className={formStyles['form-message']}>
+										{inputErrors ? inputErrors.password : 'Message Placeholder'}
+									</p>
+								</div>
+							</div>
+							<div>
+								<label
+									htmlFor="confirmPassword"
+									className={formStyles['form-label']}
+								>
+									Confirm Password
+									<input
+										onChange={handleChange}
+										value={formData.confirmPassword}
+										type="password"
+										id="confirmPassword"
+										className={`${classes({
+											'form-input': true,
+											'form-input-bgc': true,
+											'form-input-error': inputErrors.confirmPassword,
+										})}`}
+										name="confirmPassword"
+										title="The confirm password must be the same as the password."
+									/>
+								</label>
+								<div
+									className={classes({
+										'form-message-wrap': true,
+										'form-message-active': inputErrors.confirmPassword,
+									})}
+								>
+									<span className={`${icon} ${formStyles.alert}`} />
+									<p className={formStyles['form-message']}>
+										{inputErrors
+											? inputErrors.confirmPassword
+											: 'Message Placeholder'}
+									</p>
+								</div>
+							</div>
 
-					<button type="submit" className={`${formStyles['form-submit']}`}>
-						Submit
-					</button>
-				</form>
-			</div>
-			<div className={accountStyles['account-link-wrap']}>
-				<p>Already have an account?</p>
-				<Link className={accountStyles['account-link']} to="/account/login">
-					Sign in account
-				</Link>
-			</div>
-		</Account>
+							<button type="submit" className={`${formStyles['form-submit']}`}>
+								Submit
+							</button>
+						</form>
+					</div>
+					<div className={accountStyles['account-link-wrap']}>
+						<p>Already have an account?</p>
+						<Link className={accountStyles['account-link']} to="/account/login">
+							Sign in account
+						</Link>
+					</div>
+				</Account>
+			)}
+		</>
 	);
 };
