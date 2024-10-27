@@ -133,7 +133,7 @@ export const Register = () => {
 								{' '}
 								Rokulezrive Email Verification{' '}
 							</span>
-							to complete the signup within 24 hours.
+							to complete the signup within 1 hours.
 						</p>
 					</Validation_Email>
 				),
