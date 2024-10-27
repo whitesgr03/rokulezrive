@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { useMediaQuery } from 'react-responsive';
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
 import { supabase } from '../../../utils/supabase_client';
 
 // Styles
@@ -29,6 +29,8 @@ export const App = () => {
 	const [menu, setMenu] = useState(DEFAULT_MENU);
 	const [modal, setModal] = useState(null);
 	const [loading, setLoading] = useState(true);
+
+	const navigate = useNavigate();
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
@@ -85,12 +87,39 @@ export const App = () => {
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange(async (event, session) => {
-			setSession(session);
+			const handleSetMetaData = async () => {
+				navigate('/', { replace: true, state: {} });
+
+				supabase.auth
+					.updateUser({
+						data: { resetPassword: false },
+					})
+					.then(() => supabase.auth.signOut());
+			};
+
+			switch (event) {
+				case 'PASSWORD_RECOVERY':
+					navigate('/account/resetting-password', {
+						state: { resetPassword: true, session },
+					});
+					break;
+
+				case 'SIGNED_IN':
+					session.user.user_metadata?.resetPassword
+						? handleSetMetaData()
+						: setSession(session);
+					break;
+				case 'SIGNED_OUT':
+					navigate('/', { replace: true });
+					break;
+			}
+
+			subscription.unsubscribe();
 			setLoading(false);
 		});
 
 		return () => subscription.unsubscribe();
-	}, []);
+	}, [navigate]);
 
 	return (
 		<div
