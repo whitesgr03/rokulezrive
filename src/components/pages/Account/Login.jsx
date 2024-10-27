@@ -62,7 +62,7 @@ export const Login = () => {
 		setLoading(true);
 		const { email, password } = formData;
 
-		const { error } = await supabase.auth.signInWithPassword({
+		const { data, error } = await supabase.auth.signInWithPassword({
 			email,
 			password,
 		});
@@ -82,7 +82,7 @@ export const Login = () => {
 			}
 		};
 
-		error && handleError(error);
+		data.user && data.session ? onSession(data) : handleError(error);
 		setLoading(false);
 	};
 
