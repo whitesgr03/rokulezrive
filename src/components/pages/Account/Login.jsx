@@ -1,5 +1,5 @@
 // Packages
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useOutletContext } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { object, string } from 'yup';
@@ -13,6 +13,7 @@ import styles from './Login.module.css';
 
 // Components
 import { Account } from './Account';
+import { Email_Form } from './Email_Form';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -22,6 +23,8 @@ import googleIcon from '../../../assets/google.png';
 import facebookIcon from '../../../assets/facebook.png';
 
 export const Login = () => {
+	const { onActiveModal, onSession } = useOutletContext();
+
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '', password: '' });
 	const [loading, setLoading] = useState(false);
@@ -199,6 +202,20 @@ export const Login = () => {
 								Login
 							</button>
 						</form>
+					</div>
+
+					<div className={accountStyles['account-link-wrap']}>
+						<button
+							type="type"
+							className={accountStyles['account-link']}
+							onClick={() =>
+								onActiveModal({
+									component: <Email_Form onActiveModal={onActiveModal} />,
+								})
+							}
+						>
+							Forget Password?
+						</button>
 					</div>
 
 					<div className={styles.federation}>
