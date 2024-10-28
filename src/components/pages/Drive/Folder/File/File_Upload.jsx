@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { supabase } from '../../../../../utils/supabase_client';
 
 // Styles
 import driveStyles from '../../Drive.module.css';
@@ -45,6 +46,12 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 	const handleUploadFile = async () => {
 		setLoading(true);
 
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}/files`;
 
 		const formData = new FormData();
@@ -55,9 +62,8 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 			method: 'POST',
 			body: formData,
 			headers: {
-				'X-Requested-With': 'XmlHttpRequest',
+				Authorization: `Bearer ${access_token}`,
 			},
-			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
