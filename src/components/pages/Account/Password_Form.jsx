@@ -105,11 +105,11 @@ export const Password_Form = () => {
 					<p>Password reset successful, please use new password to log in.</p>
 				),
 			});
-			navigate('/account/login', { replace: true, state: {} });
 			await supabase.auth.signOut();
+			navigate('/account/login', { replace: true, state: {} });
 		};
 
-		!error ? handleSuccess() : handleError(error);
+		!error ? await handleSuccess() : handleError(error);
 
 		setLoading(false);
 	};
