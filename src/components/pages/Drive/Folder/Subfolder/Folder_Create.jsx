@@ -4,6 +4,7 @@ import { Navigate, useMatch, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { object, string } from 'yup';
 import PropTypes from 'prop-types';
+import { supabase } from '../../../../../utils/supabase_client';
 
 // Styles
 import formStyles from '../../../../../styles/form.module.css';
@@ -67,16 +68,21 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 
 	const handleCreateSubfolder = async () => {
 		setLoading(true);
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
 
 		const options = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-Requested-With': 'XmlHttpRequest',
+				Authorization: `Bearer ${access_token}`,
 			},
 			body: JSON.stringify({ ...formData, parentId }),
-			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);

@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import { object, string } from 'yup';
 import PropTypes from 'prop-types';
+import { supabase } from '../../../../../utils/supabase_client';
 
 // Styles
 import { icon } from '../../../../../styles/icon.module.css';
@@ -71,16 +72,21 @@ export const Folder_Update = ({
 	const handleUpdate = async () => {
 		setLoading(true);
 
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
 
 		const options = {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-Requested-With': 'XmlHttpRequest',
+				Authorization: `Bearer ${access_token}`,
 			},
 			body: JSON.stringify(formData),
-			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
