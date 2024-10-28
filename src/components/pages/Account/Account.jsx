@@ -8,11 +8,11 @@ import styles from './Account.module.css';
 import { Loading } from '../../utils/Loading/Loading';
 
 export const Account = ({ title, loading, children }) => {
-	const { session } = useOutletContext();
+	const { userId } = useOutletContext();
 
 	return (
 		<>
-			{session ? (
+			{userId ? (
 				<Navigate to="/drive" replace={true} />
 			) : (
 				<div className={styles.account}>

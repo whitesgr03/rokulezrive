@@ -23,7 +23,7 @@ import googleIcon from '../../../assets/google.png';
 import facebookIcon from '../../../assets/facebook.png';
 
 export const Login = () => {
-	const { onActiveModal, onSession } = useOutletContext();
+	const { onActiveModal, onUserId } = useOutletContext();
 
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '', password: '' });
@@ -91,7 +91,7 @@ export const Login = () => {
 			}
 		};
 
-		data.user && data.session ? onSession(data) : handleError(error);
+		data.user ? onUserId(data.user.id) : handleError(error);
 		setLoading(false);
 	};
 

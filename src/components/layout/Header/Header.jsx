@@ -18,12 +18,12 @@ import logo from '../../../assets/logo.png';
 const classes = classNames.bind(styles);
 
 export const Header = ({
-	session,
 	darkTheme,
 	onSwitchColorTheme,
 	menu,
 	onActiveMenu,
-	onSession,
+	userId,
+	onUserId,
 }) => {
 	const [dropdownSlideOut, setDropdownSlideOut] = useState(false);
 
@@ -39,30 +39,14 @@ export const Header = ({
 	};
 
 	const handleLogout = async () => {
-		onSession(null);
-
-		const handleFacebookLogout = async () => {
-			const url =
-				`https://graph.facebook.com/${session.user.user_metadata.sub}/permissions?` +
-				`access_token=${session.provider_token}`;
-
-			const options = {
-				method: 'DELETE',
-			};
-
-			await handleFetch(url, options);
-		};
-
-		session.user.user_metadata?.iss ===
-			'https://graph.facebook.com/me?fields=email,first_name,last_name,name,picture' &&
-			(await handleFacebookLogout());
+		onUserId(null);
 
 		await supabase.auth.signOut();
 	};
 
 	return (
 		<header className={styles.header}>
-			<Link to={session ? '/drive' : '/'} className={styles.logo}>
+			<Link to={userId ? '/drive' : '/'} className={styles.logo}>
 				<img src={logo} alt="Logo" className={styles['logo-image']} />
 				{isNormalTablet && <h1 className={styles['logo-text']}>Local Drive</h1>}
 			</Link>
@@ -120,7 +104,7 @@ export const Header = ({
 					</li>
 				)}
 				<li>
-					{session ? (
+					{userId ? (
 						<button
 							className={styles['dropdown-link']}
 							onClick={handleLogout}
@@ -146,10 +130,10 @@ export const Header = ({
 };
 
 Header.propTypes = {
-	session: PropTypes.object,
 	darkTheme: PropTypes.bool,
 	onSwitchColorTheme: PropTypes.func,
 	menu: PropTypes.object,
 	onActiveMenu: PropTypes.func,
-	onSession: PropTypes.func,
+	onUserId: PropTypes.func,
+	userId: PropTypes.string,
 };

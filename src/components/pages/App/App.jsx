@@ -24,7 +24,7 @@ const DEFAULT_MENU = {
 };
 
 export const App = () => {
-	const [session, setSession] = useState(null);
+	const [userId, setUserId] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [menu, setMenu] = useState(DEFAULT_MENU);
 	const [modal, setModal] = useState(null);
@@ -125,7 +125,7 @@ export const App = () => {
 		<div
 			className={`${styles.app} ${classes({
 				dark: darkTheme,
-				'active-mobile-nav': !isNormalTablet && session,
+				'active-mobile-nav': !isNormalTablet && userId,
 			})}`}
 			onClick={handleCloseMenu}
 		>
@@ -144,12 +144,12 @@ export const App = () => {
 						</Modal>
 					)}
 					<Header
-						session={session}
 						darkTheme={darkTheme}
 						menu={menu}
 						onActiveMenu={handleActiveMenu}
 						onSwitchColorTheme={handleSwitchColorTheme}
-						onSession={setSession}
+						userId={userId}
+						onUserId={setUserId}
 					/>
 					<div className={styles.container}>
 						<main>
@@ -159,14 +159,14 @@ export const App = () => {
 									onActiveModal: handleActiveModal,
 									menu,
 									darkTheme,
-									session,
-									onSession: setSession,
+									userId,
+									onUserId: setUserId,
 								}}
 							/>
 						</main>
 						{!isNormalTablet && <Footer />}
 					</div>
-					{!isNormalTablet && session && (
+					{!isNormalTablet && userId && (
 						<Mobile_Nav
 							menu={menu}
 							onActiveModal={handleActiveModal}

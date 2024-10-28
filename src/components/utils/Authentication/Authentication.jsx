@@ -2,9 +2,9 @@ import { useOutletContext, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export const Authentication = ({ children }) => {
-	const { session } = useOutletContext();
+	const { userId } = useOutletContext();
 
-	return session ? children : <Navigate to="/" replace={true} />;
+	return userId ? children : <Navigate to="/" replace={true} />;
 };
 
 Authentication.propTypes = {
