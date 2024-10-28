@@ -99,7 +99,7 @@ export const Shared_File = () => {
 					</div>
 					<div className={driveStyles['file-info']}>
 						<p>Size: {formatBytes(file.size)}</p>
-						<p>Shared by: {file.owner.username}</p>
+						<p>Shared by: {file.owner.email}</p>
 						<p>Shared At: {format(sharedAt, 'MMM d, y')}</p>
 					</div>
 					<button

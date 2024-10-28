@@ -137,9 +137,9 @@ export const Shared = () => {
 												)}
 												<span
 													className={styles.sharer}
-													title={item.file.owner.username}
+													title={item.file.owner.email}
 												>
-													{item.file.owner.username}
+													{item.file.owner.email}
 												</span>
 											</div>
 											<div className={driveStyles.info}>
