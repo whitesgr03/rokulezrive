@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
+import { supabase } from '../../../../../utils/supabase_client';
 
 // Styles
 import { icon } from '../../../../../styles/icon.module.css';
@@ -76,16 +77,21 @@ export const File_Share = ({
 	const handleCreateSharer = async () => {
 		setLoading(true);
 
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharers`;
 
 		const options = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-Requested-With': 'XmlHttpRequest',
+				Authorization: `Bearer ${access_token}`,
 			},
 			body: JSON.stringify(formData),
-			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
@@ -115,14 +121,19 @@ export const File_Share = ({
 	const handleDeleteSharer = async sharerId => {
 		setLoading(true);
 
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharers/${sharerId}`;
 
 		const options = {
 			method: 'DELETE',
 			headers: {
-				'X-Requested-With': 'XmlHttpRequest',
+				Authorization: `Bearer ${access_token}`,
 			},
-			credentials: 'include',
 		};
 
 		const result = await handleFetch(url, options);
@@ -139,15 +150,20 @@ export const File_Share = ({
 	const handlePublicFile = async () => {
 		setLoading(true);
 
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		const setPublic = async () => {
 			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/public`;
 
 			const options = {
 				method: 'POST',
 				headers: {
-					'X-Requested-With': 'XmlHttpRequest',
+					Authorization: `Bearer ${access_token}`,
 				},
-				credentials: 'include',
 			};
 
 			return await handleFetch(url, options);
@@ -159,9 +175,8 @@ export const File_Share = ({
 			const options = {
 				method: 'DELETE',
 				headers: {
-					'X-Requested-With': 'XmlHttpRequest',
+					Authorization: `Bearer ${access_token}`,
 				},
-				credentials: 'include',
 			};
 
 			return await handleFetch(url, options);
