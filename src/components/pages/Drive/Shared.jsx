@@ -3,6 +3,7 @@ import { useOutletContext, Link, useMatch, Navigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import driveStyles from './Drive.module.css';
@@ -64,14 +65,20 @@ export const Shared = () => {
 
 		const createResourceUrl = async () => {
 			setLoading(true);
+
+			const {
+				data: {
+					session: { access_token },
+				},
+			} = await supabase.auth.getSession();
+
 			const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${id}/copy`;
 
 			const options = {
 				method: 'POST',
 				headers: {
-					'X-Requested-With': 'XmlHttpRequest',
+					Authorization: `Bearer ${access_token}`,
 				},
-				credentials: 'include',
 			};
 
 			const result = await handleFetch(url, options);
