@@ -24,6 +24,7 @@ const DEFAULT_MENU = {
 };
 
 export const App = () => {
+	const [resetPassword, setResetPassword] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [menu, setMenu] = useState(DEFAULT_MENU);
@@ -86,8 +87,8 @@ export const App = () => {
 	useEffect(() => {
 		const {
 			data: { subscription },
-		} = supabase.auth.onAuthStateChange(async (event, session) => {
-			const handleSetMetaData = async () => {
+		} = supabase.auth.onAuthStateChange((event, session) => {
+			const handleSetMetaData = () => {
 				navigate('/', { replace: true, state: {} });
 
 				supabase.auth
@@ -99,27 +100,32 @@ export const App = () => {
 
 			switch (event) {
 				case 'PASSWORD_RECOVERY':
+					setResetPassword(true);
 					navigate('/account/resetting-password', {
-						state: { resetPassword: true, session },
+						state: { resetPassword: true },
 					});
 					break;
 
 				case 'SIGNED_IN':
-					session.user.user_metadata?.resetPassword
-						? handleSetMetaData()
-						: setSession(session);
+					!resetPassword &&
+						session.user.user_metadata.resetPassword &&
+						handleSetMetaData();
+
+					!resetPassword &&
+						!session.user.user_metadata.resetPassword &&
+						setUserId(session.user.id);
+
 					break;
 				case 'SIGNED_OUT':
 					navigate('/', { replace: true });
 					break;
 			}
 
-			subscription.unsubscribe();
 			setLoading(false);
 		});
 
 		return () => subscription.unsubscribe();
-	}, [navigate]);
+	}, [navigate, resetPassword]);
 
 	return (
 		<div
