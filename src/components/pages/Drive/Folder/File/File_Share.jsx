@@ -34,7 +34,7 @@ export const File_Share = ({
 
 	const [newSharers, setNewSharers] = useState(sharers);
 
-	const [formData, setFormData] = useState({ username: '' });
+	const [formData, setFormData] = useState({ email: '' });
 	const [inputErrors, setInputErrors] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -53,7 +53,10 @@ export const File_Share = ({
 		let isValid = false;
 
 		const schema = object({
-			username: string().trim().required('Username is required.'),
+			email: string()
+				.trim()
+				.email('Email must be in standard format.')
+				.required('Email is required.'),
 		}).noUnknown();
 
 		try {
@@ -104,7 +107,7 @@ export const File_Share = ({
 
 		const handleSuccess = () => {
 			setNewSharers([...newSharers, result.data]);
-			setFormData({ ...formData, username: '' });
+			setFormData({ ...formData, email: '' });
 			onGetFolder(folderId);
 		};
 
@@ -212,13 +215,11 @@ export const File_Share = ({
 
 	const listSharers = newSharers.map(item => {
 		return (
-			<li key={`${item.sharer.id}`} className={`${styles['username-item']} `}>
-				<span className={`${styles['username-text']}`}>
-					{item.sharer.username}
-				</span>
+			<li key={`${item.sharer.id}`} className={`${styles['email-item']} `}>
+				<span className={`${styles['email-text']}`}>{item.sharer.email}</span>
 				<button
 					type="button"
-					className={`${styles['username-close']}`}
+					className={`${styles['email-close']}`}
 					onClick={() => handleDeleteSharer(item.sharer.id)}
 				>
 					<span className={`${icon} ${styles.close}`} />
@@ -241,27 +242,27 @@ export const File_Share = ({
 						<form className={formStyles.form} onSubmit={handleSubmit}>
 							<div className={styles.wrap}>
 								{newSharers.length > 0 && (
-									<ul className={styles['username-list']}>{listSharers}</ul>
+									<ul className={styles['email-list']}>{listSharers}</ul>
 								)}
 
 								<div className={styles['label-wrap']}>
 									<label
-										htmlFor="username"
+										htmlFor="email"
 										className={`${styles['label']} ${formStyles['form-label']}`}
 									>
-										Share people with username
+										Share people with email
 									</label>
 									<div className={styles['input-wrap']}>
 										<input
 											type="text"
-											id="username"
+											id="email"
 											className={`${classes({
 												'form-input': true,
 												'form-input-modal-bgc': true,
-												'form-input-error': inputErrors.username,
+												'form-input-error': inputErrors.email,
 											})} ${styles.input}`}
-											name="username"
-											value={formData.username}
+											name="email"
+											value={formData.email}
 											onChange={handleChange}
 										/>
 										<button
@@ -271,17 +272,17 @@ export const File_Share = ({
 											<span className={`${icon} ${styles.add}`} />
 										</button>
 									</div>
-									{inputErrors.username && (
+									{inputErrors.email && (
 										<div
 											className={classes({
 												'form-message-wrap': true,
-												'form-message-active': inputErrors.username,
+												'form-message-active': inputErrors.email,
 											})}
 										>
 											<span className={`${icon} ${formStyles.alert}`} />
 											<p className={formStyles['form-message']}>
-												{inputErrors.username
-													? inputErrors.username
+												{inputErrors.email
+													? inputErrors.email
 													: 'Message Placeholder'}
 											</p>
 										</div>

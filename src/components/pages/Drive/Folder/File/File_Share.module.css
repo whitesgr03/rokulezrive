@@ -12,7 +12,7 @@
 	background-color: var(--light-scheme-main-bgc);
 }
 
-.username-list {
+.email-list {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
@@ -22,7 +22,7 @@
 	overflow: scroll;
 }
 
-.username-item {
+.email-item {
 	display: flex;
 	border: 1px solid var(--light-scheme-color);
 	border-radius: 5px;
@@ -30,7 +30,7 @@
 	overflow: hidden;
 }
 
-.username-text {
+.email-text {
 	display: flex;
 	align-items: center;
 	padding: 10px;
@@ -39,7 +39,7 @@
 	white-space: nowrap;
 }
 
-.username-close {
+.email-close {
 	transition: all 0.1s ease;
 	min-width: 45px;
 	min-height: 45px;
@@ -217,22 +217,22 @@
 	border-color: var(--dark-scheme-color);
 }
 
-:global(.dark) .username-list {
+:global(.dark) .email-list {
 	border-width: 2px;
 	border-color: var(--dark-scheme-color);
 }
 
-:global(.dark) .username-item {
+:global(.dark) .email-item {
 	border: 0;
 	border-color: var(--dark-scheme-color);
 	background-color: var(--dark-scheme-input-bgc);
 }
 
-:global(.dark) .username-text {
+:global(.dark) .email-text {
 	color: var(--dark-scheme-color);
 }
 
-:global(.dark) .username-close {
+:global(.dark) .email-close {
 	color: var(--dark-scheme-color);
 }
 
@@ -267,7 +267,7 @@
 
 /* Pseudo classes */
 
-.username-item:hover {
+.email-item:hover {
 	background-color: rgba(var(--light-scheme-color-rgb), 0.3);
 }
 
@@ -288,7 +288,7 @@
 	transform: scale(0.9);
 }
 
-.username-close:active {
+.email-close:active {
 	transform: scale(0.9);
 }
 
@@ -297,7 +297,7 @@
 	font-weight: bolder;
 }
 
-:global(.dark) .username-item:hover {
+:global(.dark) .email-item:hover {
 	background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
 }
 
@@ -318,19 +318,19 @@
 }
 
 @media (width >= 440px) {
-	.username-list {
+	.email-list {
 		max-height: 100px;
 	}
 }
 
 @media (width >= 600px) {
-	.username-list {
+	.email-list {
 		max-height: 120px;
 	}
 }
 
 @media (width >= 1000px) {
-	.username-list {
+	.email-list {
 		max-height: 100%;
 	}
 }
