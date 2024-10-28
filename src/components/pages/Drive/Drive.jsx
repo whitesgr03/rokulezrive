@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { useEffect, useState, Fragment } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
@@ -44,11 +45,20 @@ export const Drive = () => {
 
 	const handleGetFolder = async folderId => {
 		setLoading(true);
+
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
 
 		const options = {
 			method: 'GET',
-			credentials: 'include',
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+			},
 		};
 
 		const result = await handleFetch(url, options);
@@ -91,25 +101,29 @@ export const Drive = () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 
-		const getFolders = async () => {
+		const getFolders = async access_token => {
 			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
 
 			const options = {
 				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${access_token}`,
+				},
 				signal,
-				credentials: 'include',
 			};
 
 			return await handleFetch(url, options);
 		};
 
-		const getSharedFiles = async signal => {
+		const getSharedFiles = async access_token => {
 			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles`;
 
 			const options = {
 				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${access_token}`,
+				},
 				signal,
-				credentials: 'include',
 			};
 
 			return await handleFetch(url, options);
@@ -118,9 +132,15 @@ export const Drive = () => {
 		const handleGetLists = async () => {
 			setLoading(true);
 
+			const {
+				data: {
+					session: { access_token },
+				},
+			} = await supabase.auth.getSession();
+
 			const [sharedFiles, folders] = await Promise.all([
-				getSharedFiles(),
-				getFolders(),
+				getSharedFiles(access_token),
+				getFolders(access_token),
 			]);
 
 			const handleResult = async () => {
