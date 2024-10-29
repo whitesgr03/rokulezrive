@@ -2,6 +2,7 @@
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
@@ -12,6 +13,7 @@ import styles from './Public_File.module.css';
 // Components
 import { Loading } from '../../utils/Loading/Loading';
 import { Error } from '../../utils/Error/Error';
+import { Footer } from '../../layout/Footer/Footer';
 
 // Utils
 import { formatBytes } from '../../../utils/format_bytes';
@@ -23,6 +25,7 @@ export const Public_File = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
+	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 	useEffect(() => {
 		const controller = new AbortController();
 		const { signal } = controller;
@@ -100,6 +103,7 @@ export const Public_File = () => {
 					)}
 				</>
 			)}
+			{isNormalTablet && <Footer />}
 		</div>
 	);
 };
