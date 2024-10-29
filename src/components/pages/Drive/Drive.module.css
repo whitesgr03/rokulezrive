@@ -304,7 +304,9 @@
 }
 
 .download-btn {
-	width: 50% !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* Dark scheme classes */
@@ -371,6 +373,10 @@
 
 	.container {
 		gap: 15px;
+	}
+
+	.download-btn {
+		max-width: 75%;
 	}
 }
 
@@ -522,10 +528,6 @@
 	:global(.dark) .restart-button {
 		border-color: rgba(var(--dark-scheme-color-rgb), 0.8);
 		color: rgba(var(--dark-scheme-color-rgb), 0.8);
-	}
-
-	.download-btn {
-		width: 35% !important;
 	}
 }
 
