@@ -352,7 +352,8 @@
 	border-color: var(--light-scheme-highlight);
 }
 
-.item:not(:first-of-type):hover {
+.item:hover {
+	border-radius: 10px;
 	background-color: rgba(var(--light-scheme-color-rgb), 0.2);
 }
 
@@ -361,7 +362,7 @@
 	color: var(--light-scheme-color);
 }
 
-:global(.dark) .item:not(:first-of-type):hover {
+:global(.dark) .item:hover {
 	background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
 }
 
@@ -472,6 +473,20 @@
 
 	:global(.dark) .item {
 		border-bottom: 1px solid var(--dark-scheme-color);
+	}
+
+	.item:first-of-type:hover {
+		border-radius: 0;
+		background-color: transparent;
+	}
+
+	.item:not(:first-of-type):hover {
+		border-radius: 0;
+		background-color: rgba(var(--light-scheme-color-rgb), 0.2);
+	}
+
+	:global(.dark) .item:not(:first-of-type):hover {
+		background-color: rgba(var(--dark-scheme-color-rgb), 0.4);
 	}
 
 	.container {
