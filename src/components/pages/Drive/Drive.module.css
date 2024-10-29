@@ -273,7 +273,15 @@
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
+	width: 100%;
 	max-width: 400px;
+}
+
+.file-name {
+	width: 100%;
+	overflow: scroll;
+	text-align: center;
+	white-space: nowrap;
 }
 
 .file-info {

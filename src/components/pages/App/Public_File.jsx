@@ -81,7 +81,9 @@ export const Public_File = () => {
 						<Loading text="Loading..." />
 					) : (
 						<div className={driveStyles['file-container']}>
-							<p>{file.name}</p>
+							<p className={driveStyles['file-name']} title={file.name}>
+								{file.name}
+							</p>
 							<div className={driveStyles.file}>
 								<span
 									className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${file.type}`]}`}
