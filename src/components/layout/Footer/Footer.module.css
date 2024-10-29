@@ -6,6 +6,7 @@
 	align-items: center;
 	border-top: 1px solid var(--light-scheme-color);
 	padding: 20px;
+	width: 100%;
 }
 
 .address-list {
