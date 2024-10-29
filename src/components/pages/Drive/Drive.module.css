@@ -284,6 +284,10 @@
 	white-space: nowrap;
 }
 
+.file {
+  position: relative;
+}
+
 .file-info {
 	display: flex;
 	row-gap: 10px;
