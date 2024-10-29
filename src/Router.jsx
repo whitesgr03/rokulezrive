@@ -97,9 +97,9 @@ export const Router = () => (
 						path: '*',
 						element: <NotFound />,
 					},
+					{ path: 'error', element: <Error /> },
 				],
 			},
-			{ path: '/error', element: <Error /> },
 		])}
 	/>
 );
