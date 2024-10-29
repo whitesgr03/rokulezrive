@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { supabase } from '../../../utils/supabase_client';
 
 // folderStyles
 import folderStyles from './Folder/Folder.module.css';
@@ -24,14 +25,19 @@ export const Shared_Delete = ({
 	const handleDeleteFile = async () => {
 		setLoading(true);
 
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
+
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles/${sharedFileId}`;
 
 		const options = {
 			method: 'DELETE',
 			headers: {
-				'X-Requested-With': 'XmlHttpRequest',
+				Authorization: `Bearer ${access_token}`,
 			},
-			credentials: 'include',
 		};
 
 		const handleSuccess = async () => {
