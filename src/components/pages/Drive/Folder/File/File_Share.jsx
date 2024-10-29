@@ -244,7 +244,6 @@ export const File_Share = ({
 								{newSharers.length > 0 && (
 									<ul className={styles['email-list']}>{listSharers}</ul>
 								)}
-
 								<div className={styles['label-wrap']}>
 									<label
 										htmlFor="email"
