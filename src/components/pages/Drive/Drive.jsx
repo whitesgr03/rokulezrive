@@ -29,9 +29,8 @@ export const Drive = () => {
 	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
-	const isSmallMobile = useMediaQuery({ maxWidth: 450 });
+	const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-	const [paths, setPaths] = useState([]);
 	const [folders, setFolders] = useState([]);
 
 	const [shared, setShared] = useState([]);
@@ -97,6 +96,46 @@ export const Drive = () => {
 		setShared(shared.filter(item => item.file.id !== id));
 	};
 
+	const createPaths = (result, id, folders) => {
+		const index = folders.findIndex(folder => folder.id === id);
+		const subfolder = index !== -1 ? folders.splice(index, 1)[0] : folders[0];
+
+		return id
+			? subfolder.parent === null
+				? [
+						{
+							name: subfolder.name,
+							path: '/drive',
+						},
+						...result,
+					]
+				: createPaths(
+						[
+							{
+								name: subfolder.name,
+								path: `/drive/folders/${subfolder.id}`,
+							},
+							...result,
+						],
+						subfolder.parent.id,
+						folders,
+					)
+			: !fileId
+				? []
+				: [
+						{
+							name: subfolder.name,
+							path: '/drive',
+						},
+					];
+	};
+
+	const paths =
+		folders.length &&
+		createPaths([], folderId, [...folders]).slice(
+			isDesktop ? -4 : isNormalTablet ? -3 : -2,
+		);
+
 	useEffect(() => {
 		const controller = new AbortController();
 		const { signal } = controller;
@@ -157,48 +196,6 @@ export const Drive = () => {
 		handleGetLists();
 		return () => controller.abort();
 	}, []);
-
-	useEffect(() => {
-		const getParentFolderIds = (result, id, folders) => {
-			const index = folders.findIndex(folder => folder.id === id);
-			const subfolder = index !== -1 ? folders.splice(index, 1)[0] : folders[0];
-
-			return id
-				? subfolder.parent === null
-					? [
-							{
-								name: subfolder.name,
-								path: '/drive',
-							},
-							...result,
-						]
-					: getParentFolderIds(
-							[
-								{
-									name: subfolder.name,
-									path: `/drive/folders/${subfolder.id}`,
-								},
-								...result,
-							],
-							subfolder.parent.id,
-							folders,
-						)
-				: !fileId
-					? []
-					: [
-							{
-								name: subfolder.name,
-								path: '/drive',
-							},
-						];
-		};
-
-		const handleSet = () => {
-			const paths = getParentFolderIds([], folderId, [...folders]);
-			setPaths(paths.slice(isNormalTablet ? -3 : -2));
-		};
-		folders.length && handleSet();
-	}, [folders, folderId, fileId, isSmallMobile, isNormalTablet]);
 
 	return (
 		<>
