@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 import classNames from 'classnames/bind';
 import { supabase } from '../../../utils/supabase_client';
-import { handleFetch } from '../../../utils/handle_fetch';
 
 // Styles
 import styles from './Header.module.css';
