@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import styles from './Error.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Error = ({ error, onError, children }) => {
+export const Error = ({ error, children }) => {
 	const [darkTheme, setDarkTheme] = useState(false);
 	const { state } = useLocation();
 
@@ -50,15 +50,9 @@ export const Error = ({ error, onError, children }) => {
 						</p>
 					)}
 				</div>
-				{onError ? (
-					<button className={styles.link} onClick={() => onError(null)}>
-						Go back
-					</button>
-				) : (
-					<Link to="/" className={styles.link} onClick={handleClick}>
-						Back to Home Page
-					</Link>
-				)}
+				<Link to="/drive" className={styles.link} onClick={handleClick}>
+					Back to Home Page
+				</Link>
 			</div>
 		</div>
 	);
