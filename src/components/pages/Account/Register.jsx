@@ -114,7 +114,7 @@ export const Register = () => {
 						});
 						break;
 					default:
-						setError(error);
+						setError(error.message);
 				}
 			};
 
