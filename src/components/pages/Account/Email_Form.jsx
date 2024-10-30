@@ -78,7 +78,7 @@ export const Email_Form = ({ onActiveModal }) => {
 					});
 					break;
 				default:
-					setError(error);
+					setError(error.message);
 			}
 		};
 
