@@ -87,7 +87,7 @@ export const Login = () => {
 					break;
 
 				default:
-					setError(error);
+					setError(error.message);
 			}
 		};
 
