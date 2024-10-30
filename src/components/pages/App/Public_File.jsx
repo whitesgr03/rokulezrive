@@ -58,7 +58,7 @@ export const Public_File = () => {
 			const handleResult = async () => {
 				result.success
 					? setFile(await handleGetDownloadUrl(result.data))
-					: setError(result);
+					: setError(result.message);
 				setLoading(false);
 			};
 
@@ -72,7 +72,7 @@ export const Public_File = () => {
 	return (
 		<div className={styles['public-file']}>
 			{error ? (
-				<Error error={error.message} onError={setError}>
+				<Error error={error}>
 					<p>The file you are looking for could not be found.</p>
 				</Error>
 			) : (
