@@ -3,6 +3,7 @@ import { Link, useOutletContext, Navigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { supabase } from '../../../../../utils/supabase_client';
 
 // Styles
 import driveStyles from '../../Drive.module.css';
@@ -16,42 +17,80 @@ import { File_Share } from './File_Share';
 
 // Utils
 import { formatBytes } from '../../../../../utils/format_bytes';
+import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
-const downloadingIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath stroke-dasharray='2 4' stroke-dashoffset='6' d='M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9'%3E%3Canimate attributeName='stroke-dashoffset' dur='0.6s' repeatCount='indefinite' values='6;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='32' stroke-dashoffset='32' d='M12 21c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.1s' dur='0.4s' values='32;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='10' stroke-dashoffset='10' d='M12 8v7.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.5s' dur='0.2s' values='10;0'/%3E%3C/path%3E%3Cpath stroke-dasharray='6' stroke-dashoffset='6' d='M12 15.5l3.5 -3.5M12 15.5l-3.5 -3.5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' begin='0.7s' dur='0.2s' values='6;0'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E#123`;
 const RESOURCE_URL =
 	import.meta.env.MODE === 'production'
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
 export const Files = () => {
-	const { folder, menu, onActiveMenu, onActiveModal, onGetFolder } =
-		useOutletContext();
+	const {
+		folder,
+		menu,
+		onActiveMenu,
+		onActiveModal,
+		downloading,
+		onResetSVGAnimate,
+	} = useOutletContext();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [downloading, setDownloading] = useState(`url("${downloadingIcon}")`);
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
-	const handleDownload = async ({ url, name }) => {
-		setLoading(true);
-		const blob = await new Promise(resolve =>
-			fetch(url)
-				.then(res => resolve(res.blob()))
-				.catch(() => resolve(null)),
-		);
+	const handleGetResourceUrl = async ({ id, name }) => {
+		const download = async url => {
+			const blob = await new Promise(resolve =>
+				fetch(url)
+					.then(res => resolve(res.blob()))
+					.catch(() => resolve(null)),
+			);
 
-		const download = () => {
-			const a = document.createElement('a');
-			a.href = URL.createObjectURL(blob);
-			a.download = name;
-			a.click();
+			const handleDownload = downloadUrl => {
+				const a = document.createElement('a');
+				a.href = downloadUrl;
+				a.download = name;
+				a.click();
+			};
+
+			!blob
+				? setError('File resource url cloud not be loaded')
+				: handleDownload(URL.createObjectURL(blob));
 		};
 
-		!blob ? setError('File resource url cloud not be loaded') : download();
+		const getResourceUrl = async () => {
+			setLoading(true);
 
-		setLoading(false);
-		setDownloading(`url("${downloadingIcon}#${Math.random()}")`);
+			const {
+				data: {
+					session: { access_token },
+				},
+			} = await supabase.auth.getSession();
+
+			const url = `${RESOURCE_URL}/api/files/${id}/download-url`;
+
+			const options = {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${access_token}`,
+				},
+			};
+
+			const result = await handleFetch(url, options);
+
+			const handleSuccess = async () => {
+				await download(result.data.url);
+				onActiveMenu();
+				setLoading(false);
+				onResetSVGAnimate();
+			};
+
+			result.success ? handleSuccess() : setError(result.message);
+		};
+
+		!loading && getResourceUrl();
 	};
 
 	return (
@@ -138,8 +177,10 @@ export const Files = () => {
 												<button
 													className={driveStyles['option-menu-button']}
 													onClick={() =>
-														!loading &&
-														handleDownload({ url: file.url, name: file.name })
+														handleGetResourceUrl({
+															id: file.id,
+															name: file.name,
+														})
 													}
 												>
 													{loading ? (
