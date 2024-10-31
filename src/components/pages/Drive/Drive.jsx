@@ -48,54 +48,15 @@ export const Drive = () => {
 		? folders.find(folder => folder.id === folderId)
 		: folders[0];
 
-	const handleGetFolder = async folderId => {
-		setLoading(true);
-
-		const {
-			data: {
-				session: { access_token },
-			},
-		} = await supabase.auth.getSession();
-
-		let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
-
-		const options = {
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${access_token}`,
-			},
-		};
-
-		const result = await handleFetch(url, options);
-
-		const handleResult = () => {
-			const newFolders = folders.map(folder =>
-				folder.id === result.data.id ? result.data : folder,
-			);
-			setFolders(newFolders);
-		};
-
-		result.success ? handleResult() : setError(result.message);
-		setLoading(false);
-	};
-
-	const handleAddFolder = (parentFolder, newFolder) => {
-		const newFolders = folders.map(folder =>
-			folder.id === parentFolder.id ? parentFolder : folder,
-		);
-
-		setFolders([...newFolders, newFolder]);
-	};
-
-	const handleUpdateFolder = (parentFolder, newFolder) => {
+	const handleUpdateFolder = ({ parentFolder, currentFolder, newFolder }) => {
 		const newFolders = folders.map(
 			folder =>
-				(folder.id === parentFolder.id && parentFolder) ||
-				(folder.id === newFolder.id && newFolder) ||
+				(folder.id === parentFolder?.id && parentFolder) ||
+				(folder.id === currentFolder.id && currentFolder) ||
 				folder,
 		);
 
-		setFolders(newFolders);
+		setFolders(newFolder ? [...newFolders, newFolder] : newFolders);
 	};
 
 	const handleDeleteSharedFile = id => {
@@ -218,8 +179,7 @@ export const Drive = () => {
 									<Upload_List
 										folder={folder}
 										onActiveModal={onActiveModal}
-										onAddFolder={handleAddFolder}
-										onGetFolder={handleGetFolder}
+										onUpdateFolder={handleUpdateFolder}
 									/>
 									<Mobile_Nav />
 								</div>
@@ -255,9 +215,6 @@ export const Drive = () => {
 												shared,
 												onActiveMenu,
 												onActiveModal,
-												onGetFolder: handleGetFolder,
-												onAddFolder: handleAddFolder,
-												onFolders: setFolders,
 												onUpdateFolder: handleUpdateFolder,
 												onDeleteSharedFile: handleDeleteSharedFile,
 												menu,
@@ -286,8 +243,7 @@ export const Drive = () => {
 										<Upload_List
 											folder={folder}
 											onActiveModal={onActiveModal}
-											onAddFolder={handleAddFolder}
-											onGetFolder={handleGetFolder}
+											onUpdateFolder={handleUpdateFolder}
 										/>
 									)}
 								</div>
