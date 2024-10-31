@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 // Styles
 import styles from './Account.module.css';
 
+// Components
 import { Loading } from '../../utils/Loading/Loading';
 
 export const Account = ({ title, loading, children }) => {
