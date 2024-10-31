@@ -17,6 +17,10 @@ import { Email_Form } from './Email_Form';
 
 // Variables
 const classes = classNames.bind(formStyles);
+const REDIRECT =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_REDIRECT_URI
+		: import.meta.env.VITE_LOCAL_REDIRECT_URI;
 
 // Assets
 import googleIcon from '../../../assets/google.png';
@@ -101,7 +105,7 @@ export const Login = () => {
 		await supabase.auth.signInWithOAuth({
 			provider,
 			options: {
-				redirectTo: `http://localhost:5173/drive`,
+				redirectTo: REDIRECT,
 				queryParams: {
 					prompt: 'consent',
 				},
