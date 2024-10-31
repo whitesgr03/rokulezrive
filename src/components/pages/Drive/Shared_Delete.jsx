@@ -46,10 +46,10 @@ export const Shared_Delete = ({
 			},
 		};
 
-		const handleSuccess = async () => {
+		const handleSuccess = () => {
 			onDeleteSharedFile(sharedFileId);
-			setLoading(false);
 			onActiveModal({ component: null });
+			setLoading(false);
 		};
 
 		const result = await handleFetch(url, options);
