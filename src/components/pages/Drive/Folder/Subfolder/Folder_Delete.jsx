@@ -21,14 +21,12 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Folder_Delete = ({
-  onUpdateFolder, onActiveModal }) => {
+export const Folder_Delete = ({ folder, onUpdateFolder, onActiveModal }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const { _count } = subfolders.find(subfolder => subfolder.id === folderId);
-
-	const folderIsEmpty = _count.subfolders + _count.files === 0;
+	const { name, id: folderId, _count: count } = folder;
+	const folderIsEmpty = count.subfolders + count.files === 0;
 
 	const handleDeleteFolder = async () => {
 		setLoading(true);
@@ -104,6 +102,7 @@ export const Folder_Delete = ({
 };
 
 Folder_Delete.propTypes = {
+	folder: PropTypes.object,
 	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
