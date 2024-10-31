@@ -97,6 +97,10 @@ export const App = () => {
 					})
 					.then(() => supabase.auth.signOut());
 			};
+			const handleSetUser = session => {
+				setUserId(session.user.id);
+				navigate('/drive');
+			};
 
 			switch (event) {
 				case 'PASSWORD_RECOVERY':
@@ -113,9 +117,10 @@ export const App = () => {
 
 					!resetPassword &&
 						!session.user.user_metadata.resetPassword &&
-						setUserId(session.user.id);
+						handleSetUser(session);
 
 					break;
+
 				case 'SIGNED_OUT':
 					navigate('/', { replace: true });
 					break;
