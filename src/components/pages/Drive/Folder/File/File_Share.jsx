@@ -27,9 +27,8 @@ export const File_Share = ({
 	name,
 	sharers,
 	publicId,
-	folderId,
 	fileId,
-	onGetFolder,
+	onUpdateFolder,
 }) => {
 	const [newPublicId, setNewPublicId] = useState(publicId);
 	const [isPublic, setIsPublic] = useState(publicId !== '');
@@ -109,9 +108,10 @@ export const File_Share = ({
 		};
 
 		const handleSuccess = () => {
-			setNewSharers([...newSharers, result.data]);
+			const { newShare, currentFolder } = result.data;
+			setNewSharers([...newSharers, newShare]);
 			setFormData({ ...formData, email: '' });
-			onGetFolder(folderId);
+			onUpdateFolder({ currentFolder });
 		};
 
 		result.success ? handleSuccess() : handleError();
@@ -146,7 +146,7 @@ export const File_Share = ({
 
 		const handleSuccess = () => {
 			setNewSharers(newSharers.filter(item => item.sharer.id !== sharerId));
-			onGetFolder(folderId);
+			onUpdateFolder(result.data);
 		};
 
 		result.success ? handleSuccess() : setError(result.message);
@@ -191,9 +191,10 @@ export const File_Share = ({
 		const result = isPublic ? await setPrivate() : await setPublic();
 
 		const handleSuccess = () => {
-			!isPublic && setNewPublicId(result.data);
+			const { publicFileId = null, currentFolder } = result.data;
+			!isPublic && setNewPublicId(publicFileId);
 			setIsPublic(!isPublic);
-			onGetFolder(folderId);
+			onUpdateFolder({ currentFolder });
 		};
 
 		result.success ? handleSuccess() : setError(result.message);
@@ -353,8 +354,7 @@ File_Share.propTypes = {
 	name: PropTypes.string,
 	sharers: PropTypes.array,
 	publicId: PropTypes.string,
-	folderId: PropTypes.string,
 	fileId: PropTypes.string,
-	onGetFolder: PropTypes.func,
+	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
