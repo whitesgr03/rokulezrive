@@ -95,8 +95,7 @@ export const Folder_Update = ({
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			const { parentFolder, newFolder } = result.data;
-			onUpdateFolder(parentFolder, newFolder);
+			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
 		};
 
