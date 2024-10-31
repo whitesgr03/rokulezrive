@@ -22,12 +22,7 @@ const RESOURCE_URL =
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
 export const Folder_Delete = ({
-	name,
-	subfolders,
-	folderId,
-	onFolders,
-	onActiveModal,
-}) => {
+  onUpdateFolder, onActiveModal }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -54,7 +49,7 @@ export const Folder_Delete = ({
 		};
 
 		const handleSuccess = () => {
-			onFolders(result.data);
+			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
 		};
 
@@ -109,9 +104,6 @@ export const Folder_Delete = ({
 };
 
 Folder_Delete.propTypes = {
-	name: PropTypes.string,
-	subfolders: PropTypes.array,
-	folderId: PropTypes.string,
-	onFolders: PropTypes.func,
+	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
