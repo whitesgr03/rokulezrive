@@ -20,9 +20,8 @@ const RESOURCE_URL =
 
 export const File_Delete = ({
 	name,
-	folderId,
 	fileId,
-	onGetFolder,
+	onUpdateFolder,
 	onActiveModal,
 }) => {
 	const [loading, setLoading] = useState(false);
@@ -47,7 +46,7 @@ export const File_Delete = ({
 		};
 
 		const handleSuccess = () => {
-			onGetFolder(folderId);
+			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
 		};
 
@@ -96,8 +95,7 @@ export const File_Delete = ({
 
 File_Delete.propTypes = {
 	name: PropTypes.string,
-	folderId: PropTypes.string,
 	fileId: PropTypes.string,
-	onGetFolder: PropTypes.func,
+	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
