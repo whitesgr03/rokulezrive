@@ -31,6 +31,7 @@ export const Files = () => {
 		menu,
 		onActiveMenu,
 		onActiveModal,
+		onUpdateFolder,
 		downloading,
 		onResetSVGAnimate,
 	} = useOutletContext();
@@ -159,9 +160,8 @@ export const Files = () => {
 																	name={file.name}
 																	sharers={file.sharers}
 																	publicId={file.public ? file.public.id : ''}
-																	folderId={folder.id}
 																	fileId={file.id}
-																	onGetFolder={onGetFolder}
+																	onUpdateFolder={onUpdateFolder}
 																/>
 															),
 														})
@@ -208,9 +208,8 @@ export const Files = () => {
 															component: (
 																<File_Update
 																	name={file.name}
-																	folderId={folder.id}
 																	fileId={file.id}
-																	onGetFolder={onGetFolder}
+																	onUpdateFolder={onUpdateFolder}
 																	onActiveModal={onActiveModal}
 																/>
 															),
@@ -231,9 +230,8 @@ export const Files = () => {
 															component: (
 																<File_Delete
 																	name={file.name}
-																	folderId={folder.id}
 																	fileId={file.id}
-																	onGetFolder={onGetFolder}
+																	onUpdateFolder={onUpdateFolder}
 																	onActiveModal={onActiveModal}
 																/>
 															),
