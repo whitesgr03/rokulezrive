@@ -24,7 +24,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
+export const File_Upload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [inputError, setInputError] = useState('');
 	const [file, setFile] = useState({});
 	const [size, setSize] = useState(0);
@@ -73,7 +73,7 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			onGetFolder(folderId);
+			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
 		};
 
@@ -180,6 +180,6 @@ export const File_Upload = ({ folderId, onGetFolder, onActiveModal }) => {
 
 File_Upload.propTypes = {
 	folderId: PropTypes.string,
-	onGetFolder: PropTypes.func,
+	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
