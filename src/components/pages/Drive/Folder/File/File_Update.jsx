@@ -25,9 +25,8 @@ const RESOURCE_URL =
 
 export const File_Update = ({
 	name,
-	folderId,
 	fileId,
-	onGetFolder,
+	onUpdateFolder,
 	onActiveModal,
 }) => {
 	const [inputErrors, setInputErrors] = useState({});
@@ -96,7 +95,7 @@ export const File_Update = ({
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			onGetFolder(folderId);
+			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
 		};
 
@@ -171,6 +170,6 @@ File_Update.propTypes = {
 	name: PropTypes.string,
 	folderId: PropTypes.string,
 	fileId: PropTypes.string,
-	onGetFolder: PropTypes.func,
+	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
