@@ -238,9 +238,7 @@ export const File_Share = ({
 				<Navigate to="/error" state={{ error }} />
 			) : (
 				<>
-					{loading && (
-						<Loading text={'Sharing...'} light={true} shadow={true} />
-					)}
+					{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
 					<div className={styles.container}>
 						<h3>Share {`"${name}"`}</h3>
 						<form className={formStyles.form} onSubmit={handleSubmit}>
