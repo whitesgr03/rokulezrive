@@ -21,7 +21,7 @@ export const Upload_List = ({
 						onActiveModal({
 							component: (
 								<File_Upload
-									folderId={folder.id}
+									folderId={folderId}
 									onUpdateFolder={onUpdateFolder}
 									onActiveModal={onActiveModal}
 								/>
@@ -41,7 +41,7 @@ export const Upload_List = ({
 						onActiveModal({
 							component: (
 								<Folder_Create
-									parentId={folder.id}
+									folderId={folderId}
 									onUpdateFolder={onUpdateFolder}
 									onActiveModal={onActiveModal}
 								/>
