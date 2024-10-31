@@ -23,12 +23,9 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Folder_Update = ({
-	name,
-	folderId,
-	onUpdateFolder,
-	onActiveModal,
-}) => {
+export const Folder_Update = ({ folder, onUpdateFolder, onActiveModal }) => {
+	const { name, id: folderId } = folder;
+
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ name });
 	const [loading, setLoading] = useState(false);
@@ -167,8 +164,7 @@ export const Folder_Update = ({
 };
 
 Folder_Update.propTypes = {
-	name: PropTypes.string,
-	folderId: PropTypes.string,
+	folder: PropTypes.object,
 	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
