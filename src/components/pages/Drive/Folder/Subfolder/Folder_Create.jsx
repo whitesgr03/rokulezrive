@@ -29,8 +29,14 @@ export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const matchShared = useMatch('/drive/shared/:id');
-	const matchFiles = useMatch('/drive/files/:id');
+	const uploadFileFromShared_File = useMatch('/drive/shared/:id');
+	const uploadFileFromSubfolderShared_File = useMatch(
+		'/drive/folders/:id/shared/:id',
+	);
+	const uploadFileFromFile_Info = useMatch('/drive/files/:id');
+	const uploadFileFromSubfolderFile_Info = useMatch(
+		'/drive/folders/:id/files/:id',
+	);
 	const navigate = useNavigate();
 
 	const handleChange = e => {
@@ -94,7 +100,12 @@ export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 		const handleSuccess = () => {
 			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
-			matchShared || (matchFiles && navigate('/'));
+			(uploadFileFromShared_File || uploadFileFromFile_Info) &&
+				navigate('/drive');
+
+			(uploadFileFromSubfolderShared_File ||
+				uploadFileFromSubfolderFile_Info) &&
+				navigate(`/drive/folders/${folderId}`);
 		};
 
 		const handleError = () => {
