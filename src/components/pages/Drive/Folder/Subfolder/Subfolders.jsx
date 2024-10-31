@@ -13,14 +13,8 @@ import { Folder_Update } from './Folder_Update';
 import { Folder_Delete } from './Folder_Delete';
 
 export const Subfolders = () => {
-	const {
-		folder,
-		menu,
-		onActiveMenu,
-		onActiveModal,
-		onFolders,
-		onUpdateFolder,
-	} = useOutletContext();
+	const { folder, menu, onActiveMenu, onActiveModal, onUpdateFolder } =
+		useOutletContext();
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
@@ -104,11 +98,7 @@ export const Subfolders = () => {
 												onActiveModal({
 													component: (
 														<Folder_Delete
-															name={subfolder.name}
-															subfolders={folder.subfolders}
-															parentId={folder.id}
-															folderId={subfolder.id}
-															onFolders={onFolders}
+															onUpdateFolder={onUpdateFolder}
 															onActiveModal={onActiveModal}
 														/>
 													),
