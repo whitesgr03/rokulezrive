@@ -241,7 +241,7 @@ export const Drive = () => {
 									</button>
 									{menu.name === 'upload-menu' && (
 										<Upload_List
-											folder={folder}
+											folderId={folder.id}
 											onActiveModal={onActiveModal}
 											onUpdateFolder={handleUpdateFolder}
 										/>
