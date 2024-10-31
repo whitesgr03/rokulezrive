@@ -1,7 +1,7 @@
 // Packages
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useMatch, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { supabase } from '../../../../../utils/supabase_client';
 
@@ -30,6 +30,17 @@ export const File_Upload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [size, setSize] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+
+	const uploadFileFromShared_File = useMatch('/drive/shared/:id');
+	const uploadFileFromSubfolderShared_File = useMatch(
+		'/drive/folders/:id/shared/:id',
+	);
+
+	const uploadFileFromFile_Info = useMatch('/drive/files/:id');
+	const uploadFileFromSubfolderFile_Info = useMatch(
+		'/drive/folders/:id/files/:id',
+	);
+	const navigate = useNavigate();
 
 	const handleCancel = () => {
 		setFile({});
@@ -75,6 +86,11 @@ export const File_Upload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 		const handleSuccess = () => {
 			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
+			(uploadFileFromShared_File || uploadFileFromFile_Info) &&
+				navigate('/drive');
+			(uploadFileFromSubfolderShared_File ||
+				uploadFileFromSubfolderFile_Info) &&
+				navigate(`/drive/folders/${folderId}`);
 		};
 
 		result.success ? handleSuccess() : setError(result.message);
