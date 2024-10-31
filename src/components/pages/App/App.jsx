@@ -2,7 +2,12 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { useMediaQuery } from 'react-responsive';
-import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
+import {
+	Outlet,
+	ScrollRestoration,
+	useNavigate,
+	useMatches,
+} from 'react-router-dom';
 import { supabase } from '../../../utils/supabase_client';
 
 // Styles
@@ -32,6 +37,7 @@ export const App = () => {
 	const [loading, setLoading] = useState(true);
 
 	const navigate = useNavigate();
+	const matches = useMatches();
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
@@ -99,7 +105,7 @@ export const App = () => {
 			};
 			const handleSetUser = session => {
 				setUserId(session.user.id);
-				navigate('/drive');
+				matches[1].pathname !== '/drive' && navigate('/drive');
 			};
 
 			switch (event) {
@@ -111,6 +117,7 @@ export const App = () => {
 					break;
 
 				case 'SIGNED_IN':
+				case 'TOKEN_REFRESHED':
 					!resetPassword &&
 						session.user.user_metadata.resetPassword &&
 						handleSetMetaData();
@@ -130,7 +137,7 @@ export const App = () => {
 		});
 
 		return () => subscription.unsubscribe();
-	}, [navigate, resetPassword]);
+	}, [navigate, matches, resetPassword]);
 
 	return (
 		<div
