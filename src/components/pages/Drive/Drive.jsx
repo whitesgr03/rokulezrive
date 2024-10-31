@@ -225,7 +225,7 @@ export const Drive = () => {
 												onDeleteSharedFile: handleDeleteSharedFile,
 												menu,
 												downloading: downloading,
-												onResetSVG: handleResetSVGAnimate,
+												onResetSVGAnimate: handleResetSVGAnimate,
 											}}
 										/>
 									</div>
