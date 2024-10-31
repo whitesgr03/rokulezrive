@@ -98,6 +98,7 @@ export const Subfolders = () => {
 												onActiveModal({
 													component: (
 														<Folder_Delete
+															folder={subfolder}
 															onUpdateFolder={onUpdateFolder}
 															onActiveModal={onActiveModal}
 														/>
