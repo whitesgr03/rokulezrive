@@ -47,7 +47,7 @@ export const Header = ({
 		<header className={styles.header}>
 			<Link to={userId ? '/drive' : '/'} className={styles.logo}>
 				<img src={logo} alt="Logo" className={styles['logo-image']} />
-				{isNormalTablet && <h1 className={styles['logo-text']}>Local Drive</h1>}
+				{isNormalTablet && <h1 className={styles['logo-text']}>Rokulezrive</h1>}
 			</Link>
 			<ul className={styles.features}>
 				{isNormalMobile && (

@@ -19,7 +19,7 @@ export const Footer = () => {
 						<a
 							className={`${styles['address-link']} ${styles['footer-link']}`}
 							href="https://github.com/whitesgr03/local-drive-react"
-							alt="Local Drive Github Repository"
+							alt="Rokulezrive Github Repository"
 							rel="noreferrer"
 							target="_blank"
 							aria-label="Visit Project Repository"

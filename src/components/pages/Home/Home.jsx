@@ -49,7 +49,7 @@ export const Home = () => {
 						>
 							<h2 className={styles['hero-title']}>
 								<span className={styles['hero-title-highlight']}>
-									Local Drive
+									Rokulezrive
 								</span>{' '}
 								easy to store your content
 							</h2>
@@ -58,7 +58,7 @@ export const Home = () => {
 								to anyone.
 							</p>
 							<Link className={styles['home-link']} to="/account/login">
-								Try Local Drive for free
+								Try Rokulezrive for free
 							</Link>
 						</div>
 					</div>
@@ -119,7 +119,7 @@ export const Home = () => {
 								)}
 							</h3>
 							<Link className={styles['home-link']} to="/account/register">
-								Join Local Drive now
+								Join Rokulezrive now
 							</Link>
 						</div>
 					</div>
