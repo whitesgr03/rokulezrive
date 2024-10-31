@@ -18,6 +18,10 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
 export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
@@ -74,7 +78,7 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+		const url = `${RESOURCE_URL}/api/folders`;
 
 		const options = {
 			method: 'POST',

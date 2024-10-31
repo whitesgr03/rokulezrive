@@ -13,6 +13,11 @@ import { Loading } from '../../../../utils/Loading/Loading';
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
 
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
+
 export const File_Delete = ({
 	name,
 	folderId,
@@ -32,7 +37,7 @@ export const File_Delete = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}`;
+		const url = `${RESOURCE_URL}/api/files/${fileId}`;
 
 		const options = {
 			method: 'DELETE',

@@ -15,6 +15,11 @@ import { Shared_Delete } from './Shared_Delete';
 
 import { handleFetch } from '../../../utils/handle_fetch';
 
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
+
 export const Shared = () => {
 	const { shared, menu, onActiveMenu, onActiveModal, onDeleteSharedFile } =
 		useOutletContext();
@@ -55,7 +60,7 @@ export const Shared = () => {
 				},
 			} = await supabase.auth.getSession();
 
-			const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${id}/download-url`;
+			const url = `${RESOURCE_URL}/api/files/${id}/download-url`;
 
 			const options = {
 				method: 'GET',

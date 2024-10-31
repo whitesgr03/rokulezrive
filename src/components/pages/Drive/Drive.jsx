@@ -24,6 +24,12 @@ import { Footer } from '../../layout/Footer/Footer';
 // Utils
 import { handleFetch } from '../../../utils/handle_fetch';
 
+// Variables
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
+
 export const Drive = () => {
 	const { folderId, fileId } = useParams();
 	const { onActiveMenu, onActiveModal, menu } = useOutletContext();
@@ -141,7 +147,7 @@ export const Drive = () => {
 		const { signal } = controller;
 
 		const getFolders = async access_token => {
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders`;
+			let url = `${RESOURCE_URL}/api/folders`;
 
 			const options = {
 				method: 'GET',
@@ -155,7 +161,7 @@ export const Drive = () => {
 		};
 
 		const getSharedFiles = async access_token => {
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles`;
+			let url = `${RESOURCE_URL}/api/sharedFiles`;
 
 			const options = {
 				method: 'GET',

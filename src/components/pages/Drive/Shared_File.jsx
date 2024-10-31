@@ -12,6 +12,11 @@ import formStyles from '../../../styles/form.module.css';
 import { handleFetch } from '../../../utils/handle_fetch';
 import { formatBytes } from '../../../utils/format_bytes';
 
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
+
 export const Shared_File = () => {
 	const { shared } = useOutletContext();
 	const { fileId } = useParams();
@@ -51,7 +56,7 @@ export const Shared_File = () => {
 				},
 			} = await supabase.auth.getSession();
 
-			const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${id}/download-url`;
+			const url = `${RESOURCE_URL}/api/files/${id}/download-url`;
 
 			const options = {
 				method: 'GET',

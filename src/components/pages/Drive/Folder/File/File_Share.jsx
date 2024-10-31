@@ -19,7 +19,10 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);
-
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 export const File_Share = ({
 	name,
 	sharers,
@@ -86,7 +89,7 @@ export const File_Share = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharers`;
+		const url = `${RESOURCE_URL}/api/files/${fileId}/sharers`;
 
 		const options = {
 			method: 'POST',
@@ -130,7 +133,7 @@ export const File_Share = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/sharers/${sharerId}`;
+		const url = `${RESOURCE_URL}/api/files/${fileId}/sharers/${sharerId}`;
 
 		const options = {
 			method: 'DELETE',
@@ -160,7 +163,7 @@ export const File_Share = ({
 		} = await supabase.auth.getSession();
 
 		const setPublic = async () => {
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/public`;
+			let url = `${RESOURCE_URL}/api/files/${fileId}/public`;
 
 			const options = {
 				method: 'POST',
@@ -173,7 +176,7 @@ export const File_Share = ({
 		};
 
 		const setPrivate = async () => {
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/public/${newPublicId}`;
+			let url = `${RESOURCE_URL}/api/public/${newPublicId}`;
 
 			const options = {
 				method: 'DELETE',

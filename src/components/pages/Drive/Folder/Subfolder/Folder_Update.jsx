@@ -19,6 +19,10 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
 export const Folder_Update = ({
 	name,
@@ -78,7 +82,7 @@ export const Folder_Update = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
+		const url = `${RESOURCE_URL}/api/folders/${folderId}`;
 
 		const options = {
 			method: 'PATCH',

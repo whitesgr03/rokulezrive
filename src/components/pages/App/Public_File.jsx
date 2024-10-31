@@ -19,6 +19,12 @@ import { Footer } from '../../layout/Footer/Footer';
 import { formatBytes } from '../../../utils/format_bytes';
 import { handleFetch } from '../../../utils/handle_fetch';
 
+// Variables
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
+
 export const Public_File = () => {
 	const { publicFileId } = useParams();
 	const [file, setFile] = useState({});
@@ -31,7 +37,7 @@ export const Public_File = () => {
 		const { signal } = controller;
 
 		const handleGetSharedFile = async () => {
-			let url = `${import.meta.env.VITE_RESOURCE_URL}/api/public/${publicFileId}`;
+			let url = `${RESOURCE_URL}/api/public/${publicFileId}`;
 
 			const options = {
 				method: 'GET',

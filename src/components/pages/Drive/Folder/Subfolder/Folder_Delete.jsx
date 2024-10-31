@@ -16,6 +16,11 @@ import { Loading } from '../../../../utils/Loading/Loading';
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
 
+const RESOURCE_URL =
+	import.meta.env.MODE === 'production'
+		? import.meta.env.VITE_RESOURCE_URL
+		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
+
 export const Folder_Delete = ({
 	name,
 	subfolders,
@@ -39,7 +44,7 @@ export const Folder_Delete = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}`;
+		const url = `${RESOURCE_URL}/api/folders/${folderId}`;
 
 		const options = {
 			method: 'DELETE',
