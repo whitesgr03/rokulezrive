@@ -23,7 +23,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
+export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
@@ -86,14 +86,13 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${access_token}`,
 			},
-			body: JSON.stringify({ ...formData, parentId }),
+			body: JSON.stringify({ ...formData, folderId }),
 		};
 
 		const result = await handleFetch(url, options);
 
-		const handleSuccess = async () => {
-			const { parentFolder, newFolder } = result.data;
-			onAddFolder(parentFolder, newFolder);
+		const handleSuccess = () => {
+			onUpdateFolder(result.data);
 			onActiveModal({ component: null });
 			matchShared || (matchFiles && navigate('/'));
 		};
@@ -166,7 +165,7 @@ export const Folder_Create = ({ parentId, onAddFolder, onActiveModal }) => {
 };
 
 Folder_Create.propTypes = {
-	parentId: PropTypes.string,
-	onAddFolder: PropTypes.func,
+	folderId: PropTypes.string,
+	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
