@@ -9,9 +9,11 @@ import { icon } from '../../../styles/icon.module.css';
 import driveStyles from './Drive.module.css';
 import formStyles from '../../../styles/form.module.css';
 
+// Utils
 import { handleFetch } from '../../../utils/handle_fetch';
 import { formatBytes } from '../../../utils/format_bytes';
 
+// Variables
 const RESOURCE_URL =
 	import.meta.env.MODE === 'production'
 		? import.meta.env.VITE_RESOURCE_URL

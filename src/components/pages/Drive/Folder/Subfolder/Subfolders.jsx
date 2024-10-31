@@ -1,7 +1,9 @@
+// Packages
 import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useMediaQuery } from 'react-responsive';
 
+// Styles
 import driveStyles from '../../Drive.module.css';
 import { icon } from '../../../../../styles/icon.module.css';
 import styles from './Subfolders.module.css';

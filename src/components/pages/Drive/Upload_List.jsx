@@ -1,8 +1,11 @@
+// Packages
 import PropTypes from 'prop-types';
 
+// Components
 import { Folder_Create } from './Folder/Subfolder/Folder_Create';
 import { File_Upload } from './Folder/File/File_Upload';
 
+// Styles
 import { icon } from '../../../styles/icon.module.css';
 import styles from './Upload_List.module.css';
 

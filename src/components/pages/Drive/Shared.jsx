@@ -13,8 +13,10 @@ import styles from './Shared.module.css';
 // Components
 import { Shared_Delete } from './Shared_Delete';
 
+// Utils
 import { handleFetch } from '../../../utils/handle_fetch';
 
+// Variables
 const RESOURCE_URL =
 	import.meta.env.MODE === 'production'
 		? import.meta.env.VITE_RESOURCE_URL
