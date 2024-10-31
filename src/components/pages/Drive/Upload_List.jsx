@@ -10,6 +10,7 @@ import { icon } from '../../../styles/icon.module.css';
 import styles from './Upload_List.module.css';
 
 export const Upload_List = ({
+  folderId,
   onActiveModal, onUpdateFolder }) => {
 	return (
 		<ul className={`upload-menu ${styles['upload-menu']}`}>
@@ -58,7 +59,7 @@ export const Upload_List = ({
 };
 
 Upload_List.propTypes = {
-	folder: PropTypes.object,
+	folderId: PropTypes.string,
 	onActiveModal: PropTypes.func,
 	onUpdateFolder: PropTypes.func,
 };
