@@ -37,7 +37,6 @@ export const Files = () => {
 	} = useOutletContext();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [downloading, setDownloading] = useState(`url("${downloadingIcon}")`);
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
