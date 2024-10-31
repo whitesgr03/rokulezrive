@@ -29,8 +29,9 @@ export const File_Update = ({
 	onUpdateFolder,
 	onActiveModal,
 }) => {
+	const fileName = name.match(/(.+?)(\.[^.]*$|$)/);
 	const [inputErrors, setInputErrors] = useState({});
-	const [formData, setFormData] = useState({ name });
+	const [formData, setFormData] = useState({ name: fileName[1] });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -89,7 +90,7 @@ export const File_Update = ({
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${access_token}`,
 			},
-			body: JSON.stringify(formData),
+			body: JSON.stringify({ name: formData.name + fileName[2] }),
 		};
 
 		const result = await handleFetch(url, options);
