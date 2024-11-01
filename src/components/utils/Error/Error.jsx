@@ -1,43 +1,23 @@
 // Packages
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Styles
 import styles from './Error.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Error = ({ error, children }) => {
-	const [darkTheme, setDarkTheme] = useState(false);
+export const Error = ({ error }) => {
 	const { state } = useLocation();
 
 	const message = state?.error || error;
-
-	message && console.error('Error component:', message);
+	console.error('Error component:', message);
 
 	const handleClick = () => {
 		document.body.removeAttribute('style');
 	};
 
-	useEffect(() => {
-		const getColorTheme = () => {
-			const darkScheme = localStorage.getItem('darkTheme');
-
-			const browserDarkScheme =
-				window.matchMedia('(prefers-color-scheme: dark)')?.matches ?? false;
-
-			darkScheme === null &&
-				localStorage.setItem('darkTheme', browserDarkScheme);
-
-			setDarkTheme(
-				darkScheme === null ? browserDarkScheme : darkScheme === 'true',
-			);
-		};
-		!children && getColorTheme();
-	}, [children]);
-
 	return (
-		<div className={`${styles.container} ${darkTheme ? 'dark' : ''}`}>
+		<div className={styles.container}>
 			<div className={styles.error}>
 				<span className={`${icon} ${styles.alert}`} />
 				<div className={styles.message}>
