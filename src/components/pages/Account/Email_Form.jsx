@@ -1,5 +1,6 @@
 // Packages
-import { Navigate } from 'react-router-dom';
+import { Navigate,
+	useLocation, } from 'react-router-dom';
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -23,7 +24,7 @@ export const Email_Form = ({ onActiveModal }) => {
 	const [formData, setFormData] = useState({ email: '' });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-
+const { pathname: previousPath } = useLocation();
 	const handleChange = e => {
 		const { value, name } = e.target;
 		const fields = {
@@ -112,7 +113,7 @@ export const Email_Form = ({ onActiveModal }) => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error }} />
+				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<>
 					{loading && (

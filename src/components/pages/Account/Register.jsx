@@ -4,6 +4,7 @@ import {
 	useOutletContext,
 	useNavigate,
 	Navigate,
+	useLocation,
 } from 'react-router-dom';
 import { useState } from 'react';
 import classNames from 'classnames/bind';
@@ -36,7 +37,7 @@ export const Register = () => {
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-
+	const { pathname: previousPath } = useLocation();
 	const handleChange = e => {
 		const { value, name } = e.target;
 		const fields = {
@@ -158,7 +159,7 @@ export const Register = () => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error }} />
+				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<Account title="User Sign Up" loading={loading}>
 					<div className={accountStyles['account-form-wrap']}>

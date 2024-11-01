@@ -1,5 +1,10 @@
 // Packages
-import { Link, Navigate, useOutletContext } from 'react-router-dom';
+import {
+	Link,
+	Navigate,
+	useOutletContext,
+	useLocation,
+} from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { object, string } from 'yup';
@@ -33,7 +38,7 @@ export const Login = () => {
 	const [formData, setFormData] = useState({ email: '', password: '' });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-
+	const { pathname: previousPath } = useLocation();
 	const handleValidFields = async () => {
 		let isValid = false;
 
@@ -134,7 +139,7 @@ export const Login = () => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error }} />
+				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<Account title="User Sign in" loading={loading}>
 					<div className={accountStyles['account-form-wrap']}>
