@@ -7,6 +7,7 @@ import {
 	ScrollRestoration,
 	useNavigate,
 	useMatches,
+	useMatch,
 } from 'react-router-dom';
 import { supabase } from '../../../utils/supabase_client';
 
@@ -38,6 +39,7 @@ export const App = () => {
 
 	const navigate = useNavigate();
 	const matches = useMatches();
+	const isPublicFile = useMatch('/shared/:id');
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
@@ -105,7 +107,7 @@ export const App = () => {
 			};
 			const handleSetUser = session => {
 				setUserId(session.user.id);
-				matches[1].pathname !== '/drive' && navigate('/drive');
+				matches[1].pathname !== '/drive' && !isPublicFile && navigate('/drive');
 			};
 
 			switch (event) {
