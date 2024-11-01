@@ -83,35 +83,37 @@ export const Public_File = () => {
 				/>
 			) : (
 				<>
-					{loading ? (
-						<Loading text="Loading..." />
-					) : (
-						<div className={driveStyles['file-container']}>
-							<p className={driveStyles['file-name']} title={file.name}>
-								{file.name}
-							</p>
-							<div className={driveStyles.file}>
-								<span
-									className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${file.type}`]}`}
-								/>
-							</div>
-							<div className={driveStyles['file-info']}>
-								<p>Size: {formatBytes(file.size)}</p>
-								<p>Shared by: {file.owner.email}</p>
-								<p>Shared At: {format(file.sharedAt, 'MMM d, y')}</p>
-							</div>
-							<a
-								download={file.name}
-								href={file.url}
-								className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
-							>
-								Download
-							</a>
-						</div>
-					)}
+					<div className={driveStyles['file-container']}>
+						{loading ? (
+							<Loading text="Loading..." />
+						) : (
+							<>
+								<p className={driveStyles['file-name']} title={file.name}>
+									{file.name}
+								</p>
+								<div className={driveStyles.file}>
+									<span
+										className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${file.type}`]}`}
+									/>
+								</div>
+								<div className={driveStyles['file-info']}>
+									<p>Size: {formatBytes(file.size)}</p>
+									<p>Shared by: {file.owner.email}</p>
+									<p>Shared At: {format(file.sharedAt, 'MMM d, y')}</p>
+								</div>
+								<a
+									download={file.name}
+									href={file.url}
+									className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
+								>
+									Download
+								</a>
+							</>
+						)}
+					</div>
+					{isNormalTablet && <Footer />}
 				</>
 			)}
-			{isNormalTablet && <Footer />}
 		</div>
 	);
 };
