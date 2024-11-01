@@ -1,5 +1,5 @@
 // Packages
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, Navigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -12,7 +12,6 @@ import styles from './Public_File.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading/Loading';
-import { Error } from '../../utils/Error/Error';
 import { Footer } from '../../layout/Footer/Footer';
 
 // Utils
@@ -30,7 +29,7 @@ export const Public_File = () => {
 	const [file, setFile] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-
+	const { pathname: previousPath } = useLocation();
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 	useEffect(() => {
 		const controller = new AbortController();
@@ -54,7 +53,7 @@ export const Public_File = () => {
 				);
 
 				return !blob
-					? setError('File resource url cloud not be loaded')
+					? setError('The file resource cloud not be downloaded.')
 					: {
 							...file,
 							url: URL.createObjectURL(blob),
@@ -64,7 +63,7 @@ export const Public_File = () => {
 			const handleResult = async () => {
 				result.success
 					? setFile(await handleGetDownloadUrl(result.data))
-					: setError(result.message);
+					: setError('The file you are looking for could not be found.');
 				setLoading(false);
 			};
 
@@ -78,9 +77,10 @@ export const Public_File = () => {
 	return (
 		<div className={styles['public-file']}>
 			{error ? (
-				<Error error={error}>
-					<p>The file you are looking for could not be found.</p>
-				</Error>
+				<Navigate
+					to="/error"
+					state={{ error, previousPath, publicRoute: true }}
+				/>
 			) : (
 				<>
 					{loading ? (
