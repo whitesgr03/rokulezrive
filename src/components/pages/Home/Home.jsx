@@ -44,7 +44,7 @@ export const Home = () => {
 						)}
 						<div
 							className={`${styles.hero} ${classes({
-								'active-mobile-nav': user,
+								'active-mobile-nav': userId,
 							})}`}
 						>
 							<h2 className={styles['hero-title']}>
