@@ -1,6 +1,6 @@
 // Packages
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { supabase } from '../../../../../utils/supabase_client';
 
@@ -25,7 +25,9 @@ export const File_Delete = ({
 	onActiveModal,
 }) => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
+
+	const { pathname: previousPath } = useLocation();
+	const navigate = useNavigate();
 
 	const handleDeleteFile = async () => {
 		setLoading(true);
@@ -45,50 +47,42 @@ export const File_Delete = ({
 			},
 		};
 
-		const handleSuccess = () => {
-			onUpdateFolder(result.data);
-			onActiveModal({ component: null });
-		};
-
 		const result = await handleFetch(url, options);
 
-		result.success ? handleSuccess() : setError(result.message);
+		result.success
+			? onUpdateFolder(result.data)
+			: navigate('/drive/error', {
+					state: { error: result.message, previousPath },
+				});
 
 		setLoading(false);
+		onActiveModal({ component: null });
 	};
 
 	return (
 		<>
-			{error ? (
-				<Navigate to="/error" state={{ error }} />
-			) : (
-				<>
-					{loading && (
-						<Loading text={'Deleting...'} light={true} shadow={true} />
-					)}
-					<div className={folderStyles['folder-delete']}>
-						<h3>Delete Forever</h3>
-						<div className={folderStyles.container}>
-							<p>Do you really want to delete?</p>
-							<p className={folderStyles.name}>{`"${name}"`}</p>
-							<div className={folderStyles['folder-button-wrap']}>
-								<button
-									className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
-									data-close-modal
-								>
-									Cancel
-								</button>
-								<button
-									className={`${folderStyles['folder-button']} ${folderStyles.delete}`}
-									onClick={handleDeleteFile}
-								>
-									Delete
-								</button>
-							</div>
-						</div>
+			{loading && <Loading text={'Deleting...'} light={true} shadow={true} />}
+			<div className={folderStyles['folder-delete']}>
+				<h3>Delete Forever</h3>
+				<div className={folderStyles.container}>
+					<p>Do you really want to delete?</p>
+					<p className={folderStyles.name}>{`"${name}"`}</p>
+					<div className={folderStyles['folder-button-wrap']}>
+						<button
+							className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
+							data-close-modal
+						>
+							Cancel
+						</button>
+						<button
+							className={`${folderStyles['folder-button']} ${folderStyles.delete}`}
+							onClick={handleDeleteFile}
+						>
+							Delete
+						</button>
 					</div>
-				</>
-			)}
+				</div>
+			</div>
 		</>
 	);
 };

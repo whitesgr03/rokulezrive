@@ -1,6 +1,6 @@
 // Packages
 import classNames from 'classnames/bind';
-import { Navigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { object, string } from 'yup';
 import PropTypes from 'prop-types';
@@ -30,10 +30,13 @@ export const File_Update = ({
 	onActiveModal,
 }) => {
 	const fileName = name.match(/(.+?)(\.[^.]*$|$)/);
+
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ name: fileName[1] });
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
+
+	const { pathname: previousPath } = useLocation();
+	const navigate = useNavigate();
 
 	const handleChange = e => {
 		const { value, name } = e.target;
@@ -101,12 +104,17 @@ export const File_Update = ({
 		};
 
 		const handleError = () => {
-			result.fields
-				? setInputErrors({ ...result.fields })
-				: setError(result.message);
+			navigate('/drive/error', {
+				state: { error: result.message, previousPath },
+			});
+			onActiveModal({ component: null });
 		};
 
-		result.success ? handleSuccess() : handleError();
+		result.success
+			? handleSuccess()
+			: result.fields
+				? setInputErrors({ ...result.fields })
+				: handleError();
 
 		setLoading(false);
 	};
@@ -120,49 +128,43 @@ export const File_Update = ({
 
 	return (
 		<>
-			{error ? (
-				<Navigate to="/error" state={{ error }} />
-			) : (
-				<>
-					{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
-					<form className={formStyles.form} onSubmit={handleSubmit}>
-						<div>
-							<label htmlFor="name" className={formStyles['form-label']}>
-								Rename File
-								<input
-									type="text"
-									id="name"
-									className={`${classes({
-										'form-input': true,
-										'form-input-modal-bgc': true,
-										'form-input-error': inputErrors.name,
-									})}`}
-									name="name"
-									value={formData.name}
-									title="The File name is required."
-									onChange={handleChange}
-									autoFocus
-								/>
-							</label>
-							<div
-								className={classes({
-									'form-message-wrap': true,
-									'form-message-active': inputErrors.name,
-								})}
-							>
-								<span className={`${icon} ${formStyles.alert}`} />
-								<p className={formStyles['form-message']}>
-									{inputErrors.name ? inputErrors.name : 'Message Placeholder'}
-								</p>
-							</div>
-						</div>
+			{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
+			<form className={formStyles.form} onSubmit={handleSubmit}>
+				<div>
+					<label htmlFor="name" className={formStyles['form-label']}>
+						Rename File
+						<input
+							type="text"
+							id="name"
+							className={`${classes({
+								'form-input': true,
+								'form-input-modal-bgc': true,
+								'form-input-error': inputErrors.name,
+							})}`}
+							name="name"
+							value={formData.name}
+							title="The File name is required."
+							onChange={handleChange}
+							autoFocus
+						/>
+					</label>
+					<div
+						className={classes({
+							'form-message-wrap': true,
+							'form-message-active': inputErrors.name,
+						})}
+					>
+						<span className={`${icon} ${formStyles.alert}`} />
+						<p className={formStyles['form-message']}>
+							{inputErrors.name ? inputErrors.name : 'Message Placeholder'}
+						</p>
+					</div>
+				</div>
 
-						<button type="submit" className={formStyles['form-submit']}>
-							Save
-						</button>
-					</form>
-				</>
-			)}
+				<button type="submit" className={formStyles['form-submit']}>
+					Save
+				</button>
+			</form>
 		</>
 	);
 };

@@ -1,6 +1,6 @@
 // Packages
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { supabase } from '../../../utils/supabase_client';
 
@@ -26,7 +26,9 @@ export const Shared_Delete = ({
 	onActiveModal,
 }) => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
+
+	const navigate = useNavigate();
+	const { pathname } = useLocation();
 
 	const handleDeleteFile = async () => {
 		setLoading(true);
@@ -46,49 +48,41 @@ export const Shared_Delete = ({
 			},
 		};
 
-		const handleSuccess = () => {
-			onDeleteSharedFile(sharedFileId);
-			onActiveModal({ component: null });
-			setLoading(false);
-		};
-
 		const result = await handleFetch(url, options);
 
-		result.success ? handleSuccess() : setError(result.message);
+		result.success
+			? onDeleteSharedFile(sharedFileId)
+			: navigate('/drive/error', {
+					state: { error: result.message, previousPath: pathname },
+				});
+
+		onActiveModal({ component: null });
 	};
 
 	return (
 		<>
-			{error ? (
-				<Navigate to="/error" state={{ error }} />
-			) : (
-				<>
-					{loading && (
-						<Loading text={'Stopping...'} light={true} shadow={true} />
-					)}
-					<div className={folderStyles['folder-delete']}>
-						<h3>Stop sharing file</h3>
-						<div className={folderStyles.container}>
-							<p>Do you really want to unshare?</p>
-							<p className={folderStyles.name}>{`"${name}"`}</p>
-							<div className={folderStyles['folder-button-wrap']}>
-								<button
-									className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
-									data-close-modal
-								>
-									Cancel
-								</button>
-								<button
-									className={`${folderStyles['folder-button']} ${folderStyles.delete}`}
-									onClick={handleDeleteFile}
-								>
-									Stop
-								</button>
-							</div>
-						</div>
+			{loading && <Loading text={'Stopping...'} light={true} shadow={true} />}
+			<div className={folderStyles['folder-delete']}>
+				<h3>Stop sharing file</h3>
+				<div className={folderStyles.container}>
+					<p>Do you really want to unshare?</p>
+					<p className={folderStyles.name}>{`"${name}"`}</p>
+					<div className={folderStyles['folder-button-wrap']}>
+						<button
+							className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
+							data-close-modal
+						>
+							Cancel
+						</button>
+						<button
+							className={`${folderStyles['folder-button']} ${folderStyles.delete}`}
+							onClick={handleDeleteFile}
+						>
+							Stop
+						</button>
 					</div>
-				</>
-			)}
+				</div>
+			</div>
 		</>
 	);
 };

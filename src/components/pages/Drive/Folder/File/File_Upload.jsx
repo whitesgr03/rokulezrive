@@ -1,7 +1,7 @@
 // Packages
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { Navigate, useMatch, useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { supabase } from '../../../../../utils/supabase_client';
 
@@ -29,18 +29,18 @@ export const File_Upload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [file, setFile] = useState({});
 	const [size, setSize] = useState(0);
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
+
+	const { pathname: previousPath } = useLocation();
+	const navigate = useNavigate();
 
 	const uploadFileFromShared_File = useMatch('/drive/shared/:id');
 	const uploadFileFromSubfolderShared_File = useMatch(
 		'/drive/folders/:id/shared/:id',
 	);
-
 	const uploadFileFromFile_Info = useMatch('/drive/files/:id');
 	const uploadFileFromSubfolderFile_Info = useMatch(
 		'/drive/folders/:id/files/:id',
 	);
-	const navigate = useNavigate();
 
 	const handleCancel = () => {
 		setFile({});
@@ -85,7 +85,6 @@ export const File_Upload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 
 		const handleSuccess = () => {
 			onUpdateFolder(result.data);
-			onActiveModal({ component: null });
 			(uploadFileFromShared_File || uploadFileFromFile_Info) &&
 				navigate('/drive');
 			(uploadFileFromSubfolderShared_File ||
@@ -93,8 +92,13 @@ export const File_Upload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 				navigate(`/drive/folders/${folderId}`);
 		};
 
-		result.success ? handleSuccess() : setError(result.message);
+		result.success
+			? handleSuccess()
+			: navigate('/drive/error', {
+					state: { error: result.message, previousPath },
+				});
 		setLoading(false);
+		onActiveModal({ component: null });
 	};
 
 	const handleSubmit = async e => {
@@ -105,91 +109,79 @@ export const File_Upload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 
 	return (
 		<>
-			{error ? (
-				<Navigate to="/error" state={{ error }} />
-			) : (
-				<>
-					{loading && (
-						<Loading text={'Uploading...'} light={true} shadow={true} />
-					)}
-					<div className={driveStyles.upload}>
-						<h3>Upload File</h3>
-						<form
-							className={`${formStyles.form} ${driveStyles['upload-form']}`}
-							onSubmit={handleSubmit}
-						>
-							<div
-								className={`${formStyles['form-wrap']} ${driveStyles['upload-form-wrap']}`}
-							>
-								{file instanceof File ? (
-									<>
-										<div className={driveStyles.file}>
-											<button
-												type="button"
-												className={driveStyles['restart-button']}
-												onClick={handleCancel}
-											>
-												<span className={`${icon} ${driveStyles.restart}`} />
-											</button>
-											<span
-												className={`${icon} ${driveStyles['file-icon']} ${driveStyles.image}`}
-											/>
-										</div>
-										<div className={driveStyles['file-info']}>
-											<p>{file.name}</p>
-											<p>{formatBytes(file.size)}</p>
-										</div>
-										<button type="submit" className={formStyles['form-submit']}>
-											Upload
-										</button>
-									</>
-								) : (
-									<>
-										<label
-											htmlFor="upload"
-											className={`${formStyles['form-label']} ${driveStyles.preview}`}
-										>
-											<input
-												type="file"
-												id="upload"
-												className={`${classes({
-													'form-input': true,
-													'form-input-bgc': true,
-													'form-input-error': inputError,
-												})}`}
-												name="upload"
-												title="size must be less than 1 mb."
-												onChange={handleChange}
-											/>
-											<span
-												className={`${icon} ${driveStyles['upload-file']}`}
-											/>
-											<p>Click here to upload</p>
-											<p>( File as you like up to 1 MB )</p>
-										</label>
-										<div
-											className={classes({
-												'form-message-wrap': true,
-												'form-message-active': inputError,
-											})}
-										>
-											<span className={`${icon} ${formStyles.alert}`} />
-											<div>
-												<p>
-													The upload file size: {size && formatBytes(size)}.
-												</p>
-												<p className={formStyles['form-message']}>
-													{inputError ? inputError : 'Message Placeholder'}
-												</p>
-											</div>
-										</div>
-									</>
-								)}
-							</div>
-						</form>
+			{loading && <Loading text={'Uploading...'} light={true} shadow={true} />}
+			<div className={driveStyles.upload}>
+				<h3>Upload File</h3>
+				<form
+					className={`${formStyles.form} ${driveStyles['upload-form']}`}
+					onSubmit={handleSubmit}
+				>
+					<div
+						className={`${formStyles['form-wrap']} ${driveStyles['upload-form-wrap']}`}
+					>
+						{file instanceof File ? (
+							<>
+								<div className={driveStyles.file}>
+									<button
+										type="button"
+										className={driveStyles['restart-button']}
+										onClick={handleCancel}
+									>
+										<span className={`${icon} ${driveStyles.restart}`} />
+									</button>
+									<span
+										className={`${icon} ${driveStyles['file-icon']} ${driveStyles.image}`}
+									/>
+								</div>
+								<div className={driveStyles['file-info']}>
+									<p>{file.name}</p>
+									<p>{formatBytes(file.size)}</p>
+								</div>
+								<button type="submit" className={formStyles['form-submit']}>
+									Upload
+								</button>
+							</>
+						) : (
+							<>
+								<label
+									htmlFor="upload"
+									className={`${formStyles['form-label']} ${driveStyles.preview}`}
+								>
+									<input
+										type="file"
+										id="upload"
+										className={`${classes({
+											'form-input': true,
+											'form-input-bgc': true,
+											'form-input-error': inputError,
+										})}`}
+										name="upload"
+										title="size must be less than 1 mb."
+										onChange={handleChange}
+									/>
+									<span className={`${icon} ${driveStyles['upload-file']}`} />
+									<p>Click here to upload</p>
+									<p>( File as you like up to 1 MB )</p>
+								</label>
+								<div
+									className={classes({
+										'form-message-wrap': true,
+										'form-message-active': inputError,
+									})}
+								>
+									<span className={`${icon} ${formStyles.alert}`} />
+									<div>
+										<p>The upload file size: {size && formatBytes(size)}.</p>
+										<p className={formStyles['form-message']}>
+											{inputError ? inputError : 'Message Placeholder'}
+										</p>
+									</div>
+								</div>
+							</>
+						)}
 					</div>
-				</>
-			)}
+				</form>
+			</div>
 		</>
 	);
 };

@@ -1,6 +1,6 @@
 // Packages
 import { useState } from 'react';
-import { Navigate, useMatch, useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate, useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { object, string } from 'yup';
 import PropTypes from 'prop-types';
@@ -27,7 +27,9 @@ export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
+
+	const navigate = useNavigate();
+	const { pathname: previousPath } = useLocation();
 
 	const uploadFileFromShared_File = useMatch('/drive/shared/:id');
 	const uploadFileFromSubfolderShared_File = useMatch(
@@ -37,7 +39,6 @@ export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const uploadFileFromSubfolderFile_Info = useMatch(
 		'/drive/folders/:id/files/:id',
 	);
-	const navigate = useNavigate();
 
 	const handleChange = e => {
 		const { value, name } = e.target;
@@ -99,22 +100,26 @@ export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 
 		const handleSuccess = () => {
 			onUpdateFolder(result.data);
-			onActiveModal({ component: null });
 			(uploadFileFromShared_File || uploadFileFromFile_Info) &&
 				navigate('/drive');
-
 			(uploadFileFromSubfolderShared_File ||
 				uploadFileFromSubfolderFile_Info) &&
 				navigate(`/drive/folders/${folderId}`);
+			onActiveModal({ component: null });
 		};
 
 		const handleError = () => {
-			result.fields
-				? setInputErrors({ ...result.fields })
-				: setError(result.message);
+			navigate('/drive/error', {
+				state: { error: result.message, previousPath },
+			});
+			onActiveModal({ component: null });
 		};
 
-		result.success ? handleSuccess() : handleError();
+		result.success
+			? handleSuccess()
+			: result.fields
+				? setInputErrors({ ...result.fields })
+				: handleError();
 		setLoading(false);
 	};
 
@@ -126,51 +131,43 @@ export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	};
 	return (
 		<>
-			{error ? (
-				<Navigate to="/error" state={{ error }} />
-			) : (
-				<>
-					{loading && (
-						<Loading text={'Creating...'} light={true} shadow={true} />
-					)}
-					<form className={formStyles.form} onSubmit={handleSubmit}>
-						<div className={formStyles['input-wrap']}>
-							<label htmlFor="name" className={formStyles['form-label']}>
-								Folder Name
-								<input
-									type="text"
-									id="name"
-									className={`${classes({
-										'form-input': true,
-										'form-input-modal-bgc': true,
-										'form-input-error': inputErrors.name,
-									})}`}
-									name="name"
-									title="The folder name is required."
-									value={formData.folder}
-									onChange={handleChange}
-									autoFocus
-								/>
-							</label>
-							<div
-								className={classes({
-									'form-message-wrap': true,
-									'form-message-active': inputErrors.name,
-								})}
-							>
-								<span className={`${icon} ${formStyles.alert}`} />
-								<p className={formStyles['form-message']}>
-									{inputErrors.name ? inputErrors.name : 'Message Placeholder'}
-								</p>
-							</div>
-						</div>
+			{loading && <Loading text={'Creating...'} light={true} shadow={true} />}
+			<form className={formStyles.form} onSubmit={handleSubmit}>
+				<div className={formStyles['input-wrap']}>
+					<label htmlFor="name" className={formStyles['form-label']}>
+						Folder Name
+						<input
+							type="text"
+							id="name"
+							className={`${classes({
+								'form-input': true,
+								'form-input-modal-bgc': true,
+								'form-input-error': inputErrors.name,
+							})}`}
+							name="name"
+							title="The folder name is required."
+							value={formData.folder}
+							onChange={handleChange}
+							autoFocus
+						/>
+					</label>
+					<div
+						className={classes({
+							'form-message-wrap': true,
+							'form-message-active': inputErrors.name,
+						})}
+					>
+						<span className={`${icon} ${formStyles.alert}`} />
+						<p className={formStyles['form-message']}>
+							{inputErrors.name ? inputErrors.name : 'Message Placeholder'}
+						</p>
+					</div>
+				</div>
 
-						<button type="submit" className={formStyles['form-submit']}>
-							Create
-						</button>
-					</form>
-				</>
-			)}
+				<button type="submit" className={formStyles['form-submit']}>
+					Create
+				</button>
+			</form>
 		</>
 	);
 };
