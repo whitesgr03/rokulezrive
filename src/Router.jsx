@@ -75,6 +75,7 @@ export const Router = () => (
 								path: 'folders/:folderId/files/:fileId',
 								element: <File_Info />,
 							},
+							{ path: 'error', element: <Error /> },
 						],
 					},
 					{
