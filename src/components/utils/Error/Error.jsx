@@ -30,6 +30,16 @@ export const Error = ({ error }) => {
 						</p>
 					)}
 				</div>
+
+				{state.previousPath && (
+					<Link
+						to={state.previousPath}
+						className={styles.link}
+						onClick={handleClick}
+					>
+						Go Back
+					</Link>
+				)}
 				<Link to="/drive" className={styles.link} onClick={handleClick}>
 					Back to Home Page
 				</Link>
