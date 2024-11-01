@@ -1,5 +1,11 @@
 // Packages
-import { useOutletContext, Link, useMatch, Navigate } from 'react-router-dom';
+import {
+	useOutletContext,
+	Link,
+	useMatch,
+	Navigate,
+	useLocation,
+} from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -38,6 +44,7 @@ export const Shared = () => {
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
 	const matchPath = useMatch('/drive/shared');
+	const { pathname: previousPath } = useLocation();
 
 	const handleGetResourceUrl = async ({ id, name }) => {
 		const download = async url => {
@@ -95,7 +102,7 @@ export const Shared = () => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error }} />
+				<Navigate to="/drive/error" state={{ error, previousPath }} />
 			) : (
 				<>
 					{shared.length !== 0 ? (

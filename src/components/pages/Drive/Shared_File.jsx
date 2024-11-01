@@ -1,5 +1,10 @@
 // Packages
-import { useOutletContext, useParams, Navigate } from 'react-router-dom';
+import {
+	useOutletContext,
+	useParams,
+	Navigate,
+	useLocation,
+} from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { supabase } from '../../../utils/supabase_client';
@@ -26,7 +31,7 @@ export const Shared_File = () => {
 	const [error, setError] = useState(null);
 
 	const { file, sharedAt } = shared.find(item => item.file.id === fileId);
-
+	const { pathname: previousPath } = useLocation();
 	const handleGetResourceUrl = async ({ id, name }) => {
 		const download = async url => {
 			const blob = await new Promise(resolve =>
@@ -82,7 +87,7 @@ export const Shared_File = () => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error }} />
+				<Navigate to="/drive/error" state={{ error, previousPath }} />
 			) : (
 				<div className={driveStyles['file-container']}>
 					<p className={driveStyles['file-name']} title={file.name}>

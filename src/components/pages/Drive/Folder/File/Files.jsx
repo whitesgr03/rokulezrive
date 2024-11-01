@@ -1,5 +1,10 @@
 // Packages
-import { Link, useOutletContext, Navigate } from 'react-router-dom';
+import {
+	Link,
+	useOutletContext,
+	Navigate,
+	useLocation,
+} from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -38,6 +43,7 @@ export const Files = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
+	const { pathname: previousPath } = useLocation();
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
 	const handleGetResourceUrl = async ({ id, name }) => {
@@ -96,7 +102,7 @@ export const Files = () => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error }} />
+				<Navigate to="/drive/error" state={{ error, previousPath }} />
 			) : (
 				<>
 					<h3 className={driveStyles.title}>Files</h3>

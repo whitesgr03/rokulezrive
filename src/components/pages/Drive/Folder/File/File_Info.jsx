@@ -1,5 +1,10 @@
 // Packages
-import { useOutletContext, useParams, Navigate } from 'react-router-dom';
+import {
+	useOutletContext,
+	useParams,
+	Navigate,
+	useLocation,
+} from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { supabase } from '../../../../../utils/supabase_client';
@@ -23,8 +28,11 @@ const RESOURCE_URL =
 export const File_Info = () => {
 	const { folder, downloading, onResetSVGAnimate } = useOutletContext();
 	const { fileId } = useParams();
+
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+
+	const { pathname: previousPath } = useLocation();
 
 	const file = folder.files.find(file => file.id === fileId);
 
@@ -83,7 +91,7 @@ export const File_Info = () => {
 	return (
 		<>
 			{error ? (
-				<Navigate to="/error" state={{ error }} />
+				<Navigate to="/drive/error" state={{ error, previousPath }} />
 			) : (
 				<div className={driveStyles['file-container']}>
 					<p className={driveStyles['file-name']} title={file.name}>
