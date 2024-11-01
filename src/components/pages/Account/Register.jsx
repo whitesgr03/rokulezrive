@@ -91,6 +91,15 @@ export const Register = () => {
 		setLoading(true);
 		const { email, password } = formData;
 
+		const {
+			data: { session },
+		} = await supabase.auth.getSession();
+
+		session?.user.user_metadata.resetPassword &&
+			(await supabase.auth.updateUser({
+				data: { resetPassword: false },
+			}));
+
 		const { data, error } = await supabase.auth.signUp({
 			email,
 			password,

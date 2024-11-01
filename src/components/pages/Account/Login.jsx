@@ -39,6 +39,7 @@ export const Login = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { pathname: previousPath } = useLocation();
+
 	const handleValidFields = async () => {
 		let isValid = false;
 
@@ -74,6 +75,15 @@ export const Login = () => {
 		setLoading(true);
 		const { email, password } = formData;
 
+		const {
+			data: { session },
+		} = await supabase.auth.getSession();
+
+		session?.user.user_metadata.resetPassword &&
+			(await supabase.auth.updateUser({
+				data: { resetPassword: false },
+			}));
+
 		const { data, error } = await supabase.auth.signInWithPassword({
 			email,
 			password,
@@ -106,6 +116,14 @@ export const Login = () => {
 
 	const handleSocialLogin = async provider => {
 		setLoading(true);
+
+		supabase.auth.getSession().then(
+			({ data: { session } }) =>
+				session?.user.user_metadata.resetPassword &&
+				supabase.auth.updateUser({
+					data: { resetPassword: false },
+				}),
+		);
 
 		await supabase.auth.signInWithOAuth({
 			provider,
