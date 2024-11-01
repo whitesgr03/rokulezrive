@@ -39,9 +39,7 @@ export const Drive = () => {
 	const isDesktop = useMediaQuery({ minWidth: 1024 });
 
 	const [folders, setFolders] = useState([]);
-
 	const [shared, setShared] = useState([]);
-
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [downloading, setDownloading] = useState(`url("${downloadingIcon}")`);
