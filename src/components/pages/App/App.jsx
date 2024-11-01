@@ -31,6 +31,7 @@ const DEFAULT_MENU = {
 
 export const App = () => {
 	const [resetPassword, setResetPassword] = useState(false);
+	const [cancelResetPassword, setCancelResetPassword] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [menu, setMenu] = useState(DEFAULT_MENU);
@@ -96,19 +97,29 @@ export const App = () => {
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((event, session) => {
+			console.log(session);
+			console.log(event);
+
+			const handleSetUser = session => {
+				setUserId(session.user.id);
+				matches[1].pathname !== '/drive' && !isPublicFile && navigate('/drive');
+			};
+
 			const handleSetMetaData = () => {
+				setCancelResetPassword(true);
 				navigate('/', { replace: true, state: {} });
 
 				supabase.auth
 					.updateUser({
 						data: { resetPassword: false },
 					})
-					.then(() => supabase.auth.signOut());
+					.then(async () => {
+						await supabase.auth.signOut();
+						setCancelResetPassword(false);
+					});
 			};
-			const handleSetUser = session => {
-				setUserId(session.user.id);
-				matches[1].pathname !== '/drive' && !isPublicFile && navigate('/drive');
-			};
+
+			const metadata_resetPassword = session?.user.user_metadata.resetPassword;
 
 			switch (event) {
 				case 'PASSWORD_RECOVERY':
@@ -120,18 +131,13 @@ export const App = () => {
 
 				case 'SIGNED_IN':
 				case 'TOKEN_REFRESHED':
+				case 'INITIAL_SESSION':
 					!resetPassword &&
-						session.user.user_metadata.resetPassword &&
-						handleSetMetaData();
-
-					!resetPassword &&
-						!session.user.user_metadata.resetPassword &&
-						handleSetUser(session);
-
-					break;
-
-				case 'SIGNED_OUT':
-					navigate('/', { replace: true });
+						((metadata_resetPassword && handleSetMetaData()) ||
+							(!metadata_resetPassword &&
+								!cancelResetPassword &&
+								session &&
+								handleSetUser(session)));
 					break;
 			}
 
@@ -139,7 +145,7 @@ export const App = () => {
 		});
 
 		return () => subscription.unsubscribe();
-	}, [navigate, matches, resetPassword]);
+	}, [navigate, matches, resetPassword, isPublicFile, cancelResetPassword]);
 
 	return (
 		<div
@@ -181,6 +187,7 @@ export const App = () => {
 									darkTheme,
 									userId,
 									onUserId: setUserId,
+									onResetPassword: setResetPassword,
 								}}
 							/>
 						</main>

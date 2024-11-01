@@ -26,7 +26,7 @@ const DEFAULT_FORM_DATA = {
 };
 
 export const Password_Form = () => {
-	const { onActiveModal } = useOutletContext();
+	const { onActiveModal, onResetPassword } = useOutletContext();
 	const { state } = useLocation();
 	const navigate = useNavigate();
 
@@ -106,6 +106,7 @@ export const Password_Form = () => {
 				),
 			});
 			await supabase.auth.signOut();
+			onResetPassword(false);
 			navigate('/account/login', { replace: true, state: {} });
 		};
 
