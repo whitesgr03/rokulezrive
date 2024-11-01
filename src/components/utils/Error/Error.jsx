@@ -22,8 +22,8 @@ export const Error = ({ error }) => {
 				<span className={`${icon} ${styles.alert}`} />
 				<div className={styles.message}>
 					<p>Our apologies, there has been an error.</p>
-					{children ? (
-						children
+					{state.publicRoute ? (
+						<p>{state.error}</p>
 					) : (
 						<p>
 							Please come back later, or if you have any questions, contact us.
