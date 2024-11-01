@@ -15,13 +15,13 @@ import heroImage from '../../../assets/hero-bg.png';
 const classes = classNames.bind(styles);
 
 export const Home = () => {
-	const { user } = useOutletContext();
+	const { userId } = useOutletContext();
 
 	const isNormalDesktop = useMediaQuery({ minWidth: 1000 });
 
 	return (
 		<>
-			{user ? (
+			{userId ? (
 				<Navigate to="/drive" replace={true} />
 			) : (
 				<div className={styles.home}>
