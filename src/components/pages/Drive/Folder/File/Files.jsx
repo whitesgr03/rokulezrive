@@ -167,6 +167,7 @@ export const Files = () => {
 																	publicId={file.public ? file.public.id : ''}
 																	fileId={file.id}
 																	onUpdateFolder={onUpdateFolder}
+																	onActiveModal={onActiveModal}
 																/>
 															),
 														})
