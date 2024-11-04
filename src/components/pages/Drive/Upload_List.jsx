@@ -9,9 +9,7 @@ import { File_Upload } from './Folder/File/File_Upload';
 import { icon } from '../../../styles/icon.module.css';
 import styles from './Upload_List.module.css';
 
-export const Upload_List = ({
-  folderId,
-  onActiveModal, onUpdateFolder }) => {
+export const Upload_List = ({ folderId, onActiveModal, onUpdateFolder }) => {
 	return (
 		<ul className={`upload-menu ${styles['upload-menu']}`}>
 			<li className={styles['upload-item']}>
