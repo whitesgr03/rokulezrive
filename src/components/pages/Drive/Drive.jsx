@@ -140,8 +140,6 @@ export const Drive = () => {
 		};
 
 		const handleGetLists = async () => {
-			setLoading(true);
-
 			const {
 				data: {
 					session: { access_token },
