@@ -97,12 +97,12 @@ export const App = () => {
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((event, session) => {
-			console.log(session);
-			console.log(event);
-
 			const handleSetUser = session => {
 				setUserId(session.user.id);
-				matches[1].pathname !== '/drive' && !isPublicFile && navigate('/drive');
+				matches[1].pathname !== '/drive' &&
+					matches[1].pathname !== '/error' &&
+					!isPublicFile &&
+					navigate('/drive');
 			};
 
 			const handleSetMetaData = () => {
