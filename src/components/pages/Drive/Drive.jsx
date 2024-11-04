@@ -179,7 +179,7 @@ export const Drive = () => {
 							{isNormalTablet && (
 								<div className={styles.sidebar}>
 									<Upload_List
-										folder={folder}
+										folderId={folder.id}
 										onActiveModal={onActiveModal}
 										onUpdateFolder={handleUpdateFolder}
 									/>
