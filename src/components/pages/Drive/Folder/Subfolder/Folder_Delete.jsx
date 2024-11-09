@@ -15,20 +15,26 @@ import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
+import { getAllDeletedFolderSubfolderIds } from '../../../../../utils/getAllDeletedFolderSubfolderIds';
 
 const RESOURCE_URL =
 	import.meta.env.MODE === 'production'
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Folder_Delete = ({ folder, onUpdateFolder, onActiveModal }) => {
+export const Folder_Delete = ({
+	folders,
+	folder,
+	onUpdateFolder,
+	onActiveModal,
+}) => {
 	const [loading, setLoading] = useState(false);
 
 	const navigate = useNavigate();
 	const { pathname: previousPath } = useLocation();
 
-	const { name, id: folderId, _count: count } = folder;
-	const folderIsEmpty = count.subfolders + count.files === 0;
+	const { name, id, _count } = folder;
+	const folderIsEmpty = _count.subfolders + _count.files === 0;
 
 	const handleDeleteFolder = async () => {
 		setLoading(true);
@@ -39,14 +45,24 @@ export const Folder_Delete = ({ folder, onUpdateFolder, onActiveModal }) => {
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${RESOURCE_URL}/api/folders/${folderId}`;
+		const url = `${RESOURCE_URL}/api/folders/${id}`;
 
 		const options = {
 			method: 'DELETE',
 			headers: {
+				'Content-Type': 'application/json',
 				Authorization: `Bearer ${access_token}`,
 			},
 		};
+
+		const allFolderIdsWithFiles =
+			!folderIsEmpty &&
+			getAllDeletedFolderSubfolderIds([{ id, _count }], [...folders], [])
+				.filter(folder => folder._count.files)
+				.map(folder => folder.id);
+
+		allFolderIdsWithFiles?.length &&
+			(options.body = JSON.stringify({ folderIds: allFolderIdsWithFiles }));
 
 		const result = await handleFetch(url, options);
 
@@ -96,6 +112,7 @@ export const Folder_Delete = ({ folder, onUpdateFolder, onActiveModal }) => {
 };
 
 Folder_Delete.propTypes = {
+	folders: PropTypes.array,
 	folder: PropTypes.object,
 	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,

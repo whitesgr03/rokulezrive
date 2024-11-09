@@ -213,6 +213,7 @@ export const Drive = () => {
 										{!folderId && !fileId && <h2>{folder.name}</h2>}
 										<Outlet
 											context={{
+												folders,
 												folder,
 												shared,
 												onActiveMenu,
