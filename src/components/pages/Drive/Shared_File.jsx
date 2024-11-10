@@ -6,13 +6,16 @@ import {
 	useLocation,
 } from 'react-router-dom';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import driveStyles from './Drive.module.css';
 import formStyles from '../../../styles/form.module.css';
+
+// Components
+import { Loading } from '../../utils/Loading/Loading';
 
 // Utils
 import { handleFetch } from '../../../utils/handle_fetch';
@@ -27,10 +30,10 @@ const RESOURCE_URL =
 export const Shared_File = () => {
 	const { sharedFiles, downloading, onResetSVGAnimate } = useOutletContext();
 	const { fileId } = useParams();
-	const [loading, setLoading] = useState(false);
+	const [sharedFile, setSharedFile] = useState({});
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const { file, sharedAt } = shared.find(item => item.file.id === fileId);
 	const { pathname: previousPath } = useLocation();
 	const handleGetResourceUrl = async ({ id, name }) => {
 		const download = async url => {
@@ -84,43 +87,68 @@ export const Shared_File = () => {
 		!loading && createResourceUrl();
 	};
 
+	useEffect(() => {
+		const sharedFile = sharedFiles.find(item => item.file.id === fileId);
+
+		sharedFile
+			? setSharedFile(sharedFile)
+			: setError('The file you are looking for could not be found.');
+
+		setLoading(false);
+	}, [sharedFiles, fileId]);
+
 	return (
 		<>
 			{error ? (
-				<Navigate to="/drive/error" state={{ error, previousPath }} />
+				<Navigate
+					to="/drive/error"
+					state={{ error, previousPath, customMessage: true }}
+				/>
 			) : (
 				<div className={driveStyles['file-container']}>
-					<p className={driveStyles['file-name']} title={file.name}>
-						{file.name}
-					</p>
-					<div className={driveStyles.file}>
-						<span
-							className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${file.type}`]}`}
-						/>
-					</div>
-					<div className={driveStyles['file-info']}>
-						<p>Size: {formatBytes(file.size)}</p>
-						<p>Shared by: {file.owner.email}</p>
-						<p>Shared At: {format(sharedAt, 'MMM d, y')}</p>
-					</div>
-					<button
-						className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
-						onClick={() =>
-							handleGetResourceUrl({ id: fileId, name: file.name })
-						}
-					>
-						<span className={`${driveStyles['download-text']}`}>
-							Download
-							{loading && (
+					{loading ? (
+						<Loading text="Loading..." />
+					) : (
+						<>
+							<p
+								className={driveStyles['file-name']}
+								title={sharedFile.file.name}
+							>
+								{sharedFile.file.name}
+							</p>
+							<div className={driveStyles.file}>
 								<span
-									style={{
-										maskImage: downloading,
-									}}
-									className={`${icon} ${driveStyles['downloading']} ${driveStyles['download-icon']}`}
-								></span>
-							)}
-						</span>
-					</button>
+									className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${sharedFile.file.type}`]}`}
+								/>
+							</div>
+							<div className={driveStyles['file-info']}>
+								<p>Size: {formatBytes(sharedFile.file.size)}</p>
+								<p>Shared by: {sharedFile.file.owner.email}</p>
+								<p>Shared At: {format(sharedFile.sharedAt, 'MMM d, y')}</p>
+							</div>
+							<button
+								className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
+								onClick={() =>
+									handleGetResourceUrl({
+										id: fileId,
+										name: sharedFile.file.name,
+									})
+								}
+							>
+								<span className={`${driveStyles['download-text']}`}>
+									Download
+									{loading && (
+										<span
+											style={{
+												maskImage: downloading,
+											}}
+											className={`${icon} ${driveStyles['downloading']} ${driveStyles['download-icon']}`}
+										></span>
+									)}
+								</span>
+							</button>
+						</>
+					)}
 				</div>
 			)}
 		</>
