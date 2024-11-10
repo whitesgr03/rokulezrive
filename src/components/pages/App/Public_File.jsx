@@ -79,7 +79,7 @@ export const Public_File = () => {
 			{error ? (
 				<Navigate
 					to="/error"
-					state={{ error, previousPath, publicRoute: true }}
+					state={{ error, previousPath, customMessage: true }}
 				/>
 			) : (
 				<>

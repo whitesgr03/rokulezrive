@@ -22,7 +22,7 @@ export const Error = ({ error }) => {
 				<span className={`${icon} ${styles.alert}`} />
 				<div className={styles.message}>
 					<p>Our apologies, there has been an error.</p>
-					{state.publicRoute ? (
+					{state.customMessage ? (
 						<p>{state.error}</p>
 					) : (
 						<p>
