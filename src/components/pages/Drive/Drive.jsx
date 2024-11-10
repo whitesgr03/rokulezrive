@@ -146,20 +146,18 @@ export const Drive = () => {
 				},
 			} = await supabase.auth.getSession();
 
-			const [sharedFiles, folders] = await Promise.all([
+			const [shared, folders] = await Promise.all([
 				getSharedFiles(access_token),
 				getFolders(access_token),
 			]);
 
 			const handleResult = async () => {
 				folders.success ? setFolders(folders.data) : setError(folders.message);
-				sharedFiles.success
-					? setShared(sharedFiles.data)
-					: setError(sharedFiles.message);
+				shared.success ? setSharedFiles(shared.data) : setError(shared.message);
 				setLoading(false);
 			};
 
-			folders && sharedFiles && handleResult();
+			folders && shared && handleResult();
 		};
 
 		handleGetLists();
