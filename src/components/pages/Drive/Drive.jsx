@@ -39,7 +39,7 @@ export const Drive = () => {
 	const isDesktop = useMediaQuery({ minWidth: 1024 });
 
 	const [folders, setFolders] = useState([]);
-	const [shared, setShared] = useState([]);
+	const [sharedFiles, setSharedFiles] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [downloading, setDownloading] = useState(`url("${downloadingIcon}")`);
@@ -64,7 +64,7 @@ export const Drive = () => {
 	};
 
 	const handleDeleteSharedFile = id => {
-		setShared(shared.filter(item => item.file.id !== id));
+		setSharedFiles(sharedFiles.filter(item => item.file.id !== id));
 	};
 
 	const createPaths = (result, id, folders) => {
@@ -213,7 +213,7 @@ export const Drive = () => {
 											context={{
 												folders,
 												folder,
-												shared,
+												sharedFiles,
 												onActiveMenu,
 												onActiveModal,
 												onUpdateFolder: handleUpdateFolder,

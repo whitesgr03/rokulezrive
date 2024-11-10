@@ -30,7 +30,7 @@ const RESOURCE_URL =
 
 export const Shared = () => {
 	const {
-		shared,
+		sharedFiles,
 		menu,
 		onActiveMenu,
 		onActiveModal,
@@ -105,7 +105,7 @@ export const Shared = () => {
 				<Navigate to="/drive/error" state={{ error, previousPath }} />
 			) : (
 				<>
-					{shared.length !== 0 ? (
+					{sharedFiles.length !== 0 ? (
 						<>
 							<h3 className={driveStyles.title}>Shared with you</h3>
 							<ul className={driveStyles.list}>
@@ -121,7 +121,7 @@ export const Shared = () => {
 										<div className={driveStyles['options-button']} />
 									</li>
 								)}
-								{shared.map(item => (
+								{sharedFiles.map(item => (
 									<li key={item.file.id} className={driveStyles.item}>
 										<Link
 											to={`/drive/shared/${item.file.id}`}
