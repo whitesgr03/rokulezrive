@@ -267,6 +267,7 @@
 
 .file-container {
 	display: flex;
+	position: relative;
 	row-gap: 10px;
 	flex: 1 1 100%;
 	flex-direction: column;
