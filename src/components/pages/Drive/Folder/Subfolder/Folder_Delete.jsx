@@ -15,7 +15,7 @@ import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
-import { getAllDeletedFolderSubfolderIds } from '../../../../../utils/getAllDeletedFolderSubfolderIds';
+import { get_Deleted_Folder_Ids } from '../../../../../utils/get_Deleted_Folder_Ids';
 
 const RESOURCE_URL =
 	import.meta.env.MODE === 'production'
@@ -57,7 +57,7 @@ export const Folder_Delete = ({
 
 		const allFolderIdsWithFiles =
 			!folderIsEmpty &&
-			getAllDeletedFolderSubfolderIds([{ id, _count }], [...folders], [])
+			get_Deleted_Folder_Ids([{ id, _count }], [...folders], [])
 				.filter(folder => folder._count.files)
 				.map(folder => folder.id);
 

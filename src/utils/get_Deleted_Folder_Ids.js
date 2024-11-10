@@ -1,6 +1,6 @@
-export const getAllDeletedFolderSubfolderIds = (arrFolder, folders, result) =>
+export const get_Deleted_Folder_Ids = (arrFolder, folders, result) =>
 	arrFolder.length
-		? getAllDeletedFolderSubfolderIds(
+		? get_Deleted_Folder_Ids(
 				arrFolder.reduce(
 					(previousFolder, currentFolder) => [
 						...previousFolder,
