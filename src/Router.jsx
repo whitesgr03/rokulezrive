@@ -8,7 +8,7 @@ import { Drive } from './components/pages/Drive/Drive';
 import { Login } from './components/pages/Account/Login';
 import { Register } from './components/pages/Account/Register';
 import { Password_Form } from './components/pages/Account/Password_Form';
-import { NotFound } from './components/utils/Error/NotFound';
+import { Not_Found } from './components/utils/Error/Not_Found';
 import { Error } from './components/utils/Error/Error';
 
 import { Folder } from './components/pages/Drive/Folder/Folder';
@@ -96,7 +96,7 @@ export const Router = () => (
 					},
 					{
 						path: '*',
-						element: <NotFound />,
+						element: <Not_Found />,
 					},
 					{ path: 'error', element: <Error /> },
 				],
