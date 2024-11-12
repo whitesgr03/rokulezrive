@@ -7,4 +7,11 @@ export default defineConfig({
 	html: {
 		cspNonce: randomBytes(16).toString('base64'),
 	},
+	test: {
+		globals: true,
+		environment: 'jsdom',
+		include: ['src/__test__/**/*.test.jsx'],
+		exclude: ['src/__test__/**/example*.test.jsx'],
+		setupFiles: './src/__test__/setup.js',
+	},
 });
