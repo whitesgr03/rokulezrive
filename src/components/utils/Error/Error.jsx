@@ -25,10 +25,11 @@ export const Error = () => {
 				</div>
 
 				{state?.previousPath && (
+					<Link to={state.previousPath} className={styles.link}>
 						Go Back
 					</Link>
 				)}
-				<Link to="/drive" className={styles.link} onClick={handleClick}>
+				<Link to="/drive" className={styles.link}>
 					Back to Home Page
 				</Link>
 			</div>
