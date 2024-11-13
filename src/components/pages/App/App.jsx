@@ -171,7 +171,7 @@ export const App = () => {
 					)}
 					<Header
 						darkTheme={darkTheme}
-						menu={menu}
+						dropdownSlideIn={menu.name === 'dropdown'}
 						onActiveMenu={handleActiveMenu}
 						onSwitchColorTheme={handleSwitchColorTheme}
 						userId={userId}
