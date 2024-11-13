@@ -56,10 +56,12 @@ export const Header = ({
 							type="button"
 							className={styles['feature-button']}
 							onClick={onSwitchColorTheme}
+							data-testid="feature-button"
 						>
 							<div className={styles.toggle}>
 								<span
 									className={`${icon} ${darkTheme ? styles.moon : styles.sun}`}
+									data-testid="icon"
 								/>
 								<div className={styles['toggle-background']}>
 									<div className={styles['toggle-button']} />
@@ -74,6 +76,7 @@ export const Header = ({
 						className={`${styles['feature-button']}`}
 						onClick={handleDropdownSlideOut}
 						data-button="account-button"
+						data-testid="account-button"
 					>
 						<span className={`${icon} ${styles.user}`} />
 					</button>
@@ -84,6 +87,7 @@ export const Header = ({
 					'dropdown-slide-in': dropdownSlideIn,
 					'dropdown-slide-out': dropdownSlideOut,
 				})}`}
+				data-testid="dropdown"
 			>
 				{!isNormalMobile && (
 					<li>

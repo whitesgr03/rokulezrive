@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Footer component > should match snapshot 1`] = `
+<DocumentFragment>
+  <footer
+    class="_footer_bef41e"
+  >
+    <address>
+      <ul
+        class="_address-list_bef41e"
+      >
+        <li>
+          <a
+            class="_address-link_bef41e _footer-link_bef41e"
+            href="mailto:whitesgr03@gmail.com"
+          >
+            <span
+              class="undefined _email_bef41e"
+            />
+          </a>
+        </li>
+        <li>
+          <a
+            alt="Rokulezrive Github Repository"
+            aria-label="Visit Project Repository"
+            class="_address-link_bef41e _footer-link_bef41e"
+            href="https://github.com/whitesgr03/local-drive-react"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <span
+              class="undefined _github_bef41e"
+            />
+          </a>
+        </li>
+      </ul>
+    </address>
+    <p>
+      © 2024 Designed & coded by Weiss Bai
+    </p>
+  </footer>
+</DocumentFragment>
+`;
