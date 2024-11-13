@@ -6,15 +6,8 @@ import PropTypes from 'prop-types';
 import styles from './Error.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Error = ({ error }) => {
+export const Error = () => {
 	const { state } = useLocation();
-
-	const message = state?.error || error;
-	console.error('Error component:', message);
-
-	const handleClick = () => {
-		document.body.removeAttribute('style');
-	};
 
 	return (
 		<div className={styles.container}>
@@ -22,8 +15,8 @@ export const Error = ({ error }) => {
 				<span className={`${icon} ${styles.alert}`} />
 				<div className={styles.message}>
 					<p>Our apologies, there has been an error.</p>
-					{state.customMessage ? (
-						<p>{state.error}</p>
+					{state?.customMessage ? (
+						<p>{state?.error}</p>
 					) : (
 						<p>
 							Please come back later, or if you have any questions, contact us.
@@ -31,12 +24,7 @@ export const Error = ({ error }) => {
 					)}
 				</div>
 
-				{state.previousPath && (
-					<Link
-						to={state.previousPath}
-						className={styles.link}
-						onClick={handleClick}
-					>
+				{state?.previousPath && (
 						Go Back
 					</Link>
 				)}
