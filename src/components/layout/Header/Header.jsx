@@ -19,9 +19,9 @@ const classes = classNames.bind(styles);
 export const Header = ({
 	darkTheme,
 	onSwitchColorTheme,
-	menu,
+	dropdownSlideIn,
 	onActiveMenu,
-	userId,
+	isLogin,
 	onUserId,
 }) => {
 	const [dropdownSlideOut, setDropdownSlideOut] = useState(false);
@@ -45,7 +45,7 @@ export const Header = ({
 
 	return (
 		<header className={styles.header}>
-			<Link to={userId ? '/drive' : '/'} className={styles.logo}>
+			<Link to={isLogin ? '/drive' : '/'} className={styles.logo}>
 				<img src={logo} alt="Logo" className={styles['logo-image']} />
 				{isNormalTablet && <h1 className={styles['logo-text']}>Rokulezrive</h1>}
 			</Link>
@@ -81,7 +81,7 @@ export const Header = ({
 			</ul>
 			<ul
 				className={`dropdown ${styles.dropdown} ${classes({
-					'dropdown-slide-in': menu.name === 'dropdown',
+					'dropdown-slide-in': dropdownSlideIn,
 					'dropdown-slide-out': dropdownSlideOut,
 				})}`}
 			>
@@ -103,7 +103,7 @@ export const Header = ({
 					</li>
 				)}
 				<li>
-					{userId ? (
+					{isLogin ? (
 						<button
 							className={styles['dropdown-link']}
 							onClick={handleLogout}
@@ -131,8 +131,8 @@ export const Header = ({
 Header.propTypes = {
 	darkTheme: PropTypes.bool,
 	onSwitchColorTheme: PropTypes.func,
-	menu: PropTypes.object,
+	dropdownSlideIn: PropTypes.bool,
 	onActiveMenu: PropTypes.func,
 	onUserId: PropTypes.func,
-	userId: PropTypes.string,
+	isLogin: PropTypes.bool,
 };

@@ -174,7 +174,7 @@ export const App = () => {
 						dropdownSlideIn={menu.name === 'dropdown'}
 						onActiveMenu={handleActiveMenu}
 						onSwitchColorTheme={handleSwitchColorTheme}
-						userId={userId}
+						isLogin={userId !== null}
 						onUserId={setUserId}
 					/>
 					<div className={styles.container}>
