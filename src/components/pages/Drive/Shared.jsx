@@ -17,7 +17,7 @@ import { icon } from '../../../styles/icon.module.css';
 import styles from './Shared.module.css';
 
 // Components
-import { Shared_Delete } from './Shared_Delete';
+import { SharedDelete } from './Shared_Delete';
 
 // Utils
 import { handleFetch } from '../../../utils/handle_fetch';
@@ -203,7 +203,7 @@ export const Shared = () => {
 																onClick={() =>
 																	onActiveModal({
 																		component: (
-																			<Shared_Delete
+																			<SharedDelete
 																				name={item.file.name}
 																				sharedFileId={item.file.id}
 																				onActiveModal={onActiveModal}

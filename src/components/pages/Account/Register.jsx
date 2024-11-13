@@ -15,11 +15,11 @@ import { supabase } from '../../../utils/supabase_client';
 import accountStyles from './Account.module.css';
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
-import Validation_EmailStyles from './Validation_Email.module.css';
+import ValidationEmailStyles from './Validation_Email.module.css';
 
 // Components
 import { Account } from './Account';
-import { Validation_Email } from './Validation_Email';
+import { ValidationEmail } from './Validation_Email';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -136,16 +136,16 @@ export const Register = () => {
 		const handleSuccess = () => {
 			onActiveModal({
 				component: (
-					<Validation_Email>
+					<ValidationEmail>
 						<p>
 							Check your email and find the
-							<span className={Validation_EmailStyles.highlight}>
+							<span className={ValidationEmailStyles.highlight}>
 								{' '}
 								Rokulezrive Email Verification{' '}
 							</span>
 							to complete the signup within 1 hours.
 						</p>
-					</Validation_Email>
+					</ValidationEmail>
 				),
 			});
 			navigate('/account/login');

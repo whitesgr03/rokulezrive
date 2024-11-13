@@ -23,7 +23,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
+export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
@@ -172,7 +172,7 @@ export const Folder_Create = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	);
 };
 
-Folder_Create.propTypes = {
+FolderCreate.propTypes = {
 	folderId: PropTypes.string,
 	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,

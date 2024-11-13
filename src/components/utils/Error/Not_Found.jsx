@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import style from './Error.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Not_Found = () => {
+export const NotFound = () => {
 	return (
 		<div className={style.error}>
 			<span className={`${icon} ${style.alert}`} />

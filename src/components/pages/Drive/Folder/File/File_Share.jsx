@@ -23,7 +23,7 @@ const RESOURCE_URL =
 	import.meta.env.MODE === 'production'
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
-export const File_Share = ({
+export const FileShare = ({
 	name,
 	sharers,
 	publicId,
@@ -359,7 +359,7 @@ export const File_Share = ({
 	);
 };
 
-File_Share.propTypes = {
+FileShare.propTypes = {
 	name: PropTypes.string,
 	sharers: PropTypes.array,
 	publicId: PropTypes.string,

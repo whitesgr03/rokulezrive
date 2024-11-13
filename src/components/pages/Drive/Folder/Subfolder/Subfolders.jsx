@@ -9,8 +9,8 @@ import { icon } from '../../../../../styles/icon.module.css';
 import styles from './Subfolders.module.css';
 
 // Components
-import { Folder_Update } from './Folder_Update';
-import { Folder_Delete } from './Folder_Delete';
+import { FolderUpdate } from './Folder_Update';
+import { FolderDelete } from './Folder_Delete';
 
 export const Subfolders = () => {
 	const { folders, folder, menu, onActiveMenu, onActiveModal, onUpdateFolder } =
@@ -75,7 +75,7 @@ export const Subfolders = () => {
 											onClick={() =>
 												onActiveModal({
 													component: (
-														<Folder_Update
+														<FolderUpdate
 															folder={subfolder}
 															onUpdateFolder={onUpdateFolder}
 															onActiveModal={onActiveModal}
@@ -96,7 +96,7 @@ export const Subfolders = () => {
 											onClick={() =>
 												onActiveModal({
 													component: (
-														<Folder_Delete
+														<FolderDelete
 															folder={subfolder}
 															folders={folders}
 															onUpdateFolder={onUpdateFolder}

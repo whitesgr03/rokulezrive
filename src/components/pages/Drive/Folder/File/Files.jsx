@@ -16,9 +16,9 @@ import { icon } from '../../../../../styles/icon.module.css';
 import styles from './Files.module.css';
 
 // Components
-import { File_Update } from './File_Update';
-import { File_Delete } from './File_Delete';
-import { File_Share } from './File_Share';
+import { FileUpdate } from './File_Update';
+import { FileDelete } from './File_Delete';
+import { FileShare } from './File_Share';
 
 // Utils
 import { formatBytes } from '../../../../../utils/format_bytes';
@@ -161,7 +161,7 @@ export const Files = () => {
 													onClick={() =>
 														onActiveModal({
 															component: (
-																<File_Share
+																<FileShare
 																	name={file.name}
 																	sharers={file.sharers}
 																	publicId={file.public ? file.public.id : ''}
@@ -212,7 +212,7 @@ export const Files = () => {
 													onClick={() =>
 														onActiveModal({
 															component: (
-																<File_Update
+																<FileUpdate
 																	name={file.name}
 																	fileId={file.id}
 																	onUpdateFolder={onUpdateFolder}
@@ -234,7 +234,7 @@ export const Files = () => {
 													onClick={() =>
 														onActiveModal({
 															component: (
-																<File_Delete
+																<FileDelete
 																	name={file.name}
 																	fileId={file.id}
 																	onUpdateFolder={onUpdateFolder}

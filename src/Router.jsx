@@ -7,15 +7,15 @@ import { Home } from './components/pages/Home/Home';
 import { Drive } from './components/pages/Drive/Drive';
 import { Login } from './components/pages/Account/Login';
 import { Register } from './components/pages/Account/Register';
-import { Password_Form } from './components/pages/Account/Password_Form';
-import { Not_Found } from './components/utils/Error/Not_Found';
+import { PasswordForm } from './components/pages/Account/Password_Form';
+import { NotFound } from './components/utils/Error/Not_Found';
 import { Error } from './components/utils/Error/Error';
 
 import { Folder } from './components/pages/Drive/Folder/Folder';
 import { Shared } from './components/pages/Drive/Shared';
-import { File_Info } from './components/pages/Drive/Folder/File/File_Info';
-import { Shared_File } from './components/pages/Drive/Shared_File';
-import { Public_File } from './components/pages/App/Public_File';
+import { FileInfo } from './components/pages/Drive/Folder/File/File_Info';
+import { SharedFile } from './components/pages/Drive/Shared_File';
+import { PublicFile } from './components/pages/App/Public_File';
 
 import { Authentication } from './components/utils/Authentication/Authentication';
 
@@ -49,7 +49,7 @@ export const Router = () => (
 							},
 							{
 								path: 'files/:fileId',
-								element: <File_Info />,
+								element: <FileInfo />,
 							},
 							{
 								path: 'shared',
@@ -57,7 +57,7 @@ export const Router = () => (
 							},
 							{
 								path: 'shared/:fileId',
-								element: <Shared_File />,
+								element: <SharedFile />,
 							},
 							{
 								path: 'folders/my-drive',
@@ -65,7 +65,7 @@ export const Router = () => (
 							},
 							{
 								path: 'folders/my-drive/files/:fileId',
-								element: <File_Info />,
+								element: <FileInfo />,
 							},
 							{
 								path: 'folders/:folderId',
@@ -73,14 +73,14 @@ export const Router = () => (
 							},
 							{
 								path: 'folders/:folderId/files/:fileId',
-								element: <File_Info />,
+								element: <FileInfo />,
 							},
 							{ path: 'error', element: <Error /> },
 						],
 					},
 					{
 						path: 'shared/:publicFileId',
-						element: <Public_File />,
+						element: <PublicFile />,
 					},
 					{
 						path: 'account/login',
@@ -92,11 +92,11 @@ export const Router = () => (
 					},
 					{
 						path: 'account/resetting-password',
-						element: <Password_Form />,
+						element: <PasswordForm />,
 					},
 					{
 						path: '*',
-						element: <Not_Found />,
+						element: <NotFound />,
 					},
 					{ path: 'error', element: <Error /> },
 				],

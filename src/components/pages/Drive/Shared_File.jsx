@@ -27,7 +27,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Shared_File = () => {
+export const SharedFile = () => {
 	const { sharedFiles, downloading, onResetSVGAnimate } = useOutletContext();
 	const { fileId } = useParams();
 	const [sharedFile, setSharedFile] = useState({});

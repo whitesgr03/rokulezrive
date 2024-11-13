@@ -12,12 +12,12 @@ import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
-import upload_listStyles from './Upload_List.module.css';
+import uploadListStyles from './Upload_List.module.css';
 import styles from './Drive.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading/Loading';
-import { Upload_List } from './Upload_List';
+import { UploadList } from './Upload_List';
 import { Navbar } from '../../layout/Navbar/Navbar';
 import { Footer } from '../../layout/Footer/Footer';
 
@@ -176,7 +176,7 @@ export const Drive = () => {
 						<>
 							{isNormalTablet && (
 								<div className={styles.sidebar}>
-									<Upload_List
+									<UploadList
 										folderId={folder.id}
 										onActiveModal={onActiveModal}
 										onUpdateFolder={handleUpdateFolder}
@@ -228,10 +228,10 @@ export const Drive = () => {
 								</div>
 							</div>
 							{!isNormalTablet && (
-								<div className={`upload ${upload_listStyles.upload}`}>
+								<div className={`upload ${uploadListStyles.upload}`}>
 									<button
 										type="button"
-										className={upload_listStyles['upload-button']}
+										className={uploadListStyles['upload-button']}
 										onClick={() =>
 											onActiveMenu({
 												name: 'upload-menu',
@@ -240,10 +240,10 @@ export const Drive = () => {
 										}
 										data-button="upload-button"
 									>
-										<span className={`${icon} ${upload_listStyles.plus}`} />
+										<span className={`${icon} ${uploadListStyles.plus}`} />
 									</button>
 									{menu.name === 'upload-menu' && (
-										<Upload_List
+										<UploadList
 											folderId={folder.id}
 											onActiveModal={onActiveModal}
 											onUpdateFolder={handleUpdateFolder}

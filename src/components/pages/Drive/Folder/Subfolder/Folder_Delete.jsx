@@ -15,14 +15,14 @@ import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
-import { get_Deleted_Folder_Ids } from '../../../../../utils/get_Deleted_Folder_Ids';
+import { getDeletedFolderIds } from '../../../../../utils/get_deleted_folder_ids';
 
 const RESOURCE_URL =
 	import.meta.env.MODE === 'production'
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Folder_Delete = ({
+export const FolderDelete = ({
 	folders,
 	folder,
 	onUpdateFolder,
@@ -57,7 +57,7 @@ export const Folder_Delete = ({
 
 		const allFolderIdsWithFiles =
 			!folderIsEmpty &&
-			get_Deleted_Folder_Ids([{ id, _count }], [...folders], [])
+			getDeletedFolderIds([{ id, _count }], [...folders], [])
 				.filter(folder => folder._count.files)
 				.map(folder => folder.id);
 
@@ -111,7 +111,7 @@ export const Folder_Delete = ({
 	);
 };
 
-Folder_Delete.propTypes = {
+FolderDelete.propTypes = {
 	folders: PropTypes.array,
 	folder: PropTypes.object,
 	onUpdateFolder: PropTypes.func,

@@ -23,7 +23,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const File_Update = ({
+export const FileUpdate = ({
 	name,
 	fileId,
 	onUpdateFolder,
@@ -169,7 +169,7 @@ export const File_Update = ({
 	);
 };
 
-File_Update.propTypes = {
+FileUpdate.propTypes = {
 	name: PropTypes.string,
 	folderId: PropTypes.string,
 	fileId: PropTypes.string,

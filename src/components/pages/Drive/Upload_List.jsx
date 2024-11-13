@@ -2,14 +2,14 @@
 import PropTypes from 'prop-types';
 
 // Components
-import { Folder_Create } from './Folder/Subfolder/Folder_Create';
-import { File_Upload } from './Folder/File/File_Upload';
+import { FolderCreate } from './Folder/Subfolder/Folder_Create';
+import { FileUpload } from './Folder/File/File_Upload';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import styles from './Upload_List.module.css';
 
-export const Upload_List = ({ folderId, onActiveModal, onUpdateFolder }) => {
+export const UploadList = ({ folderId, onActiveModal, onUpdateFolder }) => {
 	return (
 		<ul className={`upload-menu ${styles['upload-menu']}`}>
 			<li className={styles['upload-item']}>
@@ -18,7 +18,7 @@ export const Upload_List = ({ folderId, onActiveModal, onUpdateFolder }) => {
 					onClick={() =>
 						onActiveModal({
 							component: (
-								<File_Upload
+								<FileUpload
 									folderId={folderId}
 									onUpdateFolder={onUpdateFolder}
 									onActiveModal={onActiveModal}
@@ -38,7 +38,7 @@ export const Upload_List = ({ folderId, onActiveModal, onUpdateFolder }) => {
 					onClick={() =>
 						onActiveModal({
 							component: (
-								<Folder_Create
+								<FolderCreate
 									folderId={folderId}
 									onUpdateFolder={onUpdateFolder}
 									onActiveModal={onActiveModal}
@@ -56,7 +56,7 @@ export const Upload_List = ({ folderId, onActiveModal, onUpdateFolder }) => {
 	);
 };
 
-Upload_List.propTypes = {
+UploadList.propTypes = {
 	folderId: PropTypes.string,
 	onActiveModal: PropTypes.func,
 	onUpdateFolder: PropTypes.func,

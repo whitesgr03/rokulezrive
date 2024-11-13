@@ -19,7 +19,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Shared_Delete = ({
+export const SharedDelete = ({
 	name,
 	sharedFileId,
 	onDeleteSharedFile,
@@ -87,7 +87,7 @@ export const Shared_Delete = ({
 	);
 };
 
-Shared_Delete.propTypes = {
+SharedDelete.propTypes = {
 	name: PropTypes.string,
 	sharedFileId: PropTypes.string,
 	onDeleteSharedFile: PropTypes.func,

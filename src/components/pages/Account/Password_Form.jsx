@@ -25,7 +25,7 @@ const DEFAULT_FORM_DATA = {
 	confirmPassword: '',
 };
 
-export const Password_Form = () => {
+export const PasswordForm = () => {
 	const { onActiveModal, onResetPassword } = useOutletContext();
 	const { state } = useLocation();
 	const navigate = useNavigate();

@@ -24,7 +24,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const Public_File = () => {
+export const PublicFile = () => {
 	const { publicFileId } = useParams();
 	const [file, setFile] = useState({});
 	const [loading, setLoading] = useState(true);

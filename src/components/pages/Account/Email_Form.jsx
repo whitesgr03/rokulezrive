@@ -10,16 +10,16 @@ import { supabase } from '../../../utils/supabase_client';
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import formStyles from '../../../styles/form.module.css';
-import Validation_EmailStyles from './Validation_Email.module.css';
+import ValidationEmailStyles from './Validation_Email.module.css';
 
 // Components
 import { Loading } from '../../utils/Loading/Loading';
-import { Validation_Email } from './Validation_Email';
+import { ValidationEmail } from './Validation_Email';
 
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const Email_Form = ({ onActiveModal }) => {
+export const EmailForm = ({ onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '' });
 	const [loading, setLoading] = useState(false);
@@ -86,16 +86,16 @@ const { pathname: previousPath } = useLocation();
 		const handleSuccess = () => {
 			onActiveModal({
 				component: (
-					<Validation_Email>
+					<ValidationEmail>
 						<p>
 							Check your email and find the
-							<span className={Validation_EmailStyles.highlight}>
+							<span className={ValidationEmailStyles.highlight}>
 								{' '}
 								Rokulezrive Reset Password Verification{' '}
 							</span>{' '}
 							to reset your password.
 						</p>
-					</Validation_Email>
+					</ValidationEmail>
 				),
 			});
 		};
@@ -164,6 +164,6 @@ const { pathname: previousPath } = useLocation();
 	);
 };
 
-Email_Form.propTypes = {
+EmailForm.propTypes = {
 	onActiveModal: PropTypes.func,
 };

@@ -2,7 +2,7 @@
 import styles from './Validation_Email.module.css';
 import PropTypes from 'prop-types';
 
-export const Validation_Email = ({ children }) => {
+export const ValidationEmail = ({ children }) => {
 	return (
 		<div className={styles.container}>
 			<h3>Verify your Account</h3>
@@ -12,6 +12,6 @@ export const Validation_Email = ({ children }) => {
 	);
 };
 
-Validation_Email.propTypes = {
+ValidationEmail.propTypes = {
 	children: PropTypes.node,
 };

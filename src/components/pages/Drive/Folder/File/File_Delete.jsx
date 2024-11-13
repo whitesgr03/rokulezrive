@@ -18,7 +18,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const File_Delete = ({
+export const FileDelete = ({
 	name,
 	fileId,
 	onUpdateFolder,
@@ -87,7 +87,7 @@ export const File_Delete = ({
 	);
 };
 
-File_Delete.propTypes = {
+FileDelete.propTypes = {
 	name: PropTypes.string,
 	fileId: PropTypes.string,
 	onUpdateFolder: PropTypes.func,

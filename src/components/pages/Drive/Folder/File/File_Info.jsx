@@ -25,7 +25,7 @@ const RESOURCE_URL =
 		? import.meta.env.VITE_RESOURCE_URL
 		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
-export const File_Info = () => {
+export const FileInfo = () => {
 	const { folder, downloading, onResetSVGAnimate } = useOutletContext();
 	const { fileId } = useParams();
 
