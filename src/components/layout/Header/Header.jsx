@@ -92,7 +92,9 @@ export const Header = ({
 							className={styles['dropdown-button']}
 							onClick={onSwitchColorTheme}
 						>
-							<span className={icon} />
+							<span
+								className={`${icon} ${darkTheme ? styles.moon : styles.sun}`}
+							/>
 							<span>{darkTheme ? 'Dark ' : 'Light '}mode</span>
 							<div className={styles.toggle}>
 								<div className={styles['toggle-background']}>
