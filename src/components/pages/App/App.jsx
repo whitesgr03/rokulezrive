@@ -17,7 +17,7 @@ import styles from './App.module.css';
 // Components
 import { Header } from '../../layout/Header/Header';
 import { Footer } from '../../layout/Footer/Footer';
-import { Mobile_Nav } from '../../layout/Mobile_Nav/Mobile_Nav';
+import { Navbar } from '../../layout/Navbar/Navbar';
 import { Modal } from './Modal';
 import { Loading } from '../../utils/Loading/Loading';
 
@@ -194,7 +194,7 @@ export const App = () => {
 						{!isNormalTablet && <Footer />}
 					</div>
 					{!isNormalTablet && userId && (
-						<Mobile_Nav
+						<Navbar
 							menu={menu}
 							onActiveModal={handleActiveModal}
 							onActiveMenu={handleActiveMenu}

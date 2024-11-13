@@ -18,7 +18,7 @@ import styles from './Drive.module.css';
 // Components
 import { Loading } from '../../utils/Loading/Loading';
 import { Upload_List } from './Upload_List';
-import { Mobile_Nav } from '../../layout/Mobile_Nav/Mobile_Nav';
+import { Navbar } from '../../layout/Navbar/Navbar';
 import { Footer } from '../../layout/Footer/Footer';
 
 // Utils
@@ -181,7 +181,7 @@ export const Drive = () => {
 										onActiveModal={onActiveModal}
 										onUpdateFolder={handleUpdateFolder}
 									/>
-									<Mobile_Nav />
+									<Navbar />
 								</div>
 							)}
 							<div className={styles['wrap-bgc']}>
