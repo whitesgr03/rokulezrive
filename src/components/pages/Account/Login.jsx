@@ -40,35 +40,43 @@ export const Login = () => {
 	const [error, setError] = useState(null);
 	const { pathname: previousPath } = useLocation();
 
-	const handleValidFields = async () => {
-		let isValid = false;
+	const handleChange = e => {
+		const { value, name } = e.target;
+		const fields = {
+			...formData,
+			[name]: value,
+		};
+		setFormData(fields);
+	};
 
-		const schema = object({
-			email: string()
-				.trim()
-				.email('The email must be in standard format.')
-				.required('The email is required.'),
-			password: string()
-				.min(8, 'The password is incorrect.')
-				.required('The password is required.'),
-		}).noUnknown();
+	const verifyScheme = async () => {
+		let result = {
+			success: true,
+			fields: {},
+		};
 
 		try {
+			const schema = object({
+				email: string()
+					.trim()
+					.email('Email must be in standard format.')
+					.required('Email is required.'),
+				password: string()
+					.min(8, 'Password is incorrect.')
+					.required('Password is required.'),
+			}).noUnknown();
 			await schema.validate(formData, {
 				abortEarly: false,
 				stripUnknown: true,
 			});
-			setInputErrors({});
-			isValid = true;
-			return isValid;
 		} catch (err) {
-			const obj = {};
 			for (const error of err.inner) {
-				obj[error.path] ?? (obj[error.path] = error.message);
+				result.fields[error.path] = error.message;
 			}
-			setInputErrors(obj);
-			return isValid;
+			result.success = false;
 		}
+
+		return result;
 	};
 
 	const handleLogin = async () => {
@@ -109,9 +117,19 @@ export const Login = () => {
 					setError(error.message);
 			}
 		};
+	const handleSubmit = async e => {
+		e.preventDefault();
 
-		data.user ? onUserId(data.user.id) : handleError(error);
-		setLoading(false);
+		const validationResult = await verifyScheme();
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handleLogin();
+		};
+
+		validationResult.success
+			? await handleValid()
+			: setInputErrors(validationResult.fields);
 	};
 
 	const handleSocialLogin = async provider => {
