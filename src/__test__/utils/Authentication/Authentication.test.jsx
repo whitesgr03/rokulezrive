@@ -27,9 +27,7 @@ describe('Authentication component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		const element = screen.getByRole('paragraph', {
-			value: 'Authentication Children',
-		});
+		const element = screen.getByText('Authentication Children');
 
 		expect(element).toBeInTheDocument();
 	});
@@ -61,7 +59,7 @@ describe('Authentication component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		const element = screen.getByRole('paragraph', { value: 'component' });
+		const element = screen.getByText('component');
 
 		expect(element).toBeInTheDocument();
 	});
