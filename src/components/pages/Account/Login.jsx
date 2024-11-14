@@ -119,6 +119,7 @@ export const Login = () => {
 		};
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setLogging(true);
 
 		const validationResult = await verifyScheme();
 
@@ -130,6 +131,7 @@ export const Login = () => {
 		validationResult.success
 			? await handleValid()
 			: setInputErrors(validationResult.fields);
+		setLogging(false);
 	};
 
 	const handleSocialLogin = async provider => {
