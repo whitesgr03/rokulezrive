@@ -34,49 +34,39 @@ export const PasswordForm = () => {
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(false);
 
-	const handleChange = e => {
-		const { value, name } = e.target;
-		const fields = {
-			...formData,
-			[name]: value,
+	const verifyScheme = async () => {
+		let result = {
+			success: true,
+			fields: {},
 		};
-		setFormData(fields);
-	};
-
-	const handleValidFields = async () => {
-		let isValid = false;
-
-		const schema = object({
-			password: string()
-				.matches(
-					/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=[\]{};':"|<>?,./`~])(?=.{8,})/,
-					'Password must contain one or more numbers, special symbols, lowercase and uppercase characters, and at least 8 characters.',
-				)
-				.required('Password is required.'),
-			confirmPassword: string()
-				.required('Confirm password is required.')
-				.oneOf(
-					[ref('password')],
-					'Confirmation password is not the same as the password.',
-				),
-		}).noUnknown();
 
 		try {
+			const schema = object({
+				password: string()
+					.matches(
+						/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=[\]{};':"|<>?,./`~])(?=.{8,})/,
+						'Password must contain one or more numbers, special symbols, lowercase and uppercase characters, and at least 8 characters.',
+					)
+					.required('Password is required.'),
+				confirmPassword: string()
+					.required('Confirm password is required.')
+					.oneOf(
+						[ref('password')],
+						'Confirmation password is not the same as the password.',
+					),
+			}).noUnknown();
 			await schema.validate(formData, {
 				abortEarly: false,
 				stripUnknown: true,
 			});
-			setInputErrors({});
-			isValid = true;
-			return isValid;
 		} catch (err) {
-			const obj = {};
 			for (const error of err.inner) {
-				obj[error.path] ?? (obj[error.path] = error.message);
+				result.fields[error.path] = error.message;
 			}
-			setInputErrors(obj);
-			return isValid;
+			result.success = false;
 		}
+
+		return result;
 	};
 
 	const handleResetting = async () => {
@@ -118,8 +108,17 @@ export const PasswordForm = () => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleResetting());
+		const validationResult = await verifyScheme();
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handlePasswordReset();
+		};
+
+		validationResult.success
+			? await handleValid()
+			: setInputErrors(validationResult.fields);
+
 	};
 
 	useEffect(() => {
