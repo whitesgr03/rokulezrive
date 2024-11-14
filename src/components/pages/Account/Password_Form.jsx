@@ -69,9 +69,14 @@ export const PasswordForm = () => {
 		return result;
 	};
 
-	const handleResetting = async () => {
-		setLoading(true);
-		const { error } = await supabase.auth.updateUser({
+	const handleChange = e => {
+		const { value, name } = e.target;
+		const fields = {
+			...formData,
+			[name]: value,
+		};
+		setFormData(fields);
+	};
 			password: formData.password,
 			data: { resetPassword: false },
 		});
