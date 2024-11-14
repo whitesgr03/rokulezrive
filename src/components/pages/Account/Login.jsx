@@ -36,7 +36,8 @@ export const Login = () => {
 
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '', password: '' });
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [logging, setLogging] = useState(false);
 	const [error, setError] = useState(null);
 	const { pathname: previousPath } = useLocation();
 
@@ -80,7 +81,6 @@ export const Login = () => {
 	};
 
 	const handleLogin = async () => {
-		setLoading(true);
 		const { email, password } = formData;
 
 		const {
