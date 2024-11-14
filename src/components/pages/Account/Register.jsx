@@ -20,6 +20,7 @@ import ValidationEmailStyles from './Validation_Email.module.css';
 // Components
 import { Account } from './Account';
 import { ValidationEmail } from './Validation_Email';
+import { Loading } from '../../utils/Loading/Loading';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -35,9 +36,11 @@ export const Register = () => {
 
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [registering, setRegistering] = useState(false);
 	const [error, setError] = useState(null);
 	const { pathname: previousPath } = useLocation();
+
 	const handleChange = e => {
 		const { value, name } = e.target;
 		const fields = {
@@ -140,6 +143,7 @@ export const Register = () => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setRegistering(true);
 
 		const validationResult = await verifyScheme();
 
@@ -151,7 +155,7 @@ export const Register = () => {
 		validationResult.success
 			? await handleValid()
 			: setInputErrors(validationResult.fields);
-    
+		setRegistering(false);
 	};
 
 	useEffect(() => {
@@ -178,7 +182,7 @@ export const Register = () => {
 			) : error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
-				<Account title="User Sign Up" loading={loading}>
+				<Account title="User Sign Up" loading={registering}>
 					<div className={accountStyles['account-form-wrap']}>
 						<form className={formStyles.form} onSubmit={handleSubmit}>
 							<div>
@@ -206,7 +210,7 @@ export const Register = () => {
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
-										{inputErrors ? inputErrors.email : 'Message Placeholder'}
+										{inputErrors.email ?? 'Message Placeholder'}
 									</p>
 								</div>
 							</div>
@@ -235,7 +239,7 @@ export const Register = () => {
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
-										{inputErrors ? inputErrors.password : 'Message Placeholder'}
+										{inputErrors.password ?? 'Message Placeholder'}
 									</p>
 								</div>
 							</div>
@@ -267,9 +271,7 @@ export const Register = () => {
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
-										{inputErrors
-											? inputErrors.confirmPassword
-											: 'Message Placeholder'}
+										{inputErrors.confirmPassword ?? 'Message Placeholder'}
 									</p>
 								</div>
 							</div>
