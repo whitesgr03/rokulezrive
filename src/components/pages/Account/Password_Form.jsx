@@ -114,6 +114,7 @@ export const PasswordForm = () => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setResetting(true);
 
 		const validationResult = await verifyScheme();
 
@@ -126,6 +127,7 @@ export const PasswordForm = () => {
 			? await handleValid()
 			: setInputErrors(validationResult.fields);
 
+		setResetting(false);
 	};
 
 	useEffect(() => {
