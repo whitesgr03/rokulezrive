@@ -62,8 +62,7 @@ const { pathname: previousPath } = useLocation();
 	};
 
 	const handleValidationEmail = async () => {
-		setLoading(true);
-		const { error } = await supabase.auth.resetPasswordForEmail(formData.email);
+		const result = await supabase.auth.resetPasswordForEmail(formData.email);
 
 		const handleError = error => {
 			switch (error.code) {
@@ -99,8 +98,7 @@ const { pathname: previousPath } = useLocation();
 			});
 		};
 
-		!error ? handleSuccess() : handleError(error);
-		setLoading(false);
+		!result.error ? handleSuccess() : handleError(result.error);
 	};
 
 	const handleSubmit = async e => {
