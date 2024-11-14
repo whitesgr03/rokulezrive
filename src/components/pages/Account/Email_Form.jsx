@@ -1,6 +1,5 @@
 // Packages
-import { Navigate,
-	useLocation, } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -23,8 +22,10 @@ export const EmailForm = ({ onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '' });
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
-const { pathname: previousPath } = useLocation();
+
+	const { pathname: previousPath } = useLocation();
+	const navigate = useNavigate();
+
 	const handleChange = e => {
 		const { value, name } = e.target;
 		const fields = {
@@ -77,7 +78,8 @@ const { pathname: previousPath } = useLocation();
 					});
 					break;
 				default:
-					setError(error.message);
+					navigate('/error', { replace: true, state: { error, previousPath } });
+					onActiveModal({ component: null });
 			}
 		};
 
@@ -120,54 +122,48 @@ const { pathname: previousPath } = useLocation();
 	};
 	return (
 		<>
-			{error ? (
-				<Navigate to="/error" state={{ error, previousPath }} />
-			) : (
-				<>
-					{loading && (
-						<Loading text={'Sending...'} light={true} shadow={true} />
-					)}
-					<form className={formStyles.form} onSubmit={handleSubmit}>
-						<h3 className={formStyles.title}>Getting back your account</h3>
-						<div className={formStyles['input-wrap']}>
-							<label htmlFor="email" className={formStyles['form-label']}>
-								Enter your email
-								<input
-									type="text"
-									id="email"
-									className={`${classes({
-										'form-input': true,
-										'form-input-modal-bgc': true,
-										'form-input-error': inputErrors.email,
-									})}`}
-									name="email"
-									title="The Email is required."
-									onChange={handleChange}
-									value={formData.email}
-								/>
-							</label>
-							<p className={formStyles.sign}>
-								We{`'`}ll send verification email to confirm it{`'`}s your
-								account.
-							</p>
-							<div
-								className={classes({
-									'form-message-wrap': true,
-									'form-message-active': inputErrors.email,
-								})}
-							>
-								<span className={`${icon} ${formStyles.alert}`} />
-								<p className={formStyles['form-message']}>
-									{inputErrors ? inputErrors.email : 'Message Placeholder'}
-								</p>
-							</div>
-						</div>
-						<button type="submit" className={formStyles['form-submit']}>
-							Continue
-						</button>
-					</form>
-				</>
-			)}
+			{loading && <Loading text={'Sending...'} light={true} shadow={true} />}
+			<form
+				className={formStyles.form}
+				onSubmit={e => !loading && handleSubmit(e)}
+			>
+				<h3 className={formStyles.title}>Getting back your account</h3>
+				<div className={formStyles['input-wrap']}>
+					<label htmlFor="email" className={formStyles['form-label']}>
+						Enter your email
+						<input
+							type="text"
+							id="email"
+							className={`${classes({
+								'form-input': true,
+								'form-input-modal-bgc': true,
+								'form-input-error': inputErrors.email,
+							})}`}
+							name="email"
+							title="The Email is required."
+							onChange={handleChange}
+							value={formData.email}
+						/>
+					</label>
+					<p className={formStyles.sign}>
+						We{`'`}ll send verification email to confirm it{`'`}s your account.
+					</p>
+					<div
+						className={classes({
+							'form-message-wrap': true,
+							'form-message-active': inputErrors.email,
+						})}
+					>
+						<span className={`${icon} ${formStyles.alert}`} />
+						<p className={formStyles['form-message']}>
+							{inputErrors.email ?? 'Message Placeholder'}
+						</p>
+					</div>
+				</div>
+				<button type="submit" className={formStyles['form-submit']}>
+					Continue
+				</button>
+			</form>
 		</>
 	);
 };
