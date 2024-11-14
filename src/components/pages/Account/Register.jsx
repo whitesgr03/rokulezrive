@@ -92,6 +92,13 @@ export const Register = () => {
 	const handleRegister = async () => {
 		const { email, password } = formData;
 
+		const result = await supabase.auth.signUp({
+			email,
+			password,
+			options: {
+				emailRedirectTo: REDIRECT,
+			},
+		});
 
 		const handleError = error => {
 			switch (error.code) {
@@ -127,9 +134,14 @@ export const Register = () => {
 			navigate('/account/login');
 		};
 
-		!error && data.user?.identities.length > 0
+		result.data?.user?.identities.length > 0
 			? handleSuccess()
-    
+			: !result.error
+				? setInputErrors({
+						...inputErrors,
+						email: 'Email has been registered.',
+					})
+				: handleError(result.error);
 	};
 
 	const handleSubmit = async e => {
