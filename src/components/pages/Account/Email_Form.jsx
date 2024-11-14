@@ -86,11 +86,10 @@ const { pathname: previousPath } = useLocation();
 				component: (
 					<ValidationEmail>
 						<p>
-							Check your email and find the
+							Check your email and find the{' '}
 							<span className={ValidationEmailStyles.highlight}>
-								{' '}
-								Rokulezrive Reset Password Verification{' '}
-							</span>{' '}
+								Rokulezrive Reset Password Verification
+							</span>
 							to reset your password.
 						</p>
 					</ValidationEmail>
