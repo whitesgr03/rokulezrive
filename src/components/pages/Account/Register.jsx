@@ -47,44 +47,43 @@ export const Register = () => {
 		setFormData(fields);
 	};
 
-	const handleValidFields = async () => {
-		let isValid = false;
-
-		const schema = object({
-			email: string()
-				.trim()
-				.email('Email must be in standard format.')
-				.required('Email is required.'),
-			password: string()
-				.matches(
-					/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=[\]{};':"|<>?,./`~])(?=.{8,})/,
-					'Password must contain one or more numbers, special symbols, lowercase and uppercase characters, and at least 8 characters.',
-				)
-				.required('Password is required.'),
-			confirmPassword: string()
-				.required('Confirm password is required.')
-				.oneOf(
-					[ref('password')],
-					'Confirmation password is not the same as the password.',
-				),
-		}).noUnknown();
+	const verifyScheme = async () => {
+		let result = {
+			success: true,
+			fields: {},
+		};
 
 		try {
+			const schema = object({
+				email: string()
+					.trim()
+					.email('Email must be in standard format.')
+					.required('Email is required.'),
+				password: string()
+					.matches(
+						/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-=[\]{};':"|<>?,./`~])(?=.{8,})/,
+						'Password must contain one or more numbers, special symbols, lowercase and uppercase characters, and at least 8 characters.',
+					)
+					.required('Password is required.'),
+				confirmPassword: string()
+					.required('Confirm password is required.')
+					.oneOf(
+						[ref('password')],
+						'Confirmation password is not the same as the password.',
+					),
+			}).noUnknown();
 			await schema.validate(formData, {
 				abortEarly: false,
 				stripUnknown: true,
 			});
-			setInputErrors({});
-			isValid = true;
-			return isValid;
 		} catch (err) {
-			const obj = {};
 			for (const error of err.inner) {
-				obj[error.path] ?? (obj[error.path] = error.message);
+				result.fields[error.path] = error.message;
 			}
-			setInputErrors(obj);
-			return isValid;
+			result.success = false;
 		}
+
+		return result;
 	};
 
 	const handleRegister = async () => {
@@ -161,8 +160,17 @@ export const Register = () => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleRegister());
+		const validationResult = await verifyScheme();
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handleRegister();
+		};
+
+		validationResult.success
+			? await handleValid()
+			: setInputErrors(validationResult.fields);
+    
 	};
 
 	return (
