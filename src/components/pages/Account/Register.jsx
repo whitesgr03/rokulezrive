@@ -123,9 +123,8 @@ export const Register = () => {
 				component: (
 					<ValidationEmail>
 						<p>
-							Check your email and find the
+							Check your email and find the{' '}
 							<span className={ValidationEmailStyles.highlight}>
-								{' '}
 								Rokulezrive Email Verification{' '}
 							</span>
 							to complete the signup within 1 hours.
