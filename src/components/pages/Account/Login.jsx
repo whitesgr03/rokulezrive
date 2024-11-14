@@ -18,7 +18,7 @@ import styles from './Login.module.css';
 
 // Components
 import { Account } from './Account';
-import { EmailForm } from './Email_Form';
+import { Loading } from '../../utils/Loading/Loading';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -166,12 +166,17 @@ export const Login = () => {
 
 	return (
 		<>
-			{error ? (
+			{loading ? (
+				<Loading text="Loading..." />
+			) : error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
-				<Account title="User Sign in" loading={loading}>
+				<Account title="User Sign in" loading={logging}>
 					<div className={accountStyles['account-form-wrap']}>
-						<form className={formStyles.form} onSubmit={handleSubmit}>
+						<form
+							className={formStyles.form}
+							onSubmit={e => !logging && handleSubmit(e)}
+						>
 							<div>
 								<label htmlFor="email" className={formStyles['form-label']}>
 									Email
@@ -197,9 +202,7 @@ export const Login = () => {
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
-										{inputErrors.email
-											? inputErrors.email
-											: 'Message Placeholder'}
+										{inputErrors.email ?? 'Message Placeholder'}
 									</p>
 								</div>
 							</div>
@@ -228,9 +231,7 @@ export const Login = () => {
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
-										{inputErrors.password
-											? inputErrors.password
-											: 'Message Placeholder'}
+										{inputErrors.password ?? 'Message Placeholder'}
 									</p>
 								</div>
 							</div>
