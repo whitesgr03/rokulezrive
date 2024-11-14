@@ -19,6 +19,7 @@ import styles from './Login.module.css';
 // Components
 import { Account } from './Account';
 import { Loading } from '../../utils/Loading/Loading';
+import { ForgetEmail } from './Forget_Email';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -251,7 +252,7 @@ export const Login = () => {
 							className={accountStyles['account-link']}
 							onClick={() =>
 								onActiveModal({
-									component: <EmailForm onActiveModal={onActiveModal} />,
+									component: <ForgetEmail onActiveModal={onActiveModal} />,
 								})
 							}
 						>
