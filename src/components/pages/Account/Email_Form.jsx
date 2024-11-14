@@ -104,6 +104,7 @@ const { pathname: previousPath } = useLocation();
 	const handleSubmit = async e => {
 		e.preventDefault();
 
+		setLoading(true);
 
 		const validationResult = await verifyScheme();
 
@@ -116,6 +117,7 @@ const { pathname: previousPath } = useLocation();
 			? await handleValid()
 			: setInputErrors(validationResult.fields);
 
+		setLoading(false);
 	};
 	return (
 		<>
