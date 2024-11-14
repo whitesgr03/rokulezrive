@@ -18,7 +18,7 @@ import { ValidationEmail } from './Validation_Email';
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const EmailForm = ({ onActiveModal }) => {
+export const ForgetEmail = ({ onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '' });
 	const [loading, setLoading] = useState(false);
@@ -168,6 +168,6 @@ export const EmailForm = ({ onActiveModal }) => {
 	);
 };
 
-EmailForm.propTypes = {
+ForgetEmail.propTypes = {
 	onActiveModal: PropTypes.func,
 };
