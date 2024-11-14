@@ -87,7 +87,6 @@ export const Register = () => {
 	};
 
 	const handleRegister = async () => {
-		setLoading(true);
 		const { email, password } = formData;
 
 
@@ -136,9 +135,7 @@ export const Register = () => {
 
 		!error && data.user?.identities.length > 0
 			? handleSuccess()
-			: handleError(error);
-
-		setLoading(false);
+    
 	};
 
 	const handleSubmit = async e => {
