@@ -32,7 +32,8 @@ export const PasswordForm = () => {
 
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [resetting, setResetting] = useState(false);
 
 	const verifyScheme = async () => {
 		let result = {
