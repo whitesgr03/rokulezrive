@@ -83,6 +83,10 @@ export const Login = () => {
 	const handleLogin = async () => {
 		const { email, password } = formData;
 
+		const result = await supabase.auth.signInWithPassword({
+			email,
+			password,
+		});
 
 		const handleError = error => {
 			switch (error.code) {
@@ -104,6 +108,12 @@ export const Login = () => {
 					setError(error.message);
 			}
 		};
+
+		result.data?.user
+			? onUserId(result.data.user.id)
+			: handleError(result.error);
+	};
+
 	const handleSubmit = async e => {
 		e.preventDefault();
 		setLogging(true);
