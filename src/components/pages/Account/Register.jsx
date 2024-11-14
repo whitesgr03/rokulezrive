@@ -6,7 +6,7 @@ import {
 	Navigate,
 	useLocation,
 } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { object, string, ref } from 'yup';
 import { supabase } from '../../../utils/supabase_client';
@@ -90,22 +90,6 @@ export const Register = () => {
 		setLoading(true);
 		const { email, password } = formData;
 
-		const {
-			data: { session },
-		} = await supabase.auth.getSession();
-
-		session?.user.user_metadata.resetPassword &&
-			(await supabase.auth.updateUser({
-				data: { resetPassword: false },
-			}));
-
-		const { data, error } = await supabase.auth.signUp({
-			email,
-			password,
-			options: {
-				emailRedirectTo: 'http://localhost:5173/drive',
-			},
-		});
 
 		const handleError = error => {
 			let email = '';
@@ -173,9 +157,28 @@ export const Register = () => {
     
 	};
 
+	useEffect(() => {
+		const handleCancelPasswordReset = async () => {
+			const {
+				data: { session },
+			} = await supabase.auth.getSession();
+
+			session?.user.user_metadata.resetPassword &&
+				(await supabase.auth.updateUser({
+					data: { resetPassword: false },
+				}));
+
+			setLoading(false);
+		};
+
+		handleCancelPasswordReset();
+	}, []);
+
 	return (
 		<>
-			{error ? (
+			{loading ? (
+				<Loading text="Loading..." />
+			) : error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<Account title="User Sign Up" loading={loading}>
