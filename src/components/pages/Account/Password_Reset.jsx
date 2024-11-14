@@ -26,7 +26,7 @@ const DEFAULT_FORM_DATA = {
 	confirmPassword: '',
 };
 
-export const PasswordForm = () => {
+export const PasswordReset = () => {
 	const { onActiveModal, onResetPassword } = useOutletContext();
 	const { state } = useLocation();
 	const navigate = useNavigate();
@@ -180,6 +180,7 @@ export const PasswordForm = () => {
 												'form-message-wrap': true,
 												'form-message-active': inputErrors.password,
 											})}
+											data-testid="password-message"
 										>
 											<span className={`${icon} ${formStyles.alert}`} />
 											<p className={formStyles['form-message']}>
@@ -212,6 +213,7 @@ export const PasswordForm = () => {
 												'form-message-wrap': true,
 												'form-message-active': inputErrors.confirmPassword,
 											})}
+											data-testid="confirm-password-message"
 										>
 											<span className={`${icon} ${formStyles.alert}`} />
 											<p className={formStyles['form-message']}>
