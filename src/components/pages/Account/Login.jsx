@@ -6,7 +6,7 @@ import {
 	useLocation,
 } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { object, string } from 'yup';
 import { supabase } from '../../../utils/supabase_client';
 
@@ -83,19 +83,6 @@ export const Login = () => {
 	const handleLogin = async () => {
 		const { email, password } = formData;
 
-		const {
-			data: { session },
-		} = await supabase.auth.getSession();
-
-		session?.user.user_metadata.resetPassword &&
-			(await supabase.auth.updateUser({
-				data: { resetPassword: false },
-			}));
-
-		const { data, error } = await supabase.auth.signInWithPassword({
-			email,
-			password,
-		});
 
 		const handleError = error => {
 			switch (error.code) {
@@ -135,15 +122,7 @@ export const Login = () => {
 	};
 
 	const handleSocialLogin = async provider => {
-		setLoading(true);
-
-		supabase.auth.getSession().then(
-			({ data: { session } }) =>
-				session?.user.user_metadata.resetPassword &&
-				supabase.auth.updateUser({
-					data: { resetPassword: false },
-				}),
-		);
+		setLogging(true);
 
 		await supabase.auth.signInWithOAuth({
 			provider,
@@ -155,24 +134,25 @@ export const Login = () => {
 			},
 		});
 
-		setLoading(false);
+		setLogging(false);
 	};
 
-	const handleSubmit = async e => {
-		e.preventDefault();
+	useEffect(() => {
+		const handleCancelPasswordReset = async () => {
+			const {
+				data: { session },
+			} = await supabase.auth.getSession();
 
-		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleLogin());
-	};
+			session?.user.user_metadata.resetPassword &&
+				(await supabase.auth.updateUser({
+					data: { resetPassword: false },
+				}));
 
-	const handleChange = e => {
-		const { value, name } = e.target;
-		const fields = {
-			...formData,
-			[name]: value,
+			setLoading(false);
 		};
-		setFormData(fields);
-	};
+
+		handleCancelPasswordReset();
+	}, []);
 
 	return (
 		<>
