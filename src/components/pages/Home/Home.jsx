@@ -36,8 +36,7 @@ export const Home = () => {
 										className={styles['introduce-image']}
 									/>
 									<dir className={styles.attribution}>
-										Designed by
-										<a href="www.freepik.com"> freepik</a>
+										Designed by <a href="www.freepik.com">freepik</a>
 									</dir>
 								</div>
 							</>
