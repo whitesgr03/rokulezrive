@@ -153,6 +153,7 @@ export const ForgetEmail = ({ onActiveModal }) => {
 							'form-message-wrap': true,
 							'form-message-active': inputErrors.email,
 						})}
+						data-testid="email-message"
 					>
 						<span className={`${icon} ${formStyles.alert}`} />
 						<p className={formStyles['form-message']}>

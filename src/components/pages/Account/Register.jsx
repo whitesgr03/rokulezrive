@@ -214,6 +214,7 @@ export const Register = () => {
 										'form-message-wrap': true,
 										'form-message-active': inputErrors.email,
 									})}
+									data-testid="email-message"
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
@@ -243,6 +244,7 @@ export const Register = () => {
 										'form-message-wrap': true,
 										'form-message-active': inputErrors.password,
 									})}
+									data-testid="password-message"
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
@@ -275,6 +277,7 @@ export const Register = () => {
 										'form-message-wrap': true,
 										'form-message-active': inputErrors.confirmPassword,
 									})}
+									data-testid="confirm-password-message"
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>

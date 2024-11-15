@@ -200,6 +200,7 @@ export const Login = () => {
 										'form-message-wrap': true,
 										'form-message-active': inputErrors.email,
 									})}
+									data-testid="email-message"
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
@@ -229,6 +230,7 @@ export const Login = () => {
 										'form-message-wrap': true,
 										'form-message-active': inputErrors.password,
 									})}
+									data-testid="password-message"
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
