@@ -3,14 +3,14 @@ import { render } from '@testing-library/react';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 
-import { Not_Found } from '../../../components/utils/Error/Not_Found';
+import { NotFound } from '../../../components/utils/Error/Not_Found';
 
 describe('Not_Found component', () => {
 	it('should match snapshot', () => {
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Not_Found />,
+				element: <NotFound />,
 			},
 		]);
 
