@@ -88,6 +88,7 @@ export const Home = () => {
 						</div>
 						<div
 							className={`${styles.introduce} ${isNormalDesktop ? styles['introduce-reverse'] : ''}`}
+							data-testid="introduce"
 						>
 							<figure className={styles.figure}>
 								<div className={styles['introduce-image-wrap']}>
