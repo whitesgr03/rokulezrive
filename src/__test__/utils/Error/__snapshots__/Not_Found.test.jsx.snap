@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Footer component > should match snapshot 1`] = `
+exports[`Not_Found component > should match snapshot 1`] = `
 <DocumentFragment>
   <div
     class="_error_48ab16"
