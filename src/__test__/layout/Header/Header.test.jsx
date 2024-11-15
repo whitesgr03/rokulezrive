@@ -3,12 +3,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
 import { supabase } from '../../../utils/supabase_client';
+import { Context as ResponsiveContext } from 'react-responsive';
 
 import { Header } from '../../../components/layout/Header/Header';
 
-vi.mock('react-responsive');
 vi.mock('../../../utils/supabase_client');
 
 describe('Header component', () => {
@@ -19,12 +18,14 @@ describe('Header component', () => {
 			onSwitchColorTheme: vi.fn(),
 		};
 
-		useMediaQuery.mockReturnValue(false);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Header {...mockProps} />,
+				element: (
+					<ResponsiveContext.Provider value={{ width: 400 }}>
+						<Header {...mockProps} />
+					</ResponsiveContext.Provider>
+				),
 			},
 		]);
 
@@ -43,12 +44,14 @@ describe('Header component', () => {
 			onSwitchColorTheme: vi.fn(),
 		};
 
-		useMediaQuery.mockReturnValue(false).mockReturnValueOnce(true);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Header {...mockProps} />,
+				element: (
+					<ResponsiveContext.Provider value={{ width: 440 }}>
+						<Header {...mockProps} />{' '}
+					</ResponsiveContext.Provider>
+				),
 			},
 		]);
 
@@ -61,12 +64,14 @@ describe('Header component', () => {
 		expect(mockProps.onSwitchColorTheme).toHaveBeenCalledTimes(1);
 	});
 	it(`should render a logo text when the user's device screen is wider than 700 pixels.`, () => {
-		useMediaQuery.mockReturnValueOnce(false).mockReturnValueOnce(true);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Header />,
+				element: (
+					<ResponsiveContext.Provider value={{ width: 700 }}>
+						<Header />
+					</ResponsiveContext.Provider>
+				),
 			},
 		]);
 
@@ -139,12 +144,14 @@ describe('Header component', () => {
 			darkTheme: true,
 		};
 
-		useMediaQuery.mockReturnValue(false);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Header {...mockProps} />,
+				element: (
+					<ResponsiveContext.Provider value={{ width: 400 }}>
+						<Header {...mockProps} />
+					</ResponsiveContext.Provider>
+				),
 			},
 		]);
 
@@ -159,12 +166,14 @@ describe('Header component', () => {
 			darkTheme: false,
 		};
 
-		useMediaQuery.mockReturnValue(false);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Header {...mockProps} />,
+				element: (
+					<ResponsiveContext.Provider value={{ width: 400 }}>
+						<Header {...mockProps} />
+					</ResponsiveContext.Provider>
+				),
 			},
 		]);
 
@@ -179,12 +188,14 @@ describe('Header component', () => {
 			darkTheme: true,
 		};
 
-		useMediaQuery.mockReturnValue(false).mockReturnValueOnce(true);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Header {...mockProps} />,
+				element: (
+					<ResponsiveContext.Provider value={{ width: 440 }}>
+						<Header {...mockProps} />
+					</ResponsiveContext.Provider>
+				),
 			},
 		]);
 
@@ -199,12 +210,14 @@ describe('Header component', () => {
 			darkTheme: false,
 		};
 
-		useMediaQuery.mockReturnValue(false).mockReturnValueOnce(true);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
-				element: <Header {...mockProps} />,
+				element: (
+					<ResponsiveContext.Provider value={{ width: 440 }}>
+						<Header {...mockProps} />
+					</ResponsiveContext.Provider>
+				),
 			},
 		]);
 
