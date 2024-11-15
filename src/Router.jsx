@@ -7,7 +7,7 @@ import { Home } from './components/pages/Home/Home';
 import { Drive } from './components/pages/Drive/Drive';
 import { Login } from './components/pages/Account/Login';
 import { Register } from './components/pages/Account/Register';
-import { PasswordForm } from './components/pages/Account/Password_Form';
+import { PasswordReset } from './components/pages/Account/Password_Reset';
 import { NotFound } from './components/utils/Error/Not_Found';
 import { Error } from './components/utils/Error/Error';
 
@@ -92,7 +92,7 @@ export const Router = () => (
 					},
 					{
 						path: 'account/resetting-password',
-						element: <PasswordForm />,
+						element: <PasswordReset />,
 					},
 					{
 						path: '*',
