@@ -130,7 +130,10 @@ export const FileUpdate = ({
 	return (
 		<>
 			{loading && <Loading text={'Saving...'} light={true} shadow={true} />}
-			<form className={formStyles.form} onSubmit={handleSubmit}>
+			<form
+				className={formStyles.form}
+				onSubmit={e => !loading && handleSubmit(e)}
+			>
 				<div>
 					<label htmlFor="name" className={formStyles['form-label']}>
 						Rename File
