@@ -151,6 +151,7 @@ export const FileUpdate = ({ name, fileId, onUpdateFolder, onActiveModal }) => {
 							'form-message-wrap': true,
 							'form-message-active': inputErrors.name,
 						})}
+						data-testid="file-message"
 					>
 						<span className={`${icon} ${formStyles.alert}`} />
 						<p className={formStyles['form-message']}>

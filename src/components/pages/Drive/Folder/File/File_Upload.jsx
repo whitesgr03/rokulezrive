@@ -125,6 +125,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 										type="button"
 										className={driveStyles['restart-button']}
 										onClick={handleReset}
+										title="Reset button"
 									>
 										<span className={`${icon} ${driveStyles.restart}`} />
 									</button>
@@ -155,7 +156,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 											'form-input-error': inputError,
 										})}`}
 										name="upload"
-										title="size must be less than 1 mb."
+										title="upload"
 										onChange={handlePreview}
 									/>
 									<span className={`${icon} ${driveStyles['upload-file']}`} />
@@ -167,6 +168,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 										'form-message-wrap': true,
 										'form-message-active': inputError,
 									})}
+									data-testid="upload-message"
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<div>

@@ -110,13 +110,19 @@ export const Files = ({ files }) => {
 									</p>
 									<div className={`${driveStyles.info}`}>
 										{!isNormalTablet && (
-											<span className={`${icon} ${styles.size}`} />
+											<span
+												className={`${icon} ${styles.size}`}
+												data-testid="size"
+											/>
 										)}
 										{formatBytes(file.size)}
 									</div>
 									<div className={`${driveStyles.info}`}>
 										{!isNormalTablet && (
-											<span className={`${icon} ${driveStyles.calendar} `} />
+											<span
+												className={`${icon} ${driveStyles.calendar} `}
+												data-testid="calendar"
+											/>
 										)}
 										{format(file.createdAt, 'MMM d, y')}
 									</div>
@@ -133,6 +139,7 @@ export const Files = ({ files }) => {
 										className={driveStyles['options-button']}
 										data-id={file.id}
 										data-button="options-button"
+										title="options-button"
 									>
 										<span className={`${icon} ${driveStyles.option}`} />
 									</button>

@@ -246,6 +246,7 @@ export const FileShare = ({
 					type="button"
 					className={`${styles['email-close']}`}
 					onClick={() => handleDeleteSharer(item.sharer.id)}
+					title="delete-sharer-button"
 				>
 					<span className={`${icon} ${styles.close}`} />
 				</button>
@@ -289,6 +290,7 @@ export const FileShare = ({
 								<button
 									type="submit"
 									className={`${styles['input-button']} ${styles.zoom}`}
+									title="submit"
 								>
 									<span className={`${icon} ${styles.add}`} />
 								</button>
@@ -299,6 +301,7 @@ export const FileShare = ({
 										'form-message-wrap': true,
 										'form-message-active': inputErrors.email,
 									})}
+									data-testid="email-message"
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
@@ -323,9 +326,11 @@ export const FileShare = ({
 								<div className={styles['checkbox-bgc']}>
 									<div
 										className={`${styles['checkbox-border']} ${isPublic ? styles['is-check-border'] : ''}`}
+										data-testid="checkbox-border"
 									>
 										<span
 											className={`${icon} ${styles.check} ${isPublic ? styles['is-check'] : ''}`}
+											data-testid="is-check"
 										/>
 									</div>
 								</div>
@@ -334,12 +339,13 @@ export const FileShare = ({
 							<button
 								type="button"
 								className={`${styles['copy-link']} ${styles['input-button']} ${isPublic ? '' : styles['hide-btn']}`}
+								title="copy-button"
 								onClick={handleCopyLink}
 							>
 								<div
 									className={`${styles['copy-link-wrap']} ${isCopied ? styles.copied : ''}`}
 									onAnimationEnd={handleCopiedAnimation}
-									onTransitionEnd={handleRemoveCopied}
+									data-testid="copy-link-wrap"
 								>
 									<div className={styles['copy-link-item']}>
 										<span
