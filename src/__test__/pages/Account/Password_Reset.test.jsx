@@ -208,15 +208,16 @@ describe('PasswordReset component', () => {
 		);
 
 		expect(newPasswordField).toHaveClass(/form-input-error/);
-		expect(confirmNewPasswordField).toHaveClass(/form-input-error/);
 		expect(newPasswordErrorMessageWrap).toHaveClass(/form-message-active/);
+		expect(newPasswordErrorMessage).toBeInTheDocument();
+
+		expect(confirmNewPasswordField).toHaveClass(/form-input-error/);
 		expect(confirmNewPasswordErrorMessageWrap).toHaveClass(
 			/form-message-active/,
 		);
-		expect(newPasswordErrorMessage).toBeInTheDocument();
 		expect(confirmNewPasswordErrorMessage).toBeInTheDocument();
 	});
-	it('should render an error messages if same password error occurs after submission', async () => {
+	it('should render an error message if same password error occurs after submission', async () => {
 		const user = userEvent.setup();
 		const mockContext = {
 			onActiveModal: vi.fn(),
