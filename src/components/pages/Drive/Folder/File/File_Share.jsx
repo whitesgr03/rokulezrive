@@ -340,8 +340,8 @@ export const FileShare = ({
 								onClick={handleCopyLink}
 							>
 								<div
-									className={`${styles['copy-link-wrap']}  ${isCopied ? styles.copied : ''}`}
-									data-copied
+									className={`${styles['copy-link-wrap']} ${isCopied ? styles.copied : ''}`}
+									onAnimationEnd={handleCopiedAnimation}
 									onTransitionEnd={handleRemoveCopied}
 								>
 									<div className={styles['copy-link-item']}>
