@@ -28,10 +28,11 @@ export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const { pathname: previousPath } = useLocation();
 
 	const uploadFileFromShared_File = useMatch('/drive/shared/:id');
+	const uploadFileFromFile_Info = useMatch('/drive/files/:id');
+
 	const uploadFileFromSubfolderShared_File = useMatch(
 		'/drive/folders/:id/shared/:id',
 	);
-	const uploadFileFromFile_Info = useMatch('/drive/files/:id');
 	const uploadFileFromSubfolderFile_Info = useMatch(
 		'/drive/folders/:id/files/:id',
 	);
