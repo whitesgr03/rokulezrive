@@ -6,12 +6,10 @@
 	"scripts": {
 		"dev": "NODE_ENV=development vite --host",
 		"build": "vite build",
-		"lint": "eslint .",
-		"preview": "vite preview",
-		"prepare": "husky",
-		"commitlint": "commitlint --edit",
 		"test": "vitest",
-		"coverage": "vitest --coverage"
+		"coverage": "vitest --coverage",
+		"prepare": "husky",
+		"commitlint": "commitlint --edit"
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.45.6",
