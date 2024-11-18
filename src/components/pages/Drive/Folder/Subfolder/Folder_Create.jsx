@@ -138,7 +138,10 @@ export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	return (
 		<>
 			{loading && <Loading text={'Creating...'} light={true} shadow={true} />}
-			<form className={formStyles.form} onSubmit={handleSubmit}>
+			<form
+				className={formStyles.form}
+				onSubmit={e => !loading && handleSubmit(e)}
+			>
 				<div className={formStyles['input-wrap']}>
 					<label htmlFor="name" className={formStyles['form-label']}>
 						Folder Name
