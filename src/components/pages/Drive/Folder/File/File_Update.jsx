@@ -19,13 +19,7 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 // Variables
 const classes = classNames.bind(formStyles);
 
-
-export const FileUpdate = ({
-	name,
-	fileId,
-	onUpdateFolder,
-	onActiveModal,
-}) => {
+export const FileUpdate = ({ name, fileId, onUpdateFolder, onActiveModal }) => {
 	const fileName = name.match(/(.+?)(\.[^.]*$|$)/);
 
 	const [inputErrors, setInputErrors] = useState({});
@@ -175,7 +169,6 @@ export const FileUpdate = ({
 
 FileUpdate.propTypes = {
 	name: PropTypes.string,
-	folderId: PropTypes.string,
 	fileId: PropTypes.string,
 	onUpdateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
