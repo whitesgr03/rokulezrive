@@ -43,7 +43,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 		setInputError('');
 	};
 
-	const handleChange = e => {
+	const handlePreview = e => {
 		const file = e.target.files[0];
 		const MEGABYTE = 1000000;
 
@@ -153,7 +153,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 										})}`}
 										name="upload"
 										title="size must be less than 1 mb."
-										onChange={handleChange}
+										onChange={handlePreview}
 									/>
 									<span className={`${icon} ${driveStyles['upload-file']}`} />
 									<p>Click here to upload</p>
