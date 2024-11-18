@@ -11,7 +11,7 @@ import { Header } from '../../../components/layout/Header/Header';
 vi.mock('../../../utils/supabase_client');
 
 describe('Header component', () => {
-	it(`should switch color themes if the user's device screen is 440 pixels wide or less and clicks the toggle button.`, async () => {
+	it(`should switch color themes if the user's device screen is smaller than 440 pixels and clicks the toggle button.`, async () => {
 		const user = userEvent.setup();
 
 		const mockProps = {
