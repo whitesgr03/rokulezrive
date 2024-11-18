@@ -150,7 +150,7 @@ export const Files = ({ files }) => {
 																<FileShare
 																	name={file.name}
 																	sharers={file.sharers}
-																	publicId={file.public ? file.public.id : ''}
+																	publicId={file.public?.id ?? ''}
 																	fileId={file.id}
 																	onUpdateFolder={onUpdateFolder}
 																	onActiveModal={onActiveModal}
