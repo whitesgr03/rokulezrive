@@ -76,7 +76,6 @@ export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	};
 
 	const handleCreateSubfolder = async () => {
-		setLoading(true);
 		const {
 			data: {
 				session: { access_token },
@@ -118,14 +117,23 @@ export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
 			: result.fields
 				? setInputErrors({ ...result.fields })
 				: handleError();
-		setLoading(false);
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setLoading(true);
 
-		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleCreateSubfolder());
+		const validationResult = await verifyScheme();
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handleCreateSubfolder();
+		};
+
+		validationResult.success
+			? await handleValid()
+			: setInputErrors(validationResult.fields);
+		setLoading(false);
 	};
 	return (
 		<>

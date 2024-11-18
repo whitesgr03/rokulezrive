@@ -78,8 +78,16 @@ export const FileShare = ({
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleCreateSharer());
+		const validationResult = await verifyScheme();
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handleCreateSharer();
+		};
+
+		validationResult.success
+			? await handleValid()
+			: setInputErrors(validationResult.fields);
 	};
 
 	const handleCreateSharer = async () => {

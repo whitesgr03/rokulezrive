@@ -70,8 +70,6 @@ export const FolderUpdate = ({ folder, onUpdateFolder, onActiveModal }) => {
 	};
 
 	const handleUpdate = async () => {
-		setLoading(true);
-
 		const {
 			data: {
 				session: { access_token },
@@ -108,15 +106,23 @@ export const FolderUpdate = ({ folder, onUpdateFolder, onActiveModal }) => {
 			: result.fields
 				? setInputErrors({ ...result.fields })
 				: handleError();
-
-		setLoading(false);
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setLoading(true);
 
-		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleUpdate());
+		const validationResult = await verifyScheme();
+
+		const handleValid = async () => {
+			setInputErrors({});
+			await handleUpdate();
+		};
+
+		validationResult.success
+			? await handleValid()
+			: setInputErrors(validationResult.fields);
+		setLoading(false);
 	};
 
 	return (

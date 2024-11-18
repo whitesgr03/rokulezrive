@@ -73,8 +73,6 @@ export const FileUpdate = ({
 	};
 
 	const handleUpdate = async () => {
-		setLoading(true);
-
 		const {
 			data: {
 				session: { access_token },
@@ -111,15 +109,18 @@ export const FileUpdate = ({
 			: result.fields
 				? setInputErrors({ ...result.fields })
 				: handleError();
-
-		setLoading(false);
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setLoading(true);
 
-		const isValid = !loading && (await handleValidFields());
-		isValid && (await handleUpdate());
+		const validationResult = await verifyScheme();
+
+		validationResult.success
+			? await handleUpdate()
+			: setInputErrors(validationResult.fields);
+		setLoading(false);
 	};
 
 	return (
