@@ -19,10 +19,6 @@ import { formatBytes } from '../../../../../utils/format_bytes';
 
 // Variables
 const classes = classNames.bind(formStyles);
-const RESOURCE_URL =
-	import.meta.env.MODE === 'production'
-		? import.meta.env.VITE_RESOURCE_URL
-		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
 
 export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	const [inputError, setInputError] = useState('');
@@ -67,7 +63,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${RESOURCE_URL}/api/folders/${folderId}/files`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${folderId}/files`;
 
 		const formData = new FormData();
 

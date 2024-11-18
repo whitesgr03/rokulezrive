@@ -13,12 +13,6 @@ import { Loading } from '../../utils/Loading/Loading';
 // Utils
 import { handleFetch } from '../../../utils/handle_fetch';
 
-// Variables
-const RESOURCE_URL =
-	import.meta.env.MODE === 'production'
-		? import.meta.env.VITE_RESOURCE_URL
-		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
-
 export const SharedDelete = ({
 	name,
 	sharedFileId,
@@ -39,7 +33,7 @@ export const SharedDelete = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${RESOURCE_URL}/api/sharedFiles/${sharedFileId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/sharedFiles/${sharedFileId}`;
 
 		const options = {
 			method: 'DELETE',

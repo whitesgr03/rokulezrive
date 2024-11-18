@@ -13,17 +13,7 @@ import { Loading } from '../../../../utils/Loading/Loading';
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
 
-const RESOURCE_URL =
-	import.meta.env.MODE === 'production'
-		? import.meta.env.VITE_RESOURCE_URL
-		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
-
-export const FileDelete = ({
-	name,
-	fileId,
-	onUpdateFolder,
-	onActiveModal,
-}) => {
+export const FileDelete = ({ name, fileId, onUpdateFolder, onActiveModal }) => {
 	const [loading, setLoading] = useState(false);
 
 	const { pathname: previousPath } = useLocation();
@@ -38,7 +28,7 @@ export const FileDelete = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${RESOURCE_URL}/api/files/${fileId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}`;
 
 		const options = {
 			method: 'DELETE',

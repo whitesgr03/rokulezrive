@@ -17,11 +17,6 @@ import { Loading } from '../../../../utils/Loading/Loading';
 import { handleFetch } from '../../../../../utils/handle_fetch';
 import { getDeletedFolderIds } from '../../../../../utils/get_deleted_folder_ids';
 
-const RESOURCE_URL =
-	import.meta.env.MODE === 'production'
-		? import.meta.env.VITE_RESOURCE_URL
-		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
-
 export const FolderDelete = ({
 	folders,
 	folder,
@@ -45,7 +40,7 @@ export const FolderDelete = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${RESOURCE_URL}/api/folders/${id}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/folders/${id}`;
 
 		const options = {
 			method: 'DELETE',

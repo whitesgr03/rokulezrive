@@ -19,12 +19,6 @@ import { formatBytes } from '../../../../../utils/format_bytes';
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
 
-// Variables
-const RESOURCE_URL =
-	import.meta.env.MODE === 'production'
-		? import.meta.env.VITE_RESOURCE_URL
-		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
-
 export const FileInfo = () => {
 	const { folder, downloading, onResetSVGAnimate } = useOutletContext();
 	const { fileId } = useParams();
@@ -65,7 +59,7 @@ export const FileInfo = () => {
 				},
 			} = await supabase.auth.getSession();
 
-			const url = `${RESOURCE_URL}/api/files/${id}/download-url`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/download-url`;
 
 			const options = {
 				method: 'GET',

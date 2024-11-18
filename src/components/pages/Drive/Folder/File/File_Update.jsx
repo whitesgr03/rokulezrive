@@ -18,10 +18,7 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 
 // Variables
 const classes = classNames.bind(formStyles);
-const RESOURCE_URL =
-	import.meta.env.MODE === 'production'
-		? import.meta.env.VITE_RESOURCE_URL
-		: import.meta.env.VITE_LOCAL_RESOURCE_URL;
+
 
 export const FileUpdate = ({
 	name,
@@ -85,7 +82,7 @@ export const FileUpdate = ({
 			},
 		} = await supabase.auth.getSession();
 
-		const url = `${RESOURCE_URL}/api/files/${fileId}`;
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}`;
 
 		const options = {
 			method: 'PATCH',
