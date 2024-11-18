@@ -38,7 +38,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 		'/drive/folders/:id/files/:id',
 	);
 
-	const handleCancel = () => {
+	const handleReset = () => {
 		setFile({});
 		setInputError('');
 	};
@@ -121,7 +121,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 									<button
 										type="button"
 										className={driveStyles['restart-button']}
-										onClick={handleCancel}
+										onClick={handleReset}
 									>
 										<span className={`${icon} ${driveStyles.restart}`} />
 									</button>
