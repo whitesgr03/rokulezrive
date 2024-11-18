@@ -56,22 +56,22 @@ export const Subfolders = () => {
 								onClick={() =>
 									onActiveMenu({
 										id: subfolder.id,
-										button: 'option-button',
-										name: 'option-menu',
+										button: 'options-button',
+										name: 'options-menu',
 									})
 								}
 								className={driveStyles['options-button']}
 								data-id={subfolder.id}
-								data-button="option-button"
+								data-button="options-button"
 							>
 								<span className={`${icon} ${driveStyles.option}`} />
 							</button>
-							{menu.name === 'option-menu' && menu.id === subfolder.id && (
-								<ul className={`option-menu ${driveStyles['option-menu']}`}>
+							{menu.name === 'options-menu' && menu.id === subfolder.id && (
+								<ul className={`options-menu ${driveStyles['options-menu']}`}>
 									<li>
 										<button
 											type="button"
-											className={driveStyles['option-menu-button']}
+											className={driveStyles['options-menu-button']}
 											onClick={() =>
 												onActiveModal({
 													component: (
@@ -92,7 +92,7 @@ export const Subfolders = () => {
 									<li>
 										<button
 											type="button"
-											className={driveStyles['option-menu-button']}
+											className={driveStyles['options-menu-button']}
 											onClick={() =>
 												onActiveModal({
 													component: (

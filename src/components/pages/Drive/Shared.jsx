@@ -150,24 +150,24 @@ export const Shared = () => {
 												onClick={() =>
 													onActiveMenu({
 														id: item.file.id,
-														button: 'option-button',
-														name: 'option-menu',
+														button: 'options-button',
+														name: 'options-menu',
 													})
 												}
 												className={driveStyles['options-button']}
 												data-id={item.file.id}
-												data-button="option-button"
+												data-button="options-button"
 											>
 												<span className={`${icon} ${driveStyles.option}`} />
 											</button>
-											{menu.name === 'option-menu' &&
+											{menu.name === 'options-menu' &&
 												menu.id === item.file.id && (
 													<ul
-														className={`option-menu ${driveStyles['option-menu']}`}
+														className={`options-menu ${driveStyles['options-menu']}`}
 													>
 														<li>
 															<button
-																className={driveStyles['option-menu-button']}
+																className={driveStyles['options-menu-button']}
 																onClick={() =>
 																	handleGetResourceUrl({
 																		id: item.file.id,
@@ -193,7 +193,7 @@ export const Shared = () => {
 														<li>
 															<button
 																type="button"
-																className={driveStyles['option-menu-button']}
+																className={driveStyles['options-menu-button']}
 																onClick={() =>
 																	onActiveModal({
 																		component: (
