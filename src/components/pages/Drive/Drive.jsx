@@ -215,7 +215,7 @@ export const Drive = () => {
 												onUpdateFolder: handleUpdateFolder,
 												onDeleteSharedFile: handleDeleteSharedFile,
 												menu,
-												downloading: downloading,
+												downloading,
 												onResetSVGAnimate: handleResetSVGAnimate,
 											}}
 										/>
