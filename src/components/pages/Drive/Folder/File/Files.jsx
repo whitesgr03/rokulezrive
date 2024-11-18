@@ -171,7 +171,6 @@ export const Files = ({ files }) => {
 															),
 														})
 													}
-													data-close-menu
 												>
 													<span className={`${icon} ${driveStyles.share}`} />
 													Share
@@ -221,7 +220,6 @@ export const Files = ({ files }) => {
 															),
 														})
 													}
-													data-close-menu
 												>
 													<span className={`${icon} ${driveStyles.edit}`} />
 													Rename
@@ -243,7 +241,6 @@ export const Files = ({ files }) => {
 															),
 														})
 													}
-													data-close-menu
 												>
 													<span className={`${icon} ${driveStyles.delete}`} />
 													Remove
