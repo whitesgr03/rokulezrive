@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { supabase } from '../../../../../utils/supabase_client';
+import PropTypes from 'prop-types';
 
 // Styles
 import driveStyles from '../../Drive.module.css';
@@ -27,9 +28,8 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 
 
 
-export const Files = () => {
+export const Files = ({ files }) => {
 	const {
-		folder,
 		menu,
 		onActiveMenu,
 		onActiveModal,
@@ -114,7 +114,7 @@ export const Files = () => {
 								<div className={driveStyles['options-button']} />
 							</li>
 						)}
-						{folder.files.map(file => (
+						{files.map(file => (
 							<li key={file.id} className={driveStyles.item}>
 								<Link to={`files/${file.id}`} className={driveStyles.container}>
 									<span className={`${icon} ${driveStyles[`${file.type}`]}`} />
@@ -256,4 +256,8 @@ export const Files = () => {
 			)}
 		</>
 	);
+};
+
+Files.propTypes = {
+	files: PropTypes.array,
 };
