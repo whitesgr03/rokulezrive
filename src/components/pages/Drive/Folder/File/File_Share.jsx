@@ -335,7 +335,8 @@ export const FileShare = ({
 							</label>
 							<button
 								type="button"
-								className={`${styles['copy-link']} ${styles['input-button']} ${isPublic ? '' : styles['show-btn']}`}
+								className={`${styles['copy-link']} ${styles['input-button']} ${isPublic ? '' : styles['hide-btn']}`}
+								onClick={handleCopyLink}
 							>
 								<div
 									className={`${styles['copy-link-wrap']}  ${isCopied ? styles.copied : ''}`}
@@ -348,10 +349,7 @@ export const FileShare = ({
 										/>
 										<span className={styles['copied-link-text']}>Copied</span>
 									</div>
-									<div
-										className={styles['copy-link-item']}
-										onClick={isPublic ? handleCopyLink : () => {}}
-									>
+									<div className={styles['copy-link-item']}>
 										<span className={`${icon} ${styles.link}`} />
 									</div>
 								</div>
