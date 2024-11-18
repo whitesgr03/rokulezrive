@@ -55,8 +55,6 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 	};
 
 	const handleUploadFile = async () => {
-		setLoading(true);
-
 		const {
 			data: {
 				session: { access_token },
@@ -93,14 +91,18 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 			: navigate('/drive/error', {
 					state: { error: result.message, previousPath },
 				});
-		setLoading(false);
+
 		onActiveModal({ component: null });
 	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 
+		setLoading(true);
+
 		file instanceof File && (await handleUploadFile());
+
+		setLoading(false);
 	};
 
 	return (
