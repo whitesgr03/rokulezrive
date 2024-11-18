@@ -241,7 +241,7 @@ export const FileShare = ({
 	const listSharers = newSharers.map(item => {
 		return (
 			<li key={`${item.sharer.id}`} className={`${styles['email-item']} `}>
-				<span className={`${styles['email-text']}`}>{item.sharer.email}</span>
+				<p className={`${styles['email-text']}`}>{item.sharer.email}</p>
 				<button
 					type="button"
 					className={`${styles['email-close']}`}
