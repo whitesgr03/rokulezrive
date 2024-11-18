@@ -90,9 +90,7 @@ export const FileInfo = () => {
 					</div>
 					<button
 						className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
-						onClick={() =>
-							handleGetResourceUrl({ id: fileId, name: file.name })
-						}
+						onClick={() => !loading && handleGetResourceUrl()}
 					>
 						<span className={`${driveStyles['download-text']}`}>
 							Download
