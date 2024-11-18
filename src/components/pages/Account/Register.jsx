@@ -24,10 +24,6 @@ import { Loading } from '../../utils/Loading/Loading';
 
 // Variables
 const classes = classNames.bind(formStyles);
-const REDIRECT =
-	import.meta.env.MODE === 'production'
-		? import.meta.env.VITE_REDIRECT_URI
-		: import.meta.env.VITE_LOCAL_REDIRECT_URI;
 const DEFAULT_FORM_DATA = {
 	email: '',
 	password: '',
@@ -100,7 +96,7 @@ export const Register = () => {
 			email,
 			password,
 			options: {
-				emailRedirectTo: REDIRECT,
+				emailRedirectTo: import.meta.env.VITE_REDIRECT_URI,
 			},
 		});
 
