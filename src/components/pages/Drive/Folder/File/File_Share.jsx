@@ -304,9 +304,7 @@ export const FileShare = ({
 								>
 									<span className={`${icon} ${formStyles.alert}`} />
 									<p className={formStyles['form-message']}>
-										{inputErrors.email
-											? inputErrors.email
-											: 'Message Placeholder'}
+										{inputErrors.email ?? 'Message Placeholder'}
 									</p>
 								</div>
 							)}
