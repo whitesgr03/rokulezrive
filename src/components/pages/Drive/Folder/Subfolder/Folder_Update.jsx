@@ -53,6 +53,10 @@ export const FolderUpdate = ({ folder, onUpdateFolder, onActiveModal }) => {
 						200,
 						({ max }) => `Folder name must be less then ${max} letters.`,
 					)
+					.notOneOf(
+						[name],
+						'New folder name should be different from the old folder name.',
+					)
 					.required('Folder name is required.'),
 			}).noUnknown();
 			await schema.validate(formData, {

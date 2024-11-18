@@ -56,6 +56,10 @@ export const FileUpdate = ({
 				name: string()
 					.trim()
 					.max(200, ({ max }) => `File name must be less then ${max} letters.`)
+					.notOneOf(
+						[fileName[1]],
+						'New file name should be different from the old file name.',
+					)
 					.required('File name is required.'),
 			}).noUnknown();
 			await schema.validate(formData, {
