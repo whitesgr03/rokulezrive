@@ -60,22 +60,12 @@ export const FileInfo = () => {
 
 			result.success
 				? createDownloadElement(result.blob, file.name).click()
-				: navigate('/drive/error', {
-						state: {
-							error: 'File resource url cloud not be loaded',
-							previousPath,
-						},
-					});
+				: setError('File resource url cloud not be loaded.');
 		};
 
 		result.success
 			? await handleDownload(result.data.url)
-			: navigate('/drive/error', {
-					state: {
-						error: result.message,
-						previousPath,
-					},
-				});
+			: setError(result.message);
 
 		setLoading(false);
 	};
