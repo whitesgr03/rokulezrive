@@ -139,22 +139,24 @@ export const Files = ({ files }) => {
 										onClick={() =>
 											onActiveMenu({
 												id: file.id,
-												button: 'option-button',
-												name: 'option-menu',
+												button: 'options-button',
+												name: 'options-menu',
 											})
 										}
 										className={driveStyles['options-button']}
 										data-id={file.id}
-										data-button="option-button"
+										data-button="options-button"
 									>
 										<span className={`${icon} ${driveStyles.option}`} />
 									</button>
-									{menu.name === 'option-menu' && menu.id === file.id && (
-										<ul className={`option-menu ${driveStyles['option-menu']}`}>
+									{menu.name === 'options-menu' && menu.id === file.id && (
+										<ul
+											className={`options-menu ${driveStyles['options-menu']}`}
+										>
 											<li>
 												<button
 													type="button"
-													className={driveStyles['option-menu-button']}
+													className={driveStyles['options-menu-button']}
 													onClick={() =>
 														onActiveModal({
 															component: (
@@ -178,7 +180,7 @@ export const Files = ({ files }) => {
 
 											<li>
 												<button
-													className={driveStyles['option-menu-button']}
+													className={driveStyles['options-menu-button']}
 													onClick={() =>
 														handleGetResourceUrl({
 															id: file.id,
@@ -205,7 +207,7 @@ export const Files = ({ files }) => {
 											<li>
 												<button
 													type="button"
-													className={driveStyles['option-menu-button']}
+													className={driveStyles['options-menu-button']}
 													onClick={() =>
 														onActiveModal({
 															component: (
@@ -227,7 +229,7 @@ export const Files = ({ files }) => {
 											<li>
 												<button
 													type="button"
-													className={driveStyles['option-menu-button']}
+													className={driveStyles['options-menu-button']}
 													onClick={() =>
 														onActiveModal({
 															component: (
