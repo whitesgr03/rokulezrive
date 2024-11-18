@@ -154,7 +154,7 @@ export const FileUpdate = ({ name, fileId, onUpdateFolder, onActiveModal }) => {
 					>
 						<span className={`${icon} ${formStyles.alert}`} />
 						<p className={formStyles['form-message']}>
-							{inputErrors.name ? inputErrors.name : 'Message Placeholder'}
+							{inputErrors.name ?? 'Message Placeholder'}
 						</p>
 					</div>
 				</div>
