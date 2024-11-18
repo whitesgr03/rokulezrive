@@ -45,32 +45,31 @@ export const FileUpdate = ({
 		setFormData(fields);
 	};
 
-	const handleValidFields = async () => {
-		let isValid = false;
-
-		const schema = object({
-			name: string()
-				.trim()
-				.required('Folder name is required.')
-				.max(200, ({ max }) => `Folder name must be less then ${max} letters.`),
-		}).noUnknown();
+	const verifyScheme = async () => {
+		let result = {
+			success: true,
+			fields: {},
+		};
 
 		try {
+			const schema = object({
+				name: string()
+					.trim()
+					.max(200, ({ max }) => `File name must be less then ${max} letters.`)
+					.required('File name is required.'),
+			}).noUnknown();
 			await schema.validate(formData, {
 				abortEarly: false,
 				stripUnknown: true,
 			});
-			setInputErrors({});
-			isValid = true;
-			return isValid;
 		} catch (err) {
-			const obj = {};
 			for (const error of err.inner) {
-				obj[error.path] ?? (obj[error.path] = error.message);
+				result.fields[error.path] = error.message;
 			}
-			setInputErrors(obj);
-			return isValid;
+			result.success = false;
 		}
+
+		return result;
 	};
 
 	const handleUpdate = async () => {

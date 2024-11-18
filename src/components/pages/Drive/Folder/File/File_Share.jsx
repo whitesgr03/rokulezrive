@@ -49,32 +49,31 @@ export const FileShare = ({
 		setFormData(fields);
 	};
 
-	const handleValidFields = async () => {
-		let isValid = false;
-
-		const schema = object({
-			email: string()
-				.trim()
-				.email('Email must be in standard format.')
-				.required('Email is required.'),
-		}).noUnknown();
+	const verifyScheme = async () => {
+		let result = {
+			success: true,
+			fields: {},
+		};
 
 		try {
+			const schema = object({
+				email: string()
+					.trim()
+					.email('Email must be in standard format.')
+					.required('Email is required.'),
+			}).noUnknown();
 			await schema.validate(formData, {
 				abortEarly: false,
 				stripUnknown: true,
 			});
-			setInputErrors({});
-			isValid = true;
-			return isValid;
 		} catch (err) {
-			const obj = {};
 			for (const error of err.inner) {
-				obj[error.path] ?? (obj[error.path] = error.message);
+				result.fields[error.path] = error.message;
 			}
-			setInputErrors(obj);
-			return isValid;
+			result.success = false;
 		}
+
+		return result;
 	};
 
 	const handleSubmit = async e => {
