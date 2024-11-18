@@ -182,6 +182,7 @@ export const Files = ({ files }) => {
 												<button
 													className={driveStyles['options-menu-button']}
 													onClick={() =>
+														!loading &&
 														handleGetResourceUrl({
 															id: file.id,
 															name: file.name,
