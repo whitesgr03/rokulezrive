@@ -234,11 +234,8 @@ export const FileShare = ({
 			));
 	};
 
-	const handleRemoveCopied = e => {
-		e.target.dataset.copied &&
-			setTimeout(() => {
-				setIsCopied(false);
-			}, 2000);
+	const handleCopiedAnimation = () => {
+		setIsCopied(false);
 	};
 
 	const listSharers = newSharers.map(item => {
