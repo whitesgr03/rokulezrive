@@ -226,11 +226,12 @@ export const FileShare = ({
 	};
 
 	const handleCopyLink = async () => {
-		!isCopied &&
+		isPublic && !isCopied && setIsCopied(true);
+		isPublic &&
+			!isCopied &&
 			(await navigator.clipboard.writeText(
 				`${location.protocol}//${location.host}/shared/${newPublicId}`,
 			));
-		!isCopied && setIsCopied(true);
 	};
 
 	const handleRemoveCopied = e => {
