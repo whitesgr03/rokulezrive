@@ -74,7 +74,7 @@ export const FileInfo = () => {
 		<>
 			{error ? (
 				<Navigate to="/drive/error" state={{ error, previousPath }} />
-			) : (
+			) : file ? (
 				<div className={driveStyles['file-container']}>
 					<p className={driveStyles['file-name']} title={file.name}>
 						{file.name}
@@ -105,6 +105,14 @@ export const FileInfo = () => {
 						</span>
 					</button>
 				</div>
+			) : (
+				<Navigate
+					to="/drive/error"
+					state={{
+						error: 'The file you are looking for could not been found.',
+						customMessage: true,
+					}}
+				/>
 			)}
 		</>
 	);
