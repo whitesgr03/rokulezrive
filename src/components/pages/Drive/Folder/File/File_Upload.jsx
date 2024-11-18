@@ -112,7 +112,7 @@ export const FileUpload = ({ folderId, onUpdateFolder, onActiveModal }) => {
 				<h3>Upload File</h3>
 				<form
 					className={`${formStyles.form} ${driveStyles['upload-form']}`}
-					onSubmit={handleSubmit}
+					onSubmit={e => !loading && handleSubmit(e)}
 				>
 					<div
 						className={`${formStyles['form-wrap']} ${driveStyles['upload-form-wrap']}`}
