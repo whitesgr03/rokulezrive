@@ -18,7 +18,7 @@ export const Folder = () => {
 			) : (
 				<>
 					{folder.subfolders.length > 0 && <Subfolders />}
-					{folder.files.length > 0 && <Files />}
+					{folder.files.length > 0 && <Files files={folder.files} />}
 				</>
 			)}
 		</>
