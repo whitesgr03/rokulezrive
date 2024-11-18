@@ -17,7 +17,11 @@ import driveStyles from '../../Drive.module.css';
 // Utils
 import { formatBytes } from '../../../../../utils/format_bytes';
 // Utils
-import { handleFetch } from '../../../../../utils/handle_fetch';
+import {
+	handleFetch,
+	handleFetchBlob,
+} from '../../../../../utils/handle_fetch';
+import { createDownloadElement } from '../../../../../utils/create_download_element';
 
 export const FileInfo = () => {
 	const { folder, downloading, onResetSVGAnimate } = useOutletContext();
@@ -30,56 +34,50 @@ export const FileInfo = () => {
 
 	const file = folder.files.find(file => file.id === fileId);
 
-	const handleGetResourceUrl = async ({ id, name }) => {
-		const download = async url => {
-			const blob = await new Promise(resolve =>
-				fetch(url)
-					.then(res => resolve(res.blob()))
-					.catch(() => resolve(null)),
-			);
+	const handleGetResourceUrl = async () => {
+		setLoading(true);
 
-			const handleDownload = downloadUrl => {
-				const a = document.createElement('a');
-				a.href = downloadUrl;
-				a.download = name;
-				a.click();
-			};
-
-			!blob
-				? setError('File resource url cloud not be loaded')
-				: handleDownload(URL.createObjectURL(blob));
-		};
-
-		const getResourceUrl = async () => {
-			setLoading(true);
-
-			const {
-				data: {
-					session: { access_token },
-				},
-			} = await supabase.auth.getSession();
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
 
 		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/download-url`;
 
-			const options = {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${access_token}`,
-				},
-			};
-
-			const result = await handleFetch(url, options);
-
-			const handleSuccess = async () => {
-				await download(result.data.url);
-				setLoading(false);
-				onResetSVGAnimate();
-			};
-
-			result.success ? handleSuccess() : setError(result.message);
+		const options = {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+			},
 		};
 
-		!loading && getResourceUrl();
+		const result = await handleFetch(url, options);
+
+		const handleDownload = async url => {
+			const result = await handleFetchBlob(url);
+			onResetSVGAnimate();
+
+			result.success
+				? createDownloadElement(result.blob, file.name).click()
+				: navigate('/drive/error', {
+						state: {
+							error: 'File resource url cloud not be loaded',
+							previousPath,
+						},
+					});
+		};
+
+		result.success
+			? await handleDownload(result.data.url)
+			: navigate('/drive/error', {
+					state: {
+						error: result.message,
+						previousPath,
+					},
+				});
+
+		setLoading(false);
 	};
 
 	return (
