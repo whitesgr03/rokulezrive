@@ -37,7 +37,7 @@ describe('Home component', () => {
 
 		expect(content).toBeInTheDocument();
 	});
-	it(`should render desktop content if the user's device screen is 1000 pixels wide or larger.`, () => {
+	it(`should render desktop content if the user's device screen is 1000 pixels wide or larger`, () => {
 		const mockContext = {
 			userId: null,
 		};
