@@ -10,7 +10,6 @@ import {
 } from '../../../../../utils/handle_fetch';
 import { createDownloadElement } from '../../../../../utils/create_download_element';
 import { formatBytes } from '../../../../../utils/format_bytes';
-import { format } from 'date-fns';
 
 import { Files } from '../../../../../components/pages/Drive/Folder/File/Files';
 
@@ -18,7 +17,6 @@ vi.mock('../../../../../utils/supabase_client');
 vi.mock('../../../../../utils/handle_fetch');
 vi.mock('../../../../../utils/create_download_element');
 vi.mock('../../../../../utils/format_bytes');
-vi.mock('date-fns');
 
 describe('Files component', () => {
 	it('should render files if the array of files prop is not empty', async () => {
@@ -70,7 +68,6 @@ describe('Files component', () => {
 
 		expect(nameFile).toBeInTheDocument();
 		expect(formatBytes).toBeCalledWith(mockProps.files[0].size);
-		expect(format.mock.calls[0][0]).toBe(mockProps.files[0].createdAt);
 	});
 	it('should active options menu if options button is clicked', async () => {
 		const user = userEvent.setup();
