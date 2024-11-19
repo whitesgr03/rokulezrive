@@ -52,6 +52,30 @@ describe('FileUpdate component', () => {
 		expect(errorMessage).toBeInTheDocument();
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
+	it('should close modal if cancel button is clicked', async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			name: 'file',
+			fileId: '1',
+			onUpdateFolder: vi.fn(),
+			onActiveModal: vi.fn(),
+		};
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <FileDelete {...mockProps} />,
+			},
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		const closeButton = screen.getByRole('button', { name: 'Cancel' });
+
+		await user.click(closeButton);
+
+		expect(mockProps.onActiveModal).toBeCalledTimes(1);
+	});
 	it('should delete file if submit button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
