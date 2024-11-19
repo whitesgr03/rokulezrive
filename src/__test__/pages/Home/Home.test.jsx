@@ -5,7 +5,7 @@ import { Context as ResponsiveContext } from 'react-responsive';
 
 import { Home } from '../../../components/pages/Home/Home';
 
-describe('', () => {
+describe('Home component', () => {
 	it('should navigate to "/drive" path if "userId" outlet context is provided', () => {
 		const mockContext = {
 			userId: '1',
