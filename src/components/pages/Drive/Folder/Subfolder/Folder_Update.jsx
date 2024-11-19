@@ -159,6 +159,7 @@ export const FolderUpdate = ({ folder, onUpdateFolder, onActiveModal }) => {
 							'form-message-wrap': true,
 							'form-message-active': inputErrors.name,
 						})}
+						data-testid="folder-message"
 					>
 						<span className={`${icon} ${formStyles.alert}`} />
 						<p className={formStyles['form-message']}>

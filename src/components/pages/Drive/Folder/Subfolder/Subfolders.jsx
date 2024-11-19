@@ -47,7 +47,10 @@ export const Subfolders = ({ subfolders }) => {
 							</p>
 							<div className={`${driveStyles.info} ${driveStyles.date}`}>
 								{!isNormalTablet && (
-									<span className={`${icon} ${driveStyles.calendar}`} />
+									<span
+										className={`${icon} ${driveStyles.calendar}`}
+										data-testid="calendar-icon"
+									/>
 								)}
 								{format(subfolder.createdAt, 'MMM d, y')}
 							</div>
@@ -64,6 +67,7 @@ export const Subfolders = ({ subfolders }) => {
 								className={driveStyles['options-button']}
 								data-id={subfolder.id}
 								data-button="options-button"
+								title="options-button"
 							>
 								<span className={`${icon} ${driveStyles.option}`} />
 							</button>
