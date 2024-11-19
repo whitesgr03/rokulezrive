@@ -60,7 +60,7 @@ export const FileDelete = ({ name, fileId, onUpdateFolder, onActiveModal }) => {
 					<div className={folderStyles['folder-button-wrap']}>
 						<button
 							className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
-							data-close-modal
+							onClick={() => onActiveModal({ component: null })}
 						>
 							Cancel
 						</button>
