@@ -84,7 +84,6 @@ export const Subfolders = ({ subfolders }) => {
 													),
 												})
 											}
-											data-close-menu
 										>
 											<span className={`${icon} ${driveStyles.edit}`} />
 											Rename
@@ -106,7 +105,6 @@ export const Subfolders = ({ subfolders }) => {
 													),
 												})
 											}
-											data-close-menu
 										>
 											<span className={`${icon} ${driveStyles.delete}`} />
 											Remove
