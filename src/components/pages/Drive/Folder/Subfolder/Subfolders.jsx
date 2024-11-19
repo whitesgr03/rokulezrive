@@ -2,6 +2,7 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useMediaQuery } from 'react-responsive';
+import PropTypes from 'prop-types';
 
 // Styles
 import driveStyles from '../../Drive.module.css';
@@ -12,8 +13,8 @@ import styles from './Subfolders.module.css';
 import { FolderUpdate } from './Folder_Update';
 import { FolderDelete } from './Folder_Delete';
 
-export const Subfolders = () => {
-	const { folders, folder, menu, onActiveMenu, onActiveModal, onUpdateFolder } =
+export const Subfolders = ({ subfolders }) => {
+	const { folders, menu, onActiveMenu, onActiveModal, onUpdateFolder } =
 		useOutletContext();
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
@@ -31,7 +32,7 @@ export const Subfolders = () => {
 						<div className={driveStyles['options-button']} />
 					</li>
 				)}
-				{folder.subfolders.map(subfolder => (
+				{subfolders.map(subfolder => (
 					<li key={subfolder.id} className={driveStyles.item}>
 						<Link
 							to={`/drive/folders/${subfolder.id}`}
@@ -119,4 +120,8 @@ export const Subfolders = () => {
 			</ul>
 		</>
 	);
+};
+
+Subfolders.propTypes = {
+	subfolders: PropTypes.array,
 };
