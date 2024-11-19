@@ -17,7 +17,9 @@ export const Folder = () => {
 				<p className={styles.text}>No files in the folder</p>
 			) : (
 				<>
-					{folder.subfolders.length > 0 && <Subfolders />}
+					{folder.subfolders.length > 0 && (
+						<Subfolders subfolders={folder.subfolders} />
+					)}
 					{folder.files.length > 0 && <Files files={folder.files} />}
 				</>
 			)}
