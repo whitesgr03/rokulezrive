@@ -37,7 +37,7 @@ describe('FileUpdate component', () => {
 
 		expect(nameField).toHaveValue(`${mockProps.name}${mockName}`);
 	});
-	it('should render the error field messages if email field fails validation after submission', async () => {
+	it('should render the error field messages if name field fails validation after submission', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			name: 'file',
