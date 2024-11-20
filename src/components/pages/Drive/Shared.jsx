@@ -119,7 +119,10 @@ export const Shared = () => {
 											</p>
 											<div className={driveStyles.info}>
 												{!isNormalTablet && (
-													<span className={`${icon} ${styles['share-by']}`} />
+													<span
+														className={`${icon} ${styles['share-by']}`}
+														data-testid="sharer"
+													/>
 												)}
 												<span
 													className={styles.sharer}
@@ -130,7 +133,10 @@ export const Shared = () => {
 											</div>
 											<div className={driveStyles.info}>
 												{!isNormalTablet && (
-													<span className={`${icon} ${driveStyles.calendar}`} />
+													<span
+														className={`${icon} ${driveStyles.calendar}`}
+														data-testid="calendar"
+													/>
 												)}
 												{format(item.sharedAt, 'MMM d, y')}
 											</div>
@@ -147,6 +153,7 @@ export const Shared = () => {
 												className={driveStyles['options-button']}
 												data-id={item.file.id}
 												data-button="options-button"
+												title="options-button"
 											>
 												<span className={`${icon} ${driveStyles.option}`} />
 											</button>
