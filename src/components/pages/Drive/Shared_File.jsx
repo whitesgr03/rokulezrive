@@ -6,16 +6,13 @@ import {
 	useLocation,
 } from 'react-router-dom';
 import { format } from 'date-fns';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { supabase } from '../../../utils/supabase_client';
 
 // Styles
 import { icon } from '../../../styles/icon.module.css';
 import driveStyles from './Drive.module.css';
 import formStyles from '../../../styles/form.module.css';
-
-// Components
-import { Loading } from '../../utils/Loading/Loading';
 
 // Utils
 import { handleFetch, handleFetchBlob } from '../../../utils/handle_fetch';
@@ -25,11 +22,13 @@ import { createDownloadElement } from '../../../utils/create_download_element';
 export const SharedFile = () => {
 	const { sharedFiles, downloading, onResetSVGAnimate } = useOutletContext();
 	const { fileId } = useParams();
-	const [sharedFile, setSharedFile] = useState({});
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	const { pathname: previousPath } = useLocation();
+
+	const sharedFile = sharedFiles.find(item => item.file.id === fileId);
+
 	const handleGetResourceUrl = async () => {
 		setLoading(true);
 
@@ -68,56 +67,48 @@ export const SharedFile = () => {
 
 	return (
 		<>
-			{error ? (
+			{error || !sharedFile ? (
 				<Navigate
 					to="/drive/error"
-					state={{ error, previousPath, customMessage: true }}
+					state={{
+						error: !sharedFile
+							? 'The file you are looking for could not be found.'
+							: error,
+						previousPath,
+						customMessage: !sharedFile,
+					}}
 				/>
 			) : (
 				<div className={driveStyles['file-container']}>
-					{loading ? (
-						<Loading text="Loading..." />
-					) : (
-						<>
-							<p
-								className={driveStyles['file-name']}
-								title={sharedFile.file.name}
-							>
-								{sharedFile.file.name}
-							</p>
-							<div className={driveStyles.file}>
+					<p className={driveStyles['file-name']} title={sharedFile.file.name}>
+						{sharedFile.file.name}
+					</p>
+					<div className={driveStyles.file}>
+						<span
+							className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${sharedFile.file.type}`]}`}
+						/>
+					</div>
+					<div className={driveStyles['file-info']}>
+						<p>Size: {formatBytes(sharedFile.file.size)}</p>
+						<p>Shared by: {sharedFile.file.owner.email}</p>
+						<p>Shared At: {format(sharedFile.sharedAt, 'MMM d, y')}</p>
+					</div>
+					<button
+						className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
+						onClick={() => !loading && handleGetResourceUrl()}
+					>
+						<span className={`${driveStyles['download-text']}`}>
+							Download
+							{loading && (
 								<span
-									className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${sharedFile.file.type}`]}`}
-								/>
-							</div>
-							<div className={driveStyles['file-info']}>
-								<p>Size: {formatBytes(sharedFile.file.size)}</p>
-								<p>Shared by: {sharedFile.file.owner.email}</p>
-								<p>Shared At: {format(sharedFile.sharedAt, 'MMM d, y')}</p>
-							</div>
-							<button
-								className={`${formStyles['form-submit']} ${driveStyles['download-btn']}`}
-								onClick={() =>
-									handleGetResourceUrl({
-										id: fileId,
-										name: sharedFile.file.name,
-									})
-								}
-							>
-								<span className={`${driveStyles['download-text']}`}>
-									Download
-									{loading && (
-										<span
-											style={{
-												maskImage: downloading,
-											}}
-											className={`${icon} ${driveStyles['downloading']} ${driveStyles['download-icon']}`}
-										></span>
-									)}
-								</span>
-							</button>
-						</>
-					)}
+									style={{
+										maskImage: downloading,
+									}}
+									className={`${icon} ${driveStyles['downloading']} ${driveStyles['download-icon']}`}
+								></span>
+							)}
+						</span>
+					</button>
 				</div>
 			)}
 		</>
