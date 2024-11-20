@@ -81,7 +81,7 @@ describe('FolderDelete component', () => {
 
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
-	it('should delete folder if submit button is clicked', async () => {
+	it('should delete folder if delete button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folders: [],
@@ -117,7 +117,7 @@ describe('FolderDelete component', () => {
 		expect(mockProps.onUpdateFolder).toBeCalledTimes(1);
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
-	it('should delete folder and files if submit button is clicked', async () => {
+	it('should delete folder and files if delete button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folders: [],
