@@ -85,7 +85,11 @@ export const Shared = () => {
 				<Navigate to="/drive/error" state={{ error, previousPath }} />
 			) : (
 				<>
-					{sharedFiles.length !== 0 ? (
+					{sharedFiles.length === 0 ? (
+						matchPath && (
+							<p className={styles.text}>There are not files shared with you</p>
+						)
+					) : (
 						<>
 							<h3 className={driveStyles.title}>Shared with you</h3>
 							<ul className={driveStyles.list}>
@@ -207,10 +211,6 @@ export const Shared = () => {
 								))}
 							</ul>
 						</>
-					) : (
-						matchPath && (
-							<p className={styles.text}>There are not files shared with you</p>
-						)
 					)}
 				</>
 			)}
