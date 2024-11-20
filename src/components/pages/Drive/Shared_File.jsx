@@ -18,8 +18,9 @@ import formStyles from '../../../styles/form.module.css';
 import { Loading } from '../../utils/Loading/Loading';
 
 // Utils
-import { handleFetch } from '../../../utils/handle_fetch';
+import { handleFetch, handleFetchBlob } from '../../../utils/handle_fetch';
 import { formatBytes } from '../../../utils/format_bytes';
+import { createDownloadElement } from '../../../utils/create_download_element';
 
 export const SharedFile = () => {
 	const { sharedFiles, downloading, onResetSVGAnimate } = useOutletContext();
@@ -29,67 +30,41 @@ export const SharedFile = () => {
 	const [error, setError] = useState(null);
 
 	const { pathname: previousPath } = useLocation();
-	const handleGetResourceUrl = async ({ id, name }) => {
-		const download = async url => {
-			const blob = await new Promise(resolve =>
-				fetch(url)
-					.then(res => resolve(res.blob()))
-					.catch(() => resolve(null)),
-			);
+	const handleGetResourceUrl = async () => {
+		setLoading(true);
 
-			const handleDownload = downloadUrl => {
-				const a = document.createElement('a');
-				a.href = downloadUrl;
-				a.download = name;
-				a.click();
-			};
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
 
-			!blob
-				? setError('File resource url cloud not be loaded')
-				: handleDownload(URL.createObjectURL(blob));
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${fileId}/download-url`;
+
+		const options = {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+			},
 		};
 
-		const createResourceUrl = async () => {
-			setLoading(true);
+		const handleDownload = async url => {
+			const result = await handleFetchBlob(url);
+			onResetSVGAnimate();
 
-			const {
-				data: {
-					session: { access_token },
-				},
-			} = await supabase.auth.getSession();
-
-			const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${id}/download-url`;
-
-			const options = {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${access_token}`,
-				},
-			};
-
-			const result = await handleFetch(url, options);
-
-			const handleSuccess = async () => {
-				await download(result.data.url);
-				setLoading(false);
-				onResetSVGAnimate();
-			};
-
-			result.success ? handleSuccess() : setError(result.message);
+			result.success
+				? createDownloadElement(result.blob, sharedFile.file.name).click()
+				: setError('File resource url cloud not be loaded.');
 		};
 
-		!loading && createResourceUrl();
-	};
+		const result = await handleFetch(url, options);
 
-	useEffect(() => {
-		const sharedFile = sharedFiles.find(item => item.file.id === fileId);
-
-		sharedFile
-			? setSharedFile(sharedFile)
-			: setError('The file you are looking for could not be found.');
+		result.success
+			? await handleDownload(result.data.url)
+			: setError(result.message);
 
 		setLoading(false);
-	}, [sharedFiles, fileId]);
+	};
 
 	return (
 		<>
