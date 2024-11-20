@@ -169,6 +169,7 @@ describe('FileInfo component', () => {
 		const errorMessage = screen.getByText('Error page');
 
 		expect(errorMessage).toBeInTheDocument();
+		expect(mockContext.onResetSVGAnimate).toBeCalledTimes(1);
 	});
 	it('should download file if download button is clicked', async () => {
 		const user = userEvent.setup();
