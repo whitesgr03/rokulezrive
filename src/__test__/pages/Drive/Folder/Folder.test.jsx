@@ -50,7 +50,7 @@ describe('Folder component', () => {
 			},
 		};
 
-		Subfolders.mockImplementation(({ subfolders }) => (
+		Subfolders.mockImplementationOnce(({ subfolders }) => (
 			<ul>
 				{subfolders.map(subfolder => (
 					<div key={subfolder.id} data-testid="subfolder">
@@ -102,7 +102,7 @@ describe('Folder component', () => {
 			},
 		};
 
-		Files.mockImplementation(({ files }) => (
+		Files.mockImplementationOnce(({ files }) => (
 			<ul>
 				{files.map(file => (
 					<div key={file.id} data-testid="file">
