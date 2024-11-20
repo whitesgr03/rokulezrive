@@ -164,90 +164,84 @@ export const Drive = () => {
 		<>
 			{error ? (
 				<Navigate to="/error" state={{ error }} />
+			) : loading ? (
+				<Loading text="Loading..." />
 			) : (
 				<>
-					{loading ? (
-						<Loading text="Loading..." />
-					) : (
-						<>
-							{isNormalTablet && (
-								<div className={styles.sidebar}>
-									<UploadList
-										folderId={folder.id}
-										onActiveModal={onActiveModal}
-										onUpdateFolder={handleUpdateFolder}
-									/>
-									<Navbar />
-								</div>
-							)}
-							<div className={styles['wrap-bgc']}>
-								<div className={styles.drive}>
-									<div className={styles.content}>
-										{paths.length !== 0 && (
-											<nav>
-												<div className={styles.paths}>
-													{paths.map((item, i) => (
-														<Fragment key={`${item.path}`}>
-															{i !== 0 && (
-																<span className={`${styles.arrow}`} />
-															)}
-															<Link
-																to={item.path}
-																className={styles['paths-link']}
-																title={item.name}
-															>
-																{item.name}
-															</Link>
-														</Fragment>
-													))}
-												</div>
-											</nav>
-										)}
+					{isNormalTablet && (
+						<div className={styles.sidebar}>
+							<UploadList
+								folderId={folder.id}
+								onActiveModal={onActiveModal}
+								onUpdateFolder={handleUpdateFolder}
+							/>
+							<Navbar />
+						</div>
+					)}
+					<div className={styles['wrap-bgc']}>
+						<div className={styles.drive}>
+							<div className={styles.content}>
+								{paths.length !== 0 && (
+									<nav>
+										<div className={styles.paths}>
+											{paths.map((item, i) => (
+												<Fragment key={`${item.path}`}>
+													{i !== 0 && <span className={`${styles.arrow}`} />}
+													<Link
+														to={item.path}
+														className={styles['paths-link']}
+														title={item.name}
+													>
+														{item.name}
+													</Link>
+												</Fragment>
+											))}
+										</div>
+									</nav>
+								)}
 
-										{!folderId && !fileId && <h2>{folder.name}</h2>}
-										<Outlet
-											context={{
-												folders,
-												folder,
-												sharedFiles,
-												onActiveMenu,
-												onActiveModal,
-												onUpdateFolder: handleUpdateFolder,
-												onDeleteSharedFile: handleDeleteSharedFile,
-												menu,
-												downloading,
-												onResetSVGAnimate: handleResetSVGAnimate,
-											}}
-										/>
-									</div>
-									{isNormalTablet && <Footer />}
-								</div>
+								{!folderId && !fileId && <h2>{folder.name}</h2>}
+								<Outlet
+									context={{
+										folders,
+										folder,
+										sharedFiles,
+										onActiveMenu,
+										onActiveModal,
+										onUpdateFolder: handleUpdateFolder,
+										onDeleteSharedFile: handleDeleteSharedFile,
+										menu,
+										downloading,
+										onResetSVGAnimate: handleResetSVGAnimate,
+									}}
+								/>
 							</div>
-							{!isNormalTablet && (
-								<div className={`upload ${uploadListStyles.upload}`}>
-									<button
-										type="button"
-										className={uploadListStyles['upload-button']}
-										onClick={() =>
-											onActiveMenu({
-												name: 'upload-menu',
-												button: 'upload-button',
-											})
-										}
-										data-button="upload-button"
-									>
-										<span className={`${icon} ${uploadListStyles.plus}`} />
-									</button>
-									{menu.name === 'upload-menu' && (
-										<UploadList
-											folderId={folder.id}
-											onActiveModal={onActiveModal}
-											onUpdateFolder={handleUpdateFolder}
-										/>
-									)}
-								</div>
+							{isNormalTablet && <Footer />}
+						</div>
+					</div>
+					{!isNormalTablet && (
+						<div className={`upload ${uploadListStyles.upload}`}>
+							<button
+								type="button"
+								className={uploadListStyles['upload-button']}
+								onClick={() =>
+									onActiveMenu({
+										name: 'upload-menu',
+										button: 'upload-button',
+									})
+								}
+								data-button="upload-button"
+							>
+								<span className={`${icon} ${uploadListStyles.plus}`} />
+							</button>
+							{menu.name === 'upload-menu' && (
+								<UploadList
+									folderId={folder.id}
+									onActiveModal={onActiveModal}
+									onUpdateFolder={handleUpdateFolder}
+								/>
 							)}
-						</>
+						</div>
 					)}
 				</>
 			)}
