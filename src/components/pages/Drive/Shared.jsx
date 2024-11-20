@@ -20,7 +20,8 @@ import styles from './Shared.module.css';
 import { SharedDelete } from './Shared_Delete';
 
 // Utils
-import { handleFetch } from '../../../utils/handle_fetch';
+import { handleFetch, handleFetchBlob } from '../../../utils/handle_fetch';
+import { createDownloadElement } from '../../../utils/create_download_element';
 
 export const Shared = () => {
 	const {
@@ -41,56 +42,41 @@ export const Shared = () => {
 	const { pathname: previousPath } = useLocation();
 
 	const handleGetResourceUrl = async ({ id, name }) => {
-		const download = async url => {
-			const blob = await new Promise(resolve =>
-				fetch(url)
-					.then(res => resolve(res.blob()))
-					.catch(() => resolve(null)),
-			);
+		setLoading(true);
 
-			const handleDownload = downloadUrl => {
-				const a = document.createElement('a');
-				a.href = downloadUrl;
-				a.download = name;
-				a.click();
-			};
+		const {
+			data: {
+				session: { access_token },
+			},
+		} = await supabase.auth.getSession();
 
-			!blob
-				? setError('File resource url cloud not be loaded')
-				: handleDownload(URL.createObjectURL(blob));
+		const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${id}/download-url`;
+
+		const options = {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+			},
 		};
 
-		const getResourceUrl = async () => {
-			setLoading(true);
+		const handleDownload = async url => {
+			const result = await handleFetchBlob(url);
 
-			const {
-				data: {
-					session: { access_token },
-				},
-			} = await supabase.auth.getSession();
+			result.success
+				? createDownloadElement(result.blob, name).click()
+				: setError('File resource url cloud not be loaded');
 
-			const url = `${import.meta.env.VITE_RESOURCE_URL}/api/files/${id}/download-url`;
-
-			const options = {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${access_token}`,
-				},
-			};
-
-			const result = await handleFetch(url, options);
-
-			const handleSuccess = async () => {
-				await download(result.data.url);
-				onActiveMenu();
-				setLoading(false);
-				onResetSVGAnimate();
-			};
-
-			result.success ? handleSuccess() : setError(result.message);
+			onActiveMenu();
+			onResetSVGAnimate();
 		};
 
-		!loading && getResourceUrl();
+		const result = await handleFetch(url, options);
+
+		result.success
+			? await handleDownload(result.data.url)
+			: setError(result.message);
+
+		setLoading(false);
 	};
 
 	return (
@@ -169,6 +155,7 @@ export const Shared = () => {
 															<button
 																className={driveStyles['options-menu-button']}
 																onClick={() =>
+																	!loading &&
 																	handleGetResourceUrl({
 																		id: item.file.id,
 																		name: item.file.name,
