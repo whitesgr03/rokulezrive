@@ -52,8 +52,6 @@ export const FileInfo = () => {
 			},
 		};
 
-		const result = await handleFetch(url, options);
-
 		const handleDownload = async url => {
 			const result = await handleFetchBlob(url);
 			onResetSVGAnimate();
@@ -62,6 +60,8 @@ export const FileInfo = () => {
 				? createDownloadElement(result.blob, file.name).click()
 				: setError('File resource url cloud not be loaded.');
 		};
+
+		const result = await handleFetch(url, options);
 
 		result.success
 			? await handleDownload(result.data.url)
