@@ -231,6 +231,7 @@ export const Drive = () => {
 									})
 								}
 								data-button="upload-button"
+								title="upload-button"
 							>
 								<span className={`${icon} ${uploadListStyles.plus}`} />
 							</button>
