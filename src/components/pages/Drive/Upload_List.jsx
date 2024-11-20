@@ -26,7 +26,6 @@ export const UploadList = ({ folderId, onActiveModal, onUpdateFolder }) => {
 							),
 						})
 					}
-					data-close-menu
 				>
 					<span className={`${icon} ${styles['upload-file']}`} />
 					Upload File
@@ -46,7 +45,6 @@ export const UploadList = ({ folderId, onActiveModal, onUpdateFolder }) => {
 							),
 						})
 					}
-					data-close-menu
 				>
 					<span className={`${icon} ${styles['create-folder']}`} />
 					Create Folder
