@@ -125,7 +125,7 @@ describe('Files component', () => {
 			name: 'options-menu',
 		});
 	});
-	it(`should render size and calendar icons if the user's device screen is smaller than 700 pixels`, async () => {
+	it(`should render size and calendar icons if the user's device screen is smaller than 700 pixels`, () => {
 		const mockContext = {
 			menu: {
 				id: '',
@@ -180,7 +180,7 @@ describe('Files component', () => {
 		expect(sizeIcon).toBeInTheDocument();
 		expect(calendarIcon).toBeInTheDocument();
 	});
-	it(`should render head titles if the user's device screen is wider than 700 pixels`, async () => {
+	it(`should render head titles if the user's device screen is wider than 700 pixels`, () => {
 		const mockContext = {
 			menu: {
 				id: '',
