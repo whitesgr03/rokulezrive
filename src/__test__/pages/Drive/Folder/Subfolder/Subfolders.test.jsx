@@ -7,7 +7,7 @@ import { Context as ResponsiveContext } from 'react-responsive';
 import { Subfolders } from '../../../../../components/pages/Drive/Folder/Subfolder/Subfolders';
 
 describe('Subfolders component', () => {
-	it('should render subfolders if the array of files prop is not empty', async () => {
+	it('should render subfolders if the array of subfolders prop is not empty', async () => {
 		const mockContext = {
 			folders: [],
 			menu: {
