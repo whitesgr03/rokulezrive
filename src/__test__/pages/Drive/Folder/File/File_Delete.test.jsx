@@ -76,7 +76,7 @@ describe('FileUpdate component', () => {
 
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
-	it('should delete file if submit button is clicked', async () => {
+	it('should delete file if delete button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			name: 'file',
