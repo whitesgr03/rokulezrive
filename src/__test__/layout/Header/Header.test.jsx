@@ -139,7 +139,7 @@ describe('Header component', () => {
 		expect(link).toHaveAttribute('href', '/');
 		expect(button).toBeInTheDocument();
 	});
-	it(`should render the "Dark mode" text if darkTheme prop is provided and user's device screen is 440 pixels wide or less`, () => {
+	it(`should render the "Dark mode" text if darkTheme prop is provided and user's device screen is smaller than 440 pixels`, () => {
 		const mockProps = {
 			darkTheme: true,
 		};
@@ -161,7 +161,7 @@ describe('Header component', () => {
 
 		expect(button).toBeInTheDocument();
 	});
-	it(`should render the "Light mode" text if darkTheme prop is not provided and user's device screen is 440 pixels wide or less`, () => {
+	it(`should render the "Light mode" text if darkTheme prop is not provided and user's device screen  is smaller than 440 pixels`, () => {
 		const mockProps = {
 			darkTheme: false,
 		};
