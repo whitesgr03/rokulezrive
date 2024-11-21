@@ -1,9 +1,5 @@
 import { expect, describe, it, vi } from 'vitest';
-import {
-	render,
-	screen,
-	waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
 import { supabase } from '../../../utils/supabase_client';
@@ -36,8 +32,6 @@ describe('Login component', () => {
 		]);
 
 		render(<RouterProvider router={router} />);
-
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
 		const allInput = screen.getAllByText('Message Placeholder');
 
@@ -125,8 +119,6 @@ describe('Login component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
 		const emailField = screen.getByLabelText('Email');
 		const passwordField = screen.getByLabelText('Password');
 		const submitBtn = screen.getByRole('button', { name: 'Login' });
@@ -169,8 +161,6 @@ describe('Login component', () => {
 		]);
 
 		render(<RouterProvider router={router} />);
-
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
 		const emailField = screen.getByLabelText('Email');
 		const passwordField = screen.getByLabelText('Password');
@@ -222,8 +212,6 @@ describe('Login component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
 		const emailField = screen.getByLabelText('Email');
 		const passwordField = screen.getByLabelText('Password');
 		const submitBtn = screen.getByRole('button', { name: 'Login' });
@@ -267,8 +255,6 @@ describe('Login component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
 		const emailField = screen.getByLabelText('Email');
 		const passwordField = screen.getByLabelText('Password');
 		const submitBtn = screen.getByRole('button', { name: 'Login' });
@@ -305,8 +291,6 @@ describe('Login component', () => {
 		]);
 
 		render(<RouterProvider router={router} />);
-
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
 		const emailField = screen.getByLabelText('Email');
 		const passwordField = screen.getByLabelText('Password');
@@ -347,8 +331,6 @@ describe('Login component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
 		const emailField = screen.getByLabelText('Email');
 		const passwordField = screen.getByLabelText('Password');
 		const loginBtn = screen.getByRole('button', {
@@ -386,8 +368,6 @@ describe('Login component', () => {
 		]);
 
 		render(<RouterProvider router={router} />);
-
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
 		const button = screen.getByRole('button', { name: 'Forget Password?' });
 
