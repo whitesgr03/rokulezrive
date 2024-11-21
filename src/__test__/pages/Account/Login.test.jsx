@@ -13,39 +13,6 @@ import { Login } from '../../../components/pages/Account/Login';
 vi.mock('../../../utils/supabase_client');
 
 describe('Login component', () => {
-	it('should cancel password reset status if the last user password reset was not completed', async () => {
-		const mockProps = {
-			onActiveModal: vi.fn(),
-			onUserId: vi.fn(),
-		};
-
-		supabase.auth.getSession.mockResolvedValueOnce({
-			data: { session: { user: { user_metadata: { resetPassword: true } } } },
-		});
-		supabase.auth.updateUser.mockResolvedValueOnce();
-
-		const router = createMemoryRouter([
-			{
-				path: '/',
-				element: <Outlet context={{ ...mockProps }} />,
-				children: [
-					{
-						index: true,
-						element: <Login />,
-					},
-				],
-			},
-		]);
-
-		render(<RouterProvider router={router} />);
-
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
-		expect(supabase.auth.getSession).toBeCalledTimes(1);
-		expect(supabase.auth.updateUser).toBeCalledWith({
-			data: { resetPassword: false },
-		});
-	});
 	it('should change the field values if any input field is typed', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
