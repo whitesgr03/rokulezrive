@@ -106,9 +106,15 @@ export const Login = () => {
 			}
 		};
 
-		result.data?.user
-			? onUserId(result.data.user.id)
-			: handleError(result.error);
+		const handleSuccess = async () => {
+			await supabase.auth.updateUser({
+				data: { login: true },
+			});
+			setInputErrors({});
+			onUserId(result.data.user.id);
+		};
+
+		result.data?.user ? await handleSuccess() : handleError(result.error);
 	};
 
 	const handleSubmit = async e => {
@@ -117,14 +123,10 @@ export const Login = () => {
 
 		const validationResult = await verifyScheme();
 
-		const handleValid = async () => {
-			setInputErrors({});
-			await handleLogin();
-		};
-
 		validationResult.success
-			? await handleValid()
+			? await handleLogin()
 			: setInputErrors(validationResult.fields);
+
 		setLogging(false);
 	};
 
