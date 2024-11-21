@@ -38,9 +38,18 @@ export const Header = ({
 	};
 
 	const handleLogout = async () => {
-		onUserId(null);
+		const {
+			data: { session },
+		} = await supabase.auth.getSession();
+
+		session.user.user_metadata.login &&
+			(await supabase.auth.updateUser({
+				data: { login: false },
+			}));
 
 		await supabase.auth.signOut();
+
+		onUserId(null);
 	};
 
 	return (
