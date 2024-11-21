@@ -63,7 +63,9 @@ export const ForgetEmail = ({ onActiveModal }) => {
 	};
 
 	const handleValidationEmail = async () => {
-		const result = await supabase.auth.resetPasswordForEmail(formData.email);
+		const result = await supabase.auth.resetPasswordForEmail(formData.email, {
+			redirectTo: import.meta.env.VITE_PASSWORD_RESET_REDIRECT_URI,
+		});
 
 		const handleError = error => {
 			switch (error.code) {
