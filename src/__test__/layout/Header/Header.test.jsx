@@ -16,6 +16,7 @@ describe('Header component', () => {
 
 		const mockProps = {
 			onSwitchColorTheme: vi.fn(),
+			onActiveMenu: vi.fn(),
 		};
 
 		const router = createMemoryRouter([
@@ -36,6 +37,7 @@ describe('Header component', () => {
 		await user.click(button);
 
 		expect(mockProps.onSwitchColorTheme).toHaveBeenCalledTimes(1);
+		expect(mockProps.onActiveMenu).toHaveBeenCalledTimes(1);
 	});
 	it(`should switch color themes if the user's device screen is wider than 440 pixels and clicks the toggle button.`, async () => {
 		const user = userEvent.setup();
@@ -256,7 +258,14 @@ describe('Header component', () => {
 		const mockProps = {
 			isLogin: true,
 			onUserId: vi.fn(),
+			onActiveMenu: vi.fn(),
 		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: { user: { user_metadata: { login: true } } },
+			},
+		});
 
 		const router = createMemoryRouter([
 			{
@@ -273,6 +282,9 @@ describe('Header component', () => {
 
 		expect(mockProps.onUserId).toBeCalledTimes(1);
 		expect(supabase.auth.signOut).toBeCalledTimes(1);
+		expect(supabase.auth.updateUser).toBeCalledTimes(1);
+		expect(mockProps.onActiveMenu).toHaveBeenCalledTimes(1);
+	});
 	it(`should navigate to '/account/login' path if login button is clicked.`, async () => {
 		const user = userEvent.setup();
 		const mockProps = {
