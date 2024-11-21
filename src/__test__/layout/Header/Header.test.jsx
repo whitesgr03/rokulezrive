@@ -273,5 +273,31 @@ describe('Header component', () => {
 
 		expect(mockProps.onUserId).toBeCalledTimes(1);
 		expect(supabase.auth.signOut).toBeCalledTimes(1);
+	it(`should navigate to '/account/login' path if login button is clicked.`, async () => {
+		const user = userEvent.setup();
+		const mockProps = {
+			isLogin: false,
+			onActiveMenu: vi.fn(),
+		};
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Header {...mockProps} />,
+			},
+			{
+				path: '/account/login',
+				element: <p>Login page</p>,
+			},
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		const link = screen.getByRole('link', { name: 'Login' });
+		await user.click(link);
+
+		const loginPage = screen.getByText('Login page');
+
+		expect(loginPage).toBeInTheDocument();
 	});
 });
