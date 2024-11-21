@@ -6,7 +6,7 @@ import {
 	useLocation,
 } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { object, string } from 'yup';
 import { supabase } from '../../../utils/supabase_client';
 
@@ -18,7 +18,6 @@ import styles from './Login.module.css';
 
 // Components
 import { Account } from './Account';
-import { Loading } from '../../utils/Loading/Loading';
 import { ForgetEmail } from './Forget_Email';
 
 // Variables
@@ -33,7 +32,6 @@ export const Login = () => {
 
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ email: '', password: '' });
-	const [loading, setLoading] = useState(true);
 	const [logging, setLogging] = useState(false);
 	const [error, setError] = useState(null);
 	const { pathname: previousPath } = useLocation();
@@ -146,28 +144,9 @@ export const Login = () => {
 		setLogging(false);
 	};
 
-	useEffect(() => {
-		const handleCancelPasswordReset = async () => {
-			const {
-				data: { session },
-			} = await supabase.auth.getSession();
-
-			session?.user.user_metadata.resetPassword &&
-				(await supabase.auth.updateUser({
-					data: { resetPassword: false },
-				}));
-
-			setLoading(false);
-		};
-
-		handleCancelPasswordReset();
-	}, []);
-
 	return (
 		<>
-			{loading ? (
-				<Loading text="Loading..." />
-			) : error ? (
+			{error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<Account title="User Sign in" loading={logging}>
