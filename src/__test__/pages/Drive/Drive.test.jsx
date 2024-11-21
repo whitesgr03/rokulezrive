@@ -14,7 +14,6 @@ import { Drive } from '../../../components/pages/Drive/Drive';
 import { UploadList } from '../../../components/pages/Drive/Upload_List';
 import { Navbar } from '../../../components/layout/Navbar/Navbar';
 import { Footer } from '../../../components/layout/Footer/Footer';
-import { element } from 'prop-types';
 
 vi.mock('../../../utils/supabase_client');
 vi.mock('../../../utils/handle_fetch');
