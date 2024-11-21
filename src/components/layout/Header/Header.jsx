@@ -88,6 +88,7 @@ export const Header = ({
 					'dropdown-slide-out': dropdownSlideOut,
 				})}`}
 				data-testid="dropdown"
+				onClick={() => onActiveMenu()}
 			>
 				{!isNormalMobile && (
 					<li>
@@ -110,11 +111,7 @@ export const Header = ({
 				)}
 				<li>
 					{isLogin ? (
-						<button
-							className={styles['dropdown-link']}
-							onClick={handleLogout}
-							data-close-menu
-						>
+						<button className={styles['dropdown-link']} onClick={handleLogout}>
 							<span className={`${icon} ${styles.logout}`} />
 							Logout
 						</button>
@@ -122,7 +119,6 @@ export const Header = ({
 						<Link
 							to="/account/login"
 							className={`login ${styles['dropdown-link']}`}
-							data-close-menu
 						>
 							<span className={`${icon} ${styles.login}`} />
 							Login
