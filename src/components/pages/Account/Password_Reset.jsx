@@ -1,10 +1,5 @@
 // Packages
-import {
-	useLocation,
-	Navigate,
-	useNavigate,
-	useOutletContext,
-} from 'react-router-dom';
+import { Navigate, useNavigate, useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { object, string, ref } from 'yup';
@@ -27,8 +22,7 @@ const DEFAULT_FORM_DATA = {
 };
 
 export const PasswordReset = () => {
-	const { onActiveModal, onResetPassword } = useOutletContext();
-	const { state } = useLocation();
+	const { onActiveModal } = useOutletContext();
 	const navigate = useNavigate();
 
 	const [inputErrors, setInputErrors] = useState({});
@@ -107,7 +101,6 @@ export const PasswordReset = () => {
 				),
 			});
 			await supabase.auth.signOut();
-			onResetPassword(false);
 			navigate('/account/login', { replace: true, state: {} });
 		};
 
