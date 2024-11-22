@@ -64,7 +64,10 @@ export const SharedDelete = ({
 					<div className={folderStyles['folder-button-wrap']}>
 						<button
 							className={`${folderStyles['folder-button']} ${folderStyles.cancel}`}
-							onClick={() => onActiveModal({ component: null })}
+							onClick={e =>
+								e.target === e.currentTarget &&
+								onActiveModal({ component: null })
+							}
 						>
 							Cancel
 						</button>
