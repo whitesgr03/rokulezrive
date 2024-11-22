@@ -5,12 +5,7 @@ import {
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-	RouterProvider,
-	createMemoryRouter,
-	Navigate,
-	Outlet,
-} from 'react-router-dom';
+import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
 import { supabase } from '../../../utils/supabase_client';
 
 import { PasswordReset } from '../../../components/pages/Account/Password_Reset';
@@ -18,80 +13,75 @@ import { PasswordReset } from '../../../components/pages/Account/Password_Reset'
 vi.mock('../../../utils/supabase_client');
 
 describe('PasswordReset component', () => {
-	it('should navigate to "/" path if "resetPassword" state is not provided', () => {
+	it('should navigate to "/error" path  if user password reset permission is not authenticated', async () => {
 		const mockContext = {
 			onActiveModal: vi.fn(),
-			onResetPassword: vi.fn(),
 		};
 
-		supabase.auth.updateUser.mockResolvedValueOnce();
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: (
-						<>
-							<p>Home page</p>
-							<Outlet context={{ ...mockContext }} />
-						</>
-					),
-					children: [
-						{
-							path: '/account/resetting-password',
-							element: <PasswordReset />,
-						},
-					],
-				},
-				{
-					path: '/mock',
-					element: <Navigate to="/account/resetting-password" />,
-				},
-			],
-			{ initialEntries: ['/mock'] },
-		);
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: null,
+			},
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+					{
+						path: 'error',
+						element: <p>Error page</p>,
+					},
+				],
+			},
+		]);
 
 		render(<RouterProvider router={router} />);
 
-		const element = screen.getByText('Home page');
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
-		expect(element).toBeInTheDocument();
+		const errorPage = screen.getByText('Error page');
+
+		expect(errorPage).toBeInTheDocument();
 	});
-	it('should set password reset states', async () => {
+	it('should set password reset states if user password reset permission has been authenticated', async () => {
 		const mockContext = {
 			onActiveModal: vi.fn(),
-			onResetPassword: vi.fn(),
 		};
 
-		const mockState = {
-			resetPassword: true,
-		};
-
-		supabase.auth.updateUser.mockResolvedValueOnce();
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							path: '/account/resetting-password',
-							element: <PasswordReset />,
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: {
+					user: {
+						app_metadata: {
+							provider: 'email',
 						},
-					],
+
+						user_metadata: {
+							login: false,
+						},
+					},
 				},
-				{
-					path: '/mock',
-					element: (
-						<Navigate
-							to="/account/resetting-password"
-							state={{ ...mockState }}
-						/>
-					),
-				},
-			],
-			{ initialEntries: ['/mock'] },
-		);
+			},
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+				],
+			},
+		]);
 
 		render(<RouterProvider router={router} />);
 
@@ -105,37 +95,36 @@ describe('PasswordReset component', () => {
 		const user = userEvent.setup();
 		const mockContext = {
 			onActiveModal: vi.fn(),
-			onResetPassword: vi.fn(),
 		};
-		const mockState = {
-			resetPassword: true,
-		};
-		supabase.auth.updateUser.mockResolvedValueOnce();
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							path: '/account/resetting-password',
-							element: <PasswordReset />,
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: {
+					user: {
+						app_metadata: {
+							provider: 'email',
 						},
-					],
+
+						user_metadata: {
+							login: false,
+						},
+					},
 				},
-				{
-					path: '/mock',
-					element: (
-						<Navigate
-							to="/account/resetting-password"
-							state={{ ...mockState }}
-						/>
-					),
-				},
-			],
-			{ initialEntries: ['/mock'] },
-		);
+			},
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+				],
+			},
+		]);
 
 		render(<RouterProvider router={router} />);
 
@@ -154,38 +143,36 @@ describe('PasswordReset component', () => {
 		const user = userEvent.setup();
 		const mockContext = {
 			onActiveModal: vi.fn(),
-			onResetPassword: vi.fn(),
-		};
-		const mockState = {
-			resetPassword: true,
 		};
 
-		supabase.auth.updateUser.mockResolvedValueOnce();
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							path: '/account/resetting-password',
-							element: <PasswordReset />,
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: {
+					user: {
+						app_metadata: {
+							provider: 'email',
 						},
-					],
+
+						user_metadata: {
+							login: false,
+						},
+					},
 				},
-				{
-					path: '/mock',
-					element: (
-						<Navigate
-							to="/account/resetting-password"
-							state={{ ...mockState }}
-						/>
-					),
-				},
-			],
-			{ initialEntries: ['/mock'] },
-		);
+			},
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+				],
+			},
+		]);
 
 		render(<RouterProvider router={router} />);
 
@@ -219,46 +206,45 @@ describe('PasswordReset component', () => {
 	});
 	it('should render an error message if same password error occurs after submission', async () => {
 		const user = userEvent.setup();
+
 		const mockContext = {
 			onActiveModal: vi.fn(),
-			onResetPassword: vi.fn(),
-		};
-		const mockState = {
-			resetPassword: true,
 		};
 
-		supabase.auth.updateUser
-			.mockResolvedValueOnce({ error: null })
-			.mockResolvedValueOnce({
-				error: {
-					code: 'same_password',
-				},
-			});
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							path: '/account/resetting-password',
-							element: <PasswordReset />,
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: {
+					user: {
+						app_metadata: {
+							provider: 'email',
 						},
-					],
+
+						user_metadata: {
+							login: false,
+						},
+					},
 				},
-				{
-					path: '/mock',
-					element: (
-						<Navigate
-							to="/account/resetting-password"
-							state={{ ...mockState }}
-						/>
-					),
-				},
-			],
-			{ initialEntries: ['/mock'] },
-		);
+			},
+		});
+
+		supabase.auth.updateUser.mockResolvedValueOnce().mockResolvedValueOnce({
+			error: {
+				code: 'same_password',
+			},
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+				],
+			},
+		]);
 
 		render(<RouterProvider router={router} />);
 
@@ -281,50 +267,49 @@ describe('PasswordReset component', () => {
 	});
 	it('should navigate to "/error" path if an unknown password reset error occurs after submission', async () => {
 		const user = userEvent.setup();
+
 		const mockContext = {
 			onActiveModal: vi.fn(),
-			onResetPassword: vi.fn(),
-		};
-		const mockState = {
-			resetPassword: true,
 		};
 
-		supabase.auth.updateUser
-			.mockResolvedValueOnce({ error: null })
-			.mockResolvedValueOnce({
-				error: {
-					code: 'unknown',
-				},
-			});
-
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							path: '/account/resetting-password',
-							element: <PasswordReset />,
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: {
+					user: {
+						app_metadata: {
+							provider: 'email',
 						},
-					],
+
+						user_metadata: {
+							login: false,
+						},
+					},
 				},
-				{
-					path: '/mock',
-					element: (
-						<Navigate
-							to="/account/resetting-password"
-							state={{ ...mockState }}
-						/>
-					),
-				},
-				{
-					path: '/error',
-					element: <p>Error page</p>,
-				},
-			],
-			{ initialEntries: ['/mock'] },
-		);
+			},
+		});
+
+		supabase.auth.updateUser.mockResolvedValueOnce().mockResolvedValueOnce({
+			error: {
+				code: 'unknown',
+			},
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+					{
+						path: 'error',
+						element: <p>Error page</p>,
+					},
+				],
+			},
+		]);
 
 		render(<RouterProvider router={router} />);
 
@@ -343,46 +328,51 @@ describe('PasswordReset component', () => {
 
 		expect(errorMessage).toBeInTheDocument();
 	});
-	it('should render modal with success message if password reset is successful', async () => {
+	it(`should render modal with success message and navigate to '/account/login' path if password reset is successful`, async () => {
 		const user = userEvent.setup();
+
 		const mockContext = {
 			onActiveModal: vi.fn(),
-			onResetPassword: vi.fn(),
-		};
-		const mockState = {
-			resetPassword: true,
 		};
 
-		supabase.auth.updateUser.mockResolvedValue({ error: null });
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: {
+					user: {
+						app_metadata: {
+							provider: 'email',
+						},
 
-		const router = createMemoryRouter(
-			[
-				{
-					path: '/',
-					element: <Outlet context={{ ...mockContext }} />,
-					children: [
-						{
-							path: '/account/resetting-password',
-							element: <PasswordReset />,
+						user_metadata: {
+							login: false,
 						},
-						{
-							path: '/account/login',
-							element: <p>Login page</p>,
-						},
-					],
+					},
 				},
-				{
-					path: '/mock',
-					element: (
-						<Navigate
-							to="/account/resetting-password"
-							state={{ ...mockState }}
-						/>
-					),
-				},
-			],
-			{ initialEntries: ['/mock'] },
-		);
+			},
+		});
+
+		supabase.auth.updateUser.mockResolvedValueOnce().mockResolvedValueOnce({
+			error: null,
+		});
+
+		supabase.auth.signOut.mockResolvedValueOnce();
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+					{
+						path: '/account/login',
+						element: <p>Login page</p>,
+					},
+				],
+			},
+		]);
 
 		render(<RouterProvider router={router} />);
 
@@ -397,11 +387,10 @@ describe('PasswordReset component', () => {
 		await user.type(confirmNewPasswordField, '1!Qwerty');
 		await user.click(submitBtn);
 
-		const errorMessage = screen.getByText('Login page');
+		const loginPage = screen.getByText('Login page');
 
-		expect(errorMessage).toBeInTheDocument();
+		expect(loginPage).toBeInTheDocument();
 		expect(mockContext.onActiveModal).toBeCalledTimes(1);
-		expect(mockContext.onResetPassword).toBeCalledTimes(1);
 		expect(supabase.auth.signOut).toBeCalledTimes(1);
 	});
 });
