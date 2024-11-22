@@ -132,14 +132,11 @@ export const PasswordReset = () => {
 	};
 
 	useEffect(() => {
-		const handleSetMetaData = async () => {
-			await supabase.auth.updateUser({
-				data: { resetPassword: true },
-			});
+		const handleAuth = async () => {
 
 			setLoading(false);
 		};
-		handleSetMetaData();
+		handleAuth();
 	}, [navigate]);
 
 	return (
