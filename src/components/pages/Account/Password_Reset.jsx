@@ -34,6 +34,7 @@ export const PasswordReset = () => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
 	const [resetting, setResetting] = useState(false);
 
 	const verifyScheme = async () => {
@@ -133,6 +134,16 @@ export const PasswordReset = () => {
 
 	useEffect(() => {
 		const handleAuth = async () => {
+			const {
+				data: { session },
+			} = await supabase.auth.getSession();
+
+			session?.user.app_metadata.provider === 'email' &&
+			!session?.user.user_metadata.login
+				? await supabase.auth.updateUser({
+						data: { resetPassword: true },
+					})
+				: setError('User is not authenticated and cannot reset password.');
 
 			setLoading(false);
 		};
@@ -141,97 +152,87 @@ export const PasswordReset = () => {
 
 	return (
 		<>
-			{state?.resetPassword ? (
-				<>
-					{loading ? (
-						<Loading text="Loading..." />
-					) : (
-						<Account title="Reset Password" loading={resetting}>
-							<div className={accountStyles['account-form-wrap']}>
-								<form
-									className={formStyles.form}
-									onSubmit={e => !resetting && handleSubmit(e)}
-								>
-									<div>
-										<label
-											htmlFor="password"
-											className={formStyles['form-label']}
-										>
-											New Password
-											<input
-												onChange={handleChange}
-												value={formData.password}
-												type="password"
-												id="password"
-												className={`${classes({
-													'form-input': true,
-													'form-input-bgc': true,
-													'form-input-error': inputErrors.password,
-												})}`}
-												name="password"
-												title="The password is required."
-											/>
-										</label>
-										<div
-											className={classes({
-												'form-message-wrap': true,
-												'form-message-active': inputErrors.password,
-											})}
-											data-testid="password-message"
-										>
-											<span className={`${icon} ${formStyles.alert}`} />
-											<p className={formStyles['form-message']}>
-												{inputErrors.password ?? 'Message Placeholder'}
-											</p>
-										</div>
-									</div>
-									<div>
-										<label
-											htmlFor="confirmPassword"
-											className={formStyles['form-label']}
-										>
-											Confirm New Password
-											<input
-												onChange={handleChange}
-												value={formData.confirmPassword}
-												type="password"
-												id="confirmPassword"
-												className={`${classes({
-													'form-input': true,
-													'form-input-bgc': true,
-													'form-input-error': inputErrors.confirmPassword,
-												})}`}
-												name="confirmPassword"
-												title="The confirm password must be the same as the password."
-											/>
-										</label>
-										<div
-											className={classes({
-												'form-message-wrap': true,
-												'form-message-active': inputErrors.confirmPassword,
-											})}
-											data-testid="confirm-password-message"
-										>
-											<span className={`${icon} ${formStyles.alert}`} />
-											<p className={formStyles['form-message']}>
-												{inputErrors.confirmPassword ?? 'Message Placeholder'}
-											</p>
-										</div>
-									</div>
-
-									<button
-										type="submit"
-										className={`${formStyles['form-submit']}`}
-									>
-										Submit
-									</button>
-								</form>
-							</div>
-						</Account>
-					)}
-				</>
+			{loading ? (
+				<Loading text="Loading..." />
+			) : error ? (
+				<Navigate to="/error" replace={true} state={{ error }} />
 			) : (
-				<Navigate to="/" replace={true} />
+				<Account title="Reset Password" loading={resetting}>
+					<div className={accountStyles['account-form-wrap']}>
+						<form
+							className={formStyles.form}
+							onSubmit={e => !resetting && handleSubmit(e)}
+						>
+							<div>
+								<label htmlFor="password" className={formStyles['form-label']}>
+									New Password
+									<input
+										onChange={handleChange}
+										value={formData.password}
+										type="password"
+										id="password"
+										className={`${classes({
+											'form-input': true,
+											'form-input-bgc': true,
+											'form-input-error': inputErrors.password,
+										})}`}
+										name="password"
+										title="The password is required."
+									/>
+								</label>
+								<div
+									className={classes({
+										'form-message-wrap': true,
+										'form-message-active': inputErrors.password,
+									})}
+									data-testid="password-message"
+								>
+									<span className={`${icon} ${formStyles.alert}`} />
+									<p className={formStyles['form-message']}>
+										{inputErrors.password ?? 'Message Placeholder'}
+									</p>
+								</div>
+							</div>
+							<div>
+								<label
+									htmlFor="confirmPassword"
+									className={formStyles['form-label']}
+								>
+									Confirm New Password
+									<input
+										onChange={handleChange}
+										value={formData.confirmPassword}
+										type="password"
+										id="confirmPassword"
+										className={`${classes({
+											'form-input': true,
+											'form-input-bgc': true,
+											'form-input-error': inputErrors.confirmPassword,
+										})}`}
+										name="confirmPassword"
+										title="The confirm password must be the same as the password."
+									/>
+								</label>
+								<div
+									className={classes({
+										'form-message-wrap': true,
+										'form-message-active': inputErrors.confirmPassword,
+									})}
+									data-testid="confirm-password-message"
+								>
+									<span className={`${icon} ${formStyles.alert}`} />
+									<p className={formStyles['form-message']}>
+										{inputErrors.confirmPassword ?? 'Message Placeholder'}
+									</p>
+								</div>
+							</div>
+
+							<button type="submit" className={`${formStyles['form-submit']}`}>
+								Submit
+							</button>
+						</form>
+					</div>
+				</Account>
 			)}
 		</>
 	);
