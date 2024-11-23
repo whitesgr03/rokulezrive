@@ -132,6 +132,7 @@ export const App = () => {
 				dark: darkTheme,
 				'active-mobile-nav': !isNormalTablet && userId,
 			})}`}
+			data-testid="app"
 			onClick={handleCloseMenu}
 		>
 			{loading ? (
