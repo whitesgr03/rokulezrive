@@ -14,8 +14,14 @@ import { FolderUpdate } from './Folder_Update';
 import { FolderDelete } from './Folder_Delete';
 
 export const Subfolders = ({ subfolders }) => {
-	const { folders, menu, onActiveMenu, onActiveModal, onUpdateFolder } =
-		useOutletContext();
+	const {
+		folders,
+		menu,
+		onActiveMenu,
+		onActiveModal,
+		onUpdateFolder,
+		onDeleteFolder,
+	} = useOutletContext();
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
@@ -103,7 +109,7 @@ export const Subfolders = ({ subfolders }) => {
 														<FolderDelete
 															folder={subfolder}
 															folders={folders}
-															onUpdateFolder={onUpdateFolder}
+															onDeleteFolder={onDeleteFolder}
 															onActiveModal={onActiveModal}
 														/>
 													),
