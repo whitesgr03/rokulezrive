@@ -17,9 +17,11 @@ describe('Navbar component', () => {
 					children: [
 						{
 							path: 'shared',
+							element: <p>shared page</p>,
 						},
 						{
 							path: 'folders/my-drive',
+							element: <p>my-drive page</p>,
 						},
 					],
 				},
