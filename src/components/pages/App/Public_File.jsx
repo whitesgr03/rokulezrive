@@ -107,6 +107,7 @@ export const PublicFile = () => {
 								<div className={driveStyles.file}>
 									<span
 										className={`${icon} ${driveStyles['file-icon']} ${driveStyles[`${file.type}`]}`}
+										data-testid="file-type"
 									/>
 								</div>
 								<div className={driveStyles['file-info']}>
