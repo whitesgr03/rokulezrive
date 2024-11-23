@@ -150,6 +150,9 @@ export const Drive = () => {
 			const handleResult = async () => {
 				folders.success ? setFolders(folders.data) : setError(folders.message);
 				shared.success ? setSharedFiles(shared.data) : setError(shared.message);
+				!folders.success &&
+					!shared.success &&
+					setError('Failed to get folders and shares.');
 				setLoading(false);
 			};
 
