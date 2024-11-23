@@ -19,7 +19,7 @@ import { handleFetch } from '../../../../../utils/handle_fetch';
 // Variables
 const classes = classNames.bind(formStyles);
 
-export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
+export const FolderCreate = ({ folderId, onCreateFolder, onActiveModal }) => {
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState({ name: '' });
 	const [loading, setLoading] = useState(false);
@@ -97,7 +97,7 @@ export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
 		const result = await handleFetch(url, options);
 
 		const handleSuccess = () => {
-			onUpdateFolder(result.data);
+			onCreateFolder(result.data);
 			(createFolderFromShared_File || createFolderFromFile_Info) &&
 				navigate('/drive');
 			(createFolderFromSubfolderShared_File ||
@@ -185,6 +185,6 @@ export const FolderCreate = ({ folderId, onUpdateFolder, onActiveModal }) => {
 
 FolderCreate.propTypes = {
 	folderId: PropTypes.string,
-	onUpdateFolder: PropTypes.func,
+	onCreateFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
