@@ -6,7 +6,6 @@ import {
 	Outlet,
 	ScrollRestoration,
 	useNavigate,
-	useMatches,
 	useMatch,
 } from 'react-router-dom';
 import { supabase } from '../../../utils/supabase_client';
@@ -30,8 +29,6 @@ const DEFAULT_MENU = {
 };
 
 export const App = () => {
-	const [resetPassword, setResetPassword] = useState(false);
-	const [cancelResetPassword, setCancelResetPassword] = useState(false);
 	const [userId, setUserId] = useState(null);
 	const [darkTheme, setDarkTheme] = useState(false);
 	const [menu, setMenu] = useState(DEFAULT_MENU);
@@ -39,17 +36,19 @@ export const App = () => {
 	const [loading, setLoading] = useState(true);
 
 	const navigate = useNavigate();
-	const matches = useMatches();
-	const isPublicFile = useMatch('/shared/:id');
+
+	const PublicFilePath = useMatch('/shared/:id');
+	const driveErrorPath = useMatch('/drive/error');
+	const errorPath = useMatch('/error');
+	const resetPasswordPath = useMatch('/account/resetting-password');
 
 	const isNormalTablet = useMediaQuery({ minWidth: 700 });
 
 	const handleCloseMenu = e => {
-		const { id, button, closeMenu } = e.target.dataset;
+		const { id, button } = e.target.dataset;
 
 		menu.name !== '' &&
-			(closeMenu ||
-				(!button && !e.target.closest(`.${menu.name}`)) ||
+			((!button && !e.target.closest(`.${menu.name}`)) ||
 				id === menu.id ||
 				(!id && button === menu.button)) &&
 			setMenu(DEFAULT_MENU);
@@ -88,58 +87,44 @@ export const App = () => {
 	}, []);
 
 	useEffect(() => {
-		const {
-			data: { subscription },
-		} = supabase.auth.onAuthStateChange((event, session) => {
-			const handleSetUser = session => {
-				setUserId(session.user.id);
-				matches[1].pathname !== '/drive' &&
-					matches[1].pathname !== '/error' &&
-					!isPublicFile &&
-					navigate('/drive');
-			};
+		const handleAuthState = async () => {
+			const {
+				data: { session },
+			} = await supabase.auth.getSession();
 
-			const handleSetMetaData = () => {
-				setCancelResetPassword(true);
-				navigate('/', { replace: true, state: {} });
+			const handleSetUser = async () => {
+				const incompletePasswordReset =
+					session.user.user_metadata.resetPassword;
 
-				supabase.auth
-					.updateUser({
+				const handleInitialSession = id => {
+					setUserId(id);
+
+					!PublicFilePath &&
+						!driveErrorPath &&
+						!errorPath &&
+						navigate('/drive', { replace: true });
+				};
+
+				const handleIncomplete = async () => {
+					await supabase.auth.updateUser({
 						data: { resetPassword: false },
-					})
-					.then(async () => {
-						await supabase.auth.signOut();
-						setCancelResetPassword(false);
 					});
+
+					await supabase.auth.signOut();
+				};
+
+				incompletePasswordReset
+					? await handleIncomplete()
+					: handleInitialSession(session.user.id);
 			};
 
-			const metadata_resetPassword = session?.user.user_metadata.resetPassword;
-
-			switch (event) {
-				case 'PASSWORD_RECOVERY':
-					setResetPassword(true);
-					navigate('/account/resetting-password', {
-						state: { resetPassword: true },
-					});
-					break;
-
-				case 'SIGNED_IN':
-				case 'TOKEN_REFRESHED':
-				case 'INITIAL_SESSION':
-					!resetPassword &&
-						((metadata_resetPassword && handleSetMetaData()) ||
-							(!metadata_resetPassword &&
-								!cancelResetPassword &&
-								session &&
-								handleSetUser(session)));
-					break;
-			}
+			session && !resetPasswordPath && handleSetUser();
 
 			setLoading(false);
-		});
+		};
 
-		return () => subscription.unsubscribe();
-	}, [navigate, matches, resetPassword, isPublicFile, cancelResetPassword]);
+		handleAuthState();
+	}, [resetPasswordPath, PublicFilePath, driveErrorPath, errorPath, navigate]);
 
 	return (
 		<div
@@ -180,7 +165,6 @@ export const App = () => {
 									darkTheme,
 									userId,
 									onUserId: setUserId,
-									onResetPassword: setResetPassword,
 								}}
 							/>
 						</main>
