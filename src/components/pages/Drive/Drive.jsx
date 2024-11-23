@@ -56,7 +56,14 @@ export const Drive = () => {
 				folder,
 		);
 
-		setFolders(newFolder ? [...newFolders, newFolder] : newFolders);
+	const handleCreateFolder = ({ parentFolder, currentFolder, newFolder }) => {
+		const newFolders = handleUpdateFolders({
+			parentFolder,
+			currentFolder,
+		}).concat(newFolder);
+
+		setFolders(newFolders);
+	};
 	};
 
 	const handleDeleteSharedFile = id => {
@@ -176,6 +183,7 @@ export const Drive = () => {
 							<UploadList
 								folderId={folder.id}
 								onActiveModal={onActiveModal}
+								onCreateFolder={handleCreateFolder}
 								onUpdateFolder={handleUpdateFolder}
 							/>
 							<Navbar />
@@ -242,6 +250,7 @@ export const Drive = () => {
 								<UploadList
 									folderId={folder.id}
 									onActiveModal={onActiveModal}
+									onCreateFolder={handleCreateFolder}
 									onUpdateFolder={handleUpdateFolder}
 								/>
 							)}

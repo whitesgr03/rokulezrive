@@ -9,7 +9,12 @@ import { FileUpload } from './Folder/File/File_Upload';
 import { icon } from '../../../styles/icon.module.css';
 import styles from './Upload_List.module.css';
 
-export const UploadList = ({ folderId, onActiveModal, onUpdateFolder }) => {
+export const UploadList = ({
+	folderId,
+	onActiveModal,
+	onUpdateFolder,
+	onCreateFolder,
+}) => {
 	return (
 		<ul className={`upload-menu ${styles['upload-menu']}`}>
 			<li className={styles['upload-item']}>
@@ -39,7 +44,7 @@ export const UploadList = ({ folderId, onActiveModal, onUpdateFolder }) => {
 							component: (
 								<FolderCreate
 									folderId={folderId}
-									onUpdateFolder={onUpdateFolder}
+									onCreateFolder={onCreateFolder}
 									onActiveModal={onActiveModal}
 								/>
 							),
