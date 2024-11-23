@@ -39,24 +39,9 @@ export const PublicFile = () => {
 
 			const result = await handleFetch(url, options);
 
-			const handleGetDownloadUrl = async file => {
-				const blob = await new Promise(resolve =>
-					fetch(file.url)
-						.then(res => resolve(res.blob()))
-						.catch(() => resolve(null)),
-				);
-
-				return !blob
-					? setError('The file resource cloud not be downloaded.')
-					: {
-							...file,
-							url: URL.createObjectURL(blob),
-						};
-			};
-
 			const handleResult = async () => {
 				result.success
-					? setFile(await handleGetDownloadUrl(result.data))
+					? setFile(result.data)
 					: setError('The file you are looking for could not be found.');
 				setLoading(false);
 			};
