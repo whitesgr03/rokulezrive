@@ -49,7 +49,11 @@ describe('Authentication component', () => {
 					children: [
 						{
 							path: '/error',
-							element: <Authentication />,
+							element: (
+								<Authentication>
+									<p>Authentication Children</p>
+								</Authentication>
+							),
 						},
 					],
 				},
