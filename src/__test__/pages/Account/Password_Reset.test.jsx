@@ -13,42 +13,6 @@ import { PasswordReset } from '../../../components/pages/Account/Password_Reset'
 vi.mock('../../../utils/supabase_client');
 
 describe('PasswordReset component', () => {
-	it('should navigate to "/error" path  if user password reset permission is not authenticated', async () => {
-		const mockContext = {
-			onActiveModal: vi.fn(),
-		};
-
-		supabase.auth.getSession.mockResolvedValueOnce({
-			data: {
-				session: null,
-			},
-		});
-
-		const router = createMemoryRouter([
-			{
-				path: '/',
-				element: <Outlet context={{ ...mockContext }} />,
-				children: [
-					{
-						index: true,
-						element: <PasswordReset />,
-					},
-					{
-						path: 'error',
-						element: <p>Error page</p>,
-					},
-				],
-			},
-		]);
-
-		render(<RouterProvider router={router} />);
-
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
-		const errorPage = screen.getByText('Error page');
-
-		expect(errorPage).toBeInTheDocument();
-	});
 	it('should set password reset states if user password reset permission has been authenticated', async () => {
 		const mockContext = {
 			onActiveModal: vi.fn(),
@@ -90,6 +54,42 @@ describe('PasswordReset component', () => {
 		expect(supabase.auth.updateUser).toBeCalledWith({
 			data: { resetPassword: true },
 		});
+	});
+	it('should navigate to "/error" path  if user password reset permission is not authenticated', async () => {
+		const mockContext = {
+			onActiveModal: vi.fn(),
+		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: null,
+			},
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <PasswordReset />,
+					},
+					{
+						path: 'error',
+						element: <p>Error page</p>,
+					},
+				],
+			},
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+		const errorPage = screen.getByText('Error page');
+
+		expect(errorPage).toBeInTheDocument();
 	});
 	it('should change the field values if any input field is typed', async () => {
 		const user = userEvent.setup();

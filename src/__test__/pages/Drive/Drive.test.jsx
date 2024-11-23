@@ -22,53 +22,6 @@ vi.mock('../../../components/layout/Navbar/Navbar');
 vi.mock('../../../components/layout/Footer/Footer');
 
 describe('Drive component', () => {
-	it(`should navigate to '/error' path if fetch folders or shared files fails`, async () => {
-		const mockContext = {
-			menu: {
-				name: '',
-			},
-			onActiveMenu: vi.fn(),
-			onActiveModal: vi.fn(),
-		};
-
-		supabase.auth.getSession.mockResolvedValueOnce({
-			data: {
-				session: { access_token: '' },
-			},
-		});
-
-		handleFetch.mockResolvedValue({
-			success: false,
-			message: 'error',
-		});
-
-		const router = createMemoryRouter([
-			{
-				path: '/',
-				element: <Outlet context={{ ...mockContext }} />,
-				children: [
-					{
-						index: true,
-						element: <Drive />,
-					},
-					{ path: 'error', element: <p>Error page</p> },
-				],
-			},
-		]);
-
-		handleFetch.mockResolvedValue({
-			success: false,
-			message: 'error',
-		});
-
-		render(<RouterProvider router={router} />);
-
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
-		const errorMessage = screen.getByText('Error page');
-
-		expect(errorMessage).toBeInTheDocument();
-	});
 	it(`should render default folder name if url path is '/drive'`, async () => {
 		const mockContext = {
 			menu: {
@@ -122,6 +75,48 @@ describe('Drive component', () => {
 		const folderName = screen.getByText('folder name');
 
 		expect(folderName).toBeInTheDocument();
+	});
+	it(`should navigate to '/error' path if fetch folders or shared files fails`, async () => {
+		const mockContext = {
+			menu: {
+				name: '',
+			},
+			onActiveMenu: vi.fn(),
+			onActiveModal: vi.fn(),
+		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: { access_token: '' },
+			},
+		});
+
+		handleFetch.mockResolvedValue({
+			success: false,
+			message: 'error',
+		});
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						index: true,
+						element: <Drive />,
+					},
+				],
+			},
+			{ path: '/error', element: <p>Error page</p> },
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+		const errorPage = screen.getByText('Error page');
+
+		expect(errorPage).toBeInTheDocument();
 	});
 	it(`should display up to 2 levels of folder paths when the user is in a subfolder at any level and the user's device screen is smaller than 700 pixels.`, async () => {
 		const mockContext = {
