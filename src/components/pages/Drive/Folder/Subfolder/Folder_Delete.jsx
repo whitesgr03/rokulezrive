@@ -17,12 +17,7 @@ import { Loading } from '../../../../utils/Loading/Loading';
 import { handleFetch } from '../../../../../utils/handle_fetch';
 import { getDeletedFolderIds } from '../../../../../utils/get_deleted_folder_ids';
 
-export const FolderDelete = ({
-	folders,
-	folder,
-	onUpdateFolder,
-	onActiveModal,
-}) => {
+export const FolderDelete = ({ folders, folder, onDeleteFolder, onActiveModal }) => {
 	const [loading, setLoading] = useState(false);
 
 	const navigate = useNavigate();
@@ -62,7 +57,7 @@ export const FolderDelete = ({
 		const result = await handleFetch(url, options);
 
 		result.success
-			? onUpdateFolder(result.data)
+			? onDeleteFolder({ ...result.data, deleteFolderId: id })
 			: navigate('/drive/error', {
 					state: { error: result.message, previousPath },
 				});
@@ -112,6 +107,6 @@ export const FolderDelete = ({
 FolderDelete.propTypes = {
 	folders: PropTypes.array,
 	folder: PropTypes.object,
-	onUpdateFolder: PropTypes.func,
+	onDeleteFolder: PropTypes.func,
 	onActiveModal: PropTypes.func,
 };
