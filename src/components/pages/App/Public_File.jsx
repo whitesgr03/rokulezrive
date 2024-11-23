@@ -88,14 +88,14 @@ export const PublicFile = () => {
 	}, [publicFileId]);
 
 	return (
-		<div className={styles['public-file']}>
+		<>
 			{error ? (
 				<Navigate
 					to="/error"
 					state={{ error, previousPath, customMessage: true }}
 				/>
 			) : (
-				<>
+				<div className={styles['public-file']}>
 					<div className={driveStyles['file-container']}>
 						{loading ? (
 							<Loading text="Loading..." />
@@ -134,8 +134,8 @@ export const PublicFile = () => {
 						)}
 					</div>
 					{isNormalTablet && <Footer />}
-				</>
+				</div>
 			)}
-		</div>
+		</>
 	);
 };
