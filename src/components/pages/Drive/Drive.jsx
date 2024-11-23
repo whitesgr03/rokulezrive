@@ -64,6 +64,16 @@ export const Drive = () => {
 
 		setFolders(newFolders);
 	};
+	const handleDeleteFolder = ({
+		parentFolder,
+		currentFolder,
+		deleteFolderId,
+	}) => {
+		const newFolders = handleUpdateFolders({
+			parentFolder,
+			currentFolder,
+		}).filter(folder => folder.id !== deleteFolderId);
+		setFolders(newFolders);
 	};
 
 	const handleDeleteSharedFile = id => {
@@ -220,6 +230,7 @@ export const Drive = () => {
 										onActiveMenu,
 										onActiveModal,
 										onUpdateFolder: handleUpdateFolder,
+										onDeleteFolder: handleDeleteFolder,
 										onDeleteSharedFile: handleDeleteSharedFile,
 										menu,
 										downloading,
