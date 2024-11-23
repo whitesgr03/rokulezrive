@@ -5,12 +5,23 @@ import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
 import { icon } from '../../../styles/icon.module.css';
 
-export const Modal = ({ onCloseModal, clickToClose, children }) => {
+export const Modal = ({ onActiveModal, clickToClose, children }) => {
 	return (
-		<div className={styles.modal} onClick={onCloseModal}>
+		<div
+			className={styles.modal}
+			onClick={e => {
+				e.target === e.currentTarget && onActiveModal({ component: null });
+			}}
+		>
 			<div className={styles['modal-wrap']}>
 				{clickToClose && (
-					<button className={styles['modal-button']} data-close-modal>
+					<button
+						className={styles['modal-button']}
+						title="close-button"
+						onClick={e =>
+							e.target === e.currentTarget && onActiveModal({ component: null })
+						}
+					>
 						<span className={`${icon} ${styles.close}`} />
 					</button>
 				)}
@@ -21,7 +32,7 @@ export const Modal = ({ onCloseModal, clickToClose, children }) => {
 };
 
 Modal.propTypes = {
-	onCloseModal: PropTypes.func,
+	onActiveModal: PropTypes.func,
 	clickToClose: PropTypes.bool,
 	children: PropTypes.node,
 };
