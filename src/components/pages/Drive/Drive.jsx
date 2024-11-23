@@ -48,8 +48,8 @@ export const Drive = () => {
 		setDownloading(`url("${downloadingIcon}#${Math.random()}")`);
 	};
 
-	const handleUpdateFolder = ({ parentFolder, currentFolder, newFolder }) => {
-		const newFolders = folders.map(
+	const handleUpdateFolders = ({ parentFolder, currentFolder }) =>
+		folders.map(
 			folder =>
 				(folder.id === parentFolder?.id && parentFolder) ||
 				(folder.id === currentFolder.id && currentFolder) ||
@@ -64,6 +64,15 @@ export const Drive = () => {
 
 		setFolders(newFolders);
 	};
+
+	const handleUpdateFolder = ({ parentFolder, currentFolder }) => {
+		const newFolders = handleUpdateFolders({
+			parentFolder,
+			currentFolder,
+		});
+		setFolders(newFolders);
+	};
+
 	const handleDeleteFolder = ({
 		parentFolder,
 		currentFolder,
