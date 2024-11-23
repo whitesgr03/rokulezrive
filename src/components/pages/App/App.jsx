@@ -64,12 +64,6 @@ export const App = () => {
 		localStorage.setItem('darkTheme', JSON.stringify(!darkTheme));
 	};
 
-	const handleCloseModal = e => {
-		e.target.dataset.closeModal === 'true' && setModal(null);
-		e.target.dataset.closeModal === 'true' &&
-			document.body.removeAttribute('style');
-	};
-
 	const handleActiveModal = ({ component, clickToClose = true }) => {
 		document.body.removeAttribute('style');
 		component && (document.body.style.overflow = 'hidden');
@@ -163,7 +157,6 @@ export const App = () => {
 					{modal && (
 						<Modal
 							onActiveModal={handleActiveModal}
-							onCloseModal={handleCloseModal}
 							clickToClose={modal.clickToClose}
 						>
 							{modal.component}
