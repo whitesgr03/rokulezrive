@@ -63,4 +63,5 @@ UploadList.propTypes = {
 	folderId: PropTypes.string,
 	onActiveModal: PropTypes.func,
 	onUpdateFolder: PropTypes.func,
+	onCreateFolder: PropTypes.func,
 };
