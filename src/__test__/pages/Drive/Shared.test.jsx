@@ -272,8 +272,6 @@ describe('Shared component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		screen.debug();
-
 		const downloadButton = screen.getByRole('button', { name: 'Download' });
 
 		await user.click(downloadButton);
