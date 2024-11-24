@@ -1,28 +1,25 @@
 export const handleFetch = async (url, option) => {
-	let result = null;
 	try {
 		const response = await fetch(url, { ...option });
-		result = await response.json();
+		return await response.json();
 	} catch (err) {
-		!option.signal.aborted &&
-			(result = {
+		return (
+			!option.signal.aborted && {
 				success: false,
 				message: err,
-			});
+			}
+		);
 	}
-	return result;
 };
 
 export const handleFetchBlob = async url => {
-	let result = null;
 	try {
 		const response = await fetch(url);
-		result = { success: true, blob: await response.blob() };
+		return { success: true, blob: await response.blob() };
 	} catch (err) {
-		result = {
+		return {
 			success: false,
 			message: err,
 		};
 	}
-	return result;
 };
