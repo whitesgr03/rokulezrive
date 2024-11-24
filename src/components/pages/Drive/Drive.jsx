@@ -89,11 +89,21 @@ export const Drive = () => {
 		setSharedFiles(sharedFiles.filter(item => item.file.id !== id));
 	};
 
-	const createPaths = (result, id, folders) => {
-		const index = folders.findIndex(folder => folder.id === id);
-		const subfolder = index !== -1 ? folders.splice(index, 1)[0] : folders[0];
+	const createPaths = (
+		currentFolderId,
+		allFolders = [...folders],
+		result = [],
+	) => {
+		const folderIndex = allFolders.findIndex(
+			folder => folder.id === currentFolderId,
+		);
 
-		return id
+		const subfolder =
+			folderIndex !== -1 ? allFolders.splice(folderIndex, 1)[0] : allFolders[0];
+
+		const isViewingFile = fileId !== undefined;
+
+		return currentFolderId
 			? subfolder.parent === null
 				? [
 						{
@@ -102,32 +112,26 @@ export const Drive = () => {
 						},
 						...result,
 					]
-				: createPaths(
-						[
-							{
-								name: subfolder.name,
-								path: `/drive/folders/${subfolder.id}`,
-							},
-							...result,
-						],
-						subfolder.parent.id,
-						folders,
-					)
-			: !fileId
-				? []
-				: [
+				: createPaths(subfolder.parent.id, allFolders, [
+						{
+							name: subfolder.name,
+							path: `/drive/folders/${subfolder.id}`,
+						},
+						...result,
+					])
+			: isViewingFile
+				? [
 						{
 							name: subfolder.name,
 							path: '/drive',
 						},
-					];
+					]
+				: [];
 	};
 
 	const paths =
 		folders.length &&
-		createPaths([], folderId, [...folders]).slice(
-			isDesktop ? -4 : isNormalTablet ? -3 : -2,
-		);
+		createPaths(folderId).slice(isDesktop ? -4 : isNormalTablet ? -3 : -2);
 
 	useEffect(() => {
 		const controller = new AbortController();
