@@ -75,7 +75,7 @@ describe('App component', () => {
 			}),
 		});
 
-		Header.mockImplementationOnce(({ isLogin }) => (
+		Header.mockImplementation(({ isLogin }) => (
 			<p data-testid="header component">
 				{isLogin ? 'User is logged in' : 'User is not logged in'}
 			</p>
@@ -112,7 +112,7 @@ describe('App component', () => {
 			}),
 		});
 
-		Header.mockImplementationOnce(({ isLogin }) => (
+		Header.mockImplementation(({ isLogin }) => (
 			<p data-testid="header component">
 				{isLogin ? 'User is logged in' : 'User is not logged in'}
 			</p>
@@ -188,7 +188,7 @@ describe('App component', () => {
 		supabase.auth.updateUser.mockResolvedValueOnce();
 		supabase.auth.signOut.mockResolvedValueOnce();
 
-		Navbar.mockImplementationOnce(() => <p>Navbar component</p>);
+		Navbar.mockImplementation(() => <p>Navbar component</p>);
 
 		const router = createMemoryRouter([
 			{
@@ -230,7 +230,7 @@ describe('App component', () => {
 			}),
 		});
 
-		Footer.mockImplementationOnce(() => <p>Footer component</p>);
+		Footer.mockImplementation(() => <p>Footer component</p>);
 
 		const router = createMemoryRouter([
 			{
@@ -274,7 +274,7 @@ describe('App component', () => {
 			component: 'Modal component',
 		};
 
-		Navbar.mockImplementationOnce(({ onActiveModal }) => (
+		Navbar.mockImplementation(({ onActiveModal }) => (
 			<button onClick={() => onActiveModal(mockModalContent)}>
 				Navbar modal button
 			</button>
