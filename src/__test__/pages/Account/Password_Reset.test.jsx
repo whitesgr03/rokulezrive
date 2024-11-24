@@ -85,9 +85,7 @@ describe('PasswordReset component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
-		const errorPage = screen.getByText('Error page');
+		const errorPage = await screen.findByText('Error page');
 
 		expect(errorPage).toBeInTheDocument();
 	});
