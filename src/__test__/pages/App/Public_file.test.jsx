@@ -24,34 +24,32 @@ vi.mock('date-fns');
 vi.mock('../../../components/layout/Footer/Footer');
 
 describe('PublicFile component', () => {
-	// it(`should navigate to '/error' path if fetch the public file is fails`, async () => {
-	// 	handleFetch.mockResolvedValue({
-	// 		success: false,
-	// 		message: 'error',
-	// 	});
+	it(`should navigate to '/error' path if fetch the public file is fails`, async () => {
+		handleFetch.mockResolvedValue({
+			success: false,
+			message: 'error',
+		});
 
-	// 	const router = createMemoryRouter([
-	// 		{
-	// 			path: '/',
-	// 			element: <Outlet />,
-	// 			children: [
-	// 				{
-	// 					index: true,
-	// 					element: <PublicFile />,
-	// 				},
-	// 				{ path: 'error', element: <p>Error page</p> },
-	// 			],
-	// 		},
-	// 	]);
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet />,
+				children: [
+					{
+						index: true,
+						element: <PublicFile />,
+					},
+					{ path: 'error', element: <p>Error page</p> },
+				],
+			},
+		]);
 
-	// 	render(<RouterProvider router={router} />);
+		render(<RouterProvider router={router} />);
 
-	// 	await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+		const errorMessage = await screen.findByText('Error page');
 
-	// 	const errorMessage = screen.getByText('Error page');
-
-	// 	expect(errorMessage).toBeInTheDocument();
-	// });
+		expect(errorMessage).toBeInTheDocument();
+	});
 	it(`should render the public file data if fetch the public file is successful`, async () => {
 		const mockData = {
 			name: 'public file',
