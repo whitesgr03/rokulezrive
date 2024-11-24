@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { supabase } from '../../../../../utils/supabase_client';
 import { handleFetch } from '../../../../../utils/handle_fetch';
-import { getDeletedFolderIds } from '../../../../../utils/get_deleted_folder_ids';
 
 import { FolderDelete } from '../../../../../components/pages/Drive/Folder/Subfolder/Folder_Delete';
 
@@ -33,8 +32,6 @@ describe('FolderDelete component', () => {
 			message: 'error',
 		});
 
-		getDeletedFolderIds.mockReturnValueOnce([]);
-
 		const router = createMemoryRouter([
 			{
 				path: '/',
@@ -55,7 +52,6 @@ describe('FolderDelete component', () => {
 		const errorMessage = screen.getByText('Error page');
 		expect(errorMessage).toBeInTheDocument();
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
-		expect(getDeletedFolderIds).toBeCalledTimes(1);
 	});
 	it('should close modal if cancel button is clicked', async () => {
 		const user = userEvent.setup();
@@ -150,8 +146,6 @@ describe('FolderDelete component', () => {
 			success: true,
 			data: {},
 		});
-
-		getDeletedFolderIds.mockReturnValue(mockFiles);
 
 		const router = createMemoryRouter([
 			{
