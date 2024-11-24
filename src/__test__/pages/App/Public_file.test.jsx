@@ -103,7 +103,7 @@ describe('PublicFile component', () => {
 			data: mockData,
 		});
 
-		Footer.mockImplementationOnce(() => <p>Footer component</p>);
+		Footer.mockImplementation(() => <p>Footer component</p>);
 
 		const router = createMemoryRouter([
 			{
