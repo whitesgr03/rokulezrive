@@ -40,7 +40,7 @@ describe('Fetch data', () => {
 
 		const actual = await handleFetch(mockUrl, mockOptions);
 
-		const expected = null;
+		const expected = false;
 
 		expect(actual).toBe(expected);
 	});
