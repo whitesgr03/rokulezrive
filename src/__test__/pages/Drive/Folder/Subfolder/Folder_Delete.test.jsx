@@ -116,9 +116,22 @@ describe('FolderDelete component', () => {
 	it('should delete folder and files if delete button is clicked', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
-			folders: [],
-			folder: { name: 'file', id: '1', _count: { subfolders: 0, files: 2 } },
-			onUpdateFolder: vi.fn(),
+			folders: [
+				{
+					id: '1',
+					subfolders: [
+						{ id: '2', _count: { files: 1 } },
+						{ id: '3', _count: { files: 3 } },
+					],
+				},
+				{ id: '2', subfolders: [] },
+				{ id: '3', subfolders: [] },
+			],
+			folder: {
+				id: '1',
+				_count: { subfolders: 2, files: 2 },
+			},
+			onDeleteFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -131,8 +144,8 @@ describe('FolderDelete component', () => {
 				_count: { subfolders: 0, files: 1 },
 			},
 			{
-				id: '5',
-				_count: { subfolders: 0, files: 0 },
+				id: '3',
+				_count: { subfolders: 0, files: 3 },
 			},
 		];
 
