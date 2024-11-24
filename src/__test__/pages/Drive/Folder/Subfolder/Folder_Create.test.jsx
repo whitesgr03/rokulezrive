@@ -15,7 +15,7 @@ describe('FolderCreate component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folderId: '1',
-			onUpdateFolder: vi.fn(),
+			onCreateFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -38,7 +38,7 @@ describe('FolderCreate component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folderId: '1',
-			onUpdateFolder: vi.fn(),
+			onCreateFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -67,7 +67,7 @@ describe('FolderCreate component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folderId: '1',
-			onUpdateFolder: vi.fn(),
+			onCreateFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -110,7 +110,7 @@ describe('FolderCreate component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folderId: '1',
-			onUpdateFolder: vi.fn(),
+			onCreateFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -153,7 +153,7 @@ describe('FolderCreate component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folderId: '1',
-			onUpdateFolder: vi.fn(),
+			onCreateFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -191,14 +191,14 @@ describe('FolderCreate component', () => {
 		const element = screen.getByText('Home page');
 
 		expect(element).toBeInTheDocument();
-		expect(mockProps.onUpdateFolder).toBeCalledTimes(1);
+		expect(mockProps.onCreateFolder).toBeCalledTimes(1);
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
 	it('should navigate to the parent folder path if the folder under any sub-path on the parent folder page is successfully created', async () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folderId: '1',
-			onUpdateFolder: vi.fn(),
+			onCreateFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -236,7 +236,7 @@ describe('FolderCreate component', () => {
 		const element = screen.getByText('Home page');
 
 		expect(element).toBeInTheDocument();
-		expect(mockProps.onUpdateFolder).toBeCalledTimes(1);
+		expect(mockProps.onCreateFolder).toBeCalledTimes(1);
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
 });
