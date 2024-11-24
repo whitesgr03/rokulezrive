@@ -561,4 +561,387 @@ describe('Drive component', () => {
 		expect(mockContext.onActiveMenu).toBeCalledTimes(1);
 		expect(uploadList).toBeInTheDocument();
 	});
+	it('should create a new folder if "handleCreateFolder" is executed', async () => {
+		const user = userEvent.setup();
+		const mockContext = {
+			menu: {
+				name: 'upload-menu',
+			},
+			onActiveMenu: vi.fn(),
+			onActiveModal: vi.fn(),
+		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: { access_token: '' },
+			},
+		});
+
+		const mockFolders = [
+			{
+				id: '1',
+				name: 'default folder',
+			},
+		];
+
+		const mockNewFolder = {
+			id: '2',
+			name: 'second folder',
+		};
+
+		handleFetch
+			.mockResolvedValueOnce({
+				success: true,
+				data: [],
+			})
+			.mockResolvedValueOnce({
+				success: true,
+				data: mockFolders,
+			});
+
+		UploadList.mockImplementation(({ onCreateFolder }) => (
+			<button
+				onClick={() =>
+					onCreateFolder({
+						currentFolder: mockFolders[0],
+						newFolder: mockNewFolder,
+					})
+				}
+			>
+				Create folder button
+			</button>
+		));
+
+		const DriveChildren = () => {
+			const { folders } = useOutletContext();
+			return (
+				<ul>
+					{folders.map(folder => (
+						<li key={folder.id}>{folder.name}</li>
+					))}
+				</ul>
+			);
+		};
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						path: '/',
+						element: (
+							<ResponsiveContext.Provider value={{ width: 700 }}>
+								<Drive />
+							</ResponsiveContext.Provider>
+						),
+						children: [
+							{
+								index: true,
+								element: <DriveChildren />,
+							},
+						],
+					},
+				],
+			},
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+		const createFolderButton = screen.getByRole('button', {
+			name: 'Create folder button',
+		});
+
+		await user.click(createFolderButton);
+
+		const listItems = screen.getAllByRole('listitem');
+
+		expect(listItems).toHaveLength(2);
+	});
+	it('should update a specified folder if "handleUpdateFolder" is executed', async () => {
+		const user = userEvent.setup();
+		const mockContext = {
+			menu: {
+				name: 'upload-menu',
+			},
+			onActiveMenu: vi.fn(),
+			onActiveModal: vi.fn(),
+		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: { access_token: '' },
+			},
+		});
+
+		const mockFolders = [
+			{
+				id: '1',
+				name: 'default folder',
+			},
+		];
+
+		const mockData = {
+			currentFolder: {
+				...mockFolders[0],
+				name: 'new folder',
+			},
+		};
+
+		handleFetch
+			.mockResolvedValueOnce({
+				success: true,
+				data: [],
+			})
+			.mockResolvedValueOnce({
+				success: true,
+				data: mockFolders,
+			});
+
+		UploadList.mockImplementation(({ onUpdateFolder }) => (
+			<button onClick={() => onUpdateFolder(mockData)}>
+				Update folder button
+			</button>
+		));
+
+		const DriveChildren = () => {
+			const { folders } = useOutletContext();
+			return (
+				<ul>
+					{folders.map(folder => (
+						<li key={folder.id}>{folder.name}</li>
+					))}
+				</ul>
+			);
+		};
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						path: '/',
+						element: (
+							<ResponsiveContext.Provider value={{ width: 700 }}>
+								<Drive />
+							</ResponsiveContext.Provider>
+						),
+						children: [
+							{
+								index: true,
+								element: <DriveChildren />,
+							},
+						],
+					},
+				],
+			},
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+		const updateFolderButton = screen.getByRole('button', {
+			name: 'Update folder button',
+		});
+
+		await user.click(updateFolderButton);
+
+		const listItems = screen.getAllByRole('listitem');
+
+		expect(listItems[0]).toHaveTextContent(mockData.currentFolder.name);
+	});
+	it('should delete a specified folder if "handleDeleteFolder" is executed', async () => {
+		const user = userEvent.setup();
+		const mockContext = {
+			menu: {
+				name: '',
+			},
+			onActiveMenu: vi.fn(),
+			onActiveModal: vi.fn(),
+		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: { access_token: '' },
+			},
+		});
+
+		const mockFolders = [
+			{
+				id: '1',
+				name: 'default folder',
+			},
+			{
+				id: '2',
+				name: 'second folder',
+			},
+		];
+
+		const mockData = {
+			currentFolder: {
+				id: '1',
+				name: 'default folder',
+			},
+			deleteFolderId: '2',
+		};
+
+		handleFetch
+			.mockResolvedValueOnce({
+				success: true,
+				data: [],
+			})
+			.mockResolvedValueOnce({
+				success: true,
+				data: mockFolders,
+			});
+
+		const DriveChildren = () => {
+			const { folders, onDeleteFolder } = useOutletContext();
+			return (
+				<>
+					<button onClick={() => onDeleteFolder(mockData)}>
+						Delete folder button
+					</button>
+					<ul>
+						{folders.map(folder => (
+							<li key={folder.id}>{folder.name}</li>
+						))}
+					</ul>
+				</>
+			);
+		};
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						path: '/',
+						element: (
+							<ResponsiveContext.Provider value={{ width: 700 }}>
+								<Drive />
+							</ResponsiveContext.Provider>
+						),
+						children: [
+							{
+								index: true,
+								element: <DriveChildren />,
+							},
+						],
+					},
+				],
+			},
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+		const deleteFolderButton = screen.getByRole('button', {
+			name: 'Delete folder button',
+		});
+
+		await user.click(deleteFolderButton);
+
+		const listItems = screen.getAllByRole('listitem');
+
+		expect(listItems).toHaveLength(1);
+	});
+	it('should delete a specified shared folder if "handleDeleteSharedFile" is executed', async () => {
+		const user = userEvent.setup();
+		const mockContext = {
+			menu: {
+				name: '',
+			},
+			onActiveMenu: vi.fn(),
+			onActiveModal: vi.fn(),
+		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: { access_token: '' },
+			},
+		});
+
+		const mockFolders = [
+			{
+				id: '1',
+				name: 'default folder',
+			},
+		];
+
+		const mockSharedFolders = [
+			{
+				file: { id: '1', name: 'default shared folder' },
+			},
+		];
+
+		const mockData = {
+			id: '1',
+		};
+
+		handleFetch
+			.mockResolvedValueOnce({
+				success: true,
+				data: mockSharedFolders,
+			})
+			.mockResolvedValueOnce({
+				success: true,
+				data: mockFolders,
+			});
+
+		const DriveChildren = () => {
+			const { sharedFiles, onDeleteSharedFile } = useOutletContext();
+			return (
+				<>
+					<button onClick={() => onDeleteSharedFile(mockData.id)}>
+						Delete shared file button
+					</button>
+					<ul>
+						{sharedFiles.map(item => (
+							<li key={item.file.id}>{item.file.name}</li>
+						))}
+					</ul>
+				</>
+			);
+		};
+
+		const router = createMemoryRouter([
+			{
+				path: '/',
+				element: <Outlet context={{ ...mockContext }} />,
+				children: [
+					{
+						path: '/',
+						element: <Drive />,
+						children: [
+							{
+								index: true,
+								element: <DriveChildren />,
+							},
+						],
+					},
+				],
+			},
+		]);
+
+		render(<RouterProvider router={router} />);
+
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+		const deleteSharedFileButton = screen.getByRole('button', {
+			name: 'Delete shared file button',
+		});
+
+		await user.click(deleteSharedFileButton);
+
+		const listItems = screen.queryAllByRole('listitem');
+
+		expect(listItems).toHaveLength(0);
+	});
 });
