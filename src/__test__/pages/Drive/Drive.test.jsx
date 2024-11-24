@@ -5,7 +5,12 @@ import {
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { RouterProvider, createMemoryRouter, Outlet } from 'react-router-dom';
+import {
+	RouterProvider,
+	createMemoryRouter,
+	Outlet,
+	useOutletContext,
+} from 'react-router-dom';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { supabase } from '../../../utils/supabase_client';
 import { handleFetch } from '../../../utils/handle_fetch';
@@ -112,11 +117,69 @@ describe('Drive component', () => {
 
 		render(<RouterProvider router={router} />);
 
-		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
-
-		const errorPage = screen.getByText('Error page');
+		const errorPage = await screen.findByText('Error page');
 
 		expect(errorPage).toBeInTheDocument();
+	});
+	it(`should show up to 2 levels of folder paths, including the current folder when the user is viewing file and the user's device screen is smaller than 700 pixels.`, async () => {
+		const mockContext = {
+			menu: {
+				name: '',
+			},
+			onActiveMenu: vi.fn(),
+			onActiveModal: vi.fn(),
+		};
+
+		supabase.auth.getSession.mockResolvedValueOnce({
+			data: {
+				session: { access_token: '' },
+			},
+		});
+
+		const mockFolders = [
+			{
+				id: '1',
+				name: 'default folder',
+				parent: null,
+			},
+		];
+
+		handleFetch
+			.mockResolvedValueOnce({
+				success: true,
+				data: [],
+			})
+			.mockResolvedValueOnce({
+				success: true,
+				data: mockFolders,
+			});
+
+		const router = createMemoryRouter(
+			[
+				{
+					path: '/drive',
+					element: <Outlet context={{ ...mockContext }} />,
+					children: [
+						{
+							path: 'files/:fileId',
+							element: (
+								<ResponsiveContext.Provider value={{ width: 600 }}>
+									<Drive />
+								</ResponsiveContext.Provider>
+							),
+						},
+					],
+				},
+			],
+			{ initialEntries: ['/drive/files/1'] },
+		);
+
+		render(<RouterProvider router={router} />);
+
+		await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+
+		const path = screen.getByRole('link', { name: mockFolders[0].name });
+		expect(path).toBeInTheDocument();
 	});
 	it(`should display up to 2 levels of folder paths when the user is in a subfolder at any level and the user's device screen is smaller than 700 pixels.`, async () => {
 		const mockContext = {
@@ -172,7 +235,7 @@ describe('Drive component', () => {
 					element: <Outlet context={{ ...mockContext }} />,
 					children: [
 						{
-							path: ':folderId',
+							path: 'folders/:folderId/files/:fileId',
 							element: (
 								<ResponsiveContext.Provider value={{ width: 600 }}>
 									<Drive />
@@ -182,7 +245,7 @@ describe('Drive component', () => {
 					],
 				},
 			],
-			{ initialEntries: ['/drive/3'] },
+			{ initialEntries: ['/drive/folders/3/files/1'] },
 		);
 
 		render(<RouterProvider router={router} />);
@@ -400,9 +463,9 @@ describe('Drive component', () => {
 				data: mockFolders,
 			});
 
-		UploadList.mockImplementationOnce(() => <p>UploadList component</p>);
-		Navbar.mockImplementationOnce(() => <p>Navbar component</p>);
-		Footer.mockImplementationOnce(() => <p>Footer component</p>);
+		UploadList.mockImplementation(() => <p>UploadList component</p>);
+		Navbar.mockImplementation(() => <p>Navbar component</p>);
+		Footer.mockImplementation(() => <p>Footer component</p>);
 
 		const router = createMemoryRouter([
 			{
@@ -466,9 +529,9 @@ describe('Drive component', () => {
 				data: mockFolders,
 			});
 
-		UploadList.mockImplementationOnce(() => <p>UploadList component</p>);
-		Navbar.mockImplementationOnce(() => <p>Navbar component</p>);
-		Footer.mockImplementationOnce(() => <p>Footer component</p>);
+		UploadList.mockImplementation(() => <p>UploadList component</p>);
+		Navbar.mockImplementation(() => <p>Navbar component</p>);
+		Footer.mockImplementation(() => <p>Footer component</p>);
 
 		const router = createMemoryRouter([
 			{
@@ -515,7 +578,6 @@ describe('Drive component', () => {
 			{
 				id: '1',
 				name: 'default folder',
-				parent: null,
 			},
 		];
 
@@ -529,7 +591,7 @@ describe('Drive component', () => {
 				data: mockFolders,
 			});
 
-		UploadList.mockImplementationOnce(() => <p>UploadList component</p>);
+		UploadList.mockImplementation(() => <p>UploadList component</p>);
 
 		const router = createMemoryRouter([
 			{
