@@ -15,9 +15,13 @@ import { Loading } from '../../../../utils/Loading/Loading';
 
 // Utils
 import { handleFetch } from '../../../../../utils/handle_fetch';
-import { getDeletedFolderIds } from '../../../../../utils/get_deleted_folder_ids';
 
-export const FolderDelete = ({ folders, folder, onDeleteFolder, onActiveModal }) => {
+export const FolderDelete = ({
+	folders,
+	folder,
+	onDeleteFolder,
+	onActiveModal,
+}) => {
 	const [loading, setLoading] = useState(false);
 
 	const navigate = useNavigate();
@@ -45,9 +49,33 @@ export const FolderDelete = ({ folders, folder, onDeleteFolder, onActiveModal })
 			},
 		};
 
+		const getDeletedFolderIds = (
+			arrFolder,
+			allFolders = [...folders],
+			result = [],
+		) =>
+			arrFolder.length
+				? getDeletedFolderIds(
+						arrFolder.reduce(
+							(previousFolder, currentFolder) => [
+								...previousFolder,
+								...allFolders.splice(
+									allFolders.findIndex(
+										folder => folder.id === currentFolder.id,
+									),
+									1,
+								)[0].subfolders,
+							],
+							[],
+						),
+						allFolders,
+						[...result, ...arrFolder],
+					)
+				: result;
+
 		const allFolderIdsWithFiles =
 			!folderIsEmpty &&
-			getDeletedFolderIds([{ id, _count }], [...folders], [])
+			getDeletedFolderIds([{ id, _count }])
 				.filter(folder => folder._count.files)
 				.map(folder => folder.id);
 
