@@ -17,8 +17,8 @@ describe('FolderDelete component', () => {
 		const user = userEvent.setup();
 		const mockProps = {
 			folders: [],
-			folder: { name: 'file', id: '1', _count: { subfolders: 1, files: 2 } },
-			onUpdateFolder: vi.fn(),
+			folder: { name: 'file', id: '1', _count: { subfolders: 0, files: 0 } },
+			onDeleteFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -62,7 +62,7 @@ describe('FolderDelete component', () => {
 		const mockProps = {
 			folders: [],
 			folder: { name: 'file', id: '1', _count: { subfolders: 0, files: 0 } },
-			onUpdateFolder: vi.fn(),
+			onDeleteFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -86,7 +86,7 @@ describe('FolderDelete component', () => {
 		const mockProps = {
 			folders: [],
 			folder: { name: 'file', id: '1', _count: { subfolders: 0, files: 0 } },
-			onUpdateFolder: vi.fn(),
+			onDeleteFolder: vi.fn(),
 			onActiveModal: vi.fn(),
 		};
 
@@ -114,7 +114,7 @@ describe('FolderDelete component', () => {
 
 		await user.click(deleteButton);
 
-		expect(mockProps.onUpdateFolder).toBeCalledTimes(1);
+		expect(mockProps.onDeleteFolder).toBeCalledTimes(1);
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
 	it('should delete folder and files if delete button is clicked', async () => {
