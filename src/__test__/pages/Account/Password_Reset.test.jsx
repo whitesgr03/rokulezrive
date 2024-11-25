@@ -23,7 +23,7 @@ describe('PasswordReset component', () => {
 				session: {
 					user: {
 						app_metadata: {
-							provider: 'email',
+							providers: ['email'],
 						},
 
 						user_metadata: {
@@ -100,7 +100,7 @@ describe('PasswordReset component', () => {
 				session: {
 					user: {
 						app_metadata: {
-							provider: 'email',
+							providers: ['email'],
 						},
 
 						user_metadata: {
@@ -148,7 +148,7 @@ describe('PasswordReset component', () => {
 				session: {
 					user: {
 						app_metadata: {
-							provider: 'email',
+							providers: ['email'],
 						},
 
 						user_metadata: {
@@ -214,7 +214,7 @@ describe('PasswordReset component', () => {
 				session: {
 					user: {
 						app_metadata: {
-							provider: 'email',
+							providers: ['email'],
 						},
 
 						user_metadata: {
@@ -275,7 +275,7 @@ describe('PasswordReset component', () => {
 				session: {
 					user: {
 						app_metadata: {
-							provider: 'email',
+							providers: ['email'],
 						},
 
 						user_metadata: {
@@ -338,7 +338,7 @@ describe('PasswordReset component', () => {
 				session: {
 					user: {
 						app_metadata: {
-							provider: 'email',
+							providers: ['email'],
 						},
 
 						user_metadata: {
