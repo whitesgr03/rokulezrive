@@ -87,14 +87,12 @@ export const Login = () => {
 			switch (error.code) {
 				case 'invalid_credentials':
 					setInputErrors({
-						...inputErrors,
 						email: 'Account could not be found.',
 					});
 					break;
 
 				case 'email_not_confirmed':
 					setInputErrors({
-						...inputErrors,
 						email: 'Email is registered but not verified.',
 					});
 					break;
