@@ -37,7 +37,6 @@ describe('Header component', () => {
 		await user.click(button);
 
 		expect(mockProps.onSwitchColorTheme).toHaveBeenCalledTimes(1);
-		expect(mockProps.onActiveMenu).toHaveBeenCalledTimes(1);
 	});
 	it(`should switch color themes if the user's device screen is wider than 440 pixels and clicks the toggle button.`, async () => {
 		const user = userEvent.setup();

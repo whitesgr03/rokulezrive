@@ -96,7 +96,6 @@ export const Header = ({
 					'dropdown-slide-out': dropdownSlideOut,
 				})}`}
 				data-testid="dropdown"
-				onClick={() => onActiveMenu()}
 			>
 				{!isNormalMobile && (
 					<li>
@@ -117,7 +116,7 @@ export const Header = ({
 						</button>
 					</li>
 				)}
-				<li>
+				<li onClick={() => onActiveMenu()}>
 					{isLogin ? (
 						<button className={styles['dropdown-link']} onClick={handleLogout}>
 							<span className={`${icon} ${styles.logout}`} />
