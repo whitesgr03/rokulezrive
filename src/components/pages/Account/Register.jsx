@@ -6,7 +6,7 @@ import {
 	Navigate,
 	useLocation,
 } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { object, string, ref } from 'yup';
 import { supabase } from '../../../utils/supabase_client';
@@ -20,7 +20,6 @@ import ValidationEmailStyles from './Validation_Email.module.css';
 // Components
 import { Account } from './Account';
 import { ValidationEmail } from './Validation_Email';
-import { Loading } from '../../utils/Loading/Loading';
 
 // Variables
 const classes = classNames.bind(formStyles);
@@ -36,7 +35,6 @@ export const Register = () => {
 
 	const [inputErrors, setInputErrors] = useState({});
 	const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-	const [loading, setLoading] = useState(true);
 	const [registering, setRegistering] = useState(false);
 	const [error, setError] = useState(null);
 	const { pathname: previousPath } = useLocation();
@@ -160,28 +158,9 @@ export const Register = () => {
 		setRegistering(false);
 	};
 
-	useEffect(() => {
-		const handleCancelPasswordReset = async () => {
-			const {
-				data: { session },
-			} = await supabase.auth.getSession();
-
-			session?.user.user_metadata.resetPassword &&
-				(await supabase.auth.updateUser({
-					data: { resetPassword: false },
-				}));
-
-			setLoading(false);
-		};
-
-		handleCancelPasswordReset();
-	}, []);
-
 	return (
 		<>
-			{loading ? (
-				<Loading text="Loading..." />
-			) : error ? (
+			{error ? (
 				<Navigate to="/error" state={{ error, previousPath }} />
 			) : (
 				<Account title="User Sign Up" loading={registering}>
