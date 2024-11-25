@@ -138,7 +138,6 @@ export const Register = () => {
 			? handleSuccess()
 			: !result.error
 				? setInputErrors({
-						...inputErrors,
 						email: 'Email has been registered.',
 					})
 				: handleError(result.error);
