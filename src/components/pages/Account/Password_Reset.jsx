@@ -131,7 +131,7 @@ export const PasswordReset = () => {
 				data: { session },
 			} = await supabase.auth.getSession();
 
-			session?.user.app_metadata.provider === 'email' &&
+			session?.user.app_metadata.providers.includes('email') &&
 			!session?.user.user_metadata.login
 				? await supabase.auth.updateUser({
 						data: { resetPassword: true },
