@@ -197,7 +197,7 @@ describe('FileUpload component', () => {
 		expect(mockProps.onUpdateFolder).toBeCalledTimes(1);
 		expect(mockProps.onActiveModal).toBeCalledTimes(1);
 	});
-	it('should  navigate to the specified folder path if the file under any sub-path on the specified folder page is successfully uploaded', async () => {
+	it('should navigate to the specified folder path if the file under any sub-path on the specified folder page is successfully uploaded', async () => {
 		const user = userEvent.setup();
 
 		const mockProps = {
