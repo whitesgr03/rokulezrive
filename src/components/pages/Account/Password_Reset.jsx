@@ -85,7 +85,6 @@ export const PasswordReset = () => {
 			switch (error.code) {
 				case 'same_password':
 					setInputErrors({
-						...inputErrors,
 						password: 'New password should be different from the old password.',
 					});
 					break;
