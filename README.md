@@ -2,27 +2,30 @@
 
 A cloud storage application built with React. Hosted on Vercel.  
 
-## Live
-
-[https://www.rokulezrive.com](https://www.rokulezrive.com)
-
 ![website screenshots](https://i.imgur.com/jjFC9Kq.png)
+
+## Links
+
+- Live Demo: [https://www.rokulezrive.com](https://www.rokulezrive.com)
+- Backend Repository: [https://github.com/whitesgr03/rokulezrive-api](https://github.com/whitesgr03/rokulezrive-api)
 
 ## Description:
 
 Rokulezrive is a file uploader built as a stripped down version of Google Drive. Allows users to upload, download and share files.
 
-### Technologies:  
+<details>
+  <summary>Additional info</summary>
+  
+  - At first I planned to use Passport.js to build an authentication system, but I'm new to user email validation and token expiration handling, so I decided to use the auth provider Supabase for authentication and authorization.
+
+  - Cloudinary is currently used to store user files and may be changed to Supabase Storage in the future for convenience to manage together with database and auth services.
+</details>
+
+## Technologies:  
 
 1. [React Router](https://reactrouter.com/) to keep the user interface in sync with the URL. In addition, it allows defining which component to display for a specified URL.
 
 2. [Yup](https://github.com/jquense/yup) to validate any form's data and make sure that it matches the schemas that define how the data should look and the values expected to conform to them.
-
-### Additional info:
-
-- At first I planned to use Passport.js to build an authentication system, but I'm new to user email validation and token expiration handling, so I decided to use the auth provider Supabase for authentication and authorization.
-
-- Cloudinary is currently used to store user files and may be changed to Supabase Storage in the future for convenience to manage together with database and auth services.
 
 ## Features:
 
@@ -62,13 +65,3 @@ You can access the app through your web browser.
   <img src="https://i.imgur.com/UBzYxnw.png" alt="website screenshot">
 
 </details>
-
-## Contributing:
-
-Feel free to fork the repository and submit pull requests. Any contributions, whether they’re bug fixes, new features, or performance improvements, are always welcome.
-
-## License:
-
-This project is licensed under the **MIT license**. Feel free to edit and distribute this template as you like.
-
-See [LICENSE](LICENSE) for more information.
