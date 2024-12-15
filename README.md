@@ -20,9 +20,9 @@ Rokulezrive is a file uploader built as a stripped down version of Google Drive.
 
 ### Additional info:
 
-At first I planned to use Passport.js to build an authentication system, but I'm new to user email validation and token expiration handling, so I decided to use the auth provider Supabase for authentication and authorization.
+- At first I planned to use Passport.js to build an authentication system, but I'm new to user email validation and token expiration handling, so I decided to use the auth provider Supabase for authentication and authorization.
 
-Cloudinary is currently used to store user files and may be changed to Supabase Storage in the future for convenience to manage together with database and auth services.
+- Cloudinary is currently used to store user files and may be changed to Supabase Storage in the future for convenience to manage together with database and auth services.
 
 ## Features:
 
