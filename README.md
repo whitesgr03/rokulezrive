@@ -9,12 +9,6 @@ Rokulezrive is a file uploader, a stripped-down version of Google Drive built wi
 - Live Demo: [https://www.rokulezrive.com](https://www.rokulezrive.com)
 - Backend Repository: [https://github.com/whitesgr03/rokulezrive-api](https://github.com/whitesgr03/rokulezrive-api)
 
-## Technologies:  
-
-1. [React Router](https://reactrouter.com/) to keep the user interface in sync with the URL. In addition, it allows defining which component to display for a specified URL.
-
-2. [Yup](https://github.com/jquense/yup) to validate any form's data and make sure that it matches the schemas that define how the data should look and the values expected to conform to them.
-
 ## Features:
 
 - Password and Social authentication.
@@ -51,3 +45,12 @@ You can upload or share files on the [Live Demo](https://www.rokulezrive.com) th
   <img src="https://i.imgur.com/UBzYxnw.png" alt="website screenshot">
 
 </details>
+
+## Technologies:
+
+1. [React Router](https://reactrouter.com/) to keep the user interface in sync with the URL. In addition, it allows defining which component to display for a specified URL.
+
+2. [Yup](https://github.com/jquense/yup) to validate any form's data and make sure that it matches the schemas that define how the data should look and the values expected to conform to them.
+
+3. [Supabase](https://supabase.com/) allows users to register and login and get access token to request resources.
+
