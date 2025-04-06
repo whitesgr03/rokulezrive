@@ -54,3 +54,137 @@ You can upload or share files on the [Live Demo](https://www.rokulezrive.com) th
 
 3. [Supabase](https://supabase.com/) allows users to register and login and get access token to request resources.
 
+## Additional info:
+
+- The API server currently uses the Supabase auth provider to authenticate users. In the future, I planned to create my own authentication system.
+
+## Source folder structure
+
+```
+src/
+│
+├─── __test__/                          # component and unit tests
+│
+├─── assets/                            # Static assets (icons, images)
+│
+├─── components/                        # React components and each related css modules are placed in folders
+│     │
+│     ├── layout/
+│     │    │
+│     │    ├── Footer/
+│     │    │    │
+│     │    │    └── Footer.jsx
+│     │    │
+│     │    ├── Header/
+│     │    │    │
+│     │    │    └── Header.jsx
+│     │    │
+│     │    └── Navbar/
+│     │         │
+│     │         └── Navbar.jsx
+│     │
+│     ├── pages/
+│     │    │
+│     │    ├── Account/
+│     │    │    │
+│     │    │    ├── Account.jsx
+│     │    │    │
+│     │    │    ├── Forget_Email.jsx
+│     │    │    │
+│     │    │    ├── Login.jsx
+│     │    │    │
+│     │    │    ├── Password_Reset.jsx
+│     │    │    │
+│     │    │    ├── Register.jsx
+│     │    │    │
+│     │    │    └── Validation_Email.jsx
+│     │    │
+│     │    ├── App/
+│     │    │    │
+│     │    │    ├── App.jsx
+│     │    │    │
+│     │    │    ├── Modal.jsx
+│     │    │    │
+│     │    │    └── Public_File.jsx
+│     │    │
+│     │    ├── Drive/
+│     │    │    │
+│     │    │    ├── Folder/
+│     │    │    │    │
+│     │    │    │    ├── File/
+│     │    │    │    │    │
+│     │    │    │    │    ├── File_Delete.jsx
+│     │    │    │    │    │
+│     │    │    │    │    ├── File_Info.jsx
+│     │    │    │    │    │
+│     │    │    │    │    ├── File_Share.jsx
+│     │    │    │    │    │
+│     │    │    │    │    ├── File_Update.jsx
+│     │    │    │    │    │
+│     │    │    │    │    ├── File_Upload.jsx
+│     │    │    │    │    │
+│     │    │    │    │    └── Files.jsx
+│     │    │    │    │
+│     │    │    │    ├── Subfolder/
+│     │    │    │    │    │
+│     │    │    │    │    ├── Folder_Create.jsx
+│     │    │    │    │    │
+│     │    │    │    │    ├── Folder_Delete.jsx
+│     │    │    │    │    │
+│     │    │    │    │    ├── Folder_Update.jsx
+│     │    │    │    │    │
+│     │    │    │    │    └── Subfolders.jsx
+│     │    │    │    │
+│     │    │    │    └── Folder.jsx
+│     │    │    │
+│     │    │    ├── Drive.jsx
+│     │    │    │
+│     │    │    ├── Shared_Delete.jsx
+│     │    │    │
+│     │    │    ├── Shared_File.jsx
+│     │    │    │
+│     │    │    ├── Shares.jsx
+│     │    │    │
+│     │    │    └── Upload_List.jsx
+│     │    │
+│     │    └── Home/
+│     │         │
+│     │         └── Home.jsx
+│     │
+│     └── utils/
+│          │
+│          ├── Authentication/
+│          │    │
+│          │    └── Authentication.jsx
+│          │
+│          ├── Error/
+│          │    │
+│          │    ├── Error.jsx
+│          │    │
+│          │    └── NotFound.jsx
+│          │
+│          └── Loading/
+│               │
+│               └── Loading.jsx
+│
+├─── styles/                            # Generic CSS Modules
+│     │
+│     ├── form.module.css
+│     │
+│     ├── icon.module.css
+│     │
+│     └── index.css                     # Index css include main custom properties and type selectors styles
+│
+├─── utils/                             # Generic function
+│     ├── create_download_element.js    # Handle creating an anchor element to download the file
+│     │
+│     ├── format_bytes.js               # Handle formatting the upload file bytes
+│     │
+│     ├── handle_fetch.js
+│     │
+│     └── supabase_client.js            # Handle connection with the supabase auth database
+│
+├─── main.jsx
+│
+└──  Router.jsx                         # React router config
+```
