@@ -1,6 +1,6 @@
 # Rokulezrive
 
-A cloud storage application built with React. Hosted on Vercel.  
+Rokulezrive is a file uploader, a stripped-down version of Google Drive built with React. Allows users to upload, download and share files. Hosted on Vercel.
 
 ![website screenshots](https://i.imgur.com/jjFC9Kq.png)
 
@@ -8,18 +8,6 @@ A cloud storage application built with React. Hosted on Vercel.
 
 - Live Demo: [https://www.rokulezrive.com](https://www.rokulezrive.com)
 - Backend Repository: [https://github.com/whitesgr03/rokulezrive-api](https://github.com/whitesgr03/rokulezrive-api)
-
-## Description:
-
-Rokulezrive is a file uploader built as a stripped down version of Google Drive. Allows users to upload, download and share files.
-
-<details>
-  <summary>Additional info</summary>
-  
-  - At first I planned to use Passport.js to build an authentication system, but I'm new to user email validation and token expiration handling, so I decided to use the auth provider Supabase for authentication and authorization.
-
-  - Cloudinary is currently used to store user files and may be changed to Supabase Storage in the future for convenience to manage together with database and auth services.
-</details>
 
 ## Technologies:  
 
@@ -29,15 +17,13 @@ Rokulezrive is a file uploader built as a stripped down version of Google Drive.
 
 ## Features:
 
-- User authentication.
-- Upload any type of files.
-- Share files with everyone.
-- Folder and file management.
-- Responsive design.
+- Password and Social authentication.
+- Upload and Share any type of files.
+- Responsive design for mobile devices.
 
 ## Usage:
 
-You can access the app through your web browser.
+You can upload or share files on the [Live Demo](https://www.rokulezrive.com) through your web browser.
 
 <details>
 
